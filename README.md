@@ -27,6 +27,6 @@ After the required source data is loaded, the build process is broken into two s
 
 2. Use the Civic Data Loader scripts to load all the source data files.
 
-3. Run the assembly scripts using `sh run_assembly.sh` This calls all the scripts inside the scripts_assembly folder and describes what each one does.
+3. Run the assembly scripts using `sh run_assembly.sh` This script runs all the scripts inside the scripts_assembly folder and describes what each one does.
 
-4. Run the processing scripts using `sh run_processing.sh` This calls all the scripts inside the scripts_processing folder and describes what each one does.
+4. Run the processing scripts using `sh run_processing.sh` This script runs all the scripts inside the scripts_processing folder and describes what each one does.
