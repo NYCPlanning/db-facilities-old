@@ -1,0 +1,86 @@
+DROP TABLE IF EXISTS facilities;
+CREATE TABLE facilities (
+-- ids
+guid UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+id text,
+idold text,
+idagency text,
+--name
+facilityname text,
+--location information
+addressnumber text,
+streetname text,
+address text,
+city text,
+borough text,
+boroughcode smallint,
+zipcode integer,
+-- spatial joins to polygons
+bbl text ARRAY,
+bin text ARRAY,
+parkid text,
+xcoord double precision,
+ycoord double precision,
+latitude double precision,
+longitude double precision,
+-- classification
+facilitytype text,
+domain text,
+facilitygroup text,
+facilitysubgroup text,
+agencyclass1 text,
+agencyclass2 text,
+colpusetype text,
+-- size
+capacity double precision,
+utilization double precision,
+capacitytype text,
+utilizationrate double precision,
+area double precision,
+areatype text,
+servicearea text,
+-- operator and agency information
+operatortype text,
+operatorname text,
+operatorabbrev text,
+oversightagency text,
+oversightabbrev text,
+-- information on when the facility opened/closed and tags classifing the facility
+dateactive date,
+dateinactive date,
+inactivestatus boolean,
+tags text ARRAY,
+-- information to be tracked by the data admin
+notes text,
+datesourcereceived date,
+datesourceupdated date,
+datecreated date,
+dateedited date,
+creator text,
+editor text,
+geom geometry,
+agencysource text,
+sourcedatasetname text,
+linkdata text,
+linkdownload text,
+datatype text,
+refreshmeans text,
+refreshfrequency text,
+processingflag text,
+-- attributes specific to schools
+buildingid text,
+buildingname text,
+schoolorganizationlevel text,
+-- served populations
+children boolean,
+youth boolean,
+senior boolean,
+family boolean,
+disabilities boolean,
+dropouts boolean,
+unemployed boolean,
+homeless boolean,
+immigrants boolean,
+-- miscellaneous
+groupquarters boolean
+)
