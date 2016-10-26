@@ -1,15 +1,15 @@
 ### Published (Draft v1.0) Database and Documentation:
 
-  * [Carto webmap]()
+  * [Webmap Explorer](http://cpp.capitalplanning.nyc/facilities)
   * [Shapefile download]()
   * [Documentation](https://nycplanning.github.io/cpdocs/facdb/)
-  * [Feedback survey sent to DCP users](https://docs.google.com/forms/d/e/1FAIpQLSc4G4g1o3ptY3Eq44ys3UTLu5IbvsyhS9x-oY4cFZi1BpbJng/viewform)
+  * [Feedback Form](https://docs.google.com/forms/d/e/1FAIpQLSffdzVSCRmMQhGn32Z6bDnBEKPXJw20m6CkDMeco-z4B1FcNQ/viewform)
 
 ### Summary of Build Process and Stages:
 
 The build follows an Extract -> Load -> Transform sequence rather than an ETL (Extract-Transform-Load) sequence.
 
-All the source datasets are first loaded using the [Civic Data Loader](https://github.com/NYCPlanning/civic-data-loader) scripts. The datasets which must be loaded are listed out in the run_assembly.sh script.
+All the source datasets are first loaded using the [Civic Data Loader](https://github.com/NYCPlanning/civic-data-loader) scripts. The datasets which must be loaded are listed out in the `run_assembly.sh` script.
 
 After the required source data is loaded, the build process is broken into two stages: **assembly** and **processing**.
 
@@ -27,6 +27,6 @@ After the required source data is loaded, the build process is broken into two s
 
 2. Use the Civic Data Loader scripts to load all the source data files.
 
-3. Run the assembly scripts using 'sh run_assembly.sh' This calls all the scripts inside the scripts_assembly folder and describes what each one does.
+3. Run the assembly scripts using `sh run_assembly.sh` This calls all the scripts inside the scripts_assembly folder and describes what each one does.
 
-4. Run the processing scripts using 'sh run_processing.sh' This calls all the scripts inside the scripts_processing folder and describes what each one does.
+4. Run the processing scripts using `sh run_processing.sh` This calls all the scripts inside the scripts_processing folder and describes what each one does.
