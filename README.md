@@ -1,5 +1,32 @@
-How to Use:
-1. Set up the necessary data loading scripts:
+### Published (Draft v1.0) Database and Documentation:
 
-2. Create an environmental variable for the database in your .bash_profile
-export DATABASE_URL=postgres://{User}:{Password}@{Host}:{Port}/{Database}
+  * [Carto webmap]()
+  * [Shapefile download]()
+  * [Documentation](https://nycplanning.github.io/cpdocs/facdb/)
+  * [Feedback survey sent to DCP users](https://docs.google.com/forms/d/e/1FAIpQLSc4G4g1o3ptY3Eq44ys3UTLu5IbvsyhS9x-oY4cFZi1BpbJng/viewform)
+
+### Summary of Build Process and Stages:
+
+The build follows an Extract -> Load -> Transform sequence rather than an ETL (Extract-Transform-Load) sequence.
+
+All the source datasets are first loaded using the [Civic Data Loader](https://github.com/NYCPlanning/civic-data-loader) scripts. The datasets which must be loaded are listed out in the run_assembly.sh script.
+
+After the required source data is loaded, the build process is broken into two stages: **assembly** and **processing**.
+
+**Assembly**: Creates the empty FacDB table, matches and inserts desired columns from the source data into the FacDB schema, recodes variables, classifies the facilities, and concatenates the DCP ID. The end product is all the records and attributes from the source datasets inserted into the FacDB table. There are many missing geometries and other missing attributes related to location like addresses, zipcodes, BBLs, and BINs.
+
+**Processing**: Fills in all the missing values that weren't provided in the source data before doing a final round of formatting and cleanup. Records without geometries get geocoded, x & y values (SRID 2263) are calculated and filled in, and spatial joins with MapPLUTO are performed to get additional location details like BBL and addresses when missing. Finally, a script performs final formatting by querying for acronyms that need to be changed back to all caps
+
+### How to Build:
+
+1. Create an environment variable in your bash profile that provides your DATABASE_URL. This gets used in both the run_assembly.sh and run_processing.sh scripts.
+  * `cd ~/.bash_profile`
+  * Open .bash_profile in Sublime and add the following code:
+  * `export DATABASE_URL=postgres://{User}:{Password}@{Host}:{Post}/{Database}`
+  * Check that it was created successfully with `printenv`
+
+2. Use the Civic Data Loader scripts to load all the source data files.
+
+3. Run the assembly scripts using 'sh run_assembly.sh' This calls all the scripts inside the scripts_assembly folder and describes what each one does.
+
+4. Run the processing scripts using 'sh run_processing.sh' This calls all the scripts inside the scripts_processing folder and describes what each one does.
