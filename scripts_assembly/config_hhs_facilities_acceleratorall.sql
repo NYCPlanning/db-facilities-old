@@ -407,8 +407,10 @@ SELECT
 				OR agency LIKE '%Homeless Services%'
 				OR Program_name LIKE '%Re-Housing%'
 				OR services LIKE '%Homelessness Prevention%'
-				OR services LIKE '%Housing%'
-				OR Program_name LIKE '%Homelessness Prevention%'
+				OR services LIKE '%Housing%')
+				AND Program_name NOT LIKE '%AIDS%'
+			WHEN (Program_name LIKE '%Homelessness Prevention%'
+				OR Program_name LIKE '%Safe Haven%'
 				OR services LIKE '%Shelter%'
 				OR Program_name LIKE '%Shelter%')
 				AND Program_name NOT LIKE '%AIDS%'
@@ -531,7 +533,7 @@ SELECT
 	-- operatortype
 	'Non-public',
 	-- operatorname
-	'Non-public',
+	initcap(provider_name),
 	-- operatorabbrev
 	'Non-public',
 	-- oversightagency
@@ -705,5 +707,3 @@ SELECT
 		END)
 FROM
 	hhs_facilities_acceleratorall
-WHERE
-	Program_name NOT LIKE '%Safe Haven%'

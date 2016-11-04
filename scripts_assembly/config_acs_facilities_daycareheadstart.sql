@@ -78,13 +78,13 @@ SELECT
 	-- idagency
 	EL_Program_Number,
 	-- facilityname
-	Site_Name,
+	Program_Name,
 	-- addressnumber
-	split_part(trim(both ' ' from Site_Address), ' ', 1),
+	split_part(trim(both ' ' from Program_Address), ' ', 1),
 	-- streetname
-	trim(both ' ' from substr(trim(both ' ' from Site_Address), strpos(trim(both ' ' from Site_Address), ' ')+1, (length(trim(both ' ' from Site_Address))-strpos(trim(both ' ' from Site_Address), ' ')))),
+	trim(both ' ' from substr(trim(both ' ' from Program_Address), strpos(trim(both ' ' from Program_Address), ' ')+1, (length(trim(both ' ' from Program_Address))-strpos(trim(both ' ' from Program_Address), ' ')))),
 	-- address
-	Site_Address,
+	Program_Address,
 	-- city
 	NULL,
 	-- borough
@@ -112,23 +112,13 @@ SELECT
 	-- parkid
 	NULL,
 	-- xcoord
-		(CASE
-			WHEN ProgXcoord <> '#N/A' THEN ProgXcoord::double precision
-		END),
+	NULL,
 	-- ycoord
-		(CASE
-			WHEN ProgYcoord <> '#N/A' THEN ProgYcoord::double precision
-		END),
+	NULL,
 	-- latitude
-		(CASE
-			WHEN ProgYcoord <> '#N/A' THEN
-				ST_Y(ST_Transform(ST_SetSRID(ST_MakePoint(ProgXcoord::double precision, ProgYcoord::double precision),2263),4326))
-		END),
+	NULL,
 	-- longitude
-		(CASE
-			WHEN ProgYcoord <> '#N/A' THEN
-				ST_X(ST_Transform(ST_SetSRID(ST_MakePoint(ProgXcoord::double precision, ProgYcoord::double precision),2263),4326))
-		END),
+	NULL,
 	-- facilitytype
 		(CASE
 			WHEN Model_Type = 'DE' OR Model_Type = 'DU' THEN 'Dual Enrollment Child Care/Head Start'
@@ -136,7 +126,7 @@ SELECT
 			WHEN Model_Type = 'HS' THEN 'Head Start'
 		END),
 	-- domain
-	'Youth, Education, and Child Welfare',
+	'Education, Child Welfare, and Youth',
 	-- facilitygroup
 		(CASE
 			WHEN Model_Type = 'DE' OR Model_Type = 'DU' THEN 'Schools'
@@ -156,13 +146,13 @@ SELECT
 	-- colpusetype
 	NULL,
 	-- capacity
-	Total_capacity_contracts,
+	ROUND(Total::numeric,0),
 	-- utilization
-	Total_Enroll,
+	NULL,
 	-- capacitytype
 	'Seats',
 	-- utilizationrate
-	Utilization,
+	NULL,
 	-- area
 	NULL,
 	-- areatype
@@ -172,7 +162,7 @@ SELECT
 	-- operatortype
 	'Non-public',
 	-- operatorname
-	Contractor_Program_Name,
+	Contractor_Name,
 	-- operator abbrev
 	'Non-public',
 	-- oversightagency
@@ -190,9 +180,9 @@ SELECT
 	-- notes
 	NULL,
 	-- datesourcereceived
-	'2016-07-20',
+	'2016-10-31',
 	-- datesourceupdated
-	'2016-07-20',
+	'2016-10-31',
 	-- datecreated
 	CURRENT_TIMESTAMP,
 	-- dateedited
@@ -203,9 +193,7 @@ SELECT
 	'Hannah Kates',
 	-- geom
 	-- ST_SetSRID(ST_MakePoint(long, lat),4326)
-		(CASE
-			WHEN ProgXcoord <> '#N/A' THEN ST_Transform(ST_SetSRID(ST_MakePoint(ProgXcoord::double precision, ProgYcoord::double precision),2263),4326)
-		END),
+	NULL,
 	-- agencysource
 	'NYCACS',
 	-- sourcedatasetname

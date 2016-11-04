@@ -124,7 +124,7 @@ SELECT
 	-- facilitytype
 	program_category,
 	-- domain
-	'Health Care and Human Services',
+	'Health and Human Services',
 	-- facilitygroup
 	'Health Care',
 	-- facilitysubgroup
@@ -170,9 +170,9 @@ SELECT
 	-- notes
 	NULL,
 	-- datesourcereceived
-	'2016-10-01',
+	'2016-10-29',
 	-- datesourceupdated
-	'2016-10-01',
+	'2016-10-29',
 	-- datecreated
 	CURRENT_TIMESTAMP,
 	-- dateedited

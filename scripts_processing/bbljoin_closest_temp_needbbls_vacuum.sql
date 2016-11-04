@@ -1,0 +1,1 @@
+VACUUM ANALYZE temp_needbbls

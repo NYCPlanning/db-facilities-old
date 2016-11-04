@@ -64,6 +64,7 @@ psql $DATABASE_URL -f ./scripts_assembly/create.sql
 psql $DATABASE_URL -f ./scripts_assembly/config_acs_facilities_daycareheadstart.sql ##OK
 psql $DATABASE_URL -f ./scripts_assembly/config_bic_facilities_tradewaste.sql ##OK
 psql $DATABASE_URL -f ./scripts_assembly/config_dca_facilities_operatingbusinesses.sql ##Needs to be geocoded
+psql $DATABASE_URL -f ./scripts_assembly/config_dcas_facilities_colp.sql ##Needs to be joined to geom
 psql $DATABASE_URL -f ./scripts_assembly/config_dcas_facilities_fdny.sql ##Needs to be joined to geom
 psql $DATABASE_URL -f ./scripts_assembly/config_dcas_facilities_nypd.sql ##Needs to be joined to geom
 psql $DATABASE_URL -f ./scripts_assembly/config_dcla_facilities_culturalinstitutions.sql ##Needs to be geocoded

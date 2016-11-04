@@ -226,7 +226,7 @@ SELECT
 	-- agencysource
 	'NYCDOE',
 	-- sourcedatasetname
-	'2014-2015 Blue Book - for CEQR Analysis',
+	'2014-2015 Blue Book',
 	-- linkdata
 	'NA',
 	-- linkdownload
