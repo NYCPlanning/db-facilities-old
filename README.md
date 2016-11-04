@@ -1,4 +1,4 @@
-### Published (Draft v1.0) Database and Documentation:
+### Database and Documentation:
 
   * [Webmap Explorer](http://cpp.capitalplanning.nyc/facilities)
   * [Shapefile download]()
