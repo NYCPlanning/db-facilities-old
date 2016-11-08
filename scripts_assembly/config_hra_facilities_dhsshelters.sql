@@ -116,11 +116,11 @@ SELECT
 	-- facilitytype
 	Shelter_Facility_Type_Cares,
 	-- domain
-	'Health Care and Human Services',
+	'Health and Human Services',
 	-- facilitygroup
 	'Human Services',
 	-- facilitysubgroup
-	'Housing and Homeless Services',
+	'Shelters and Transitional Housing',
 	-- agencyclass1
 	Shelter_Facility_Type_CARES,
 	-- agencyclass2

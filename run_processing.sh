@@ -5,54 +5,89 @@
 ## NOTE: This script requires that your setup the DATABASE_URL environment variable. 
 ## Directions are in the README.md.
 
-
 ## 1. Run the geocoding script using address and borough - get BBL, BIN, lat/long
-# node ./scripts_processing/address2geom_borough.js
 
-# # ## 2. Run the geocoding script using address and zipcode - get BBL, BIN, lat/long
-# node ./scripts_processing/address2geom_zipcode.js
+echo 'Running geocoding script using address and borough...'
+time node ./scripts_processing/address2geom_borough.js
+echo 'Done geocoding using address and borough'
 
-# ## 3. Run the geocoding script using place name (facilityname) - get BBL, BIN, lat/long
-# node ./scripts_processing/place2geom_nameborough.js
-# # ^^ Hasn't been catching anything
+## 2. Run the geocoding script using address and zipcode - get BBL, BIN, lat/long
 
-# ## 4. Run the geocoding script using place name (address) - get BBL, BIN, lat/long
-# node ./scripts_processing/place2geom_addressborough.js
-# # ^^ Hasn't been catching anything
+echo 'Running geocoding script using address and zip code...'
+time node ./scripts_processing/address2geom_zipcode.js
+echo 'Done geocoding using address and zip code'
 
-# ## 3. If record could not be geocoded but came with a BBL, use BBL to get geom
-# ##    Should only be relevant for Gazetteer/COLP records
-# psql $DATABASE_URL -f ./scripts_processing/bbl2geom.sql
+## 3. Run the geocoding script using place name (facilityname) - get BBL, BIN, lat/long
 
-# ## 4. Calculate x,y for all blank records
-# psql $DATABASE_URL -f ./scripts_processing/calcxy.sql
+echo 'Running geocoding script using place name and borough...'
+time node ./scripts_processing/place2geom_nameborough.js
+echo 'Done geocoding using place name and borough'
+# ^^ Hasn't been catching anything
 
-# ## 5. Create a spatial index for the facilities database and for MapPLUTO and VACUUM
-# ## 	  (Reindex and vacuum after each spatial join)
-# psql $DATABASE_URL -f ./scripts_processing/force2D.sql
-# psql $DATABASE_URL -f ./scripts_processing/setSRID.sql
-# psql $DATABASE_URL -f ./scripts_processing/spatialindex.sql
-# psql $DATABASE_URL -f ./scripts_processing/vacuum.sql
+## 4. Run the geocoding script using place name (address) - get BBL, BIN, lat/long
 
-# psql $DATABASE_URL -f ./scripts_processing/mapplutosetSRID.sql
-# psql $DATABASE_URL -f ./scripts_processing/mapplutoindex.sql
-# psql $DATABASE_URL -f ./scripts_processing/mapplutovacuum.sql
+echo 'Running geocoding script using place name and zip code...'
+time node ./scripts_processing/place2geom_addressborough.js
+echo 'Done geocoding using place name and zip code'
+# ^^ Hasn't been catching anything
 
-# ## 6. Do a spatial join with MapPLUTO to get BBL and addresses info if missing
-# psql $DATABASE_URL -f ./scripts_processing/bbljoin.sql
-# psql $DATABASE_URL -f ./scripts_processing/vacuum.sql
+## 3. If record could not be geocoded but came with a BBL, use BBL to get geom
+##    Should only be relevant for Gazetteer/COLP records
+
+echo 'Joining on geometry using BBL...'
+time psql $DATABASE_URL -f ./scripts_processing/bbl2geom.sql
+echo 'Done joining on geometry using BBL'
+
+## 4. Calculate x,y for all blank records
+
+echo 'Calculating x,y for all blank records...'
+time psql $DATABASE_URL -f ./scripts_processing/calcxy.sql
+echo 'Done calculating x,y for all blank records'
+
+## 5. Create a spatial index for the facilities database and for MapPLUTO and VACUUM
+## 	  (Reindex and vacuum after each spatial join)
+
+echo 'Indexing and vacuuming facilities...'
+psql $DATABASE_URL -f ./scripts_processing/force2D.sql
+psql $DATABASE_URL -f ./scripts_processing/setSRID.sql
+psql $DATABASE_URL -f ./scripts_processing/spatialindex.sql
+psql $DATABASE_URL -f ./scripts_processing/vacuum.sql
+echo 'Done indexing and vacuuming facilities'
+
+echo 'Indexing and vacuuming dcp_mappluto...'
+psql $DATABASE_URL -f ./scripts_processing/mapplutosetSRID.sql
+psql $DATABASE_URL -f ./scripts_processing/mapplutoindex.sql
+psql $DATABASE_URL -f ./scripts_processing/mapplutovacuum.sql
+echo 'Done indexing and vacuuming dcp_mappluto'
+
+## 6. Do a spatial join with MapPLUTO to get BBL and addresses info if missing
+
+echo 'Spatially joining with dcp_mappluto...'
+time psql $DATABASE_URL -f ./scripts_processing/bbljoin.sql
+echo 'Done spatially joining with dcp_mappluto'
+psql $DATABASE_URL -f ./scripts_processing/vacuum.sql
+
 
 ## 7. For facilities which did not overlap with a BBL in MapPLUTO but should be located on a BBL lot, 
 ## 	  assign the closest BBL to the record
-sh ./scripts_processing/bbljoin_closest.sh
+
+echo 'Spatially joining with dcp_mappluto - FINDING CLOSEST...'
+time sh ./scripts_processing/bbljoin_closest.sh
+echo 'Done spatially joining with dcp_mappluto - FOUND CLOSEST'
 psql $DATABASE_URL -f ./scripts_processing/vacuum.sql
 
-# 10. Final formatting -- find and capitalize acronyms and abbreviations
-psql $DATABASE_URL -f ./scripts_processing/fixallcaps.sql
+## 10. Final formatting -- find and properly capitalize acronyms and abbreviations
+
+echo 'Cleaning up capitalization...'
+time psql $DATABASE_URL -f ./scripts_processing/fixallcaps.sql
+echo 'Done cleaning up capitalization'
 psql $DATABASE_URL -f ./scripts_processing/vacuum.sql
 
-#  11. Final export that excludes null geoms and geoms outside NYC
-psql $DATABASE_URL -f ./scripts_processing/export.sql
+##  11. Final export that excludes null geoms and geoms outside NYC
+
+echo 'Exporting...'
+time psql $DATABASE_URL -f ./scripts_processing/export.sql
+echo 'All done!'
 
 
 

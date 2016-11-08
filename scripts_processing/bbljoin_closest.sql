@@ -1,0 +1,61 @@
+
+-- changing to planar projection so that distance calculations will be faster
+ALTER TABLE dcp_mappluto ALTER COLUMN geom TYPE Geometry(MultiPolygon, 26918) USING ST_Transform(geom, 26918);
+ALTER TABLE facilities ALTER COLUMN geom TYPE Geometry(Point, 26918) USING ST_Transform(geom, 26918);
+
+CREATE INDEX dcp_mappluto_x ON dcp_mappluto USING GIST (geom);
+CREATE INDEX facilities_x ON facilities USING GIST (geom);
+
+UPDATE facilities AS f
+    SET
+        bbl = ARRAY[ROUND(j.bbl,0)],
+        borough = 
+	        (CASE
+	        	WHEN j.borough = 'MN' THEN 'Manhattan'
+	        	WHEN j.borough = 'BX' THEN 'Bronx'
+	        	WHEN j.borough = 'BK' THEN 'Brooklyn'
+	        	WHEN j.borough = 'QN' THEN 'Queens'
+	        	WHEN j.borough = 'SI' THEN 'Staten Island'
+	        END),
+        boroughcode = j.borocode,
+        zipcode = j.zipcode,
+        addressnumber = 
+        	(CASE
+	        	WHEN f.address IS NULL THEN initcap(split_part(j.address,' ',1))
+	        	ELSE f.addressnumber
+        	END),
+        streetname = 
+        	(CASE
+	        	WHEN f.address IS NULL THEN initcap(split_part(j.address,' ',2))
+	        	ELSE f.streetname
+        	END),
+        address = 
+        	(CASE
+	        	WHEN f.address IS NULL THEN initcap(j.address)
+	        	ELSE f.streetname
+        	END),
+        processingflag = 
+        	(CASE
+	        	WHEN f.address IS NULL AND j.address IS NOT NULL THEN 'bbljoin2address_closest'
+	        	ELSE 'bbljoin_closest'
+        	END)
+    FROM 
+        (SELECT DISTINCT ON(f.guid)
+		    f.guid,
+		    p.bbl,
+		    p.address,
+		    p.borough,
+		    p.borocode,
+		    p.zipcode
+		FROM dcp_mappluto p
+		JOIN facilities f ON ST_DWithin(p.geom, f.geom, 100)
+		WHERE
+			f.geom IS NOT NULL
+			AND f.bbl IS NULL
+			AND NOT f.facilitygroup ~ 'Parks and Plazas'
+		ORDER BY
+		    f.guid,
+		    ST_Distance(f.geom, p.geom)
+        ) AS j
+    WHERE
+        f.giud = j.guid

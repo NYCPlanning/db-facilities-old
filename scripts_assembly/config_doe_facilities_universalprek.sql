@@ -120,20 +120,19 @@ SELECT
 	-- longitude
 	ST_X(ST_Transform(ST_SetSRID(ST_MakePoint(x, y),2263),4326)),
 	-- facilitytype
-	'Universal Pre-K',
+		(CASE
+			WHEN PreK_Type = 'DOE' THEN 'Universal Pre-K'
+			WHEN PreK_Type = 'CHARTER' THEN 'Universal Pre-K - Charter '
+			WHEN PreK_Type = 'NYCEEC' THEN 'NYC Early Education Center'
+		END),
 	-- domain
-	'Youth, Education, and Child Welfare',
+	'Education, Child Welfare, and Youth',
 	-- facilitygroup
 	'Schools',
 	-- facilitysubgroup
 	'Preschools',
 	-- agencyclass1
 	PreK_Type,
-		-- (CASE
-		-- 	WHEN PreK_Type = 'DOE' THEN 'DOE Universal Pre-K Location'
-		-- 	WHEN PreK_Type = 'CHARTER' THEN 'Charter Universal Pre-K Location'
-		-- 	WHEN PreK_Type = 'NYCEEC' THEN 'NYC Early Education Center (NYCEEC)'
-		-- END),
 	-- agencyclass2
 	'NA',
 	-- colpusetype

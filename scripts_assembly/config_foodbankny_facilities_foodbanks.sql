@@ -115,7 +115,7 @@ SELECT
 			WHEN fbc_agency_category_code = 'SOUP KITCH' THEN 'Soup Kitchen'
 		END),
 	-- domain
-	'Health Care and Human Services',
+	'Health and Human Services',
 	-- facilitygroup
 	'Human Services',
 	-- facilitysubgroup

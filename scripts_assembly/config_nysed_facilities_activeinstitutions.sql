@@ -160,13 +160,17 @@ SELECT
 		(CASE
 			WHEN Institution_Type_Desc LIKE '%MUSEUM%' THEN 'Parks, Cultural, and Other Community Facilities'
 			WHEN Institution_Type_Desc LIKE '%LIBRARIES%' THEN 'Parks, Cultural, and Other Community Facilities'
-			ELSE 'Youth, Education, and Child Welfare'
+			ELSE 'Education, Child Welfare, and Youth'
 		END),
 	-- facilitygroup
 		(CASE
 			WHEN Institution_Type_Desc LIKE '%MUSEUM%' THEN 'Cultural Institutions'
 			WHEN Institution_Type_Desc LIKE '%LIBRARIES%' THEN 'Libraries'
 			WHEN Institution_Type_Desc LIKE '%CHILD NUTRITION%' THEN 'Child Welfare'
+			WHEN Institution_Type_Desc LIKE '%PROPRIETARY%' THEN 'Vocational and Proprietary Schools'
+			WHEN (Institution_Type_Desc LIKE '%COLLEGE%') OR (Institution_Type_Desc LIKE '%CUNY%') OR 
+				(Institution_Type_Desc LIKE '%SUNY%') OR (Institution_Type_Desc LIKE '%SUNY%')
+				THEN 'Higher Education'
 			ELSE 'Schools'
 		END),
 	-- facilitysubgroup

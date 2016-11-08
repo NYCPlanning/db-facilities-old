@@ -132,7 +132,7 @@ SELECT
 			ELSE CONCAT(facility_type,'-',program_type)
 		END),
 	-- domain
-	'Youth, Education, and Child Welfare',
+	'Education, Child Welfare, and Youth',
 	-- facilitygroup
 		(CASE
 			WHEN (facility_type = 'CAMP' OR facility_type = 'Camp' OR program_type LIKE '%CAMP%' OR program_type LIKE '%Camp%')

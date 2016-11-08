@@ -126,7 +126,7 @@ SELECT
 			ELSE Description
 		END),
 	-- domain
-	'Health Care and Human Services',
+	'Health and Human Services',
 	-- facilitygroup
 	'Health Care',
 	-- facilitysubgroup

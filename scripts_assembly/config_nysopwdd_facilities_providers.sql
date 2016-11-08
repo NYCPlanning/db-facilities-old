@@ -147,7 +147,7 @@ SELECT
 		-- 	Developmental_Centers_And_Special_Population_Services
 		-- END),
 	-- domain
-	'Health Care and Human Services',
+	'Health and Human Services',
 	-- facilitygroup
 	'Human Services',
 	-- facilitysubgroup

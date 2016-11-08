@@ -115,7 +115,7 @@ SELECT
 			ELSE 'Senior Services'
 		END),
 	-- domain
-	'Health Care and Human Services',
+	'Health and Human Services',
 	-- facilitygroup
 	'Human Services',
 	-- facilitysubgroup

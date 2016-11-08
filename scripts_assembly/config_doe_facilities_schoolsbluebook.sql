@@ -150,7 +150,7 @@ SELECT
 			ELSE 'Other School - Unspecified'
 		END),
 	-- domain
-	'Youth, Education, and Child Welfare',
+	'Education, Child Welfare, and Youth',
 	-- facilitygroup
 	'Schools',
 	-- facilitysubgroup

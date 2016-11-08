@@ -1,1 +1,0 @@
-VACUUM ANALYZE temp_plutosubset

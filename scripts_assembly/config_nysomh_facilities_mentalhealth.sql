@@ -128,7 +128,7 @@ SELECT
 	-- facilitytype
 	Program_Category_Description,
 	-- domain
-	'Health Care and Human Services',
+	'Health and Human Services',
 	-- facilitygroup
 	'Health Care',
 	-- facilitysubgroup

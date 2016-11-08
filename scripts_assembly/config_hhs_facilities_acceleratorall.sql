@@ -204,28 +204,28 @@ SELECT
 		(CASE
 			WHEN services LIKE '%Homelessness Prevention%' 
 				OR Program_name LIKE '%Homelessness Prevention%'
-				THEN 'Health Care and Human Services'
+				THEN 'Health and Human Services'
 			WHEN agency LIKE '%DOE%' 
 				OR agency LIKE '%Education%'
-				THEN 'Youth, Education, and Child Welfare'
+				THEN 'Education, Child Welfare, and Youth'
 			WHEN (agency LIKE '%ACS%' 
 				OR agency LIKE '%Children%')
 				AND Program_name NOT LIKE '%Disabilities%'
 				AND services NOT LIKE '%Mental%' 
 				AND Program_name NOT LIKE '%Behavioral Health%'
 				AND Program_name NOT LIKE '%Mental Health%'
-				THEN 'Youth, Education, and Child Welfare'
+				THEN 'Education, Child Welfare, and Youth'
 			WHEN agency LIKE '%DYCD%' 
 				OR agency LIKE '%Youth%' 
 				OR Program_name LIKE '%Youth%'
 				AND Program_name NOT LIKE '%Behavioral Health%'
 				AND Program_name NOT LIKE '%Mental Health%'
-				THEN 'Youth, Education, and Child Welfare'
-			ELSE 'Health Care and Human Services'
+				THEN 'Education, Child Welfare, and Youth'
+			ELSE 'Health and Human Services'
 		END),
 	-- facilitygroup
 		(CASE
-			-- domain: Youth, Education, and Child Welfare
+			-- domain: Education, Child Welfare, and Youth
 
 			-- facilitygroup: Schools
 			-- facilitysubgroup: Preschools
@@ -256,8 +256,7 @@ SELECT
 				AND Program_name NOT LIKE '%Mental Health%'
 				THEN 'Youth Services'
 			
-			-- domain: Health Care and Human Services
-
+			-- domain: Health and Human Services
 			-- facilitygroup: Human Services
 			-- facilitysubgroup: Housing and Homeless Services
 			WHEN ( agency LIKE '%HPD%'
@@ -366,7 +365,7 @@ SELECT
 		END),
 	-- facilitysubgroup
 		(CASE
-			-- domain: Youth, Education, and Child Welfare
+			-- domain: Education, Child Welfare, and Youth
 
 			-- facilitygroup: Schools
 			-- facilitysubgroup: Preschools
@@ -397,11 +396,16 @@ SELECT
 				AND Program_name NOT LIKE '%Mental Health%'
 				THEN 'Youth Services'
 			
-			-- domain: Health Care and Human Services
-
+			-- domain: Health and Human Services
 			-- facilitygroup: Human Services
 			-- facilitysubgroup: Housing and Homeless Services
-			WHEN (agency LIKE '%HPD%'
+			WHEN (Program_name LIKE '%Safe Haven%'
+				OR services LIKE '%Shelter%'
+				OR Program_name LIKE '%Shelter%')
+				AND Program_name NOT LIKE '%AIDS%'
+				THEN 'Shelters and Transitional Housing'
+			WHEN (Program_name LIKE '%Homelessness Prevention%'
+				OR agency LIKE '%HPD%'
 				OR agency LIKE '%Housing%'
 				OR agency LIKE '%DHS%'
 				OR agency LIKE '%Homeless Services%'
@@ -409,12 +413,7 @@ SELECT
 				OR services LIKE '%Homelessness Prevention%'
 				OR services LIKE '%Housing%')
 				AND Program_name NOT LIKE '%AIDS%'
-			WHEN (Program_name LIKE '%Homelessness Prevention%'
-				OR Program_name LIKE '%Safe Haven%'
-				OR services LIKE '%Shelter%'
-				OR Program_name LIKE '%Shelter%')
-				AND Program_name NOT LIKE '%AIDS%'
-				THEN 'Housing and Homeless Services'
+				THEN 'Non-residential Housing and Homeless Services'
 			-- facilitysubgroup: Workforce Development
 			WHEN agency LIKE '%SBS%'
 				OR agency LIKE '%Business%'

@@ -119,7 +119,7 @@ SELECT
 			ELSE facility_type
 		END),
 	-- domain
-	'Health Care and Human Services',
+	'Health and Human Services',
 	-- facilitygroup
 	'Health Care',
 	-- facilitysubgroup
