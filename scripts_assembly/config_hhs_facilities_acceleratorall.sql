@@ -201,7 +201,13 @@ SELECT
 			ELSE split_part(Program_name,' (',1)
 		END),
 	-- domain
-		(CASE
+		(CASE 
+			WHEN services LIKE '%Non-secure Placement%' 
+				OR Program_name LIKE '%Non-secure%' 
+				OR Program_name LIKE '%Non-Secure%' 
+				AND (agency LIKE '%Children%'
+				OR agency LIKE '%ACS%')
+				THEN 'Public Safety, Emergency Services, and Administration of Justice'
 			WHEN services LIKE '%Homelessness Prevention%' 
 				OR Program_name LIKE '%Homelessness Prevention%'
 				THEN 'Health and Human Services'
@@ -225,6 +231,13 @@ SELECT
 		END),
 	-- facilitygroup
 		(CASE
+
+			WHEN services LIKE '%Non-secure Placement%' 
+				OR Program_name LIKE '%Non-secure%' 
+				OR Program_name LIKE '%Non-Secure%' 
+				AND (agency LIKE '%Children%'
+				OR agency LIKE '%ACS%')
+				THEN 'Justice and Corrections'
 			-- domain: Education, Child Welfare, and Youth
 
 			-- facilitygroup: Schools
@@ -365,6 +378,13 @@ SELECT
 		END),
 	-- facilitysubgroup
 		(CASE
+
+			WHEN services LIKE '%Non-secure Placement%' 
+				OR Program_name LIKE '%Non-secure%' 
+				OR Program_name LIKE '%Non-Secure%' 
+				AND (agency LIKE '%Children%'
+				OR agency LIKE '%ACS%')
+				THEN 'Juvenile Non-Secure Placement'
 			-- domain: Education, Child Welfare, and Youth
 
 			-- facilitygroup: Schools
@@ -403,6 +423,7 @@ SELECT
 				OR services LIKE '%Shelter%'
 				OR Program_name LIKE '%Shelter%')
 				AND Program_name NOT LIKE '%AIDS%'
+				AND service_settings LIKE '%Residential%'
 				THEN 'Shelters and Transitional Housing'
 			WHEN (Program_name LIKE '%Homelessness Prevention%'
 				OR agency LIKE '%HPD%'
@@ -544,7 +565,7 @@ SELECT
 			WHEN agency LIKE '%DFTA%' THEN 'New York City Department for the Aging'
 			WHEN agency LIKE '%HPD%' THEN 'New York City Department of Housing Preservation and Development'
 			WHEN agency LIKE '%DOHMH%' THEN 'New York City Department of Health and Mental Hygiene'
-			WHEN agency LIKE '%ACS%' THEN 'New York City Administration of Childrens Services'
+			WHEN agency LIKE '%ACS%' THEN 'New York City Administration for Childrens Services'
 			WHEN agency LIKE '%NYPD%' THEN 'New York City New York Police Department'
 			WHEN agency LIKE '%DOP%' THEN 'New York City Department of Probation'
 			WHEN agency LIKE '%DYCD%' THEN 'New York City Department of Youth and Community Development'
@@ -695,13 +716,6 @@ SELECT
 	-- groupquarters
 		(CASE
 			WHEN service_settings LIKE '%Residential%' THEN TRUE
-			WHEN service_settings LIKE '%Home%' THEN TRUE
-			WHEN Program_name LIKE '%Drop-In Centers%' THEN TRUE
-			WHEN Program_name LIKE '%SRO%' THEN TRUE
-			WHEN Program_name LIKE '%Shelter%' THEN TRUE
-			WHEN services LIKE '%Shelter%' THEN TRUE
-			WHEN Program_name LIKE '%Housing%' THEN TRUE
-			WHEN services LIKE '%Support%' THEN TRUE
 			ELSE FALSE
 		END)
 FROM

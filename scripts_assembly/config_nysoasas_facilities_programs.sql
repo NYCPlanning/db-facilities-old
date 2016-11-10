@@ -228,7 +228,10 @@ SELECT
 	-- immigrants
 	FALSE,
 	-- groupquarters
-	FALSE
+		(CASE
+			WHEN program_category LIKE '%Residential%' THEN TRUE
+			ELSE FALSE
+		END)
 FROM
 	nysoasas_facilities_programs
 WHERE

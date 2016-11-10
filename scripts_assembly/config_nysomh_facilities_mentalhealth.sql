@@ -248,7 +248,10 @@ SELECT
 	-- immigrants
 	FALSE,
 	-- groupquarters
-	FALSE
+		(CASE
+			WHEN Program_Category_Description LIKE '%Residential%' THEN TRUE
+			ELSE FALSE
+		END)
 FROM
 	nysomh_facilities_mentalhealth
 WHERE

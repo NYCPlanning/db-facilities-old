@@ -1,12 +1,4 @@
-
--- changing to planar projection so that distance calculations will be faster
-ALTER TABLE dcp_mappluto ALTER COLUMN geom TYPE Geometry(MultiPolygon, 26918) USING ST_Transform(geom, 26918);
-ALTER TABLE facilities ALTER COLUMN geom TYPE Geometry(Point, 26918) USING ST_Transform(geom, 26918);
-
-CREATE INDEX dcp_mappluto_x ON dcp_mappluto USING GIST (geom);
-CREATE INDEX facilities_x ON facilities USING GIST (geom);
-
-UPDATE facilities AS f
+UPDATE facilities
     SET
         bbl = ARRAY[ROUND(j.bbl,0)],
         borough = 
@@ -21,22 +13,22 @@ UPDATE facilities AS f
         zipcode = j.zipcode,
         addressnumber = 
         	(CASE
-	        	WHEN f.address IS NULL THEN initcap(split_part(j.address,' ',1))
-	        	ELSE f.addressnumber
+	        	WHEN facilities.address IS NULL THEN initcap(split_part(j.address,' ',1))
+	        	ELSE facilities.addressnumber
         	END),
         streetname = 
         	(CASE
-	        	WHEN f.address IS NULL THEN initcap(split_part(j.address,' ',2))
-	        	ELSE f.streetname
+	        	WHEN facilities.address IS NULL THEN initcap(split_part(j.address,' ',2))
+	        	ELSE facilities.streetname
         	END),
         address = 
         	(CASE
-	        	WHEN f.address IS NULL THEN initcap(j.address)
-	        	ELSE f.streetname
+	        	WHEN facilities.address IS NULL THEN initcap(j.address)
+	        	ELSE facilities.address
         	END),
         processingflag = 
         	(CASE
-	        	WHEN f.address IS NULL AND j.address IS NOT NULL THEN 'bbljoin2address_closest'
+	        	WHEN facilities.address IS NULL AND j.address IS NOT NULL THEN 'bbljoin2address_closest'
 	        	ELSE 'bbljoin_closest'
         	END)
     FROM 
@@ -58,4 +50,4 @@ UPDATE facilities AS f
 		    ST_Distance(f.geom, p.geom)
         ) AS j
     WHERE
-        f.giud = j.guid
+        facilities.guid = j.guid

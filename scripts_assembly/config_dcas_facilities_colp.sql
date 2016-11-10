@@ -194,7 +194,8 @@ SELECT
 				OR use_type LIKE '%MARINA%'
 				THEN 'Core Infrastructure and Transportation'
 			WHEN use_type LIKE '%RAIL%'
-				OR use_type LIKE '%TRANSIT%' 
+				OR (use_type LIKE '%TRANSIT%'
+					AND use_type NOT LIKE '%TRANSITIONAL%')
 				THEN 'Core Infrastructure and Transportation'
 			WHEN use_type LIKE '%BUS%' THEN 'Core Infrastructure and Transportation'
 
@@ -338,7 +339,8 @@ SELECT
 				OR use_type LIKE '%MARINA%'
 				THEN 'Transportation'
 			WHEN use_type LIKE '%RAIL%'
-				OR use_type LIKE '%TRANSIT%' 
+				OR (use_type LIKE '%TRANSIT%'
+					AND use_type NOT LIKE '%TRANSITIONAL%')
 				THEN 'Transportation'
 			WHEN use_type LIKE '%BUS%' THEN 'Transportation'
 
@@ -480,7 +482,8 @@ SELECT
 				OR use_type LIKE '%MARINA%'
 				THEN 'Ports and Ferry Landings'
 			WHEN use_type LIKE '%RAIL%'
-				OR use_type LIKE '%TRANSIT%' 
+				OR (use_type LIKE '%TRANSIT%'
+					AND use_type NOT LIKE '%TRANSITIONAL%')
 				THEN 'Rail Yards and Maintenance'
 			WHEN use_type LIKE '%BUS%' THEN 'Bus Depots and Terminals'
 
@@ -491,7 +494,11 @@ SELECT
 			WHEN agency LIKE '%OCME%' THEN 'Other Health Care'
 			WHEN agency LIKE '%ACS%' AND use_type LIKE '%HOUSING%' THEN 'Shelters and Transitional Housing'
 			WHEN agency LIKE '%AGING%' THEN 'Senior Services'
-			WHEN agency LIKE '%DHS%' THEN 'Shelters and Transitional Housing'
+			WHEN agency LIKE '%DHS%'
+				AND (use_type LIKE '%RESIDENTIAL%'
+				OR use_type LIKE '%TRANSITIONAL HOUSING%')
+				THEN 'Shelters and Transitional Housing'
+			WHEN agency LIKE '%DHS%' THEN 'Non-residential Housing and Homeless Services'
 			WHEN (agency LIKE '%NYCHA%' 
 				OR agency LIKE '%HPD%')
 				AND use_type LIKE '%RESIDENTIAL%'
@@ -854,7 +861,9 @@ SELECT
 	-- immigrants
 	FALSE,
 	-- groupquarters
-	FALSE
+		(CASE WHEN use_type LIKE '%RESIDENTIAL%' THEN TRUE
+			ELSE FALSE
+		END)
 FROM 
 	dcas_facilities_colp
 WHERE

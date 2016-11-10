@@ -10,6 +10,7 @@
 # https://github.com/NYCPlanning/civic-data-loader
 
 # # open_datasets - PULLING FROM OPEN DATA
+echo 'Loading open source datasets...'
 # 	# Data you probably already have loaded
 # 	node loader.js install dcp_mappluto
 # 	node loader.js install doitt_buildingfootprints
@@ -36,6 +37,7 @@
 # 	node loader.js install usdot_facilities_airports
 # 	node loader.js install usdot_facilities_ports
 # 	node loader.js install usnps_facilities_parks
+echo 'Done loading open source datasets. Moving on to "other" datasets...'
 # # other_datasets - PULLING FROM FTP SITE
 # 	node loader.js install acs_facilities_daycareheadstart
 # 	node loader.js install dcas_facilities_fdny ##Will be open through COLP
@@ -52,21 +54,23 @@
 # 	node loader.js install nysed_facilities_activeinstitutions ##Actually is open but need to figue out url
 # 	node loader.js install nysed_nonpublicenrollment ##Actually is open but in xlsx that needs to be formatted
 # 	node loader.js install omb_facilities_libraryvisits
+echo 'Done loading other source datasets'
 
 # STEP 2
 # create empty master table with facilities db schema
 
+echo 'Creating empty facilities table...'
 psql $DATABASE_URL -f ./scripts_assembly/create.sql
+echo 'Done creating empty facilities table'
 
 # STEP 3
 # configure (transform) each dataset and insert into master table
 
+echo 'Transforming and inserting records from source data'
 psql $DATABASE_URL -f ./scripts_assembly/config_acs_facilities_daycareheadstart.sql ##OK
 psql $DATABASE_URL -f ./scripts_assembly/config_bic_facilities_tradewaste.sql ##OK
 psql $DATABASE_URL -f ./scripts_assembly/config_dca_facilities_operatingbusinesses.sql ##Needs to be geocoded
 psql $DATABASE_URL -f ./scripts_assembly/config_dcas_facilities_colp.sql ##Needs to be joined to geom
-psql $DATABASE_URL -f ./scripts_assembly/config_dcas_facilities_fdny.sql ##Needs to be joined to geom
-psql $DATABASE_URL -f ./scripts_assembly/config_dcas_facilities_nypd.sql ##Needs to be joined to geom
 psql $DATABASE_URL -f ./scripts_assembly/config_dcla_facilities_culturalinstitutions.sql ##Needs to be geocoded
 psql $DATABASE_URL -f ./scripts_assembly/config_dcp_facilities_sfpsd.sql ##OK
 psql $DATABASE_URL -f ./scripts_assembly/config_dfta_facilities_contracts.sql ##Needs to be geocoded
@@ -97,11 +101,5 @@ psql $DATABASE_URL -f ./scripts_assembly/config_usdot_facilities_airports.sql ##
 psql $DATABASE_URL -f ./scripts_assembly/config_usdot_facilities_ports.sql ##OK
 psql $DATABASE_URL -f ./scripts_assembly/config_usnps_facilities_parks.sql ##OK
 psql $DATABASE_URL -f ./scripts_assembly/config_facilities_togeocode.sql ##Needs to be geocoded
-
-# STEP 4
-# create ID for all records at once and create a spatial index then vacuum
-psql $DATABASE_URL -f ./scripts_assembly/facilities_addID.sql
-psql $DATABASE_URL -f ./scripts_assembly/facilities_One_to_1.sql
-psql $DATABASE_URL -f ./scripts_processing/facilities_spatialindex.sql
-psql $DATABASE_URL -f ./scripts_processing/facilities_vacuum.sql
+echo 'Done transforming and inserting records from source data'
 

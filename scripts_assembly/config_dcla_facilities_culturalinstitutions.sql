@@ -115,7 +115,6 @@ SELECT
 	NULL,
 	-- facilitytype
 		(CASE
-			WHEN Discipline LIKE '%Museum%'
 			WHEN Discipline IS NOT NULL THEN Discipline
 			ELSE 'Unspecified Discipline'
 		END),
@@ -124,7 +123,10 @@ SELECT
 	-- facilitygroup
 	'Cultural Institutions',
 	-- facilitysubgroup
-	'Other Cultural Institutions',
+		(CASE
+			WHEN Discipline LIKE '%Museum%' THEN 'Museums'
+			ELSE 'Other Cultural Institutions'
+		END),
 	-- agencyclass1
 	Discipline,
 	-- agencyclass2
