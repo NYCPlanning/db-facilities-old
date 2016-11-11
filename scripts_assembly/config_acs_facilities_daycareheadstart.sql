@@ -124,6 +124,7 @@ SELECT
 			WHEN Model_Type = 'DE' OR Model_Type = 'DU' THEN 'Dual Enrollment Child Care/Head Start'
 			WHEN Model_Type = 'CC' THEN 'Childcare - Unspecified'
 			WHEN Model_Type = 'HS' THEN 'Head Start'
+			ELSE 'Childcare - Unspecified'
 		END),
 	-- domain
 	'Education, Child Welfare, and Youth',
@@ -138,6 +139,7 @@ SELECT
 			WHEN Model_Type = 'DE' OR Model_Type = 'DU' THEN 'Preschools'
 			WHEN Model_Type = 'CC' THEN 'Childcare'
 			WHEN Model_Type = 'HS' THEN 'Preschools'
+			ELSE 'Childcare'
 		END),
 	-- agencyclass1
 	Model_Type,

@@ -384,7 +384,7 @@ SELECT
 				OR Program_name LIKE '%Non-Secure%' 
 				AND (agency LIKE '%Children%'
 				OR agency LIKE '%ACS%')
-				THEN 'Juvenile Non-Secure Placement'
+				THEN 'Detention and Correctional'
 			-- domain: Education, Child Welfare, and Youth
 
 			-- facilitygroup: Schools

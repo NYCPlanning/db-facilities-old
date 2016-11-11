@@ -406,7 +406,7 @@ SELECT
 			WHEN agency LIKE '%OCME%' THEN 'Justice and Corrections'
 
 			-- Education, Children, Youth
-			WHEN use_type LIKE '%UNIVERSITY%' THEN 'Higher Education and Adult Education'
+			WHEN use_type LIKE '%UNIVERSITY%' THEN 'Higher Education'
 			WHEN use_type LIKE '%EARLY CHILDHOOD%' THEN 'Schools'
 			WHEN use_type LIKE '%DAY CARE%' THEN 'Childcare'
 			WHEN agency LIKE '%ACS%' AND use_type LIKE '%RESIDENTIAL%' THEN 'Childrens Services'
