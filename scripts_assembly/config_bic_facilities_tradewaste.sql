@@ -118,7 +118,7 @@ SELECT
 	-- domain
 	'Core Infrastructure and Transportation',
 	-- facilitygroup
-	'Wastewater and Waste Management',
+	'Solid Waste',
 	-- facilitysubgroup
 	'Solid Waste Transfer and Carting',
 	-- agencyclass1
