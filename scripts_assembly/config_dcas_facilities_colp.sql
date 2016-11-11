@@ -363,7 +363,7 @@ SELECT
 			WHEN use_type LIKE '%MUSEUM%' THEN 'Cultural Institutions'
 			WHEN use_type LIKE '%CULTURAL%' THEN 'Cultural Institutions'
 			WHEN use_type LIKE '%ZOO%' THEN 'Cultural Institutions'
-			WHEN use_type LIKE '%CEMETERY%' THEN 'Cemeteries'
+			WHEN use_type LIKE '%CEMETERY%' THEN 'Parks and Plazas'
 			WHEN agency LIKE '%CULT%' AND use_type LIKE '%MUSEUM%' THEN 'Cultural Institutions'
 			WHEN agency LIKE '%CULT%' THEN 'Cultural Institutions'
 			WHEN use_type LIKE '%NATURAL AREA%'

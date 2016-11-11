@@ -135,6 +135,7 @@ SELECT
 			WHEN typecatego = 'Undeveloped' THEN 'Other Property'
 			WHEN typecatego = 'Lot' THEN 'Parking, Maintenance, and Storage'
 			-- parks
+			WHEN typecatego = 'Cemetery' THEN 'Parks and Plazas'
 			WHEN typecatego = 'Historic House Park' THEN 'Historical Sites'
 			ELSE 'Parks and Plazas'
 		END),
