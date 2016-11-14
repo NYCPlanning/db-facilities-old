@@ -861,7 +861,7 @@ SELECT
 	-- immigrants
 	FALSE,
 	-- groupquarters
-		(CASE WHEN use_type LIKE '%RESIDENTIAL%' THEN TRUE
+		(CASE WHEN use_type LIKE '%RESIDENTIAL%' AND use_type NOT LIKE '%NON RESIDENTIAL%' THEN TRUE
 			ELSE FALSE
 		END)
 FROM 
