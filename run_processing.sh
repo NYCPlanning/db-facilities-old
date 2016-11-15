@@ -71,7 +71,7 @@ psql $DATABASE_URL -f ./scripts_processing/setSRID_4326.sql
 echo 'Calculating x,y for all blank records...'
 time psql $DATABASE_URL -f ./scripts_processing/calcxy.sql
 echo 'Done calculating x,y for all blank records'
-psql $DATABASE_URL -f ./scripts_assembly/addID.sql
+psql $DATABASE_URL -f ./scripts_processing/addID.sql
 
 ## 10. Final formatting -- find and properly capitalize acronyms and abbreviations
 
