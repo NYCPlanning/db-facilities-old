@@ -217,7 +217,7 @@ SELECT
 	-- agencysource
 	'NYCDPR',
 	-- sourcedatasetname
-	'Parks Parks Properties',
+	'Parks Properties',
 	-- linkdata
 	'https://data.cityofnewyork.us/City-Government/Parks-Properties/rjaj-zgq7',
 	-- linkdownload
