@@ -76,7 +76,9 @@ SELECT
 	-- idold
 	NULL,
 	-- idagency
-	NULL,
+		(CASE
+			WHEN authorization_number <> '?' THEN authorization_number
+		END),
 	-- facilityname
 	facility_name,
 	-- addressnumber
@@ -182,7 +184,8 @@ SELECT
 	-- operatorname
 		(CASE
 			WHEN owner_type = 'Municipal' THEN 'New York City Department of Sanitation'
-			ELSE 'Non-public'
+			WHEN owner_name IS NOT NULL THEN owner_name
+			ELSE 'Unknown'
 		END),
 	-- operatorabbrev
 		(CASE
@@ -240,7 +243,7 @@ SELECT
 	-- refreshmeans
 	'Pull from NYState Open Data',
 	-- refreshfrequency
-	'Nightly pull',
+	'Annually',
 	-- buildingid
 	NULL,
 	-- buildingname

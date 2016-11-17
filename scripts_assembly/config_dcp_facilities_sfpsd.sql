@@ -100,7 +100,7 @@ SELECT
 	-- zipcode
 	NULL,
 	-- bbl
-	ARRAY[bbl::text],
+	ARRAY[ROUND(bbl,0)::text],
 	-- bin
 	NULL,
 	-- parkid

@@ -76,9 +76,9 @@ SELECT
 	-- idold
 	NULL,
 	-- idagency
-	Org_ID,
+	Bldg_ID,
 	-- facilityname
-	initcap(Organization_Name),
+	initcap(Bldg_Name),
 	-- addressnumber
 		(CASE
 			WHEN Address <> '#N/A' THEN split_part(Address,' ',1)

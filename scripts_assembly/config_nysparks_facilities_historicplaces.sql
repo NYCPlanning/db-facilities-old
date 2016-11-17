@@ -189,7 +189,7 @@ SELECT
 	-- refreshmeans
 	'Pull from NYState Open Data',
 	-- refreshfrequency
-	'Nightly pull',
+	'Annually',
 	-- buildingid
 	NULL,
 	-- buildingname

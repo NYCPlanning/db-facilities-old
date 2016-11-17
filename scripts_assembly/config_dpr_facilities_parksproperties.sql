@@ -200,9 +200,9 @@ SELECT
 	-- notes
 	NULL,
 	-- datesourcereceived
-	'2016-07-27',
+	'2016-08-27',
 	-- datesourceupdated
-	'2016-07-27',
+	'2016-08-27',
 	-- datecreated
 	CURRENT_TIMESTAMP,
 	-- dateedited
@@ -227,7 +227,7 @@ SELECT
 	-- refreshmeans
 	'Pull from NYC Open Data',
 	-- refreshfrequency
-	'Nightly pull',
+	'Monthly',
 	-- buildingid
 	NULL,
 	-- buildingname

@@ -199,7 +199,7 @@ SELECT
 	-- datatype
 	'CSV with BINs and Addresses',
 	-- refreshmeans
-	'Request from Agency',
+	'Request file from agency',
 	-- refreshfrequency
 	'Monthly',
 	-- buildingid

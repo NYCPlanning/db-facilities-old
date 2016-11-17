@@ -167,7 +167,7 @@ SELECT
 	-- datesourcereceived
 	'2016-08-01',
 	-- datesourceupdated
-	'2015-12-18',
+	'2016-02-04',
 	-- datecreated
 	CURRENT_TIMESTAMP,
 	-- dateedited
@@ -192,7 +192,7 @@ SELECT
 	-- refreshmeans
 	'Pull from NYState Open Data',
 	-- refreshfrequency
-	'Nightly pull',
+	'Annually',
 	-- buildingid
 	NULL,
 	-- buildingname

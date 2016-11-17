@@ -76,9 +76,9 @@ SELECT
 	-- idold
 	NULL,
 	-- idagency
-	Facility_Code,
+	CONCAT(sponsor_code,'-',facility_code,'-', program_code),
 	-- facilityname
-	Facility_Name,
+	Program_Name,
 	-- addressnumber
 	NULL,
 	-- streetname
@@ -186,9 +186,9 @@ SELECT
 	-- notes
 	NULL,
 	-- datesourcereceived
-	'2016-07-16',
+	'2016-10-24',
 	-- datesourceupdated
-	'2016-07-16',
+	'2016-10-24',
 	-- datecreated
 	CURRENT_TIMESTAMP,
 	-- dateedited

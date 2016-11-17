@@ -199,7 +199,7 @@ SELECT
 	-- refreshmeans
 	'Pull from NYC Open Data',
 	-- refreshfrequency
-	'Nightly pull',
+	'Annually',
 	-- buildingid
 	NULL,
 	-- buildingname

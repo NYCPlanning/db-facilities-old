@@ -202,9 +202,9 @@ SELECT
 	-- notes
 	NULL,
 	-- datesourcereceived
-	'2016-07-28',
+	'2016-11-14',
 	-- datesourceupdated
-	'2016-07-28',
+	'2016-11-14',
 	-- datecreated
 	CURRENT_TIMESTAMP,
 	-- dateedited
@@ -261,13 +261,15 @@ SELECT
 			ELSE FALSE
 		END)
 FROM
-	(SELECT
-		nysdoh_facilities_healthfacilities.*,
-		nysdoh_nursinghomebedcensus.total_capacity AS capacity,
-		(nysdoh_nursinghomebedcensus.total_capacity-nysdoh_nursinghomebedcensus.total_available) AS utilization
-		FROM nysdoh_facilities_healthfacilities
-		LEFT JOIN nysdoh_nursinghomebedcensus
-		ON nysdoh_facilities_healthfacilities.facility_id::numeric=nysdoh_nursinghomebedcensus.facility_id::numeric) AS nysdoh_facilities_healthfacilities
+	(SELECT DISTINCT ON (facility_id)
+		f.*,
+		c.total_capacity AS capacity,
+		(c.total_capacity-c.total_available) AS utilization,
+		c.bed_census_date
+		FROM nysdoh_facilities_healthfacilities AS f
+		JOIN nysdoh_nursinghomebedcensus AS c
+		ON f.facility_id::numeric=c.facility_id::numeric
+		ORDER BY f.facility_id, c.bed_census_date DESC) AS nysdoh_facilities_healthfacilities
 WHERE
 	Facility_County = 'New York'
 	OR Facility_County = 'Bronx'

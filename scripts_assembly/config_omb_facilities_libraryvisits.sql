@@ -189,7 +189,7 @@ SELECT
 	-- datatype
 	'CSV with Coordinates',
 	-- refreshmeans
-	'Request from Agency',
+	'Request file from agency',
 	-- refreshfrequency
 	'Annually',
 	-- buildingid

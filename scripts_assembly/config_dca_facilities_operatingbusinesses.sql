@@ -212,9 +212,9 @@ SELECT
 	-- notes
 	NULL,
 	-- datesourcereceived
-	'2016-08-01',
+	'2016-11-11',
 	-- datesourceupdated
-	'2016-06-24',
+	'2016-11-11',
 	-- datecreated
 	CURRENT_TIMESTAMP,
 	-- dateedited
@@ -239,7 +239,7 @@ SELECT
 	-- refreshmeans
 	'Geocode - Pull from NYC Open Data',
 	-- refreshfrequency
-	'Nightly pull',
+	'Weekly',
 	-- buildingid
 	NULL,
 	-- buildingname

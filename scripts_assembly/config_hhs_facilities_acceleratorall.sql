@@ -82,16 +82,19 @@ SELECT
 	-- address number
 		(CASE
 			WHEN service_location IS NOT NULL THEN split_part(trim(both ' ' from service_location), ' ', 1)
+			WHEN agency_address IS NOT NULL THEN split_part(trim(both ' ' from agency_address), ' ', 1)
 			ELSE split_part(trim(both ' ' from administrative_address), ' ', 1)
 		END),
 	-- street name
 		(CASE
 			WHEN service_location IS NOT NULL THEN initcap(trim(both ' ' from substr(trim(both ' ' from service_location), strpos(trim(both ' ' from service_location), ' ')+1, (length(trim(both ' ' from service_location))-strpos(trim(both ' ' from service_location), ' ')))))
+			WHEN agency_address IS NOT NULL THEN initcap(trim(both ' ' from substr(trim(both ' ' from agency_address), strpos(trim(both ' ' from agency_address), ' ')+1, (length(trim(both ' ' from agency_address))-strpos(trim(both ' ' from agency_address), ' ')))))
 			ELSE initcap(trim(both ' ' from substr(trim(both ' ' from administrative_address), strpos(trim(both ' ' from administrative_address), ' ')+1, (length(trim(both ' ' from administrative_address))-strpos(trim(both ' ' from administrative_address), ' ')))))
 		END),
 	-- address
 		(CASE
 			WHEN service_location IS NOT NULL THEN initcap(service_location)
+			WHEN agency_address IS NOT NULL THEN initcap(agency_address)
 			ELSE initcap(administrative_address)
 		END),
 	-- city
@@ -655,9 +658,9 @@ SELECT
 	-- datatype
 	'CSV with Coordinates',
 	-- refreshmeans
-	'Manual download',
+	'Request file from agency',
 	-- refreshfrequency
-	'Weekly pull',
+	'Annually',
 	-- buildingid
 	NULL,
 	-- building name

@@ -156,9 +156,9 @@ SELECT
 	-- notes
 	NULL,
 	-- datesourcereceived
-	'2016-08-01',
+	'2016-09-30',
 	-- datesourceupdated
-	'2016-06-30',
+	'2016-09-30',
 	-- datecreated
 	CURRENT_TIMESTAMP,
 	-- dateedited

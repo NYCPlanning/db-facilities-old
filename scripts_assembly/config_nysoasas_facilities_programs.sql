@@ -200,9 +200,9 @@ SELECT
 	-- datatype
 	'CSV with Addresses',
 	-- refreshmeans
-	'Request file from agency',
+	'Receive scheduled email transfer from agency',
 	-- refreshfrequency
-	'Quarterly',
+	'Monthly',
 	-- buildingid
 	NULL,
 	-- buildingname
