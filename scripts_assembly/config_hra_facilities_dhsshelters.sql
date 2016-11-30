@@ -104,7 +104,7 @@ SELECT
 	-- bin
 	ARRAY[Corrected_BIN],
 	-- parkid
-	ARRAY[bbl],
+	NULL,
 	-- xcoord
 	ST_X(ST_Transform(geom,2263)),
 	-- ycoord

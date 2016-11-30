@@ -222,7 +222,7 @@ SELECT
 	-- refreshmeans
 	'Pull from NYState Open Data',
 	-- refreshfrequency
-	'Weekly pull',
+	'Weekly',
 	-- buildingid
 	NULL,
 	-- buildingname

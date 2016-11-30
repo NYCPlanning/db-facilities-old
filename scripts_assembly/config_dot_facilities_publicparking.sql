@@ -179,7 +179,7 @@ SELECT
 	-- linkdownload
 	'NA',
 	-- datatype
-	'Webmap',
+	'Addresses and Details Copied from Website',
 	-- refreshmeans
 	'Manual copy and paste',
 	-- refreshfrequency

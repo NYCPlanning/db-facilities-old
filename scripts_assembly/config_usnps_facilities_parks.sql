@@ -183,7 +183,7 @@ SELECT
 	-- refreshmeans
 	'Pull from USNPS',
 	-- refreshfrequency
-	'Nightly pull',
+	'Annually',
 	-- buildingid
 	NULL,
 	-- buildingname

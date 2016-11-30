@@ -5,44 +5,47 @@
 ## NOTE: This script requires that your setup the DATABASE_URL environment variable. 
 ## Directions are in the README.md.
 
-## 0. Switching One to 1 for geocoding
+# ## 0. Switching One to 1 for geocoding
 psql $DATABASE_URL -f ./scripts_processing/One_to_1.sql
 
-## 1. Run the geocoding script using address and borough - get BBL, BIN, lat/long
+# ## 1. Run the geocoding script using address and borough - get BBL, BIN, lat/long
 
-echo 'Running geocoding script using address and borough...'
+# echo 'Running geocoding script using address and borough...'
 time node ./scripts_processing/address2geom_borough.js
-echo 'Done geocoding using address and borough'
+# echo 'Done geocoding using address and borough'
 
-## 2. Run the geocoding script using address and zipcode - get BBL, BIN, lat/long
+# ## 2. Run the geocoding script using address and zipcode - get BBL, BIN, lat/long
 
-echo 'Running geocoding script using address and zip code...'
+# echo 'Running geocoding script using address and zip code...'
 time node ./scripts_processing/address2geom_zipcode.js
-echo 'Done geocoding using address and zip code'
+# echo 'Done geocoding using address and zip code'
 
-## 3. Run the geocoding script using place name (facilityname) - get BBL, BIN, lat/long
+# ## 3. Run the geocoding script using place name (facilityname) - get BBL, BIN, lat/long
 
-echo 'Running geocoding script using place name and borough...'
-time node ./scripts_processing/place2geom_nameborough.js
-echo 'Done geocoding using place name and borough'
-# ^^ Hasn't been catching anything
+# echo 'Running geocoding script using place name and borough...'
+# time node ./scripts_processing/place2geom_nameborough.js
+# echo 'Done geocoding using place name and borough'
+# # ^^ Hasn't been catching anything
 
-## 4. Run the geocoding script using place name (address) - get BBL, BIN, lat/long
+# ## 4. Run the geocoding script using place name (address) - get BBL, BIN, lat/long
 
-echo 'Running geocoding script using place name and zip code...'
-time node ./scripts_processing/place2geom_addressborough.js
-echo 'Done geocoding using place name and zip code'
-# ^^ Hasn't been catching anything
+# echo 'Running geocoding script using place name and zip code...'
+# time node ./scripts_processing/place2geom_addressborough.js
+# echo 'Done geocoding using place name and zip code'
+# ## ^^ Hasn't been catching anything
 
-# 3. If record could not be geocoded but came with a BBL, use BBL to get geom
-#    Should only be relevant for Gazetteer/COLP records
+# ## 3. If record could not be geocoded but came with a BBL, use BBL to get geom
+# ##    Should only be relevant for Gazetteer/COLP records
 
-echo 'Joining on geometry using BBL...'
-time psql $DATABASE_URL -f ./scripts_processing/bbl2geom.sql
-echo 'Done joining on geometry using BBL'
+# echo 'Joining on geometry using BBL...'
+# time psql $DATABASE_URL -f ./scripts_processing/bbl2geom.sql
+# echo 'Done joining on geometry using BBL'
 
-5. Create a spatial index for the facilities database and for MapPLUTO and VACUUM
-	  (Reindex and vacuum after each spatial join)
+## 4. Create backup table of records with no geom or outside NYC and then delete from database
+
+
+# ## 5. Create a spatial index for the facilities database and for MapPLUTO and VACUUM
+# ##	  (Reindex and vacuum after each spatial join)
 
 echo 'Indexing and vacuuming facilities and dcp_mappluto...'
 psql $DATABASE_URL -f ./scripts_processing/force2D.sql
@@ -50,22 +53,22 @@ psql $DATABASE_URL -f ./scripts_processing/setSRID_26918.sql
 psql $DATABASE_URL -f ./scripts_processing/vacuum.sql
 echo 'Done indexing and vacuuming facilities and dcp_mappluto'
 
-6. Do a spatial join with MapPLUTO to get BBL and addresses info if missing
+# ## 6. Do a spatial join with MapPLUTO to get BBL and addresses info if missing
 
 echo 'Spatially joining with dcp_mappluto...'
 time psql $DATABASE_URL -f ./scripts_processing/bbljoin.sql
 echo 'Done spatially joining with dcp_mappluto'
 psql $DATABASE_URL -f ./scripts_processing/vacuum.sql
 
-## 7. For facilities which did not overlap with a BBL in MapPLUTO but should be located on a BBL lot, 
-## 	  assign the closest BBL to the record
+# ## 7. For facilities which did not overlap with a BBL in MapPLUTO but should be located on a BBL lot, 
+# ## 	  assign the closest BBL to the record
 
 echo 'Spatially joining with dcp_mappluto - Finding closest...'
 time psql $DATABASE_URL -f ./scripts_processing/bbljoin_closest.sql
 echo 'Done spatially joining with dcp_mappluto - Found closest'
 psql $DATABASE_URL -f ./scripts_processing/vacuum.sql
 
-# 8. Convert back to 4326, calculating x,y for all blank records, and create ID for all records at once to use for deduping
+## 8. Convert back to 4326, calculating x,y for all blank records, and create ID for all records at once to use for deduping
 
 psql $DATABASE_URL -f ./scripts_processing/setSRID_4326.sql
 echo 'Calculating x,y for all blank records...'
@@ -73,18 +76,28 @@ time psql $DATABASE_URL -f ./scripts_processing/calcxy.sql
 echo 'Done calculating x,y for all blank records'
 psql $DATABASE_URL -f ./scripts_processing/addID.sql
 
-## 10. Final formatting -- find and properly capitalize acronyms and abbreviations
+## 9. Final formatting -- find and properly capitalize acronyms and abbreviations
 
 echo 'Cleaning up capitalization...'
 time psql $DATABASE_URL -f ./scripts_processing/fixallcaps.sql
 echo 'Done cleaning up capitalization'
 psql $DATABASE_URL -f ./scripts_processing/vacuum.sql
 
-##  11. Final export to csv that excludes null geoms and geoms outside NYC
+## 10. Join on COLP attributes to records from other datasets
 
-echo 'Exporting...'
-time psql $DATABASE_URL -f ./scripts_processing/export.sql
-echo 'All done!'
+
+# ## 10. Remove DPR properties sourced from COLP that overlap with records from DPR's data
+# echo 'Updating DPR records with attributes from properties that came from COLP...'
+# time psql $DATABASE_URL -f ./scripts_processing/update_ParkDupsFromCOLP.sql
+
+# echo 'Removing overlapping DPR properties that came from COLP...'
+# time psql $DATABASE_URL -f ./scripts_processing/delete_ParkDupsFromCOLP.sql
+
+# ## 11. Final export to csv that excludes null geoms and geoms outside NYC
+
+# echo 'Exporting...'
+# time psql $DATABASE_URL -f ./scripts_processing/export.sql
+# echo 'All done!'
 
 
 

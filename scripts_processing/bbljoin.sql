@@ -24,7 +24,7 @@ UPDATE facilities AS f
         address = 
         	(CASE
 	        	WHEN f.address IS NULL THEN initcap(p.address)
-	        	ELSE f.streetname
+	        	ELSE f.address
         	END),
         processingflag = 
         	(CASE

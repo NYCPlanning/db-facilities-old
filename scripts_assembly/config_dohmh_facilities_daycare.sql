@@ -137,13 +137,13 @@ SELECT
 		(CASE
 			WHEN (facility_type = 'CAMP' OR facility_type = 'Camp' OR program_type LIKE '%CAMP%' OR program_type LIKE '%Camp%')
 				THEN 'Camps'
-			ELSE 'Childcare'
+			ELSE 'Child Care and Pre-Kindergarten'
 		END),
 	-- facilitysubgroup
 		(CASE
 			WHEN (facility_type = 'CAMP' OR facility_type = 'Camp' OR program_type LIKE '%CAMP%' OR program_type LIKE '%Camp%')
 				THEN 'Camps'
-			ELSE 'Childcare'
+			ELSE 'Child Care'
 		END),
 	-- agencyclass1
 	child_care_type,
@@ -212,9 +212,9 @@ SELECT
 	-- linkdownload
 	'https://data.cityofnewyork.us/api/views/dsg6-ifza/rows.csv?accessType=DOWNLOAD',
 	-- datatype
-	'CSV with Addresses',
+	'CSV with Addresseses',
 	-- refreshmeans
-	'Geocode - Pull from NYC Open Data',
+	'Geocode - from NYC Open Data',
 	-- refreshfrequency
 	'Daily',
 	-- buildingid

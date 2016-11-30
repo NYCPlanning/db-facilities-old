@@ -201,7 +201,7 @@ SELECT
 	-- refreshmeans
 	'Pull from NYState GIS Clearinghouse',
 	-- refreshfrequency
-	'Nightly pull',
+	'Annually',
 	-- buildingid
 	NULL,
 	-- buildingname

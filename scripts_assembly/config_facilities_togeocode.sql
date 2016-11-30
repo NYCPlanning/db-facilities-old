@@ -189,7 +189,7 @@ SELECT
 	-- linkdownload
 	'NA',
 	-- datatype
-	'Addresses',
+	'Addresses and Details Copied from Website',
 	-- refreshmeans
 	'Manual copy and paste',
 	-- refreshfrequency

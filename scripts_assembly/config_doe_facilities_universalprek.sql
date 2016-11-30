@@ -80,11 +80,11 @@ SELECT
 	-- facilityname
 	LocName,
 	-- addressnumber
-	split_part(trim(both ' ' from address), ' ', 1),
+	split_part(trim(both ' ' from REPLACE(address,' - ','-')), ' ', 1),
 	-- streetname
-	trim(both ' ' from substr(trim(both ' ' from address), strpos(trim(both ' ' from address), ' ')+1, (length(trim(both ' ' from address))-strpos(trim(both ' ' from address), ' ')))),
+	trim(both ' ' from substr(trim(both ' ' from REPLACE(address,' - ','-')), strpos(trim(both ' ' from REPLACE(address,' - ','-')), ' ')+1, (length(trim(both ' ' from REPLACE(address,' - ','-')))-strpos(trim(both ' ' from REPLACE(address,' - ','-')), ' ')))),
 	-- address
-	address,
+	REPLACE(address,' - ','-'),
 	-- city
 	NULL,
 	-- borough
@@ -122,15 +122,15 @@ SELECT
 	-- facilitytype
 		(CASE
 			WHEN PreK_Type = 'DOE' THEN 'Universal Pre-K'
-			WHEN PreK_Type = 'CHARTER' THEN 'Universal Pre-K - Charter '
+			WHEN PreK_Type = 'CHARTER' OR PreK_Type = 'Charter' THEN 'Universal Pre-K - Charter '
 			WHEN PreK_Type = 'NYCEEC' THEN 'NYC Early Education Center'
 		END),
 	-- domain
 	'Education, Child Welfare, and Youth',
 	-- facilitygroup
-	'Schools',
+	'Child Care and Pre-Kindergarten',
 	-- facilitysubgroup
-	'Preschools',
+	'Pre-Kindergarten',
 	-- agencyclass1
 	PreK_Type,
 	-- agencyclass2

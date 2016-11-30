@@ -198,7 +198,7 @@ SELECT
 	-- linkdownload
 	'NA',
 	-- datatype
-	'CSV with Addresses',
+	'CSV with Addresseses',
 	-- refreshmeans
 	'Receive scheduled email transfer from agency',
 	-- refreshfrequency

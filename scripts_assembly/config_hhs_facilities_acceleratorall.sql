@@ -246,7 +246,7 @@ SELECT
 			-- facilitygroup: Schools
 			-- facilitysubgroup: Preschools
 			WHEN Program_name LIKE '%Early Learn%'
-				THEN 'Schools'
+				THEN 'Child Care and Pre-Kindergarten'
 			-- facilitysubgroup: Public Schools
 			WHEN agency LIKE '%DOE%'
 				OR agency LIKE '%Education%'
@@ -652,7 +652,7 @@ SELECT
 	-- sourcedatasetname
 	CONCAT('HHS Accelerator - ',initcap(flag)),
 	-- linkdata
-	'TBD',
+	'NA',
 	-- linkdownload
 	'NA',
 	-- datatype

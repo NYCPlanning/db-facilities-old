@@ -191,9 +191,9 @@ SELECT
 	-- linkdownload
 	'https://data.cityofnewyork.us/api/views/u35m-9t32/rows.csv?accessType=DOWNLOAD',
 	-- datatype
-	'CSV with Address',
+	'CSV with Addresses',
 	-- refreshmeans
-	'Geocode - Pull from NYC Open Data',
+	'Geocode - from NYC Open Data',
 	-- refreshfrequency
 	'Annually',
 	-- buildingid

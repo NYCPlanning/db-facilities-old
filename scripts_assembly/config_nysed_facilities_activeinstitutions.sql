@@ -171,7 +171,7 @@ SELECT
 			WHEN (Institution_Type_Desc LIKE '%COLLEGE%') OR (Institution_Type_Desc LIKE '%CUNY%') OR 
 				(Institution_Type_Desc LIKE '%SUNY%') OR (Institution_Type_Desc LIKE '%SUNY%')
 				THEN 'Higher Education'
-			ELSE 'Schools'
+			ELSE 'Schools (K-12)'
 		END),
 	-- facilitysubgroup
 		(CASE
@@ -303,7 +303,7 @@ SELECT
 	-- refreshmeans
 	'Manual download',
 	-- refreshfrequency
-	'Weekly pull',
+	'Weekly',
 	-- buildingid
 	NULL,
 	-- building name

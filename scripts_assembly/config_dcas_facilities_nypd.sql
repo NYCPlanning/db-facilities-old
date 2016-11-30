@@ -224,7 +224,7 @@ SELECT
 	-- linkdownload
 	'NA',
 	-- datatype
-	'CSV with Address',
+	'CSV with Addresses',
 	-- refreshmeans
 	'Geocode - Request from Agency',
 	-- refreshfrequency

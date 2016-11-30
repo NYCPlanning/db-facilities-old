@@ -85,7 +85,7 @@ SELECT
 		END),
 	-- streetname
 		(CASE
-			WHEN Address <> '#N/A' THEN initcap(split_part(Address,' ',2))
+			WHEN Address <> '#N/A' THEN initcap(trim(both ' ' from substr(trim(both ' ' from Address), strpos(trim(both ' ' from Address), ' ')+1, (length(trim(both ' ' from Address))-strpos(trim(both ' ' from Address), ' ')))))
 		END),
 	-- address
 		(CASE
@@ -152,7 +152,7 @@ SELECT
 	-- domain
 	'Education, Child Welfare, and Youth',
 	-- facilitygroup
-	'Schools',
+	'Schools (K-12)',
 	-- facilitysubgroup
 	'Public Schools',
 	-- agencyclass1

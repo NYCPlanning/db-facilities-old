@@ -80,11 +80,11 @@ SELECT
 	-- facilityname
 	Program_Name,
 	-- addressnumber
-	split_part(trim(both ' ' from Program_Address), ' ', 1),
+	split_part(trim(both ' ' from initcap(Program_Address)), ' ', 1),
 	-- streetname
-	trim(both ' ' from substr(trim(both ' ' from Program_Address), strpos(trim(both ' ' from Program_Address), ' ')+1, (length(trim(both ' ' from Program_Address))-strpos(trim(both ' ' from Program_Address), ' ')))),
+	trim(both ' ' from substr(trim(both ' ' from initcap(Program_Address)), strpos(trim(both ' ' from initcap(Program_Address)), ' ')+1, (length(trim(both ' ' from initcap(Program_Address)))-strpos(trim(both ' ' from initcap(Program_Address)), ' ')))),
 	-- address
-	Program_Address,
+	initcap(Program_Address),
 	-- city
 	NULL,
 	-- borough
@@ -122,25 +122,16 @@ SELECT
 	-- facilitytype
 		(CASE
 			WHEN Model_Type = 'DE' OR Model_Type = 'DU' THEN 'Dual Enrollment Child Care/Head Start'
-			WHEN Model_Type = 'CC' THEN 'Childcare - Unspecified'
+			WHEN Model_Type = 'CC' THEN 'Child Care - Unspecified'
 			WHEN Model_Type = 'HS' THEN 'Head Start'
-			ELSE 'Childcare - Unspecified'
+			ELSE 'Child Care - Unspecified'
 		END),
 	-- domain
 	'Education, Child Welfare, and Youth',
 	-- facilitygroup
-		(CASE
-			WHEN Model_Type = 'DE' OR Model_Type = 'DU' THEN 'Schools'
-			WHEN Model_Type = 'CC' THEN 'Childcare'
-			WHEN Model_Type = 'HS' THEN 'Schools'
-		END),
+	'Child Care and Pre-Kindergarten',
 	-- facilitysubgroup
-		(CASE
-			WHEN Model_Type = 'DE' OR Model_Type = 'DU' THEN 'Preschools'
-			WHEN Model_Type = 'CC' THEN 'Childcare'
-			WHEN Model_Type = 'HS' THEN 'Preschools'
-			ELSE 'Childcare'
-		END),
+	'Child Care',
 	-- agencyclass1
 	Model_Type,
 	-- agencyclass2
