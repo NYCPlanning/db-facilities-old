@@ -122,9 +122,9 @@ SELECT
 	-- facilitytype
 		(CASE
 			WHEN Model_Type = 'DE' OR Model_Type = 'DU' THEN 'Dual Enrollment Child Care/Head Start'
-			WHEN Model_Type = 'CC' THEN 'Child Care - Unspecified'
+			WHEN Model_Type = 'CC' THEN 'Child Care'
 			WHEN Model_Type = 'HS' THEN 'Head Start'
-			ELSE 'Child Care - Unspecified'
+			ELSE 'Child Care'
 		END),
 	-- domain
 	'Education, Child Welfare, and Youth',

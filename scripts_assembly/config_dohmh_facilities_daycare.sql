@@ -78,7 +78,11 @@ SELECT
 	-- idagency
 	Day_Care_Id,
 	-- facilityname
-	initcap(Legal_Name),
+		(CASE
+			WHEN Center_Name LIKE '%SBCC%' THEN initcap(Legal_Name)
+			WHEN Center_Name LIKE '%SCHOOL BASED CHILD CARE%' THEN initcap(Legal_Name)
+			ELSE initcap(Center_Name)
+		END),
 	-- addressnumber
 	Building,
 	-- streetname
@@ -247,6 +251,7 @@ FROM
 	dohmh_facilities_daycare
 GROUP BY
 	Day_Care_ID,
+	Center_Name,
 	Legal_Name,
 	Building,
 	Street,
