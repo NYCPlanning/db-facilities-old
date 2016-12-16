@@ -1,6 +1,6 @@
 WITH matches AS (
 SELECT
-	CONCAT(a.agencysource,'-',b.agencysource) as sourcecombo,
+	CONCAT(a.pgtable,'-',b.pgtable) as sourcecombo,
 	a.id,
 	b.id as id_b,
 	a.guid,
@@ -53,8 +53,8 @@ SELECT
 	a.address,
 	b.address as address_b,
 	a.geom,
-	a.agencysource,
-	b.agencysource as agencysource_b,
+	a.pgtable,
+	b.pgtable as pgtable_b,
 	a.sourcedatasetname,
 	b.sourcedatasetname as sourcedatasetname_b
 FROM facilities a
@@ -64,8 +64,8 @@ WHERE
 	a.facilitygroup LIKE '%Child Care%'
 	AND (a.facilitytype LIKE '%Early%'
 	OR a.facilitytype LIKE '%Charter%')
-	AND a.agencysource = 'NYCDOE'
-	AND b.agencysource = 'NYCACS'
+	AND a.pgtable = 'doe_facilities_universalprek'
+	AND b.pgtable = 'acs_facilities_daycareheadstart'
 	AND a.geom IS NOT NULL
 	AND b.geom IS NOT NULL
 	AND a.bbl IS NOT NULL
@@ -110,10 +110,10 @@ WHERE
 				,'(',1)
 			,' ')
 		,4)
-	AND a.agencysource <> b.agencysource
+	AND a.pgtable <> b.pgtable
 	AND a.guid <> b.guid
 	AND a.id <> b.id
-	ORDER BY CONCAT(a.agencysource,'-',b.agencysource), a.facilityname, a.facilitysubgroup
+	ORDER BY CONCAT(a.pgtable,'-',b.pgtable), a.facilityname, a.facilitysubgroup
 )
 --, 
 
@@ -138,7 +138,7 @@ ORDER BY facilitytype, count DESC
 -- SET
 -- 	idagency = array_cat(idagency, d.idagency),
 -- 	guid_duplicate = d.guid_duplicate
--- 	agencysource = array_cat(agencysource, 'NYCDOHMH')
+-- 	pgtable = array_cat(pgtable, 'NYCDOHMH')
 -- 	sourcedatasetname = array_cat(sourcedatasetname, 'NYCDOHMH'),
 -- 	oversightagency = array_cat(oversightagency, 'NYCDOHMH')
 -- 	capacity = array_cat(capacity, d.capacity)

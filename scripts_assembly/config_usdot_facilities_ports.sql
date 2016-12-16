@@ -1,61 +1,36 @@
 INSERT INTO
 facilities (
-	id,
-	idold,
+	pgtable,
+	hash,
+	geom,
 	idagency,
 	facilityname,
 	addressnumber,
 	streetname,
 	address,
-	city,
 	borough,
-	boroughcode,
 	zipcode,
 	bbl,
 	bin,
 	parkid,
-	xcoord,
-	ycoord,
-	latitude,
-	longitude,
 	facilitytype,
 	domain,
 	facilitygroup,
 	facilitysubgroup,
 	agencyclass1,
 	agencyclass2,
-	colpusetype,
 	capacity,
 	utilization,
 	capacitytype,
 	utilizationrate,
 	area,
 	areatype,
-	servicearea,
 	operatortype,
 	operatorname,
 	operatorabbrev,
 	oversightagency,
 	oversightabbrev,
-	dateactive,
-	dateinactive,
-	inactivestatus,
-	tags,
-	notes,
-	datesourcereceived,
-	datesourceupdated,
 	datecreated,
-	dateedited,
-	creator,
-	editor,
-	geom,
-	agencysource,
-	sourcedatasetname,
-	linkdata,
-	linkdownload,
-	datatype,
-	refreshmeans,
-	refreshfrequency,
 	buildingid,
 	buildingname,
 	schoolorganizationlevel,
@@ -71,10 +46,12 @@ facilities (
 	groupquarters
 )
 SELECT
-	-- id
-	NULL,
-	-- idold
-	NULL,
+	-- pgtable
+	'usdot_facilities_ports',
+	-- hash,
+	md5(CAST((*) AS text)),
+	-- geom
+	geom,
 	-- idagency
 	nav_unit_i,
 	-- facilityname
@@ -85,8 +62,6 @@ SELECT
 	NULL,
 	-- address
 	NULL,
-	-- city
-	NULL,
 	-- borough
 		(CASE
 			WHEN (state_post = 'NY') AND (County_nam = 'New York') THEN 'Manhattan'
@@ -94,14 +69,6 @@ SELECT
 			WHEN (state_post = 'NY') AND (County_nam = 'Kings') THEN 'Brooklyn'
 			WHEN (state_post = 'NY') AND (County_nam = 'Queens') THEN 'Queens'
 			WHEN (state_post = 'NY') AND (County_nam = 'Richmond') THEN 'Staten Island'
-		END),
-	-- boroughcode
-		(CASE
-			WHEN (state_post = 'NY') AND (County_nam = 'New York') THEN 1
-			WHEN (state_post = 'NY') AND (County_nam = 'Bronx') THEN 2
-			WHEN (state_post = 'NY') AND (County_nam = 'Kings') THEN 3
-			WHEN (state_post = 'NY') AND (County_nam = 'Queens') THEN 4
-			WHEN (state_post = 'NY') AND (County_nam = 'Richmond') THEN 5
 		END),
 	-- zipcode
 	zipcode::integer,
@@ -111,14 +78,6 @@ SELECT
 	NULL,
 	-- parkid
 	NULL,
-	-- xcoord
-	NULL,
-	-- ycoord
-	NULL,
-	-- latitude
-	ST_Y(geom),
-	-- longitude
-	ST_X(geom),
 	-- facilitytype
 		(CASE
 			WHEN (nav_unit_n LIKE '%FERRY%') OR (nav_unit_n LIKE '%Ferry%') THEN 'Ferry Landing'
@@ -145,8 +104,7 @@ SELECT
 			WHEN operators IS NOT NULL THEN operators
 			ELSE 'NA'
 		END),
-	-- colpusetype
-	NULL,
+
 	-- capacity
 	NULL,
 	-- utilization
@@ -158,8 +116,6 @@ SELECT
 	-- area
 	NULL,
 	-- areatype
-	NULL,
-	-- servicearea
 	NULL,
 	-- operatortype
 	(CASE
@@ -296,45 +252,8 @@ SELECT
 		WHEN operators like '%Coast Guard%' THEN 'USCG'
 		ELSE 'Non-public'
 	END),
-	-- dateactive
-	NULL,
-	-- dateinactive
-	NULL,
-	-- inactivestatus
-	NULL,
-	-- tags
-	NULL,
-	-- notes
-	NULL,
-	-- datesourcereceived
-	'2016-08-01',
-	-- datesourceupdated
-	'2015-08-01',
 	-- datecreated
 	CURRENT_TIMESTAMP,
-	-- dateedited
-	CURRENT_TIMESTAMP,
-	-- creator
-	'Hannah Kates',
-	-- editor
-	'Hannah Kates',
-	-- geom
-	-- ST_SetSRID(ST_MakePoint(long, lat),4326)
-	geom,
-	-- agencysource
-	'USDOT',
-	-- sourcedatasetname
-	'U.S. Army Corps of Engineers Ports',
-	-- linkdata
-	'http://www.rita.dot.gov/bts/sites/rita.dot.gov.bts/files/publications/national_transportation_atlas_database/2015/point',
-	-- linkdownload
-	'http://www.rita.dot.gov/bts/sites/rita.dot.gov.bts/files/AdditionalAttachmentFiles/ports.zip',
-	-- datatype
-	'Shapefile',
-	-- refreshmeans
-	'Pull from US DOT',
-	-- refreshfrequency
-	'Annually',
 	-- buildingid
 	NULL,
 	-- buildingname

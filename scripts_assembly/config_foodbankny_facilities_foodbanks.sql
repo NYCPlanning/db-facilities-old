@@ -1,61 +1,36 @@
 INSERT INTO
 facilities (
-	id,
-	idold,
+	pgtable,
+	hash,
+	geom,
 	idagency,
 	facilityname,
 	addressnumber,
 	streetname,
 	address,
-	city,
 	borough,
-	boroughcode,
 	zipcode,
 	bbl,
 	bin,
 	parkid,
-	xcoord,
-	ycoord,
-	latitude,
-	longitude,
 	facilitytype,
 	domain,
 	facilitygroup,
 	facilitysubgroup,
 	agencyclass1,
 	agencyclass2,
-	colpusetype,
 	capacity,
 	utilization,
 	capacitytype,
 	utilizationrate,
 	area,
 	areatype,
-	servicearea,
 	operatortype,
 	operatorname,
 	operatorabbrev,
 	oversightagency,
 	oversightabbrev,
-	dateactive,
-	dateinactive,
-	inactivestatus,
-	tags,
-	notes,
-	datesourcereceived,
-	datesourceupdated,
 	datecreated,
-	dateedited,
-	creator,
-	editor,
-	geom,
-	agencysource,
-	sourcedatasetname,
-	linkdata,
-	linkdownload,
-	datatype,
-	refreshmeans,
-	refreshfrequency,
 	buildingid,
 	buildingname,
 	schoolorganizationlevel,
@@ -71,10 +46,12 @@ facilities (
 	groupquarters
 )
 SELECT
-	-- id
-	NULL,
-	-- idold
-	NULL,
+	-- pgtable
+	'foodbankny_facilities_foodbanks',
+	-- hash,
+	md5(CAST((*) AS text)),
+	-- geom
+	ST_SetSRID(ST_MakePoint(longitude_x, latitude_y),4326),	
 	-- idagency
 	NULL,
 	-- facilityname
@@ -85,11 +62,7 @@ SELECT
 	initcap(trim(both ' ' from substr(trim(both ' ' from address), strpos(trim(both ' ' from address), ' ')+1, (length(trim(both ' ' from address))-strpos(trim(both ' ' from address), ' '))))),
 	-- address
 	address,
-	-- city
-	NULL,
 	-- borough
-	NULL,
-	-- boroughcode
 	NULL,
 	-- zipcode
 	LEFT(zip_code,5)::integer,
@@ -99,16 +72,6 @@ SELECT
 	NULL,
 	-- parkid
 	NULL,
-	-- xcoord
-	NULL,
-	-- ycoord
-	NULL,
-	-- latitude
-	latitude_y,
-	-- trim(trim(split_part(split_part(Location,'(',2),',',1),'('),' ')::double precision,
-	-- longitude
-	longitude_x,
-	-- trim(split_part(split_part(Location,'(',2),',',1),' ')::double precision,
 	-- facilitytype
 		(CASE
 			WHEN fbc_agency_category_code = 'PANTRY' THEN 'Food Pantry'
@@ -124,8 +87,6 @@ SELECT
 	fbc_agency_category_code,
 	-- agencyclass2
 	'NA',
-	-- colpusetype
-	NULL,
 	-- capacity
 	NULL,
 	-- utilization
@@ -138,8 +99,6 @@ SELECT
 	NULL,
 	-- areatype
 	NULL,
-	-- servicearea
-	NULL,
 	-- operatortype
 	'Non-public',
 	-- operatorname
@@ -147,48 +106,11 @@ SELECT
 	-- operatorabbrev
 	'Non-public',
 	-- oversightagency
-	'Non-public',
+	ARRAY['Non-public'],
 	-- oversightabbrev
-	'Non-public',
-	-- dateactive
-	NULL,
-	-- dateinactive
-	NULL,
-	-- inactivestatus
-	NULL,
-	-- tags
-	NULL,
-	-- notes
-	NULL,
-	-- datesourcereceived
-	'2016-08-05',
-	-- datesourceupdated
-	'2016-08-05',
+	ARRAY['Non-public'],
 	-- datecreated
 	CURRENT_TIMESTAMP,
-	-- dateedited
-	CURRENT_TIMESTAMP,
-	-- creator
-	'Hannah Kates',
-	-- editor
-	'Hannah Kates',
-	-- geom
-	-- ST_SetSRID(ST_MakePoint(long, lat),4326)
-	ST_SetSRID(ST_MakePoint(longitude_x, latitude_y),4326),
-	-- agencysource
-	'FBNYC',
-	-- sourcedatasetname
-	'FBNYC Food Pantry Soup Kitchen List 8-5-16',
-	-- linkdata
-	'NA',
-	-- linkdownload
-	'NA',
-	-- datatype
-	'CSV with Coordinates',
-	-- refreshmeans
-	'Request file from agency',
-	-- refreshfrequency
-	'Quarterly',
 	-- buildingid
 	NULL,
 	-- buildingname

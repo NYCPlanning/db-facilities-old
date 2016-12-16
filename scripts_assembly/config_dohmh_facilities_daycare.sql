@@ -1,61 +1,36 @@
 INSERT INTO
 facilities (
-	id,
-	idold,
+	pgtable,
+	hash,
+	geom,
 	idagency,
 	facilityname,
 	addressnumber,
 	streetname,
 	address,
-	city,
 	borough,
-	boroughcode,
 	zipcode,
 	bbl,
 	bin,
 	parkid,
-	xcoord,
-	ycoord,
-	latitude,
-	longitude,
 	facilitytype,
 	domain,
 	facilitygroup,
 	facilitysubgroup,
 	agencyclass1,
 	agencyclass2,
-	colpusetype,
 	capacity,
 	utilization,
 	capacitytype,
 	utilizationrate,
 	area,
 	areatype,
-	servicearea,
 	operatortype,
 	operatorname,
 	operatorabbrev,
 	oversightagency,
 	oversightabbrev,
-	dateactive,
-	dateinactive,
-	inactivestatus,
-	tags,
-	notes,
-	datesourcereceived,
-	datesourceupdated,
 	datecreated,
-	dateedited,
-	creator,
-	editor,
-	geom,
-	agencysource,
-	sourcedatasetname,
-	linkdata,
-	linkdownload,
-	datatype,
-	refreshmeans,
-	refreshfrequency,
 	buildingid,
 	buildingname,
 	schoolorganizationlevel,
@@ -71,12 +46,14 @@ facilities (
 	groupquarters
 )
 SELECT
-	-- id
-	NULL,
-	-- idold
+	-- pgtable
+	ARRAY['dohmh_facilities_daycare'],
+	-- hash,
+	md5(CAST((Day_Care_ID,Center_Name,Legal_Name,Building,Street,ZipCode,Borough,facility_type,child_care_type,program_type,Maximum_Capacity) AS text)),
+	-- geom
 	NULL,
 	-- idagency
-	Day_Care_Id,
+	ARRAY[Day_Care_Id],
 	-- facilityname
 		(CASE
 			WHEN Center_Name LIKE '%SBCC%' THEN initcap(Legal_Name)
@@ -89,18 +66,8 @@ SELECT
 	initcap(Street),
 	-- address
 	CONCAT(Building,' ',initcap(Street)),
-	-- city
-	NULL,
 	-- borough
 	initcap(Borough),
-	-- boroughcode
-		(CASE
-			WHEN Borough = 'MANHATTAN' THEN 1
-			WHEN Borough = 'BRONX' THEN 2
-			WHEN Borough = 'BROOKLYN' THEN 3
-			WHEN Borough = 'QUEENS' THEN 4
-			WHEN Borough = 'STATEN ISLAND' THEN 5
-		END),
 	-- zipcode
 	ZipCode::integer,
 	-- bbl
@@ -108,14 +75,6 @@ SELECT
 	-- bin
 	NULL,
 	-- parkid
-	NULL,
-	-- xcoord
-	NULL,
-	-- ycoord
-	NULL,
-	-- latitude
-	NULL,
-	-- longitude
 	NULL,
 	-- facilitytype
 		(CASE
@@ -153,8 +112,6 @@ SELECT
 	child_care_type,
 	-- agencyclass2
 	program_type,
-	-- colpusetype
-	NULL,
 	-- capacity
 		(CASE
 			WHEN Maximum_Capacity <> '0' THEN Maximum_Capacity::integer
@@ -170,8 +127,6 @@ SELECT
 	NULL,
 	-- areatype
 	NULL,
-	-- servicearea
-	NULL,
 	-- operatortype
 	'Non-public',
 	-- operator
@@ -179,49 +134,11 @@ SELECT
 	-- operatorabbrev
 	'Non-public',
 	-- oversightagency
-	'New York City Department of Health and Mental Hygiene',
+	ARRAY['New York City Department of Health and Mental Hygiene'],
 	-- oversightabbrev
-	'NYCDOHMH',
-	-- dateactive
-	NULL,
-	-- dateinactive
-	NULL,
-	-- inactivestatus
-	NULL,
-	-- tags
-	NULL,
-	-- notes
-	NULL,
-	-- datesourcereceived
-	'2016-11-15',
-	-- datesourceupdated
-	'2016-11-15',
+	ARRAY['NYCDOHMH'],
 	-- datecreated
 	CURRENT_TIMESTAMP,
-	-- dateedited
-	CURRENT_TIMESTAMP,
-	-- creator
-	'Hannah Kates',
-	-- editor
-	'Hannah Kates',
-	-- geom
-	-- ST_SetSRID(ST_MakePoint(long, lat),4326)
-	NULL,
-	-- agencysource
-	'NYCDOHMH',
-	-- sourcedatasetname
-	'DOHMH Childcare Center Inspections',
-	-- linkdata
-	'https://data.cityofnewyork.us/Health/DOHMH-Childcare-Center-Inspections/dsg6-ifza',
-	-- linkdownload
-	'https://data.cityofnewyork.us/api/views/dsg6-ifza/rows.csv?accessType=DOWNLOAD',
-	-- datatype
-	'CSV with Addresseses',
-	-- refreshmeans
-	'Geocode - from NYC Open Data',
-	-- refreshfrequency
-	'Daily',
-	-- buildingid
 	NULL,
 	-- buildingname
 	NULL,

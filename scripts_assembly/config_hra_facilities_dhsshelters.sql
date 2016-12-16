@@ -1,61 +1,36 @@
 INSERT INTO
 facilities (
-	id,
-	idold,
+	pgtable,
+	hash,
+	geom,
 	idagency,
 	facilityname,
 	addressnumber,
 	streetname,
 	address,
-	city,
 	borough,
-	boroughcode,
 	zipcode,
 	bbl,
 	bin,
 	parkid,
-	xcoord,
-	ycoord,
-	latitude,
-	longitude,
 	facilitytype,
 	domain,
 	facilitygroup,
 	facilitysubgroup,
 	agencyclass1,
 	agencyclass2,
-	colpusetype,
 	capacity,
 	utilization,
 	capacitytype,
 	utilizationrate,
 	area,
 	areatype,
-	servicearea,
 	operatortype,
 	operatorname,
 	operatorabbrev,
 	oversightagency,
 	oversightabbrev,
-	dateactive,
-	dateinactive,
-	inactivestatus,
-	tags,
-	notes,
-	datesourcereceived,
-	datesourceupdated,
 	datecreated,
-	dateedited,
-	creator,
-	editor,
-	geom,
-	agencysource,
-	sourcedatasetname,
-	linkdata,
-	linkdownload,
-	datatype,
-	refreshmeans,
-	refreshfrequency,
 	buildingid,
 	buildingname,
 	schoolorganizationlevel,
@@ -71,12 +46,14 @@ facilities (
 	groupquarters
 )
 SELECT
-	-- id
-	NULL,
-	-- idold
-	NULL,
+	-- pgtable
+	'hra_facilities_dhsshelters',
+	-- hash,
+	md5(CAST((*) AS text)),
+	-- geom
+	geom,	
 	-- idagency
-	Reference_Key,
+	ARRAY[Reference_Key],
 	-- facilityname
 	initcap(Shelter_Operator_Facility_Name),
 	-- addressnumber
@@ -85,18 +62,8 @@ SELECT
 	initcap(split_part(trim(both ' ' from Shelter_Operating_Address), ' ', 2)),
 	-- address
 	initcap(Shelter_Operating_Address),
-	-- city
-	NULL,
 	-- borough
 	initcap(Borough),
-	-- boroughcode
-		(CASE
-			WHEN Borough = 'MANHATTAN' THEN 1
-			WHEN Borough = 'BRONX' THEN 2
-			WHEN Borough = 'BROOKLYN' THEN 3
-			WHEN Borough = 'QUEENS' THEN 4
-			WHEN Borough = 'STATEN ISLAND' THEN 5
-		END),
 	-- zipcode
 	zip::integer,
 	-- bbl
@@ -105,14 +72,6 @@ SELECT
 	ARRAY[Corrected_BIN],
 	-- parkid
 	NULL,
-	-- xcoord
-	ST_X(ST_Transform(geom,2263)),
-	-- ycoord
-	ST_Y(ST_Transform(geom,2263)),
-	-- latitude
-	ST_Y(geom),
-	-- longitude
-	ST_X(geom),
 	-- facilitytype
 	Shelter_Facility_Type_Cares,
 	-- domain
@@ -125,8 +84,7 @@ SELECT
 	Shelter_Facility_Type_CARES,
 	-- agencyclass2
 	NYC_Owned_Property,
-	-- colpusetype
-	NULL,
+
 	-- capacity
 	Active,
 	-- utilization
@@ -141,8 +99,6 @@ SELECT
 	-- area
 	NULL,
 	-- areatype
-	NULL,
-	-- servicearea
 	NULL,
 	-- operatortype
 		(CASE
@@ -160,48 +116,11 @@ SELECT
 			ELSE 'Non-public'
 		END),
 	-- oversightagency
-	'New York City Department of Homeless Services',
+	ARRAY['New York City Department of Homeless Services'],
 	-- oversightabbrev
-	'NYCDHS',
-	-- dateactive
-	NULL,
-	-- dateinactive
-	NULL,
-	-- inactivestatus
-	NULL,
-	-- tags
-	NULL,
-	-- notes
-	NULL,
-	-- datesourcereceived
-	'2016-07-25',
-	-- datesourceupdated
-	'2016-07-25',
+	ARRAY['NYCDHS'],
 	-- datecreated
 	CURRENT_TIMESTAMP,
-	-- dateedited
-	CURRENT_TIMESTAMP,
-	-- creator
-	'Hannah Kates',
-	-- editor
-	'Hannah Kates',
-	-- geom
-	-- ST_SetSRID(ST_MakePoint(long, lat),4326)
-	geom,
-	-- agencysource
-	'NYCHRA',
-	-- sourcedatasetname
-	'Final shelter address list 2016 07 25 for distribution corrected',
-	-- linkdata
-	'NA',
-	-- linkdownload
-	'NA',
-	-- datatype
-	'CSV with BINs and Addresses',
-	-- refreshmeans
-	'Request file from agency',
-	-- refreshfrequency
-	'Monthly',
 	-- buildingid
 	NULL,
 	-- buildingname

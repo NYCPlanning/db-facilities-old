@@ -1,61 +1,36 @@
 INSERT INTO
 facilities (
-	id,
-	idold,
+	pgtable,
+	hash,
+	geom,
 	idagency,
 	facilityname,
 	addressnumber,
 	streetname,
 	address,
-	city,
 	borough,
-	boroughcode,
 	zipcode,
 	bbl,
 	bin,
 	parkid,
-	xcoord,
-	ycoord,
-	latitude,
-	longitude,
 	facilitytype,
 	domain,
 	facilitygroup,
 	facilitysubgroup,
 	agencyclass1,
 	agencyclass2,
-	colpusetype,
 	capacity,
 	utilization,
 	capacitytype,
 	utilizationrate,
 	area,
 	areatype,
-	servicearea,
 	operatortype,
 	operatorname,
 	operatorabbrev,
 	oversightagency,
 	oversightabbrev,
-	dateactive,
-	dateinactive,
-	inactivestatus,
-	tags,
-	notes,
-	datesourcereceived,
-	datesourceupdated,
 	datecreated,
-	dateedited,
-	creator,
-	editor,
-	geom,
-	agencysource,
-	sourcedatasetname,
-	linkdata,
-	linkdownload,
-	datatype,
-	refreshmeans,
-	refreshfrequency,
 	buildingid,
 	buildingname,
 	schoolorganizationlevel,
@@ -71,12 +46,14 @@ facilities (
 	groupquarters
 )
 SELECT
-	-- id
-	NULL,
-	-- idold
-	NULL,
+	-- pgtable
+	ARRAY['doe_facilities_universalprek'],
+	-- hash,
+	md5(CAST((doe_facilities_universalprek.*) AS text)),
+	-- geom
+	ST_Transform(ST_SetSRID(ST_MakePoint(x, y),2263),4326),
 	-- idagency
-	LOCCODE,
+	ARRAY[LOCCODE],
 	-- facilityname
 	LocName,
 	-- addressnumber
@@ -85,8 +62,6 @@ SELECT
 	trim(both ' ' from substr(trim(both ' ' from REPLACE(address,' - ','-')), strpos(trim(both ' ' from REPLACE(address,' - ','-')), ' ')+1, (length(trim(both ' ' from REPLACE(address,' - ','-')))-strpos(trim(both ' ' from REPLACE(address,' - ','-')), ' ')))),
 	-- address
 	REPLACE(address,' - ','-'),
-	-- city
-	NULL,
 	-- borough
 		(CASE
 			WHEN Borough = 'M' THEN 'Manhattan'
@@ -94,14 +69,6 @@ SELECT
 			WHEN Borough = 'K' THEN 'Brooklyn'
 			WHEN Borough = 'Q' THEN 'Queens'
 			WHEN Borough = 'R' THEN 'Staten Island'
-		END),
-	-- boroughcode
-		(CASE
-			WHEN Borough = 'M' THEN 1
-			WHEN Borough = 'X' THEN 2
-			WHEN Borough = 'K' THEN 3
-			WHEN Borough = 'Q' THEN 4
-			WHEN Borough = 'R' THEN 5
 		END),
 	-- zipcode
 	zip::integer,
@@ -111,14 +78,6 @@ SELECT
 	NULL,
 	-- parkid
 	NULL,
-	-- xcoord
-	x,
-	-- ycoord
-	y,
-	-- latitude
-	ST_Y(ST_Transform(ST_SetSRID(ST_MakePoint(x, y),2263),4326)),
-	-- longitude
-	ST_X(ST_Transform(ST_SetSRID(ST_MakePoint(x, y),2263),4326)),
 	-- facilitytype
 		(CASE
 			WHEN PreK_Type = 'DOE' THEN 'Universal Pre-K'
@@ -135,8 +94,6 @@ SELECT
 	PreK_Type,
 	-- agencyclass2
 	'NA',
-	-- colpusetype
-	NULL,
 	-- capacity
 	Seats,
 	-- utilization
@@ -148,8 +105,6 @@ SELECT
 	-- area
 	NULL,
 	-- areatype
-	NULL,
-	-- servicearea
 	NULL,
 	-- operatortype
 		(CASE
@@ -173,48 +128,11 @@ SELECT
 			ELSE 'Unknown'
 		END),
 	-- oversightagency
-	'New York City Department of Education',
+	ARRAY['New York City Department of Education'],
 	-- oversightabbrev
-	'NYCDOE',
-	-- dateactive
-	NULL,
-	-- dateinactive
-	NULL,
-	-- inactivestatus
-	NULL,
-	-- tags
-	NULL,
-	-- notes
-	NULL,
-	-- datesourcereceived
-	'2016-08-01',
-	-- datesourceupdated
-	'2016-01-15',
+	ARRAY['NYCDOE'],
 	-- datecreated
 	CURRENT_TIMESTAMP,
-	-- dateedited
-	CURRENT_TIMESTAMP,
-	-- creator
-	'Hannah Kates',
-	-- editor
-	'Hannah Kates',
-	-- geom
-	-- ST_SetSRID(ST_MakePoint(long, lat),4326)
-	ST_Transform(ST_SetSRID(ST_MakePoint(x, y),2263),4326),
-	-- agencysource
-	'NYCDOE',
-	-- sourcedatasetname
-	'Universal Pre-K (UPK) School Locations',
-	-- linkdata
-	'https://data.cityofnewyork.us/Education/Universal-Pre-K-UPK-School-Locations/kiyv-ks3f',
-	-- linkdownload
-	'https://data.cityofnewyork.us/api/views/kiyv-ks3f/rows.csv?accessType=DOWNLOAD',
-	-- datatype
-	'CSV with Coordinates',
-	-- refreshmeans
-	'Pull from NYC Open Data',
-	-- refreshfrequency
-	'Monthly',
 	-- buildingid
 	NULL,
 	-- buildingname

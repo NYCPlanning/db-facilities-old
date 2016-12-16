@@ -1,82 +1,61 @@
 INSERT INTO
 facilities (
-	id,
-	idold,
-	idagency,
-	facilityname,
-	addressnumber,
-	streetname,
-	address,
-	city,
-	borough,
-	boroughcode,
-	zipcode,
-	bbl,
-	bin,
-	parkid,
-	xcoord,
-	ycoord,
-	latitude,
-	longitude,
-	facilitytype,
-	domain,
-	facilitygroup,
-	facilitysubgroup,
-	agencyclass1,
-	agencyclass2,
-	colpusetype,
-	capacity,
-	utilization,
-	capacitytype,
-	utilizationrate,
-	area,
-	areatype,
-	servicearea,
-	operatortype,
-	operatorname,
-	operatorabbrev,
-	oversightagency,
-	oversightabbrev,
-	dateactive,
-	dateinactive,
-	inactivestatus,
-	tags,
-	notes,
-	datesourcereceived,
-	datesourceupdated,
-	datecreated,
-	dateedited,
-	creator,
-	editor,
-	geom,
-	agencysource,
-	sourcedatasetname,
-	linkdata,
-	linkdownload,
-	datatype,
-	refreshmeans,
-	refreshfrequency,
-	buildingid,
-	buildingname,
-	schoolorganizationlevel,
-	children,
-	youth,
-	senior,
-	family,
-	disabilities,
-	dropouts,
-	unemployed,
-	homeless,
-	immigrants,
-	groupquarters
+pgtable,
+hash,
+geom,
+idagency,
+facilityname,
+addressnumber,
+streetname,
+address,
+borough,
+zipcode,
+bbl,
+bin,
+parkid,
+facilitytype,
+domain,
+facilitygroup,
+facilitysubgroup,
+agencyclass1,
+agencyclass2,
+capacity,
+utilization,
+capacitytype,
+utilizationrate,
+area,
+areatype,
+operatortype,
+operatorname,
+operatorabbrev,
+oversightagency,
+oversightabbrev,
+datecreated,
+agencysource,
+sourcedatasetname,
+buildingid,
+buildingname,
+schoolorganizationlevel,
+children,
+youth,
+senior,
+family,
+disabilities,
+dropouts,
+unemployed,
+homeless,
+immigrants,
+groupquarters
 )
 SELECT
-	-- id
-	NULL,
-	-- idold
-	NULL,
+	-- pgtable
+	'hhs_facilities_acceleratorall',
+	-- hash,
+	md5(CAST((*) AS text)),
+	-- geom
+	the_geom,
 	-- idagency
-	ein,
+	ARRAY[ein],
 	-- facilityname
 	initcap(Provider_Name),
 	-- address number
@@ -97,11 +76,7 @@ SELECT
 			WHEN agency_address IS NOT NULL THEN initcap(agency_address)
 			ELSE initcap(administrative_address)
 		END),
-	-- city
-	NULL,
 	-- borough
-	NULL,
-	-- boroughcode
 	NULL,
 	-- zipcode
 	NULL,
@@ -111,14 +86,6 @@ SELECT
 	NULL,
 	-- parkid
 	NULL,
-	-- xcoord
-	NULL,
-	-- ycoord
-	NULL,
-	-- latitude
-	ST_Y(the_geom),
-	-- longitude
-	ST_X(the_geom),
 	-- facilitytype
 		(CASE
 			WHEN Program_name LIKE '%Blended Case%' 
@@ -537,8 +504,7 @@ SELECT
 	Services,
 	-- agencyclass2
 	Program_name,
-	-- colpusetype
-	NULL,
+
 	-- capacity
 	NULL,
 	-- utilization
@@ -551,8 +517,6 @@ SELECT
 	NULL,
 	-- areatype
 	NULL,
-	-- servicearea
-	NULL,
 	-- operatortype
 	'Non-public',
 	-- operatorname
@@ -560,7 +524,7 @@ SELECT
 	-- operatorabbrev
 	'Non-public',
 	-- oversightagency
-		(CASE
+		ARRAY[(CASE
 			WHEN agency LIKE '%DOE%' THEN 'New York City Department of Education'
 			WHEN agency LIKE '%SBS%' THEN 'New York City Department of Small Business Services'
 			WHEN agency LIKE '%DHS%' THEN 'New York City Department of Homeless Services'
@@ -575,9 +539,9 @@ SELECT
 			WHEN agency LIKE '%MOCJ%' THEN 'New York City Mayors Office of Criminal Justice'
 			WHEN agency LIKE '%DOC%' THEN 'New York City Department of Correction'
 			ELSE CONCAT('New York City ', agency)
-		END),
+		END)],
 	-- oversightabbrev
-		(CASE
+		ARRAY[(CASE
 			WHEN agency LIKE '%DOE%'
 				OR agency LIKE '%Department of Education%'
 				THEN 'NYCDOE'
@@ -621,46 +585,13 @@ SELECT
 				OR agency LIKE '%DOC%'
 				THEN 'NYCDOC'
 			ELSE CONCAT('NYC', UPPER(agency))
-		END),
-	-- dateactive
-	NULL,
-	-- dateinactive
-	NULL,
-	-- inactivestatus
-	NULL,
-	-- tags
-	NULL,
-	-- notes
-	NULL,
-	-- datesoucereceived
-	'2016-07-26',
-	-- datesouceupdated
-	'2016-07-26',
+		END)],
 	-- datecreated
 	CURRENT_TIMESTAMP,
-	-- dateedited
-	CURRENT_TIMESTAMP,
-	-- creator
-	'Hannah Kates',
-	-- editor
-	'Hannah Kates',
-	-- geom
-	-- ST_SetSRID(ST_MakePoint(long, lat),4326)
-	the_geom,
 	-- agencysource
-	'NYCHHS',
+	ARRAY['NYCHHS'],
 	-- sourcedatasetname
-	CONCAT('HHS Accelerator - ',initcap(flag)),
-	-- linkdata
-	'NA',
-	-- linkdownload
-	'NA',
-	-- datatype
-	'CSV with Coordinates',
-	-- refreshmeans
-	'Request file from agency',
-	-- refreshfrequency
-	'Annually',
+	ARRAY[CONCAT('HHS Accelerator - ',initcap(flag))],
 	-- buildingid
 	NULL,
 	-- building name

@@ -1,61 +1,36 @@
 INSERT INTO
 facilities (
-	id,
-	idold,
+	pgtable,
+	hash,
+	geom,
 	idagency,
 	facilityname,
 	addressnumber,
 	streetname,
 	address,
-	city,
 	borough,
-	boroughcode,
 	zipcode,
 	bbl,
 	bin,
 	parkid,
-	xcoord,
-	ycoord,
-	latitude,
-	longitude,
 	facilitytype,
 	domain,
 	facilitygroup,
 	facilitysubgroup,
 	agencyclass1,
 	agencyclass2,
-	colpusetype,
 	capacity,
 	utilization,
 	capacitytype,
 	utilizationrate,
 	area,
 	areatype,
-	servicearea,
 	operatortype,
 	operatorname,
 	operatorabbrev,
 	oversightagency,
 	oversightabbrev,
-	dateactive,
-	dateinactive,
-	inactivestatus,
-	tags,
-	notes,
-	datesourcereceived,
-	datesourceupdated,
 	datecreated,
-	dateedited,
-	creator,
-	editor,
-	geom,
-	agencysource,
-	sourcedatasetname,
-	linkdata,
-	linkdownload,
-	datatype,
-	refreshmeans,
-	refreshfrequency,
 	buildingid,
 	buildingname,
 	schoolorganizationlevel,
@@ -71,10 +46,19 @@ facilities (
 	groupquarters
 )
 SELECT
-	-- id
-	NULL,
-	-- idold
-	NULL,
+	-- pgtable
+	'nysopwdd_facilities_providers',
+	-- hash,
+	md5(CAST((*) AS text)),
+	-- geom
+	(CASE
+		WHEN (Location_1 IS NOT NULL) AND (Location_1 LIKE '%(%') THEN 
+			ST_SetSRID(
+				ST_MakePoint(
+					trim(trim(split_part(split_part(Location_1,'(',2),',',2),')'),' ')::double precision,
+					trim(split_part(split_part(Location_1,'(',2),',',1),' ')::double precision),
+				4326)
+	END),
 	-- idagency
 	NULL,
 	-- facilityname
@@ -85,8 +69,6 @@ SELECT
 	trim(both ' ' from substr(trim(both ' ' from initcap(Street_Address_)), strpos(trim(both ' ' from initcap(Street_Address_)), ' ')+1, (length(trim(both ' ' from initcap(Street_Address_)))-strpos(trim(both ' ' from initcap(Street_Address_)), ' ')))),
 	-- address
 	initcap(Street_Address_),
-	-- city
-	NULL,
 	-- borough
 		(CASE
 			WHEN County = 'NEW YORK' THEN 'Manhattan'
@@ -94,14 +76,6 @@ SELECT
 			WHEN County = 'KINGS' THEN 'Brooklyn'
 			WHEN County = 'QUEENS' THEN 'Queens'
 			WHEN County = 'RICHMOND' THEN 'Staten Island'
-		END),
-	-- boroughcode
-		(CASE
-			WHEN County = 'NEW YORK' THEN 1
-			WHEN County = 'BRONX' THEN 2
-			WHEN County = 'KINGS' THEN 3
-			WHEN County = 'QUEENS' THEN 4
-			WHEN County = 'RICHMOND' THEN 5
 		END),
 	-- zipcode
 	LEFT(Zip_Code,5)::integer,
@@ -111,20 +85,6 @@ SELECT
 	NULL,
 	-- parkid
 	NULL,
-	-- xcoord
-	NULL,
-	-- ycoord
-	NULL,
-	-- latitude
-	(CASE
-		WHEN (Location_1 IS NOT NULL) AND (Location_1 LIKE '%(%')
-			THEN trim(trim(split_part(split_part(Location_1,'(',2),',',1),'('),' ')::double precision
-	END),
-	-- longitude
-	(CASE
-		WHEN (Location_1 IS NOT NULL) AND (Location_1 LIKE '%(%')
-			THEN trim(split_part(split_part(Location_1,'(',2),',',1),' ')::double precision
-	END),
 	-- facilitytype
 	'Programs for People with Disabilities',
 		-- (CASE
@@ -171,8 +131,7 @@ SELECT
 		CONCAT('Developmental_Centers_And_Special_Population_Services',Developmental_Centers_And_Special_Population_Services)],
 	-- agencyclass2
 	'NA',
-	-- colpusetype
-	NULL,
+
 	-- capacity
 	NULL,
 	-- utilization
@@ -185,8 +144,6 @@ SELECT
 	NULL,
 	-- areatype
 	NULL,
-	-- servicearea
-	NULL,
 	-- operatortype
 	'Non-public',
 	-- operatorname
@@ -194,55 +151,11 @@ SELECT
 	-- operatorabbrev
 	'Non-public',
 	-- oversightagency
-	'New York State Office for People With Developmental Disabilities',
+	ARRAY['New York State Office for People With Developmental Disabilities'],
 	-- oversightabbrev
-	'NYSOPWDD',
-	-- dateactive
-	NULL,
-	-- dateinactive
-	NULL,
-	-- inactivestatus
-	NULL,
-	-- tags
-	NULL,
-	-- notes
-	NULL,
-	-- datesourcereceived
-	'2016-08-01',
-	-- datesourceupdated
-	'2015-12-22',
+	ARRAY['NYSOPWDD'],
 	-- datecreated
 	CURRENT_TIMESTAMP,
-	-- dateedited
-	CURRENT_TIMESTAMP,
-	-- creator
-	'Hannah Kates',
-	-- editor
-	'Hannah Kates',
-	-- geom
-	-- ST_SetSRID(ST_MakePoint(long, lat),4326)
-	(CASE
-		WHEN (Location_1 IS NOT NULL) AND (Location_1 LIKE '%(%') THEN 
-			ST_SetSRID(
-				ST_MakePoint(
-					trim(trim(split_part(split_part(Location_1,'(',2),',',2),')'),' ')::double precision,
-					trim(split_part(split_part(Location_1,'(',2),',',1),' ')::double precision),
-				4326)
-	END),
-	-- agencysource
-	'NYSOPWDD',
-	-- sourcedatasetname
-	'Directory of Developmental Disabilities Service Provider Agencies',
-	-- linkdata
-	'https://data.ny.gov/Human-Services/Directory-of-Developmental-Disabilities-Service-Pr/ieqx-cqyk',
-	-- linkdownload
-	'https://data.ny.gov/api/views/ieqx-cqyk/rows.csv?accessType=DOWNLOAD',
-	-- datatype
-	'CSV with Coordinates',
-	-- refreshmeans
-	'Pull from NYState Open Data',
-	-- refreshfrequency
-	'Weekly',
 	-- buildingid
 	NULL,
 	-- buildingname

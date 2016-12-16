@@ -1,61 +1,36 @@
 INSERT INTO
 facilities (
-	id,
-	idold,
+	pgtable,
+	hash,
+	geom,
 	idagency,
 	facilityname,
 	addressnumber,
 	streetname,
 	address,
-	city,
 	borough,
-	boroughcode,
 	zipcode,
 	bbl,
 	bin,
 	parkid,
-	xcoord,
-	ycoord,
-	latitude,
-	longitude,
 	facilitytype,
 	domain,
 	facilitygroup,
 	facilitysubgroup,
 	agencyclass1,
 	agencyclass2,
-	colpusetype,
 	capacity,
 	utilization,
 	capacitytype,
 	utilizationrate,
 	area,
 	areatype,
-	servicearea,
 	operatortype,
 	operatorname,
 	operatorabbrev,
 	oversightagency,
 	oversightabbrev,
-	dateactive,
-	dateinactive,
-	inactivestatus,
-	tags,
-	notes,
-	datesourcereceived,
-	datesourceupdated,
 	datecreated,
-	dateedited,
-	creator,
-	editor,
-	geom,
-	agencysource,
-	sourcedatasetname,
-	linkdata,
-	linkdownload,
-	datatype,
-	refreshmeans,
-	refreshfrequency,
 	buildingid,
 	buildingname,
 	schoolorganizationlevel,
@@ -71,10 +46,12 @@ facilities (
 	groupquarters
 )
 SELECT
-	-- id
-	NULL,
-	-- idold
-	NULL,
+	-- pgtable
+	'dot_facilities_publicparking',
+	-- hash,
+	md5(CAST((*) AS text)),
+	-- geom
+	ST_SetSRID(ST_MakePoint(longitude, latitude),4326),
 	-- idagency
 	abbrev,
 	-- facilityname
@@ -85,11 +62,7 @@ SELECT
 	NULL,
 	-- address
 	NULL,
-	-- city
-	NULL,
 	-- borough
-	NULL,
-	-- boroughcode
 	NULL,
 	-- zipcode
 	NULL,
@@ -99,14 +72,6 @@ SELECT
 	NULL,
 	-- parkid
 	NULL,
-	-- xcoord
-	NULL,
-	-- ycoord
-	NULL,
-	-- latitude
-	latitude,
-	-- longitude
-	longitude,
 	-- facilitytype
 	'Public Parking Facility',
 	-- domain
@@ -119,8 +84,6 @@ SELECT
 	'NA',
 	-- agencyclass2
 	'NA',
-	-- colpusetype
-	NULL,
 	-- capacity
 	capacity,
 	-- utilization
@@ -133,8 +96,6 @@ SELECT
 	NULL,
 	-- areatype
 	NULL,
-	-- servicearea
-	NULL,
 	-- operatortype
 	'Public',
 	-- operatorname
@@ -142,48 +103,11 @@ SELECT
 	-- operatorabbrev
 	'NYCDOT',
 	-- oversightagency
-	'New York City Department of Transportation',
+	ARRAY['New York City Department of Transportation'],
 	-- oversightabbrev
-	'NYCDOT',
-	-- dateactive
-	NULL,
-	-- dateinactive
-	NULL,
-	-- inactivestatus
-	NULL,
-	-- tags
-	NULL,
-	-- notes
-	NULL,
-	-- datesourcereceived
-	'2016-07-01',
-	-- datesourceupdated
-	'2016-07-01',
+	ARRAY['NYCDOT'],
 	-- datecreated
 	CURRENT_TIMESTAMP,
-	-- dateedited
-	CURRENT_TIMESTAMP,
-	-- creator
-	'Hannah Kates',
-	-- editor
-	'Hannah Kates',
-	-- geom
-	-- ST_SetSRID(ST_MakePoint(long, lat),4326)
-	ST_SetSRID(ST_MakePoint(longitude, latitude),4326),
-	-- agencysource
-	'NYCDOT',
-	-- sourcedatasetname
-	'Municipal Parking Facilities',
-	-- linkdata
-	'http://www.nyc.gov/html/dot/html/motorist/parkinglist.shtml',
-	-- linkdownload
-	'NA',
-	-- datatype
-	'Addresses and Details Copied from Website',
-	-- refreshmeans
-	'Manual copy and paste',
-	-- refreshfrequency
-	'Annually',
 	-- buildingid
 	NULL,
 	-- buildingname

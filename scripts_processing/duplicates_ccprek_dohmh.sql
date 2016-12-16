@@ -46,3 +46,12 @@ ORDER BY facilitysubgroup, count DESC
 -- 	capacity = array_cat(capacity, d.capacity)
 -- FROM duplicates AS d
 -- WHERE f.guid = d.guid
+
+CREATE TABLE duplicates_ccprek_dohmh AS (
+SELECT facilities.*
+FROM facilities
+WHERE facilities.guid IN (SELECT unnest(duplicates.guid_duplicate) FROM duplicates)
+ORDER BY guid )
+
+DELETE FROM facilities
+WHERE facilities.guid IN (SELECT unnest(duplicates.guid_duplicate) FROM duplicates)

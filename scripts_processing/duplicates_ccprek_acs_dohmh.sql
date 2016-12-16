@@ -1,3 +1,8 @@
+--------------------------------------------------------------------------------------------------
+-- 1. CREATING A TABLE TO BACKUP THE DUPLICATE RECORDS BEFORE DROPPING THEM FROM THE DATABASE
+--------------------------------------------------------------------------------------------------
+
+
 WITH matches AS (
 SELECT
 	CONCAT(a.agencysource,'-',b.agencysource) as sourcecombo,
@@ -203,3 +208,12 @@ ORDER BY facilitytype, count DESC
 -- 	capacity = array_cat(capacity, d.capacity)
 -- FROM duplicates AS d
 -- WHERE f.guid = d.guid
+
+CREATE TABLE duplicates_ccprek_acs_dohmh AS (
+SELECT facilities.*
+FROM facilities
+WHERE facilities.guid IN (SELECT unnest(duplicates.guid_duplicate) FROM duplicates)
+ORDER BY guid )
+
+DELETE FROM facilities
+WHERE facilities.guid IN (SELECT unnest(duplicates.guid_duplicate) FROM duplicates)

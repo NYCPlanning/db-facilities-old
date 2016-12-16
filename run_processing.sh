@@ -5,20 +5,32 @@
 ## NOTE: This script requires that your setup the DATABASE_URL environment variable. 
 ## Directions are in the README.md.
 
-# ## 0. Switching One to 1 for geocoding
+## Joining on source data info
+# psql $DATABASE_URL -f ./scripts_processing/join_sourcedatainfo.sql
+
+## Standardizing agency names and abbreviations
+## NEED TO FINISH
+
+## Standardizing borough and assigning borough code
+psql $DATABASE_URL -f ./scripts_processing/standardize_borough.sql
+
+## 0. Switching One to 1 for geocoding
 psql $DATABASE_URL -f ./scripts_processing/One_to_1.sql
 
-# ## 1. Run the geocoding script using address and borough - get BBL, BIN, lat/long
+## Checking if address number is actually a number, if not, deleting text value
+## NEED TO FINISH
 
-# echo 'Running geocoding script using address and borough...'
+## 1. Run the geocoding script using address and borough - get BBL, BIN, lat/long
+
+echo 'Running geocoding script using address and borough...'
 time node ./scripts_processing/address2geom_borough.js
-# echo 'Done geocoding using address and borough'
+echo 'Done geocoding using address and borough'
 
-# ## 2. Run the geocoding script using address and zipcode - get BBL, BIN, lat/long
+## 2. Run the geocoding script using address and zipcode - get BBL, BIN, lat/long
 
-# echo 'Running geocoding script using address and zip code...'
+echo 'Running geocoding script using address and zip code...'
 time node ./scripts_processing/address2geom_zipcode.js
-# echo 'Done geocoding using address and zip code'
+echo 'Done geocoding using address and zip code'
 
 # ## 3. Run the geocoding script using place name (facilityname) - get BBL, BIN, lat/long
 
@@ -37,15 +49,15 @@ time node ./scripts_processing/address2geom_zipcode.js
 # ## 3. If record could not be geocoded but came with a BBL, use BBL to get geom
 # ##    Should only be relevant for Gazetteer/COLP records
 
-# echo 'Joining on geometry using BBL...'
-# time psql $DATABASE_URL -f ./scripts_processing/bbl2geom.sql
-# echo 'Done joining on geometry using BBL'
+echo 'Joining on geometry using BBL...'
+time psql $DATABASE_URL -f ./scripts_processing/bbl2geom.sql
+echo 'Done joining on geometry using BBL'
 
 ## 4. Create backup table of records with no geom or outside NYC and then delete from database
 
 
-# ## 5. Create a spatial index for the facilities database and for MapPLUTO and VACUUM
-# ##	  (Reindex and vacuum after each spatial join)
+## 5. Create a spatial index for the facilities database and for MapPLUTO and VACUUM
+##	  (Reindex and vacuum after each spatial join)
 
 echo 'Indexing and vacuuming facilities and dcp_mappluto...'
 psql $DATABASE_URL -f ./scripts_processing/force2D.sql
@@ -68,13 +80,16 @@ time psql $DATABASE_URL -f ./scripts_processing/bbljoin_closest.sql
 echo 'Done spatially joining with dcp_mappluto - Found closest'
 psql $DATABASE_URL -f ./scripts_processing/vacuum.sql
 
-## 8. Convert back to 4326, calculating x,y for all blank records, and create ID for all records at once to use for deduping
+## 8. Convert back to 4326, calculating lat,long and x,y for all blank records, and create ID for all records at once to use for deduping
 
 psql $DATABASE_URL -f ./scripts_processing/setSRID_4326.sql
 echo 'Calculating x,y for all blank records...'
 time psql $DATABASE_URL -f ./scripts_processing/calcxy.sql
 echo 'Done calculating x,y for all blank records'
 psql $DATABASE_URL -f ./scripts_processing/addID.sql
+
+## Doing spatial join to fill in City
+## Doing spatial join to fill in BIN
 
 ## 9. Final formatting -- find and properly capitalize acronyms and abbreviations
 
@@ -84,6 +99,9 @@ echo 'Done cleaning up capitalization'
 psql $DATABASE_URL -f ./scripts_processing/vacuum.sql
 
 ## 10. Join on COLP attributes to records from other datasets
+
+
+# psql $DATABASE_URL -f ./scripts_processing/duplicates_ccprek_doe_dohmh.sql
 
 
 # ## 10. Remove DPR properties sourced from COLP that overlap with records from DPR's data

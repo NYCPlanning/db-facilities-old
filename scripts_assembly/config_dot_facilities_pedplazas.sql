@@ -1,61 +1,36 @@
 INSERT INTO
 facilities (
-	id,
-	idold,
+	pgtable,
+	hash,
+	geom,
 	idagency,
 	facilityname,
 	addressnumber,
 	streetname,
 	address,
-	city,
 	borough,
-	boroughcode,
 	zipcode,
 	bbl,
 	bin,
 	parkid,
-	xcoord,
-	ycoord,
-	latitude,
-	longitude,
 	facilitytype,
 	domain,
 	facilitygroup,
 	facilitysubgroup,
 	agencyclass1,
 	agencyclass2,
-	colpusetype,
 	capacity,
 	utilization,
 	capacitytype,
 	utilizationrate,
 	area,
 	areatype,
-	servicearea,
 	operatortype,
 	operatorname,
 	operatorabbrev,
 	oversightagency,
 	oversightabbrev,
-	dateactive,
-	dateinactive,
-	inactivestatus,
-	tags,
-	notes,
-	datesourcereceived,
-	datesourceupdated,
 	datecreated,
-	dateedited,
-	creator,
-	editor,
-	geom,
-	agencysource,
-	sourcedatasetname,
-	linkdata,
-	linkdownload,
-	datatype,
-	refreshmeans,
-	refreshfrequency,
 	buildingid,
 	buildingname,
 	schoolorganizationlevel,
@@ -71,10 +46,12 @@ facilities (
 	groupquarters
 )
 SELECT
-	-- id
-	NULL,
-	-- idold
-	NULL,
+	-- pgtable
+	'dot_facilities_pedplazas',
+	-- hash,
+	md5(CAST((*) AS text)),
+	-- geom
+	geom,
 	-- idagency
 	NULL,
 	-- facilityname
@@ -85,9 +62,6 @@ SELECT
 	NULL,
 	-- address
 	NULL,
-	-- city
-	NULL,
-	-- borough
 	-- borough
 		(CASE
 			WHEN boro_code = 1 THEN 'Manhattan'
@@ -96,8 +70,6 @@ SELECT
 			WHEN boro_code = 4 THEN 'Queens'
 			WHEN boro_code = 5 THEN 'Staten Island'
 		END),
-	-- borough
-	boro_code,
 	-- zipcode
 	NULL,
 	-- bbl
@@ -106,14 +78,6 @@ SELECT
 	NULL,
 	-- parkid
 	NULL,
-	-- xcoord
-	NULL,
-	-- ycoord
-	NULL,
-	-- latitude
-	ST_Y(geom),
-	-- longitude
-	ST_X(geom),
 	-- facilitytype
 	'Pedestrian Plaza',
 	-- domain
@@ -126,8 +90,6 @@ SELECT
 	'NA',
 	-- agencyclass2
 	'NA',
-	-- colpusetype
-	NULL,
 	-- capacity
 	NULL,
 	-- utilization
@@ -140,8 +102,6 @@ SELECT
 	NULL,
 	-- areatype
 	NULL,
-	-- servicearea
-	NULL,
 	-- operatortype
 	'Public',
 	-- operatorname
@@ -149,48 +109,11 @@ SELECT
 	-- operatorabbrev
 	'NYCDOT',
 	-- oversightagency
-	'New York City Department of Transportation',
+	ARRAY['New York City Department of Transportation'],
 	-- oversightabbrev
-	'NYCDOT',
-	-- dateactive
-	NULL,
-	-- dateinactive
-	NULL,
-	-- inactivestatus
-	NULL,
-	-- tags
-	NULL,
-	-- notes
-	NULL,
-	-- datesourcereceived
-	'2016-07-01',
-	-- datesourceupdated
-	'2016-07-01',
+	ARRAY['NYCDOT'],
 	-- datecreated
 	CURRENT_TIMESTAMP,
-	-- dateedited
-	CURRENT_TIMESTAMP,
-	-- creator
-	'Hannah Kates',
-	-- editor
-	'Hannah Kates',
-	-- geom
-	-- ST_SetSRID(ST_MakePoint(long, lat),4326)
-	geom,
-	-- agencysource
-	'NYCDOT',
-	-- sourcedatasetname
-	'Plaza Program',
-	-- linkdata
-	'NA',
-	-- linkdownload
-	'NA',
-	-- datatype
-	'Shapefile',
-	-- refreshmeans
-	'Request file from agency',
-	-- refreshfrequency
-	'Annually',
 	-- buildingid
 	NULL,
 	-- buildingname

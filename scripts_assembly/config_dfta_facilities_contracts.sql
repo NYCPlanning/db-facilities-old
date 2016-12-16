@@ -1,61 +1,36 @@
 INSERT INTO
 facilities (
-	id,
-	idold,
+	pgtable,
+	hash,
+	geom,
 	idagency,
 	facilityname,
 	addressnumber,
 	streetname,
 	address,
-	city,
 	borough,
-	boroughcode,
 	zipcode,
 	bbl,
 	bin,
 	parkid,
-	xcoord,
-	ycoord,
-	latitude,
-	longitude,
 	facilitytype,
 	domain,
 	facilitygroup,
 	facilitysubgroup,
 	agencyclass1,
 	agencyclass2,
-	colpusetype,
 	capacity,
 	utilization,
 	capacitytype,
 	utilizationrate,
 	area,
 	areatype,
-	servicearea,
 	operatortype,
 	operatorname,
 	operatorabbrev,
 	oversightagency,
 	oversightabbrev,
-	dateactive,
-	dateinactive,
-	inactivestatus,
-	tags,
-	notes,
-	datesourcereceived,
-	datesourceupdated,
 	datecreated,
-	dateedited,
-	creator,
-	editor,
-	geom,
-	agencysource,
-	sourcedatasetname,
-	linkdata,
-	linkdownload,
-	datatype,
-	refreshmeans,
-	refreshfrequency,
 	buildingid,
 	buildingname,
 	schoolorganizationlevel,
@@ -71,12 +46,14 @@ facilities (
 	groupquarters
 )
 SELECT
-	-- id
-	NULL,
-	-- idold
+	-- pgtable
+	'dfta_facilities_contracts',
+	-- hash,
+	md5(CAST((*) AS text)),
+	-- geom
 	NULL,
 	-- idagency
-	Provider_ID,
+	ARRAY[Provider_ID],
 	-- facilityname
 	initcap(Sponsor_Name),
 	-- addressnumber
@@ -85,11 +62,7 @@ SELECT
 	trim(both ' ' from substr(trim(both ' ' from initcap(Program_Address)), strpos(trim(both ' ' from initcap(Program_Address)), ' ')+1, (length(trim(both ' ' from initcap(Program_Address)))-strpos(trim(both ' ' from initcap(Program_Address)), ' ')))),
 	-- address
 	initcap(Program_Address),
-	-- city
-	NULL,
 	-- borough
-	NULL,
-	-- boroughcode
 	NULL,
 	-- zipcode
 	Program_Zipcode::integer,
@@ -98,14 +71,6 @@ SELECT
 	-- bin
 	NULL,
 	-- parkid
-	NULL,
-	-- xcoord
-	NULL,
-	-- ycoord
-	NULL,
-	-- latitude
-	NULL,
-	-- longitude
 	NULL,
 	-- facilitytype
 		(CASE
@@ -124,8 +89,7 @@ SELECT
 	Contract_Type,
 	-- agencyclass2
 	'NA',
-	-- colpusetype
-	NULL,
+
 	-- capacity
 	NULL,
 	-- utilization
@@ -138,8 +102,6 @@ SELECT
 	NULL,
 	-- areatype
 	NULL,
-	-- servicearea
-	NULL,
 	-- operatortype
 	'Non-public',
 	-- operatorname
@@ -147,48 +109,11 @@ SELECT
 	-- operatorabbrev
 	'Non-public',
 	-- oversightagency
-	'New York City Department for the Aging',
+	ARRAY['New York City Department for the Aging'],
 	-- oversightabbrev
-	'NYCDFTA',
-	-- dateactive
-	NULL,
-	-- dateinactive
-	NULL,
-	-- inactivestatus
-	NULL,
-	-- tags
-	NULL,
-	-- notes
-	NULL,
-	-- datesourcereceived
-	'2016-11-11',
-	-- datesourceupdated
-	'2016-11-11',
+	ARRAY['NYCDFTA'],
 	-- datecreated
 	CURRENT_TIMESTAMP,
-	-- dateedited
-	CURRENT_TIMESTAMP,
-	-- creator
-	'Hannah Kates',
-	-- editor
-	'Hannah Kates',
-	-- geom
-	-- ST_SetSRID(ST_MakePoint(long, lat),4326)
-	NULL,
-	-- agencysource
-	'NYCDFTA',
-	-- sourcedatasetname
-	'DFTA Contracts',
-	-- linkdata
-	'https://data.cityofnewyork.us/Social-Services/DFTA-Contracts/6j6t-3ixh',
-	-- linkdownload
-	'https://data.cityofnewyork.us/api/views/6j6t-3ixh/rows.csv?accessType=DOWNLOAD',
-	-- datatype
-	'CSV with Addresses',
-	-- refreshmeans
-	'Geocode - from NYC Open Data',
-	-- refreshfrequency
-	'Weekly',
 	-- buildingid
 	NULL,
 	-- buildingname

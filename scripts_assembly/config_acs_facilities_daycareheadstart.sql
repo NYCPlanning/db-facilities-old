@@ -1,61 +1,36 @@
 INSERT INTO
 facilities (
-	id,
-	idold,
+	pgtable,
+	hash,
+	geom,
 	idagency,
 	facilityname,
 	addressnumber,
 	streetname,
 	address,
-	city,
 	borough,
-	boroughcode,
 	zipcode,
 	bbl,
 	bin,
 	parkid,
-	xcoord,
-	ycoord,
-	latitude,
-	longitude,
 	facilitytype,
 	domain,
 	facilitygroup,
 	facilitysubgroup,
 	agencyclass1,
 	agencyclass2,
-	colpusetype,
 	capacity,
 	utilization,
 	capacitytype,
 	utilizationrate,
 	area,
 	areatype,
-	servicearea,
 	operatortype,
 	operatorname,
 	operatorabbrev,
 	oversightagency,
 	oversightabbrev,
-	dateactive,
-	dateinactive,
-	inactivestatus,
-	tags,
-	notes,
-	datesourcereceived,
-	datesourceupdated,
 	datecreated,
-	dateedited,
-	creator,
-	editor,
-	geom,
-	agencysource,
-	sourcedatasetname,
-	linkdata,
-	linkdownload,
-	datatype,
-	refreshmeans,
-	refreshfrequency,
 	buildingid,
 	buildingname,
 	schoolorganizationlevel,
@@ -71,12 +46,14 @@ facilities (
 	groupquarters
 )
 SELECT
-	-- id
-	NULL,
-	-- idold
+	-- pgtable
+	ARRAY['acs_facilities_daycareheadstart'],
+	-- hash,
+	md5(CAST((acs_facilities_daycareheadstart.*) AS text)),
+	-- geom
 	NULL,
 	-- idagency
-	EL_Program_Number,
+	ARRAY[EL_Program_Number],
 	-- facilityname
 	Program_Name,
 	-- addressnumber
@@ -85,8 +62,6 @@ SELECT
 	trim(both ' ' from substr(trim(both ' ' from initcap(Program_Address)), strpos(trim(both ' ' from initcap(Program_Address)), ' ')+1, (length(trim(both ' ' from initcap(Program_Address)))-strpos(trim(both ' ' from initcap(Program_Address)), ' ')))),
 	-- address
 	initcap(Program_Address),
-	-- city
-	NULL,
 	-- borough
 		(CASE
 			WHEN Boro = 'MN' THEN 'Manhattan'
@@ -95,14 +70,6 @@ SELECT
 			WHEN Boro = 'QN' THEN 'Queens'
 			WHEN Boro = 'SI' THEN 'Staten Island'
 		END),
-	-- boroughcode
-		(CASE
-			WHEN Boro = 'MN' THEN 1
-			WHEN Boro = 'BX' THEN 2
-			WHEN Boro = 'BK' THEN 3
-			WHEN Boro = 'QN' THEN 4
-			WHEN Boro = 'SI' THEN 5
-		END),
 	-- zipcode
 	NULL,
 	-- bbl
@@ -110,14 +77,6 @@ SELECT
 	-- bin
 	NULL,
 	-- parkid
-	NULL,
-	-- xcoord
-	NULL,
-	-- ycoord
-	NULL,
-	-- latitude
-	NULL,
-	-- longitude
 	NULL,
 	-- facilitytype
 		(CASE
@@ -136,8 +95,6 @@ SELECT
 	Model_Type,
 	-- agencyclass2
 	'NA',
-	-- colpusetype
-	NULL,
 	-- capacity
 	ROUND(Total::numeric,0),
 	-- utilization
@@ -150,8 +107,6 @@ SELECT
 	NULL,
 	-- areatype
 	NULL,
-	-- servicearea
-	NULL,
 	-- operatortype
 	'Non-public',
 	-- operatorname
@@ -159,48 +114,11 @@ SELECT
 	-- operator abbrev
 	'Non-public',
 	-- oversightagency
-	'New York City Administration for Childrens Services',
+	ARRAY['New York City Administration for Childrens Services'],
 	-- oversightabbrev
-	'NYCACS',
-	-- dateactive
-	NULL,
-	-- dateinactive
-	NULL,
-	-- inactivestatus
-	NULL,
-	-- tags
-	NULL,
-	-- notes
-	NULL,
-	-- datesourcereceived
-	'2016-10-31',
-	-- datesourceupdated
-	'2016-10-31',
+	ARRAY['NYCACS'],
 	-- datecreated
 	CURRENT_TIMESTAMP,
-	-- dateedited
-	CURRENT_TIMESTAMP,
-	-- creator
-	'Hannah Kates',
-	-- editor
-	'Hannah Kates',
-	-- geom
-	-- ST_SetSRID(ST_MakePoint(long, lat),4326)
-	NULL,
-	-- agencysource
-	'NYCACS',
-	-- sourcedatasetname
-	'Contractor Data',
-	-- linkdata
-	'NA',
-	-- linkdownload
-	'NA',
-	-- datatype
-	'CSV with Coordinates',
-	-- refreshmeans
-	'Request file from agency',
-	-- refreshfrequency
-	'Annually',
 	-- buildingid
 	NULL,
 	-- buildingname

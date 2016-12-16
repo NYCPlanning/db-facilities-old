@@ -1,8 +1,20 @@
 UPDATE facilities 
     SET 
-    	xcoord = ROUND(ST_X(ST_Transform(geom,2263))::numeric,4),
-    	ycoord = ROUND(ST_Y(ST_Transform(geom,2263))::numeric,4)
+    	latitude =
+    		(CASE
+	    		WHEN latitude IS NULL THEN ST_Y(geom)
+	    	END),
+    	longitude =
+    		(CASE
+	    		WHEN longitude IS NULL THEN ST_X(geom)
+	    	END),
+    	xcoord = 
+    		(CASE
+    			WHEN xcoord IS NULL THEN ROUND(ST_X(ST_Transform(geom,2263))::numeric,4)
+    		END),
+    	ycoord =
+    		(CASE
+    			WHEN ycoord IS NULL THEN ROUND(ST_Y(ST_Transform(geom,2263))::numeric,4)
+    		END)
     WHERE
-        xcoord IS NULL
-        AND ycoord IS NULL
-        AND geom IS NOT NULL
+        geom IS NOT NULL

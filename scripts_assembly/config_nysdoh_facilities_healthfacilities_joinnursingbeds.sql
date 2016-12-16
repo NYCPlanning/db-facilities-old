@@ -1,61 +1,36 @@
 INSERT INTO
 facilities (
-	id,
-	idold,
+	pgtable,
+	hash,
+	geom,
 	idagency,
 	facilityname,
 	addressnumber,
 	streetname,
 	address,
-	city,
 	borough,
-	boroughcode,
 	zipcode,
 	bbl,
 	bin,
 	parkid,
-	xcoord,
-	ycoord,
-	latitude,
-	longitude,
 	facilitytype,
 	domain,
 	facilitygroup,
 	facilitysubgroup,
 	agencyclass1,
 	agencyclass2,
-	colpusetype,
 	capacity,
 	utilization,
 	capacitytype,
 	utilizationrate,
 	area,
 	areatype,
-	servicearea,
 	operatortype,
 	operatorname,
 	operatorabbrev,
 	oversightagency,
 	oversightabbrev,
-	dateactive,
-	dateinactive,
-	inactivestatus,
-	tags,
-	notes,
-	datesourcereceived,
-	datesourceupdated,
 	datecreated,
-	dateedited,
-	creator,
-	editor,
-	geom,
-	agencysource,
-	sourcedatasetname,
-	linkdata,
-	linkdownload,
-	datatype,
-	refreshmeans,
-	refreshfrequency,
 	buildingid,
 	buildingname,
 	schoolorganizationlevel,
@@ -71,10 +46,13 @@ facilities (
 	groupquarters
 )
 SELECT
-	-- id
-	NULL,
-	-- idold
-	NULL,
+	-- pgtable
+	'nysdoh_facilities_healthfacilities',
+	-- hash,
+	md5(CAST((*) AS text)),
+	-- geom
+	-- ST_SetSRID(ST_MakePoint(long, lat),4326)
+	ST_SetSRID(ST_MakePoint(Facility_Longitude, Facility_Latitude),4326),
 	-- idagency
 	Facility_ID,
 	-- facilityname
@@ -85,8 +63,6 @@ SELECT
 	trim(both ' ' from substr(trim(both ' ' from Facility_Address_1), strpos(trim(both ' ' from Facility_Address_1), ' ')+1, (length(trim(both ' ' from Facility_Address_1))-strpos(trim(both ' ' from Facility_Address_1), ' ')))),
 	-- address
 	Facility_Address_1,
-	-- city
-	NULL,
 	-- borough
 		(CASE
 			WHEN Facility_County = 'New York' THEN 'Manhattan'
@@ -94,14 +70,6 @@ SELECT
 			WHEN Facility_County = 'Kings' THEN 'Brooklyn'
 			WHEN Facility_County = 'Queens' THEN 'Queens'
 			WHEN Facility_County = 'Richmond' THEN 'Staten Island'
-		END),
-	-- boroughcode
-		(CASE
-			WHEN Facility_County = 'New York' THEN 1
-			WHEN Facility_County = 'Bronx' THEN 2
-			WHEN Facility_County = 'Kings' THEN 3
-			WHEN Facility_County = 'Queens' THEN 4
-			WHEN Facility_County = 'Richmond' THEN 5
 		END),
 	-- zipcode
 	LEFT(Facility_Zip_Code,5)::integer,
@@ -111,14 +79,6 @@ SELECT
 	NULL,
 	-- parkid
 	NULL,
-	-- xcoord
-	NULL,
-	-- ycoord
-	NULL,
-	-- latitude
-	Facility_Latitude,
-	-- longitude
-	Facility_Longitude,
 	-- facilitytype
 		(CASE
 			WHEN Description LIKE '%Residential%'
@@ -144,8 +104,7 @@ SELECT
 	Description,
 	-- agencyclass2
 	ownership_type,
-	-- colpusetype
-	NULL,
+
 	-- capacity
 	capacity,
 	-- utilization
@@ -163,8 +122,6 @@ SELECT
 	-- area
 	NULL,
 	-- areatype
-	NULL,
-	-- servicearea
 	NULL,
 	-- operatortype
 		(CASE
@@ -188,48 +145,15 @@ SELECT
 			ELSE 'Non-public'
 		END),
 	-- oversightagency
-	'New York State Department of Health',
+	ARRAY['New York State Department of Health'],
 	-- oversightabbrev
-	'NYSDOH',
-	-- dateactive
-	NULL,
-	-- dateinactive
-	NULL,
-	-- inactivestatus
-	NULL,
-	-- tags
-	NULL,
-	-- notes
-	NULL,
-	-- datesourcereceived
-	'2016-11-14',
-	-- datesourceupdated
-	'2016-11-14',
+	ARRAY['NYSDOH'],
 	-- datecreated
 	CURRENT_TIMESTAMP,
-	-- dateedited
-	CURRENT_TIMESTAMP,
-	-- creator
-	'Hannah Kates',
-	-- editor
-	'Hannah Kates',
-	-- geom
-	-- ST_SetSRID(ST_MakePoint(long, lat),4326)
-	ST_SetSRID(ST_MakePoint(Facility_Longitude, Facility_Latitude),4326),
 	-- agencysource
-	'NYSDOH',
+	ARRAY['NYSDOH'],
 	-- sourcedatasetname
-	'Health Facility General Information',
-	-- linkdata
-	'https://health.data.ny.gov/Health/Health-Facility-General-Information/vn5v-hh5r',
-	-- linkdownload
-	'https://health.data.ny.gov/api/views/vn5v-hh5r/rows.csv?accessType=DOWNLOAD',
-	-- datatype
-	'CSV with Coordinates',
-	-- refreshmeans
-	'Pull from NYState Open Data',
-	-- refreshfrequency
-	'Weekly',
+	ARRAY['Health Facility General Information'],
 	-- buildingid
 	NULL,
 	-- buildingname

@@ -1,61 +1,36 @@
 INSERT INTO
 facilities (
-	id,
-	idold,
+	pgtable,
+	hash,
+	geom,
 	idagency,
 	facilityname,
 	addressnumber,
 	streetname,
 	address,
-	city,
 	borough,
-	boroughcode,
 	zipcode,
 	bbl,
 	bin,
 	parkid,
-	xcoord,
-	ycoord,
-	latitude,
-	longitude,
 	facilitytype,
 	domain,
 	facilitygroup,
 	facilitysubgroup,
 	agencyclass1,
 	agencyclass2,
-	colpusetype,
 	capacity,
 	utilization,
 	capacitytype,
 	utilizationrate,
 	area,
 	areatype,
-	servicearea,
 	operatortype,
 	operatorname,
 	operatorabbrev,
 	oversightagency,
 	oversightabbrev,
-	dateactive,
-	dateinactive,
-	inactivestatus,
-	tags,
-	notes,
-	datesourcereceived,
-	datesourceupdated,
 	datecreated,
-	dateedited,
-	creator,
-	editor,
-	geom,
-	agencysource,
-	sourcedatasetname,
-	linkdata,
-	linkdownload,
-	datatype,
-	refreshmeans,
-	refreshfrequency,
 	buildingid,
 	buildingname,
 	schoolorganizationlevel,
@@ -71,10 +46,16 @@ facilities (
 	groupquarters
 )
 SELECT
-	-- id
-	NULL,
-	-- idold
-	NULL,
+	-- pgtable
+	'nysdec_facilities_solidwaste',
+	-- hash,
+	md5(CAST((*) AS text)),
+	-- geom
+	-- ST_SetSRID(ST_MakePoint(long, lat),4326)
+		(CASE
+			WHEN east_coordinate > 11111 
+				THEN ST_Transform(ST_SetSRID(ST_MakePoint(east_coordinate, north_coordinate),26918),4326)
+		END),
 	-- idagency
 		(CASE
 			WHEN authorization_number <> '?' THEN authorization_number
@@ -87,8 +68,6 @@ SELECT
 	trim(both ' ' from substr(trim(both ' ' from location_address), strpos(trim(both ' ' from location_address), ' ')+1, (length(trim(both ' ' from location_address))-strpos(trim(both ' ' from location_address), ' ')))),
 	-- address
 	location_address,
-	-- city
-	NULL,
 	-- borough
 		(CASE
 			WHEN County = 'New York' THEN 'Manhattan'
@@ -96,14 +75,6 @@ SELECT
 			WHEN County = 'Kings' THEN 'Brooklyn'
 			WHEN County = 'Queens' THEN 'Queens'
 			WHEN County = 'Richmond' THEN 'Staten Island'
-		END),
-	-- boroughcode
-		(CASE
-			WHEN County = 'New York' THEN 1
-			WHEN County = 'Bronx' THEN 2
-			WHEN County = 'Kings' THEN 3
-			WHEN County = 'Queens' THEN 4
-			WHEN County = 'Richmond' THEN 5
 		END),
 	-- zipcode
 	NULL,
@@ -113,26 +84,6 @@ SELECT
 	NULL,
 	-- parkid
 	NULL,
-	-- xcoord
-		(CASE
-			WHEN east_coordinate > 11111 
-				THEN east_coordinate
-		END),
-	-- ycoord
-		(CASE
-			WHEN north_coordinate > 11111 
-				THEN north_coordinate
-		END),
-	-- latitude
-		(CASE
-			WHEN east_coordinate > 11111 
-				THEN ST_Y(ST_Transform(ST_SetSRID(ST_MakePoint(east_coordinate, north_coordinate),26918),4326))
-		END),
-	-- longitude
-		(CASE
-			WHEN north_coordinate > 11111 
-				THEN ST_X(ST_Transform(ST_SetSRID(ST_MakePoint(east_coordinate, north_coordinate),26918),4326))
-		END),
 	-- facilitytype
 		(CASE
 			WHEN activity_desc LIKE '%C&D%' THEN 'Construction and Demolition Processing'
@@ -160,8 +111,7 @@ SELECT
 			WHEN waste_types IS NOT NULL THEN waste_types
 			ELSE 'NA'
 		END),
-	-- colpusetype
-	NULL,
+
 	-- capacity
 	NULL,
 	-- utilization
@@ -173,8 +123,6 @@ SELECT
 	-- area
 	NULL,
 	-- areatype
-	NULL,
-	-- servicearea
 	NULL,
 	-- operatortype
 		(CASE
@@ -202,48 +150,12 @@ SELECT
 			WHEN owner_type = 'Municipal' THEN 'NYCDSNY'
 			ELSE 'NYSDEC'
 		END),
-	-- dateactive
-	NULL,
-	-- dateinactive
-	NULL,
-	-- inactivestatus
-	NULL,
-	-- tags
-	NULL,
-	-- notes
-	NULL,
-	-- datesourcereceived
-	'2016-08-01',
-	-- datesourceupdated
-	'2016-03-01',
 	-- datecreated
 	CURRENT_TIMESTAMP,
-	-- dateedited
-	CURRENT_TIMESTAMP,
-	-- creator
-	'Hannah Kates',
-	-- editor
-	'Hannah Kates',
-	-- geom
-	-- ST_SetSRID(ST_MakePoint(long, lat),4326)
-		(CASE
-			WHEN east_coordinate > 11111 
-				THEN ST_Transform(ST_SetSRID(ST_MakePoint(east_coordinate, north_coordinate),26918),4326)
-		END),
 	-- agencysource
-	'NYSDEC',
+	ARRAY['NYSDEC'],
 	-- sourcedatasetname
-	'Solid Waste Management Facilities',
-	-- linkdata
-	'https://data.ny.gov/Energy-Environment/Solid-Waste-Management-Facilities/2fni-raj8',
-	-- linkdownload
-	'https://data.ny.gov/api/views/2fni-raj8/rows.csv?accessType=DOWNLOAD',
-	-- datatype
-	'CSV with Coordinates',
-	-- refreshmeans
-	'Pull from NYState Open Data',
-	-- refreshfrequency
-	'Annually',
+	ARRAY['Solid Waste Management Facilities'],
 	-- buildingid
 	NULL,
 	-- buildingname

@@ -1,61 +1,36 @@
 INSERT INTO
 facilities (
-	id,
-	idold,
+	pgtable,
+	hash,
+	geom,
 	idagency,
 	facilityname,
 	addressnumber,
 	streetname,
 	address,
-	city,
 	borough,
-	boroughcode,
 	zipcode,
 	bbl,
 	bin,
 	parkid,
-	xcoord,
-	ycoord,
-	latitude,
-	longitude,
 	facilitytype,
 	domain,
 	facilitygroup,
 	facilitysubgroup,
 	agencyclass1,
 	agencyclass2,
-	colpusetype,
 	capacity,
 	utilization,
 	capacitytype,
 	utilizationrate,
 	area,
 	areatype,
-	servicearea,
 	operatortype,
 	operatorname,
 	operatorabbrev,
 	oversightagency,
 	oversightabbrev,
-	dateactive,
-	dateinactive,
-	inactivestatus,
-	tags,
-	notes,
-	datesourcereceived,
-	datesourceupdated,
 	datecreated,
-	dateedited,
-	creator,
-	editor,
-	geom,
-	agencysource,
-	sourcedatasetname,
-	linkdata,
-	linkdownload,
-	datatype,
-	refreshmeans,
-	refreshfrequency,
 	buildingid,
 	buildingname,
 	schoolorganizationlevel,
@@ -71,10 +46,14 @@ facilities (
 	groupquarters
 )
 SELECT
-	-- id
-	NULL,
-	-- idold
-	NULL,
+	-- pgtable
+	'dcas_facilities_colp',
+	-- hash,
+	md5(CAST((*) AS text)),
+	-- geom
+		(CASE
+			WHEN xcoord <> ' ' THEN ST_Transform(ST_SetSRID(ST_MakePoint(xcoord::numeric, ycoord::numeric),2263),4326)
+		END),
 	-- idagency
 	NULL,
 	-- facilityname
@@ -92,18 +71,8 @@ SELECT
 				AND house_number <> ' '
 				THEN initcap(CONCAT(house_number,' ',street_name))
 		END),
-	-- city
-	NULL,
 	-- borough
 	initcap(Borough),
-	-- boroughcode
-		(CASE
-			WHEN borough = 'MANHATTAN' THEN 1
-			WHEN borough = 'BRONX' THEN 2
-			WHEN borough = 'BROOKLYNK' THEN 3
-			WHEN borough = 'QUEENS' THEN 4
-			WHEN borough = 'STATEN ISLAND' THEN 5
-		END),
 	-- zipcode
 	NULL,
 	-- bbl
@@ -112,27 +81,10 @@ SELECT
 	NULL,
 	-- parkid
 	NULL,
-	-- xcoord
-	(CASE
-		WHEN xcoord <> ' ' THEN xcoord::numeric
-	END),
-	-- ycoord
-	(CASE
-		WHEN xcoord <> ' ' THEN ycoord::numeric
-	END),
-	-- latitude
-	(CASE
-		WHEN xcoord <> ' ' THEN ST_Y(ST_Transform(ST_SetSRID(ST_MakePoint(xcoord::numeric, ycoord::numeric),2263),4326))
-	END),
-	-- longitude
-	(CASE
-		WHEN xcoord <> ' ' THEN ST_X(ST_Transform(ST_SetSRID(ST_MakePoint(xcoord::numeric, ycoord::numeric),2263),4326))
-	END),
 	-- facilitytype
 	initcap(use_type),
 	-- domain
-
-(CASE
+		(CASE
 			-- Admin of Gov
 			WHEN use_type LIKE '%AGREEMENT%'
 				OR use_type LIKE '%DISPOSITION%'
@@ -589,8 +541,6 @@ SELECT
 	NULL,
 	-- areatype
 	NULL,
-	-- servicearea
-	NULL,
 	-- operatortype
 	'Public',
 	-- operatorname
@@ -807,47 +757,8 @@ SELECT
 			WHEN agency LIKE 'HLTH' THEN 'NYCODHMH'
 			ELSE CONCAT('NYC',agency)
 		END),
-	-- dateactive
-	NULL,
-	-- dateinactive
-	NULL,
-	-- inactivestatus
-	NULL,
-	-- tags
-	NULL,
-	-- notes
-	NULL,
-	-- datesourcereceived
-	'2016-10-20',
-	-- datesourceupdated
-	'2016-10-20',
 	-- datecreated
 	CURRENT_TIMESTAMP,
-	-- dateedited
-	CURRENT_TIMESTAMP,
-	-- creator
-	'Hannah Kates',
-	-- editor
-	'Hannah Kates',
-	-- geom
-	-- ST_SetSRID(ST_MakePoint(long, lat),4326)
-		(CASE
-			WHEN xcoord <> ' ' THEN ST_Transform(ST_SetSRID(ST_MakePoint(xcoord::numeric, ycoord::numeric),2263),4326)
-		END),
-	-- agencysource
-	'NYCDCAS',
-	-- sourcedatasetname
-	'City Owned and Leased Properties',
-	-- linkdata
-	'NA',
-	-- linkdownload
-	'NA',
-	-- datatype
-	'CSV with Addresses',
-	-- refreshmeans
-	'Geocode - Request from Agency',
-	-- refreshfrequency
-	'Annually',
 	-- buildingid
 	NULL,
 	-- buildingname

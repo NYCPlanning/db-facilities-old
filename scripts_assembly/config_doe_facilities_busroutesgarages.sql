@@ -1,61 +1,36 @@
 INSERT INTO
 facilities (
-	id,
-	idold,
+	pgtable,
+	hash,
+	geom,
 	idagency,
 	facilityname,
 	addressnumber,
 	streetname,
 	address,
-	city,
 	borough,
-	boroughcode,
 	zipcode,
 	bbl,
 	bin,
 	parkid,
-	xcoord,
-	ycoord,
-	latitude,
-	longitude,
 	facilitytype,
 	domain,
 	facilitygroup,
 	facilitysubgroup,
 	agencyclass1,
 	agencyclass2,
-	colpusetype,
 	capacity,
 	utilization,
 	capacitytype,
 	utilizationrate,
 	area,
 	areatype,
-	servicearea,
 	operatortype,
 	operatorname,
 	operatorabbrev,
 	oversightagency,
 	oversightabbrev,
-	dateactive,
-	dateinactive,
-	inactivestatus,
-	tags,
-	notes,
-	datesourcereceived,
-	datesourceupdated,
 	datecreated,
-	dateedited,
-	creator,
-	editor,
-	geom,
-	agencysource,
-	sourcedatasetname,
-	linkdata,
-	linkdownload,
-	datatype,
-	refreshmeans,
-	refreshfrequency,
 	buildingid,
 	buildingname,
 	schoolorganizationlevel,
@@ -71,10 +46,12 @@ facilities (
 	groupquarters
 )
 SELECT
-	-- id
-	NULL,
-	-- idold
-	NULL,
+	-- pgtable
+	'doe_facilities_busroutesgarages',
+	-- hash,
+	md5(CAST((*) AS text)),
+	-- geom
+	ST_Transform(ST_SetSRID(ST_MakePoint(XCoordinates, YCoordinates),2263),4326),
 	-- idagency
 	NULL,
 	-- facilityname
@@ -89,8 +66,6 @@ SELECT
 	Garage_City,
 	-- borough
 	NULL,
-	-- boroughcode
-	NULL,
 	-- zipcode
 	Garage_Zip::integer,
 	-- bbl
@@ -99,14 +74,6 @@ SELECT
 	NULL,
 	-- parkid
 	NULL,
-	-- xcoord
-	XCoordinates,
-	-- ycoord
-	YCoordinates,
-	-- latitude
-	ST_Y(ST_Transform(ST_SetSRID(ST_MakePoint(XCoordinates, YCoordinates),2263),4326)),
-	-- longitude
-	ST_X(ST_Transform(ST_SetSRID(ST_MakePoint(XCoordinates, YCoordinates),2263),4326)),
 	-- facilitytype
 	'School Bus Depot',
 	-- domain
@@ -119,8 +86,6 @@ SELECT
 	'NA',
 	-- agencyclass2
 	'NA',
-	-- colpusetype
-	NULL,
 	-- capacity
 	NULL,
 	-- utilization
@@ -133,8 +98,6 @@ SELECT
 	NULL,
 	-- areatype
 	NULL,
-	-- servicearea
-	NULL,
 	-- operatortype
 	'Non-public',
 	-- operatorname
@@ -142,49 +105,11 @@ SELECT
 	-- operatorabbrev
 	'Non-public',
 	-- oversightagency
-	'New York City Department of Education',
+	ARRAY['New York City Department of Education'],
 	-- oversightabbrev
-	'NYCDOE',
-	-- dateactive
-	NULL,
-	-- dateinactive
-	NULL,
-	-- inactivestatus
-	NULL,
-	-- tags
-	NULL,
-	-- notes
-	NULL,
-	-- datesourcereceived
-	'2016-11-01',
-	-- datesourceupdated
-	'2016-11-01',
+	ARRAY['NYCDOE'],
 	-- datecreated
 	CURRENT_TIMESTAMP,
-	-- dateedited
-	CURRENT_TIMESTAMP,
-	-- creator
-	'Hannah Kates',
-	-- editor
-	'Hannah Kates',
-	-- geom
-	-- ST_SetSRID(ST_MakePoint(long, lat),4326)
-	ST_Transform(ST_SetSRID(ST_MakePoint(XCoordinates, YCoordinates),2263),4326),
-	-- NAD 1983 StatePlane New York Long Island FIPS 3104 Feet
-	-- agencysource
-	'NYCDOE',
-	-- sourcedatasetname
-	'Routes',
-	-- linkdata
-	'https://data.cityofnewyork.us/Transportation/Routes/8yac-vygm',
-	-- linkdownload
-	'https://data.cityofnewyork.us/api/views/8yac-vygm/rows.csv?accessType=DOWNLOAD',
-	-- datatype
-	'CSV with Coordinates',
-	-- refreshmeans
-	'Pull from NYC Open Data',
-	-- refreshfrequency
-	'Monthly',
 	-- buildingid
 	NULL,
 	-- buildingname

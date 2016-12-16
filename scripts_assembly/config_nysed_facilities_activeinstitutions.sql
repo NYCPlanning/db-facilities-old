@@ -1,61 +1,36 @@
 INSERT INTO
 facilities (
-	id,
-	idold,
+	pgtable,
+	hash,
+	geom,
 	idagency,
 	facilityname,
 	addressnumber,
 	streetname,
 	address,
-	city,
 	borough,
-	boroughcode,
 	zipcode,
 	bbl,
 	bin,
 	parkid,
-	xcoord,
-	ycoord,
-	latitude,
-	longitude,
 	facilitytype,
 	domain,
 	facilitygroup,
 	facilitysubgroup,
 	agencyclass1,
 	agencyclass2,
-	colpusetype,
 	capacity,
 	utilization,
 	capacitytype,
 	utilizationrate,
 	area,
 	areatype,
-	servicearea,
 	operatortype,
 	operatorname,
 	operatorabbrev,
 	oversightagency,
 	oversightabbrev,
-	dateactive,
-	dateinactive,
-	inactivestatus,
-	tags,
-	notes,
-	datesourcereceived,
-	datesourceupdated,
 	datecreated,
-	dateedited,
-	creator,
-	editor,
-	geom,
-	agencysource,
-	sourcedatasetname,
-	linkdata,
-	linkdownload,
-	datatype,
-	refreshmeans,
-	refreshfrequency,
 	buildingid,
 	buildingname,
 	schoolorganizationlevel,
@@ -71,10 +46,26 @@ facilities (
 	groupquarters
 )
 SELECT
-	-- id
-	NULL,
-	-- idold
-	NULL,
+	-- pgtable
+	nysed_facilities_activeinstitutions,
+	-- hash,
+	md5(CAST((*) AS text)),
+	-- geom
+	-- ST_SetSRID(ST_MakePoint(long, lat),4326)
+		(CASE
+			-- if switched coordinates were provided
+			WHEN 
+				Gis_Latitude_Y::double precision < 37
+				AND Gis_Latitude_Y::double precision <> 0
+				AND Gis_Longitude_X::double precision > -69
+				AND Gis_Longitude_X::double precision <> 0
+			THEN ST_SetSRID(ST_MakePoint(Gis_Latitude_Y::double precision, Gis_Longitude_X::double precision),4326)
+			-- if correct coordinates were provided
+			WHEN 
+				Gis_Latitude_Y::double precision > 37
+				AND Gis_Longitude_X::double precision < -69
+			THEN ST_SetSRID(ST_MakePoint(Gis_Longitude_X::double precision, Gis_Latitude_Y::double precision),4326)
+		END),
 	-- idagency
 	Sed_Code,
 	-- facilityname
@@ -95,14 +86,6 @@ SELECT
 			WHEN County_Desc = 'QUEENS' THEN 'Queens'
 			WHEN County_Desc = 'RICHMOND' THEN 'Staten Island'
 		END),
-	-- boroughcode
-		(CASE
-			WHEN County_Desc = 'NEW YORK' THEN 1
-			WHEN County_Desc = 'BRONX' THEN 2
-			WHEN County_Desc = 'KINGS' THEN 3
-			WHEN County_Desc = 'QUEENS' THEN 4
-			WHEN County_Desc = 'RICHMOND' THEN 5
-		END),
 	-- zipcode
 	zipcd5::integer,
 	-- bbl
@@ -111,24 +94,6 @@ SELECT
 	NULL,
 	-- parkid
 	NULL,
-	-- xcoord
-	NULL,
-	-- ycoord
-	NULL,
-	-- latitude
-		(CASE
-			-- if switched coordinates were provided
-			WHEN Gis_Latitude_Y::double precision < 37 THEN Gis_Longitude_X
-			-- if correct coordinates were provided
-			WHEN Gis_Latitude_Y::double precision > 37 THEN Gis_Latitude_Y
-		END),
-	-- longitude
-		(CASE
-			-- if switched coordinates were provided
-			WHEN Gis_Longitude_X::double precision > -69 THEN Gis_Latitude_Y
-			-- if correct coordinates were provided
-			WHEN Gis_Longitude_X::double precision < -69 THEN Gis_Longitude_X
-		END),
 	-- facilitytype
 		(CASE
 			WHEN Institution_Sub_Type_Desc LIKE '%PUBLIC SCHOOL%'
@@ -197,8 +162,7 @@ SELECT
 	Institution_Sub_Type_Desc,
 	-- agencyclass2
 	Institution_Type_Desc,
-	-- colpusetype
-	NULL,
+
 	-- capacity
 	NULL,
 	-- utilization
@@ -213,8 +177,6 @@ SELECT
 	-- area
 	NULL,
 	-- areatype
-	NULL,
-	-- servicearea
 	NULL,
 	-- operatortype
 		(CASE
@@ -242,68 +204,22 @@ SELECT
 		END),
 	-- oversightagency
 		(CASE
-			WHEN Institution_Type_Desc = 'PUBLIC SCHOOLS' THEN 'New York City Department of Education'
-			WHEN Institution_Type_Desc LIKE '%NON-IMF%' THEN 'NYCDOE'
-			ELSE 'New York State Education Department'
+			WHEN Institution_Type_Desc = 'PUBLIC SCHOOLS' THEN ARRAY['New York City Department of Education', 'New York State Education Department']
+			WHEN Institution_Type_Desc LIKE '%NON-IMF%' THEN ARRAY['New York City Department of Education', 'New York State Education Department']
+			ELSE ARRAY['New York State Education Department']
 		END),
 	-- oversightabbrev
 		(CASE
-			WHEN Institution_Type_Desc = 'PUBLIC SCHOOLS' THEN 'NYCDOE'
-			WHEN Institution_Type_Desc LIKE '%NON-IMF%' THEN 'NYCDOE'
-			ELSE 'NYSED'
+			WHEN Institution_Type_Desc = 'PUBLIC SCHOOLS' THEN ARRAY['NYCDOE', 'NYSED']
+			WHEN Institution_Type_Desc LIKE '%NON-IMF%' THEN ARRAY['NYCDOE', 'NYSED']
+			ELSE ARRAY['NYSED']
 		END),
-	-- dateactive
-	Active_Date::date,
-	-- dateinactive
-	NULL,
-	-- inactivestatus
-	NULL,
-	-- tags
-	NULL,
-	-- notes
-	NULL,
-	-- datesoucereceived
-	'2016-07-26',
-	-- datesouceupdated
-	'2016-07-26',
 	-- datecreated
 	CURRENT_TIMESTAMP,
-	-- dateedited
-	CURRENT_TIMESTAMP,
-	-- creator
-	'Hannah Kates',
-	-- editor
-	'Hannah Kates',
-	-- geom
-	-- ST_SetSRID(ST_MakePoint(long, lat),4326)
-		(CASE
-			-- if switched coordinates were provided
-			WHEN 
-				Gis_Latitude_Y::double precision < 37
-				AND Gis_Latitude_Y::double precision <> 0
-				AND Gis_Longitude_X::double precision > -69
-				AND Gis_Longitude_X::double precision <> 0
-			THEN ST_SetSRID(ST_MakePoint(Gis_Latitude_Y::double precision, Gis_Longitude_X::double precision),4326)
-			-- if correct coordinates were provided
-			WHEN 
-				Gis_Latitude_Y::double precision > 37
-				AND Gis_Longitude_X::double precision < -69
-			THEN ST_SetSRID(ST_MakePoint(Gis_Longitude_X::double precision, Gis_Latitude_Y::double precision),4326)
-		END),
 	-- agencysource
-	'NYSED',
+	ARRAY['NYSED'],
 	-- sourcedatasetname
-	'LIstings - Active Institutions with GIS coordinates and OITS Accuracy Code',
-	-- linkdata
-	'https://portal.nysed.gov/discoverer/app/grid;jsessionid=eikT4MZCXS4gnCu4gkga8RxAT-LFQX1XhLGyOQErv16YJWGj_jo8!-214928944?bi_origin=dvtb&bi_cPath=dvtb&numberLocale=en_US&source=dvtb&gotoNthPage=1&bi_tool=rt&event=bi_showTool&bi_rownavdv=s25&stateStr=eNrtVlFzmzgQ%2FjPY0xtPMiBjJ3nwg4vdlGmKe8ZpmnthZEkYJRgIksHOr79Fog71JO1Q957OL9rVov202tWKz2DbLDa65VKOUDdJKRuhq67IRt08TeXI7LKCJXIEi3BCu0JiyUbvhoO%2FDJwZHTSkYac%2FASm0SIiWNNayFmyTV5pBEqNbEDkSBe2S5HFEwgBbJjLKRxFJgLNXtAioAAWcnmIRbDvIskxw9RnNWdi5mCJzFuNMKQu8jJnSPqS5knOWpbkU5066SeROmSZMEADDaQkoIY4Fa0JftIYeU1gthLLd8IShJtxl%240g5xImG4Ro8t%24u4CTaowCLGpHKwzmfuwlfqtavlmBAlHSha03HYOoov0U5wgmMNe3BCqyqvqAos880PG%2FUPIrzmtVearLjcUL1ZB11%2466CrpqP9liOWP%2FjdH%2FhZrU%2Fm0%2FjVHKHfRqov1B7pqj1S1UQNiPa3xk1ElSjJ00TZ%2Fc1Se%24wy9lqQV8d0UJ06KUQgqgMff7uU8jmlPOSM6nhVRpw4giFJ8zUsRs73bsX50yu9ax6dNZc269ga7oat6jN5eN2M7DfuVp2Gg1vab5%2FqNNvEOH8tKrv9U0ckL1ijPvs7YB5%2Fn96o9VMW%24CxmRL8MdaFq5%2F5kANM%24DsPwUine9E59v5%2FNP0mw6s%2Fv5zPv28v0k%24td%249V0qKZ%2F306nnpprjLnrfPw88yaykarB0Vdr34gHFUX%2FYffsNxn%24ufAP3hHUvvD%2F8IzQQQPj4s%24%2FdodJRkdv8SVKk%2FovBEO%2FCd4%2FGvw2r%2F7zlIqC5QBmad4Tadpj0wKG7eOZtY57sECA13NpnZtl73G3pUVviZ9LmBABVnRZ7rYZ6RWglw%2477QMtgE3YZVFhAXEyNbRc%2FgRSfd9tl1zEshIkSis8Bbc3rtR4ZnMqo548s55L2zSrJUseMb6K5IHxOseUA2%2Fskeh7aBrkQW%24n4hJrEFWIGc7xWrwk4EQBTxTwRAFPFPBEAU8U8EQBTxTwf0EBY6LpTwlPkl33gv1CC1eKFyrTT%24ncr9ncg1piZDmnxo3rL6rmCIKxs3C%2FTgPXA8PiduHOPD%244cxcfA6AagTObzSeuN15M%2FWDsTYKKh4CHczsfO%2FfwdTLtoA%24WQeQuMwrOSpb%2FCyl4PR4%3D',
-	-- linkdownload
-	'NA',
-	-- datatype
-	'CSV with Coordinates',
-	-- refreshmeans
-	'Manual download',
-	-- refreshfrequency
-	'Weekly',
+	ARRAY['Listings - Active Institutions with GIS coordinates and OITS Accuracy Code'],
 	-- buildingid
 	NULL,
 	-- building name

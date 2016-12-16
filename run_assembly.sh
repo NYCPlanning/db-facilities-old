@@ -60,7 +60,7 @@ echo 'Done loading other source datasets'
 # create empty master table with facilities db schema
 
 echo 'Creating empty facilities table...'
-# psql $DATABASE_URL -f ./scripts_assembly/create.sql
+psql $DATABASE_URL -f ./scripts_assembly/create.sql
 echo 'Done creating empty facilities table'
 
 # STEP 3

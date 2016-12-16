@@ -1,61 +1,36 @@
 INSERT INTO
 facilities (
-	id,
-	idold,
+	pgtable,
+	hash,
+	geom,
 	idagency,
 	facilityname,
 	addressnumber,
 	streetname,
 	address,
-	city,
 	borough,
-	boroughcode,
 	zipcode,
 	bbl,
 	bin,
 	parkid,
-	xcoord,
-	ycoord,
-	latitude,
-	longitude,
 	facilitytype,
 	domain,
 	facilitygroup,
 	facilitysubgroup,
 	agencyclass1,
 	agencyclass2,
-	colpusetype,
 	capacity,
 	utilization,
 	capacitytype,
 	utilizationrate,
 	area,
 	areatype,
-	servicearea,
 	operatortype,
 	operatorname,
 	operatorabbrev,
 	oversightagency,
 	oversightabbrev,
-	dateactive,
-	dateinactive,
-	inactivestatus,
-	tags,
-	notes,
-	datesourcereceived,
-	datesourceupdated,
 	datecreated,
-	dateedited,
-	creator,
-	editor,
-	geom,
-	agencysource,
-	sourcedatasetname,
-	linkdata,
-	linkdownload,
-	datatype,
-	refreshmeans,
-	refreshfrequency,
 	buildingid,
 	buildingname,
 	schoolorganizationlevel,
@@ -71,12 +46,16 @@ facilities (
 	groupquarters
 )
 SELECT
-	-- id
-	NULL,
-	-- idold
-	NULL,
+	-- pgtable
+	'doe_facilities_schoolsbluebook',
+	-- hash,
+	md5(CAST((*) AS text)),
+	-- geom
+		(CASE
+			WHEN X <> '#N/A' THEN ST_Transform(ST_SetSRID(ST_MakePoint(X::double precision, Y::double precision),2263),4326)
+		END),
 	-- idagency
-	Bldg_ID,
+	ARRAY[Bldg_ID],
 	-- facilityname
 	initcap(Bldg_Name),
 	-- addressnumber
@@ -91,8 +70,6 @@ SELECT
 		(CASE
 			WHEN Address <> '#N/A' THEN initcap(Address)
 		END),
-	-- city
-	NULL,
 	-- borough
 		(CASE
 			WHEN LEFT(Org_ID,1) = 'M' THEN 'Manhattan'
@@ -100,14 +77,6 @@ SELECT
 			WHEN LEFT(Org_ID,1) = 'K' THEN 'Brooklyn'
 			WHEN LEFT(Org_ID,1) = 'Q' THEN 'Queens'
 			WHEN LEFT(Org_ID,1) = 'R' THEN 'Staten Island'
-		END),
-	-- boroughcode
-		(CASE
-			WHEN LEFT(Org_ID,1) = 'M' THEN 1
-			WHEN LEFT(Org_ID,1) = 'X' THEN 2
-			WHEN LEFT(Org_ID,1) = 'K' THEN 3
-			WHEN LEFT(Org_ID,1) = 'Q' THEN 4
-			WHEN LEFT(Org_ID,1) = 'R' THEN 5
 		END),
 	-- zipcode
 	NULL,
@@ -117,18 +86,6 @@ SELECT
 	NULL,
 	-- parkid
 	NULL,
-	-- xcoord
-	x::double precision,
-	-- ycoord
-	y::double precision,
-	-- latitude
-		(CASE
-			WHEN X <> '#N/A' THEN ST_Y(ST_Transform(ST_SetSRID(ST_MakePoint(X::double precision, Y::double precision),2263),4326))
-		END),
-	-- longitude
-		(CASE
-			WHEN X <> '#N/A' THEN ST_X(ST_Transform(ST_SetSRID(ST_MakePoint(X::double precision, Y::double precision),2263),4326))
-		END),
 	-- facilitytype
 		(CASE
 			WHEN Charter IS NULL AND Org_Level = 'PS' THEN 'Elementary School - Public'
@@ -159,8 +116,7 @@ SELECT
 	Charter,
 	-- agencyclass2
 	Org_Level,
-	-- colpusetype
-	NULL,
+
 	-- capacity
 	PS_Capacity::numeric + MS_Capacity::numeric + HS_Capacity::numeric,
 	-- utilization
@@ -174,8 +130,6 @@ SELECT
 	-- area
 	NULL,
 	-- areatype
-	NULL,
-	-- servicearea
 	NULL,
 	-- operatortype
 		(CASE
@@ -193,50 +147,11 @@ SELECT
 			ELSE 'NYCDOE'
 		END),
 	-- oversightagency
-	'New York City Department of Education',
+	ARRAY['New York City Department of Education'],
 	-- oversightabbrev
-	'NYCDOE',
-	-- dateactive
-	NULL,
-	-- dateinactive
-	NULL,
-	-- inactivestatus
-	NULL,
-	-- tags
-	NULL,
-	-- notes
-	NULL,
-	-- datesourcereceived
-	'2016-07-20',
-	-- datesourceupdated
-	'2016-07-20',
+	ARRAY['NYCDOE'],
 	-- datecreated
 	CURRENT_TIMESTAMP,
-	-- dateedited
-	CURRENT_TIMESTAMP,
-	-- creator
-	'Hannah Kates',
-	-- editor
-	'Hannah Kates',
-	-- geom
-	-- ST_SetSRID(ST_MakePoint(long, lat),4326)
-		(CASE
-			WHEN X <> '#N/A' THEN ST_Transform(ST_SetSRID(ST_MakePoint(X::double precision, Y::double precision),2263),4326)
-		END),
-	-- agencysource
-	'NYCDOE',
-	-- sourcedatasetname
-	'2014-2015 Blue Book',
-	-- linkdata
-	'NA',
-	-- linkdownload
-	'NA',
-	-- datatype
-	'CSV with Coordinates',
-	-- refreshmeans
-	'Request file from agency',
-	-- refreshfrequency
-	'Annually',
 	-- buildingid
 	Bldg_ID,
 	-- buildingname

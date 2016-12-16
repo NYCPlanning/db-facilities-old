@@ -1,61 +1,36 @@
 INSERT INTO
 facilities (
-	id,
-	idold,
+	pgtable,
+	hash,
+	geom,
 	idagency,
 	facilityname,
 	addressnumber,
 	streetname,
 	address,
-	city,
 	borough,
-	boroughcode,
 	zipcode,
 	bbl,
 	bin,
 	parkid,
-	xcoord,
-	ycoord,
-	latitude,
-	longitude,
 	facilitytype,
 	domain,
 	facilitygroup,
 	facilitysubgroup,
 	agencyclass1,
 	agencyclass2,
-	colpusetype,
 	capacity,
 	utilization,
 	capacitytype,
 	utilizationrate,
 	area,
 	areatype,
-	servicearea,
 	operatortype,
 	operatorname,
 	operatorabbrev,
 	oversightagency,
 	oversightabbrev,
-	dateactive,
-	dateinactive,
-	inactivestatus,
-	tags,
-	notes,
-	datesourcereceived,
-	datesourceupdated,
 	datecreated,
-	dateedited,
-	creator,
-	editor,
-	geom,
-	agencysource,
-	sourcedatasetname,
-	linkdata,
-	linkdownload,
-	datatype,
-	refreshmeans,
-	refreshfrequency,
 	buildingid,
 	buildingname,
 	schoolorganizationlevel,
@@ -71,10 +46,12 @@ facilities (
 	groupquarters
 )
 SELECT
-	-- id
-	NULL,
-	-- idold
-	NULL,
+	-- pgtable
+	'omb_facilities_libraryvisits',
+	-- hash,
+	md5(CAST((*) AS text)),
+	-- geom
+	ST_SetSRID(ST_MakePoint(lon, lat),4326),
 	-- idagency
 	NULL,
 	-- facilityname
@@ -85,12 +62,8 @@ SELECT
 	initcap(streetname),
 	-- address
 	CONCAT(housenum,' ',initcap(streetname)),
-	-- city
-	NULL,
 	-- borough
 	boroname,
-	-- boroughcode
-	ROUND(borocode::numeric,0),
 	-- zipcode
 	ROUND(zip::numeric,0),
 	-- bbl
@@ -99,14 +72,6 @@ SELECT
 	ARRAY[ROUND(bin::numeric,0)],
 	-- parkid
 	NULL,
-	-- xcoord
-	ST_X(ST_Transform(ST_SetSRID(ST_MakePoint(lon, lat),4326),2263)),
-	-- ycoord
-	ST_Y(ST_Transform(ST_SetSRID(ST_MakePoint(lon, lat),4326),2263)),
-	-- latitude
-	lat,
-	-- longitude
-	lon,
 	-- facilitytype
 	'Public Libraries',
 	-- domain
@@ -119,8 +84,7 @@ SELECT
 	'NA',
 	-- agencyclass2
 	'NA',
-	-- colpusetype
-	NULL,
+
 	-- capacity
 	NULL,
 	-- utilization
@@ -132,8 +96,6 @@ SELECT
 	-- area
 	NULL,
 	-- areatype
-	NULL,
-	-- servicearea
 	NULL,
 	-- operatortype
 	'Non-public',
@@ -147,51 +109,14 @@ SELECT
 	system,
 	-- oversightagency
 		(CASE
-			WHEN system = 'QPL' THEN 'Queens Public Libraries'
-			WHEN system = 'BPL' THEN 'Brooklyn Public Libraries'
-			WHEN system = 'NYPL' THEN 'New York Public Libraries'
+			WHEN system = 'QPL' THEN ARRAY['Queens Public Libraries']
+			WHEN system = 'BPL' THEN ARRAY['Brooklyn Public Libraries']
+			WHEN system = 'NYPL' THEN ARRAY['New York Public Libraries']
 		END),
 	-- oversightabbrev
-	system,
-	-- dateactive
-	NULL,
-	-- dateinactive
-	NULL,
-	-- inactivestatus
-	NULL,
-	-- tags
-	NULL,
-	-- notes
-	NULL,
-	-- datesourcereceived
-	'2016-06-30',
-	-- datesourceupdated
-	'2016-06-30',
+	ARRAY[system],
 	-- datecreated
 	CURRENT_TIMESTAMP,
-	-- dateedited
-	CURRENT_TIMESTAMP,
-	-- creator
-	'Hannah Kates',
-	-- editor
-	'Hannah Kates',
-	-- geom
-	-- ST_SetSRID(ST_MakePoint(long, lat),4326)
-	ST_SetSRID(ST_MakePoint(lon, lat),4326),
-	-- agencysource
-	'NYCOMB',
-	-- sourcedatasetname
-	'District Resource Statement',
-	-- linkdata
-	'NA',
-	-- linkdownload
-	'NA',
-	-- datatype
-	'CSV with Coordinates',
-	-- refreshmeans
-	'Request file from agency',
-	-- refreshfrequency
-	'Annually',
 	-- buildingid
 	NULL,
 	-- buildingname
