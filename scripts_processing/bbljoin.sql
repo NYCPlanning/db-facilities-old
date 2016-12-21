@@ -13,22 +13,22 @@ UPDATE facilities AS f
         zipcode = p.zipcode,
         addressnumber = 
         	(CASE
-	        	WHEN f.address IS NULL THEN initcap(split_part(p.address,' ',1))
+	        	WHEN f.addressnumber IS NULL THEN initcap(split_part(p.address,' ',1))
 	        	ELSE f.addressnumber
         	END),
         streetname = 
         	(CASE
-	        	WHEN f.address IS NULL THEN initcap(split_part(p.address,' ',2))
+	        	WHEN f.addressnumber IS NULL THEN initcap(split_part(p.address,' ',2))
 	        	ELSE f.streetname
         	END),
         address = 
         	(CASE
-	        	WHEN f.address IS NULL THEN initcap(p.address)
+	        	WHEN f.addressnumber IS NULL THEN initcap(p.address)
 	        	ELSE f.address
         	END),
         processingflag = 
         	(CASE
-	        	WHEN f.address IS NULL AND p.address IS NOT NULL THEN 'bbljoin2address'
+	        	WHEN f.addressnumber IS NULL AND p.address IS NOT NULL THEN 'bbljoin2address'
 	        	ELSE 'bbljoin'
         	END)
     FROM 

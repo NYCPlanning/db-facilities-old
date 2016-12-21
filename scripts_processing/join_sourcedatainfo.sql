@@ -9,7 +9,7 @@ UPDATE facilities
         refreshfrequency = ARRAY[j.refreshfrequency],
         datesourceupdated = ARRAY[j.datesourceupdated]
     FROM
-        (SELECT
+        (SELECT DISTINCT ON (pgtable)
             f.pgtable,
             d.agencysource,
             d.sourcedatasetname,

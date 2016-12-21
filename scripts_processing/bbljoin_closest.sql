@@ -13,22 +13,22 @@ UPDATE facilities
         zipcode = j.zipcode,
         addressnumber = 
         	(CASE
-	        	WHEN facilities.address IS NULL THEN initcap(split_part(j.address,' ',1))
+	        	WHEN facilities.addressnumber IS NULL THEN initcap(split_part(j.address,' ',1))
 	        	ELSE facilities.addressnumber
         	END),
         streetname = 
         	(CASE
-	        	WHEN facilities.address IS NULL THEN initcap(split_part(j.address,' ',2))
+	        	WHEN facilities.addressnumber IS NULL THEN initcap(split_part(j.address,' ',2))
 	        	ELSE facilities.streetname
         	END),
         address = 
         	(CASE
-	        	WHEN facilities.address IS NULL THEN initcap(j.address)
+	        	WHEN facilities.addressnumber IS NULL THEN initcap(j.address)
 	        	ELSE facilities.address
         	END),
         processingflag = 
         	(CASE
-	        	WHEN facilities.address IS NULL AND j.address IS NOT NULL THEN 'bbljoin2address_closest'
+	        	WHEN facilities.addressnumber IS NULL AND j.address IS NOT NULL THEN 'bbljoin2address_closest'
 	        	ELSE 'bbljoin_closest'
         	END)
     FROM 

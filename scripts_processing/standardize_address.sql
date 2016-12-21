@@ -16,11 +16,11 @@ LANGUAGE plpgsql IMMUTABLE;
 UPDATE facilities
     SET
     addressnumber = 
-    	(CASE WHEN isnumeric(addressnumber) THEN addressnumber
+    	(CASE WHEN isnumeric(REPLACE(addressnumber,'-','')) THEN addressnumber
     		ELSE NULL
     	END),
     streetname =
-        (CASE WHEN isnumeric(addressnumber) THEN streetname
+        (CASE WHEN isnumeric(REPLACE(addressnumber,'-','')) THEN streetname
     		ELSE NULL
     	END)
     ;

@@ -14,11 +14,8 @@ psql $DATABASE_URL -f ./scripts_processing/join_sourcedatainfo.sql
 ## Standardizing borough and assigning borough code
 psql $DATABASE_URL -f ./scripts_processing/standardize_borough.sql
 
-## 0. Switching One to 1 for geocoding
-psql $DATABASE_URL -f ./scripts_processing/One_to_1.sql
-
-## Checking if address number is actually a number, if not, deleting text value
-## NEED TO FINISH
+## 0. Switching One to 1 for geocoding and removing invalid (string) address numbers
+psql $DATABASE_URL -f ./scripts_processing/standardize_address.sql
 
 ## 1. Run the geocoding script using address and borough - get BBL, BIN, lat/long
 
@@ -88,8 +85,8 @@ time psql $DATABASE_URL -f ./scripts_processing/calcxy.sql
 echo 'Done calculating x,y for all blank records'
 psql $DATABASE_URL -f ./scripts_processing/addID.sql
 
-## Doing spatial join to fill in City
-## Doing spatial join to fill in BIN
+## Doing spatial join to fill in City (zip code shapefile on M drive)
+## Doing spatial join to fill in BIN (building footprints)
 
 ## 9. Final formatting -- find and properly capitalize acronyms and abbreviations
 

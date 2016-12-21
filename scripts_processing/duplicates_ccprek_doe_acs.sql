@@ -33,17 +33,17 @@ WITH matches AS (
 			LEFT(
 				TRIM(
 					split_part(
-						REPLACE(
-							REPLACE(
-								REPLACE(
-									REPLACE(
-										REPLACE(
-											UPPER(a.facilityname)
-										,'THE ','')
-									,'-','')
-								,' ','')
-							,'.','')
-						,',','')
+				REPLACE(
+					REPLACE(
+				REPLACE(
+					REPLACE(
+				REPLACE(
+					UPPER(a.facilityname)
+				,'THE ','')
+					,'-','')
+				,' ','')
+					,'.','')
+				,',','')
 					,'(',1)
 				,' ')
 			,4)
@@ -51,17 +51,17 @@ WITH matches AS (
 			LEFT(
 				TRIM(
 					split_part(
-						REPLACE(
-							REPLACE(
-								REPLACE(
-									REPLACE(
-										REPLACE(
-											UPPER(b.facilityname)
-										,'THE ','')
-									,'-','')
-								,' ','')
-							,'.','')
-						,',','')
+				REPLACE(
+					REPLACE(
+				REPLACE(
+					REPLACE(
+				REPLACE(
+					UPPER(b.facilityname)
+				,'THE ','')
+					,'-','')
+				,' ','')
+					,'.','')
+				,',','')
 					,'(',1)
 				,' ')
 			,4)
@@ -146,17 +146,17 @@ WITH matches AS (
 			LEFT(
 				TRIM(
 					split_part(
-						REPLACE(
-							REPLACE(
-								REPLACE(
-									REPLACE(
-										REPLACE(
-											UPPER(a.facilityname)
-										,'THE ','')
-									,'-','')
-								,' ','')
-							,'.','')
-						,',','')
+				REPLACE(
+					REPLACE(
+				REPLACE(
+					REPLACE(
+				REPLACE(
+					UPPER(a.facilityname)
+				,'THE ','')
+					,'-','')
+				,' ','')
+					,'.','')
+				,',','')
 					,'(',1)
 				,' ')
 			,4)
@@ -164,17 +164,17 @@ WITH matches AS (
 			LEFT(
 				TRIM(
 					split_part(
-						REPLACE(
-							REPLACE(
-								REPLACE(
-									REPLACE(
-										REPLACE(
-											UPPER(b.facilityname)
-										,'THE ','')
-									,'-','')
-								,' ','')
-							,'.','')
-						,',','')
+				REPLACE(
+					REPLACE(
+				REPLACE(
+					REPLACE(
+				REPLACE(
+					UPPER(b.facilityname)
+				,'THE ','')
+					,'-','')
+				,' ','')
+					,'.','')
+				,',','')
 					,'(',1)
 				,' ')
 			,4)
