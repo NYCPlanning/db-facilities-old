@@ -49,7 +49,7 @@ SELECT
 	-- pgtable
 	ARRAY['usdot_facilities_ports'],
 	-- hash,
-	md5(nav_unit_i,nav_unit_n,state_post,County_nam,zipcode::text,owners,operators),
+	md5(CAST((nav_unit_i,nav_unit_n,state_post,County_nam,zipcode::text,owners,operators) AS text)),
 	-- geom
 	geom,
 	-- idagency

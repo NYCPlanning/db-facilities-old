@@ -47,9 +47,9 @@ facilities (
 )
 SELECT
 	-- pgtable
-	ARRAY['usdot_facilities_ports'],
+	ARRAY['usnps_facilities_parks'],
 	-- hash,
-	md5(CAST((usdot_facilities_ports.*) AS text)),
+	md5(CAST((usnps_facilities_parks.*) AS text)),
 	-- geom
 	ST_Centroid(geom),
 	-- idagency
@@ -104,9 +104,9 @@ SELECT
 	-- operatorabbrev
 	'USNPS',
 	-- oversightagency
-	'United States National Park Service',
+	ARRAY['United States National Park Service'],
 	-- oversightabbrev
-	'USNPS',
+	ARRAY['USNPS'],
 	-- datecreated
 	CURRENT_TIMESTAMP,
 	-- buildingid
