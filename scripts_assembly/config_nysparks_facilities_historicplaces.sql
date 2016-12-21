@@ -47,14 +47,14 @@ facilities (
 )
 SELECT
 	-- pgtable
-	'nysparks_facilities_historicplaces',
+	ARRAY['nysparks_facilities_historicplaces'],
 	-- hash,
-	md5(CAST((*) AS text)),
+	md5(CAST((nysparks_facilities_historicplaces.*) AS text)),
 	-- geom
 	-- ST_SetSRID(ST_MakePoint(long, lat),4326)
 	ST_SetSRID(ST_MakePoint(longitude, latitude),4326),
 	-- idagency
-	National_Register_Number,
+	ARRAY[National_Register_Number],
 	-- facilityname
 	Resource_Name,
 	-- addressnumber
@@ -99,15 +99,15 @@ SELECT
 	-- areatype
 	NULL,
 	-- operatortype
-	'Mix',
+	'FIX THIS (Previosly said Mix)',
 	-- operatorname
 	'New York State Office of Parks, Recreation and Historic Preservation',
 	-- operatorabbrev
 	'NYSOPRHP',
 	-- oversightagency
-	'New York State Office of Parks, Recreation and Historic Preservation',
+	ARRAY['New York State Office of Parks, Recreation and Historic Preservation'],
 	-- oversightabbrev
-	'NYSOPRHP',
+	ARRAY['NYSOPRHP'],
 	-- datecreated
 	CURRENT_TIMESTAMP,
 	-- buildingid

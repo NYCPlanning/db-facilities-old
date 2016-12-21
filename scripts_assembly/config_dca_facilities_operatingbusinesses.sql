@@ -47,13 +47,13 @@ facilities (
 )
 SELECT
 	-- pgtable
-	'dca_facilities_operatingbusinesses',
+	ARRAY['dca_facilities_operatingbusinesses'],
 	-- hash,
-	md5(CAST((*) AS text)),
+	md5(CAST((dca_facilities_operatingbusinesses.*) AS text)),
 	-- geom
 	NULL,
 	-- idagency
-	DCA_License_Number,
+	ARRAY[DCA_License_Number],
 	-- facilityname
 	initcap(Business_Name),
 	-- addressnumber
@@ -62,8 +62,6 @@ SELECT
 	initcap(Address_Street_Name),
 	-- address
 	CONCAT(Address_Building,' ',initcap(Address_Street_Name)),
-	-- city
-	Address_City,
 	-- borough
 		(CASE
 			WHEN (Address_Borough IS NULL) AND (Address_City = 'NEW YORK') THEN 'Manhattan'

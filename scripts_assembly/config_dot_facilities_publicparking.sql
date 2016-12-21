@@ -47,13 +47,13 @@ facilities (
 )
 SELECT
 	-- pgtable
-	'dot_facilities_publicparking',
+	ARRAY['dot_facilities_publicparking'],
 	-- hash,
-	md5(CAST((*) AS text)),
+	md5(CAST((dot_facilities_publicparking.*) AS text)),
 	-- geom
 	ST_SetSRID(ST_MakePoint(longitude, latitude),4326),
 	-- idagency
-	abbrev,
+	ARRAY[abbrev],
 	-- facilityname
 	name,
 	-- addressnumber

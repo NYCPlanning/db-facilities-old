@@ -49,9 +49,9 @@ groupquarters
 )
 SELECT
 	-- pgtable
-	'hhs_facilities_acceleratorall',
+	ARRAY['hhs_facilities_acceleratorall'],
 	-- hash,
-	md5(CAST((*) AS text)),
+	md5(CAST((hhs_facilities_acceleratorall.*) AS text)),
 	-- geom
 	the_geom,
 	-- idagency

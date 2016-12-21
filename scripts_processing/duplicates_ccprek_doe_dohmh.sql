@@ -121,7 +121,11 @@ WITH matches AS (
 		a.agencysource,
 		b.agencysource as agencysource_b,
 		a.sourcedatasetname,
-		b.sourcedatasetname as sourcedatasetname_b
+		b.sourcedatasetname as sourcedatasetname_b,
+		a.oversightagency,
+		b.oversightagency as oversightagency_b,
+		a.oversightabbrev,
+		b.oversightabbrev as oversightabbrev_b
 	FROM facilities a
 	LEFT JOIN facilities b
 	ON a.bbl = b.bbl
@@ -193,7 +197,12 @@ duplicates AS (
 		guid,
 		array_agg(guid_b) AS guid_merged,
 		array_agg(distinct idagency_b) AS idagency_merged,
-		array_agg(distinct hash_b) AS hash_merged
+		array_agg(distinct hash_b) AS hash_merged,
+		array_agg(distinct agencysource_b) AS agencysource,
+		array_agg(distinct sourcedatasetname_b) AS sourcedatasetname,
+		array_agg(distinct oversightagency_b) AS oversightagency,
+		array_agg(distinct oversightabbrev_b) AS oversightabbrev,
+		array_agg(distinct pgtable_b) AS pgtable
 	FROM matches
 	GROUP BY
 	id, guid, facilityname, facilitytype
@@ -202,12 +211,13 @@ duplicates AS (
 UPDATE facilities AS f
 SET
 	BIN = d.BIN,
-	idagency = array_append(idagency, d.idagency_merged),
+	idagency = array_cat(idagency, d.idagency_merged),
 	guid_merged = d.guid_merged,
 	hash_merged = d.hash_merged,
-	pgtable = array_append(f.pgtable,'dohmh_facilities_childcare'),
-	sourcedatasetname = array_append(sourcedatasetname, 'dohmh_facilities_childcare'),
-	oversightagency = array_append(oversightagency, 'dohmh_facilities_childcare')
+	pgtable = array_cat(f.pgtable,d.pgtable),
+	sourcedatasetname = array_cat(f.sourcedatasetname, d.sourcedatasetname),
+	oversightagency = array_cat(f.oversightagency, d.oversightagency),
+	oversightabbrev = array_cat(f.oversightabbrev, d.oversightabbrev)
 FROM duplicates AS d
 WHERE f.guid = d.guid
 ;
@@ -216,7 +226,7 @@ WHERE f.guid = d.guid
 -- 3. DROPPING DUPLICATE RECORDS AFTER ATTRIBUTES HAVE BEEN MERGED INTO PREFERRED RECORD
 --------------------------------------------------------------------------------------------------
 
-DELETE FROM facilities
-WHERE facilities.guid IN (SELECT duplicates_ccprek_doe_dohmh.guid FROM duplicates_ccprek_doe_dohmh)
-;
+-- DELETE FROM facilities
+-- WHERE facilities.guid IN (SELECT duplicates_ccprek_doe_dohmh.guid FROM duplicates_ccprek_doe_dohmh)
+-- ;
 

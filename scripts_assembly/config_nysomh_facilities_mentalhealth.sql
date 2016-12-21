@@ -47,9 +47,9 @@ facilities (
 )
 SELECT
 	-- pgtable
-	'nysomh_facilities_mentalhealth',
+	ARRAY['nysomh_facilities_mentalhealth'],
 	-- hash,
-	md5(CAST((*) AS text)),
+	md5(CAST((nysomh_facilities_mentalhealth.*) AS text)),
 	-- geom
 	(CASE
 		WHEN (Location IS NOT NULL) AND (Location LIKE '%(%') THEN
@@ -61,7 +61,7 @@ SELECT
 			-- before had 3857, not sure where this SRID came from
 	END),
 	-- idagency
-	CONCAT(sponsor_code,'-',facility_code,'-', program_code),
+	ARRAY[CONCAT(sponsor_code,'-',facility_code,'-', program_code)],
 	-- facilityname
 	Program_Name,
 	-- addressnumber

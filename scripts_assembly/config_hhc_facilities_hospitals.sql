@@ -47,9 +47,9 @@ facilities (
 )
 SELECT
 	-- pgtable
-	'hhc_facilities_hospitals',
+	ARRAY['hhc_facilities_hospitals'],
 	-- hash,
-	md5(CAST((*) AS text)),
+	md5(CAST((hhc_facilities_hospitals.*) AS text)),
 	-- geom
 	ST_SetSRID(
 		ST_MakePoint(

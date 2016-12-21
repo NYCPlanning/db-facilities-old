@@ -47,9 +47,9 @@ facilities (
 )
 SELECT
 	-- pgtable
-	'nysopwdd_facilities_providers',
+	ARRAY['nysopwdd_facilities_providers'],
 	-- hash,
-	md5(CAST((*) AS text)),
+	md5(CAST((nysopwdd_facilities_providers.*) AS text)),
 	-- geom
 	(CASE
 		WHEN (Location_1 IS NOT NULL) AND (Location_1 LIKE '%(%') THEN 

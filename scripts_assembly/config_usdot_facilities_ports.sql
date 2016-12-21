@@ -47,13 +47,13 @@ facilities (
 )
 SELECT
 	-- pgtable
-	'usdot_facilities_ports',
+	ARRAY['usdot_facilities_ports'],
 	-- hash,
-	md5(CAST((*) AS text)),
+	md5(nav_unit_i,nav_unit_n,state_post,County_nam,zipcode::text,owners,operators),
 	-- geom
 	geom,
 	-- idagency
-	nav_unit_i,
+	ARRAY[nav_unit_i],
 	-- facilityname
 	initcap(nav_unit_n),
 	-- addressnumber
@@ -104,7 +104,6 @@ SELECT
 			WHEN operators IS NOT NULL THEN operators
 			ELSE 'NA'
 		END),
-
 	-- capacity
 	NULL,
 	-- utilization
@@ -197,7 +196,7 @@ SELECT
 		ELSE 'Non-public'
 	END),
 	-- oversightagency
-	(CASE
+	ARRAY[(CASE
 		WHEN owners like '%Port Authority%' THEN 'Port Authority of New York and New Jersey'
 		WHEN owners like '%Economic Development%' THEN 'New York City Economic Development Corporation'
 		WHEN owners like '%Parks%' THEN 'New York City Department of Parks and Recreation'
@@ -223,9 +222,9 @@ SELECT
 		WHEN operators like '%State University%' THEN 'State University of New York'
 		WHEN operators like '%Coast Guard%' THEN 'United States Coast Guard'
 		ELSE 'Non-public'
-	END),
+	END)],
 	-- oversightabbrev
-	(CASE
+	ARRAY[(CASE
 		WHEN owners like '%Port Authority%' THEN 'PANYNJ'
 		WHEN owners like '%Economic Development%' THEN 'NYCEDC'
 		WHEN owners like '%Parks%' THEN 'NYCDPR'
@@ -251,7 +250,7 @@ SELECT
 		WHEN operators like '%State University%' THEN 'SUNY'
 		WHEN operators like '%Coast Guard%' THEN 'USCG'
 		ELSE 'Non-public'
-	END),
+	END)],
 	-- datecreated
 	CURRENT_TIMESTAMP,
 	-- buildingid

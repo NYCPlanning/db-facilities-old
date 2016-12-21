@@ -47,13 +47,13 @@ facilities (
 )
 SELECT
 	-- pgtable
-	'usdot_facilities_ports',
+	ARRAY['usdot_facilities_ports'],
 	-- hash,
-	md5(CAST((*) AS text)),
+	md5(CAST((usdot_facilities_ports.*) AS text)),
 	-- geom
 	ST_Centroid(geom),
 	-- idagency
-	unit_code,
+	ARRAY[unit_code],
 	-- facilityname
 	unit_name,
 	-- addressnumber

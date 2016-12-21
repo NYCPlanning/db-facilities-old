@@ -47,14 +47,14 @@ facilities (
 )
 SELECT
 	-- pgtable
-	'nysdoh_facilities_healthfacilities',
+	ARRAY['nysdoh_facilities_healthfacilities'],
 	-- hash,
-	md5(CAST((*) AS text)),
+	md5(CAST((nysdoh_facilities_healthfacilities.*) AS text)),
 	-- geom
 	-- ST_SetSRID(ST_MakePoint(long, lat),4326)
 	ST_SetSRID(ST_MakePoint(Facility_Longitude, Facility_Latitude),4326),
 	-- idagency
-	Facility_ID,
+	ARRAY[Facility_ID],
 	-- facilityname
 	Facility_Name,
 	-- addressnumber
@@ -150,10 +150,6 @@ SELECT
 	ARRAY['NYSDOH'],
 	-- datecreated
 	CURRENT_TIMESTAMP,
-	-- agencysource
-	ARRAY['NYSDOH'],
-	-- sourcedatasetname
-	ARRAY['Health Facility General Information'],
 	-- buildingid
 	NULL,
 	-- buildingname

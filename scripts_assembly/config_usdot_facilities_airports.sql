@@ -47,13 +47,13 @@ facilities (
 )
 SELECT
 	-- pgtable
-	'usdot_facilities_airports',
+	ARRAY['usdot_facilities_airports'],
 	-- hash,
-	md5(CAST((*) AS text)),
+	md5(CAST((usdot_facilities_airports.*) AS text)),
 	-- geom
 	geom,
 	-- idagency
-	locationid,
+	ARRAY[locationid],
 	-- facilityname
 	fullname,
 	-- addressnumber

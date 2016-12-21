@@ -6,7 +6,7 @@
 ## Directions are in the README.md.
 
 ## Joining on source data info
-# psql $DATABASE_URL -f ./scripts_processing/join_sourcedatainfo.sql
+psql $DATABASE_URL -f ./scripts_processing/join_sourcedatainfo.sql
 
 ## Standardizing agency names and abbreviations
 ## NEED TO FINISH
@@ -100,9 +100,11 @@ psql $DATABASE_URL -f ./scripts_processing/vacuum.sql
 
 ## 10. Join on COLP attributes to records from other datasets
 
-
+# ## Merge Child Care and Pre-K Duplicate records
+# psql $DATABASE_URL -f ./scripts_processing/duplicates_ccprek_doe_acs.sql
 # psql $DATABASE_URL -f ./scripts_processing/duplicates_ccprek_doe_dohmh.sql
-
+# psql $DATABASE_URL -f ./scripts_processing/duplicates_ccprek_acs_dohmh.sql
+# psql $DATABASE_URL -f ./scripts_processing/duplicates_ccprek_dohmh.sql
 
 # ## 10. Remove DPR properties sourced from COLP that overlap with records from DPR's data
 # echo 'Updating DPR records with attributes from properties that came from COLP...'

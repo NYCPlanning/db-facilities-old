@@ -47,9 +47,9 @@ facilities (
 )
 SELECT
 	-- pgtable
-	'dpr_parksproperties',
+	ARRAY['dpr_parksproperties'],
 	-- hash,
-	md5(CAST((*) AS text)),
+	md5(CAST((dpr_parksproperties.*) AS text)),
 	-- geom
 	ST_Centroid(geom),
 	-- idagency

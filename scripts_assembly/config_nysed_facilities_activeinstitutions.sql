@@ -47,9 +47,9 @@ facilities (
 )
 SELECT
 	-- pgtable
-	nysed_facilities_activeinstitutions,
+	ARRAY['nysed_facilities_activeinstitutions'],
 	-- hash,
-	md5(CAST((*) AS text)),
+	md5(CAST((nysed_facilities_activeinstitutions.*) AS text)),
 	-- geom
 	-- ST_SetSRID(ST_MakePoint(long, lat),4326)
 		(CASE
@@ -67,7 +67,7 @@ SELECT
 			THEN ST_SetSRID(ST_MakePoint(Gis_Longitude_X::double precision, Gis_Latitude_Y::double precision),4326)
 		END),
 	-- idagency
-	Sed_Code,
+	ARRAY[Sed_Code],
 	-- facilityname
 	initcap(Popular_Name),
 	-- address number
@@ -76,8 +76,6 @@ SELECT
 	initcap(trim(both ' ' from substr(trim(both ' ' from physical_address_line1), strpos(trim(both ' ' from physical_address_line1), ' ')+1, (length(trim(both ' ' from physical_address_line1))-strpos(trim(both ' ' from physical_address_line1), ' '))))),
 	-- address
 	initcap(Physical_Address_Line1),
-	-- city
-	City,
 	-- borough
 		(CASE
 			WHEN County_Desc = 'NEW YORK' THEN 'Manhattan'
@@ -203,23 +201,19 @@ SELECT
 			ELSE 'Non-public'
 		END),
 	-- oversightagency
-		(CASE
+		ARRAY[(CASE
 			WHEN Institution_Type_Desc = 'PUBLIC SCHOOLS' THEN ARRAY['New York City Department of Education', 'New York State Education Department']
 			WHEN Institution_Type_Desc LIKE '%NON-IMF%' THEN ARRAY['New York City Department of Education', 'New York State Education Department']
 			ELSE ARRAY['New York State Education Department']
-		END),
+		END)],
 	-- oversightabbrev
-		(CASE
+		ARRAY[(CASE
 			WHEN Institution_Type_Desc = 'PUBLIC SCHOOLS' THEN ARRAY['NYCDOE', 'NYSED']
 			WHEN Institution_Type_Desc LIKE '%NON-IMF%' THEN ARRAY['NYCDOE', 'NYSED']
 			ELSE ARRAY['NYSED']
-		END),
+		END)],
 	-- datecreated
 	CURRENT_TIMESTAMP,
-	-- agencysource
-	ARRAY['NYSED'],
-	-- sourcedatasetname
-	ARRAY['Listings - Active Institutions with GIS coordinates and OITS Accuracy Code'],
 	-- buildingid
 	NULL,
 	-- building name

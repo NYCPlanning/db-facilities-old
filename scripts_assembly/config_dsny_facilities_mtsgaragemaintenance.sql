@@ -47,9 +47,9 @@ facilities (
 )
 SELECT
 	-- pgtable
-	'dsny_facilities_mtsgaragemaintenance',
+	ARRAY['dsny_facilities_mtsgaragemaintenance'],
 	-- hash,
-	md5(CAST((*) AS text)),
+	md5(CAST((dsny_facilities_mtsgaragemaintenance.*) AS text)),
 	-- geom
 	geom,
 	-- idagency

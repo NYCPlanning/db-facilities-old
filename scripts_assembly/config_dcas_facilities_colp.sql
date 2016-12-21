@@ -1,3 +1,5 @@
+-- Custom insert statement
+
 INSERT INTO
 facilities (
 	pgtable,
@@ -19,6 +21,7 @@ facilities (
 	facilitysubgroup,
 	agencyclass1,
 	agencyclass2,
+	colpusetype,
 	capacity,
 	utilization,
 	capacitytype,
@@ -47,9 +50,9 @@ facilities (
 )
 SELECT
 	-- pgtable
-	'dcas_facilities_colp',
+	ARRAY['dcas_facilities_colp'],
 	-- hash,
-	md5(CAST((*) AS text)),
+	md5(CAST((dcas_facilities_colp.*) AS text)),
 	-- geom
 		(CASE
 			WHEN xcoord <> ' ' THEN ST_Transform(ST_SetSRID(ST_MakePoint(xcoord::numeric, ycoord::numeric),2263),4326)
@@ -651,7 +654,7 @@ SELECT
 			ELSE CONCAT('NYC',agency)
 		END),
 	-- oversightagency
-		(CASE
+		ARRAY[(CASE
 			WHEN agency='ACS' THEN 'New York City Agency for Childrens Services'
 			WHEN agency='ACTRY' THEN 'New York City Office of the Actuary'
 			WHEN agency='AGING' THEN 'New York City Department for the Aging'
@@ -740,9 +743,9 @@ SELECT
 			WHEN agency='TBTA' THEN 'Triborough Bridge & Tunnel Authority'
 			WHEN agency='TLC' THEN 'New York City Taxi and Limousine Commission'
 			WHEN agency='UNKN' THEN 'New York City Unknown'
-		END),
+		END)],
 	-- oversightabbrev
-		(CASE
+		ARRAY[(CASE
 			WHEN agency LIKE 'PARKS' THEN 'NYCDPR'
 			WHEN agency LIKE 'BLDGS' THEN 'NYCDOB'
 			WHEN agency LIKE 'BPL' THEN 'BPL'
@@ -756,7 +759,7 @@ SELECT
 			WHEN agency LIKE 'FIRE' THEN 'NYCFDNY'
 			WHEN agency LIKE 'HLTH' THEN 'NYCODHMH'
 			ELSE CONCAT('NYC',agency)
-		END),
+		END)],
 	-- datecreated
 	CURRENT_TIMESTAMP,
 	-- buildingid

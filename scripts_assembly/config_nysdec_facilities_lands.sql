@@ -47,13 +47,13 @@ facilities (
 )
 SELECT
 	-- pgtable
-	'nysdec_facilities_lands',
+	ARRAY['nysdec_facilities_lands'],
 	-- hash,
-	md5(CAST((*) AS text)),
+	md5(CAST((nysdec_facilities_lands.*) AS text)),
 	-- geom
 	ST_Centroid(geom),
 	-- idagency
-	lands_uid,
+	ARRAY[lands_uid],
 	-- facilityname
 	initcap(facility),
 	-- addressnumber
@@ -121,10 +121,6 @@ SELECT
 	ARRAY['NYSDEC'],
 	-- datecreated
 	CURRENT_TIMESTAMP,
-	-- agencysource
-	ARRAY['NYSDEC'],
-	-- sourcedatasetname
-	ARRAY['Lands - Under the Care, Custody, and Control of DEC'],
 	-- buildingid
 	NULL,
 	-- buildingname

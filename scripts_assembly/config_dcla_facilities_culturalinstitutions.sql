@@ -47,9 +47,9 @@ facilities (
 )
 SELECT
 	-- pgtable
-	'dcla_facilities_culturalinstitutions',
+	ARRAY['dcla_facilities_culturalinstitutions'],
 	-- hash,
-	md5(CAST((*) AS text)),
+	md5(CAST((dcla_facilities_culturalinstitutions.*) AS text)),
 	-- geom
 	NULL,
 	-- idagency
@@ -62,8 +62,6 @@ SELECT
 	trim(both ' ' from substr(trim(both ' ' from Address), strpos(trim(both ' ' from Address), ' ')+1, (length(trim(both ' ' from Address))-strpos(trim(both ' ' from Address), ' ')))),
 	-- address
 	Address,
-	-- city
-	City,
 	-- borough
 	borough,
 	-- zipcode

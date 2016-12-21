@@ -47,9 +47,9 @@ facilities (
 )
 SELECT
 	-- pgtable
-	'doe_facilities_busroutesgarages',
+	ARRAY['doe_facilities_busroutesgarages'],
 	-- hash,
-	md5(CAST((*) AS text)),
+	md5(CAST((Vendor_Name,Garage_Street_Address,Garage_City,Garage_Zip,XCoordinates,YCoordinates) AS text)),
 	-- geom
 	ST_Transform(ST_SetSRID(ST_MakePoint(XCoordinates, YCoordinates),2263),4326),
 	-- idagency
@@ -62,8 +62,6 @@ SELECT
 	trim(both ' ' from substr(trim(both ' ' from Garage_Street_Address), strpos(trim(both ' ' from Garage_Street_Address), ' ')+1, (length(trim(both ' ' from Garage_Street_Address))-strpos(trim(both ' ' from Garage_Street_Address), ' ')))),
 	-- address
 	Garage_Street_Address,
-	-- city
-	Garage_City,
 	-- borough
 	NULL,
 	-- zipcode

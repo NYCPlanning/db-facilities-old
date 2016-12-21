@@ -47,13 +47,13 @@ facilities (
 )
 SELECT
 	-- pgtable
-	nysoasas_facilities_programs,
+	ARRAY['nysoasas_facilities_programs'],
 	-- hash,
-	md5(CAST((*) AS text)),
+	md5(CAST((nysoasas_facilities_programs.*) AS text)),
 	-- geom
 	NULL,
 	-- idagency
-	program_number,
+	ARRAY[program_number],
 	-- facilityname
 	provider_name,
 	-- address number
@@ -90,7 +90,6 @@ SELECT
 	program_category,
 	-- agencyclass2
 	service,
-
 	-- capacity
 	NULL,
 	-- utilization
@@ -115,10 +114,6 @@ SELECT
 	ARRAY['NYSOASAS'],
 	-- datecreated
 	CURRENT_TIMESTAMP,
-	-- agencysource
-	ARRAY['NYSOASAS'],
-	-- sourcedatasetname
-	ARRAY['List of NYC Programs'],
 	-- buildingid
 	NULL,
 	-- buildingname

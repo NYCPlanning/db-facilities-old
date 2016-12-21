@@ -47,9 +47,9 @@ facilities (
 )
 SELECT
 	-- pgtable
-	'nysdec_facilities_solidwaste',
+	ARRAY['nysdec_facilities_solidwaste'],
 	-- hash,
-	md5(CAST((*) AS text)),
+	md5(CAST((nysdec_facilities_solidwaste.*) AS text)),
 	-- geom
 	-- ST_SetSRID(ST_MakePoint(long, lat),4326)
 		(CASE
@@ -57,9 +57,9 @@ SELECT
 				THEN ST_Transform(ST_SetSRID(ST_MakePoint(east_coordinate, north_coordinate),26918),4326)
 		END),
 	-- idagency
-		(CASE
+		ARRAY[(CASE
 			WHEN authorization_number <> '?' THEN authorization_number
-		END),
+		END)],
 	-- facilityname
 	facility_name,
 	-- addressnumber
@@ -141,21 +141,17 @@ SELECT
 			ELSE 'Non-public'
 		END),
 	-- oversightagencyname
-		(CASE
+		ARRAY[(CASE
 			WHEN owner_type = 'Municipal' THEN 'New York City Department of Sanitation'
 			ELSE 'New York Department of Environmental Conservation'
-		END),
+		END)],
 	-- oversightabbrev
-		(CASE
+		ARRAY[(CASE
 			WHEN owner_type = 'Municipal' THEN 'NYCDSNY'
 			ELSE 'NYSDEC'
-		END),
+		END)],
 	-- datecreated
 	CURRENT_TIMESTAMP,
-	-- agencysource
-	ARRAY['NYSDEC'],
-	-- sourcedatasetname
-	ARRAY['Solid Waste Management Facilities'],
 	-- buildingid
 	NULL,
 	-- buildingname

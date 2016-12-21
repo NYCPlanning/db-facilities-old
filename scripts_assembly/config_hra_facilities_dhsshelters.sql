@@ -47,9 +47,9 @@ facilities (
 )
 SELECT
 	-- pgtable
-	'hra_facilities_dhsshelters',
+	ARRAY['hra_facilities_dhsshelters'],
 	-- hash,
-	md5(CAST((*) AS text)),
+	md5(CAST((hra_facilities_dhsshelters.*) AS text)),
 	-- geom
 	geom,	
 	-- idagency

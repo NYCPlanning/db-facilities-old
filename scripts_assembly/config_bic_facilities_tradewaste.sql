@@ -47,7 +47,7 @@ facilities (
 )
 SELECT
 	-- pgtable
-	'bic_facilities_tradewaste',
+	ARRAY['bic_facilities_tradewaste'],
 	-- hash,
 	md5(CAST((bic_facilities_tradewaste.*) AS text)),
 	-- geom

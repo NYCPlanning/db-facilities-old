@@ -52,9 +52,9 @@ facilities (
 )
 SELECT
 	-- pgtable
-	'togeocode',
+	ARRAY['togeocode'],
 	-- hash,
-	md5(CAST((*) AS text)),
+	md5(CAST((togeocode.*) AS text)),
 	-- geom
 	NULL,
 	-- idagency
@@ -122,7 +122,7 @@ SELECT
 	-- sourcedatasetname
 	ARRAY[dataset],
 	-- linkdata
-	datalink,
+	ARRAY[datalink],
 	-- buildingid
 	NULL,
 	-- buildingname

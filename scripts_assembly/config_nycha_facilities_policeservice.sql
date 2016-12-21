@@ -47,9 +47,9 @@ facilities (
 )
 SELECT
 	-- pgtable
-	'nycha_facilities_policeservice',
+	ARRAY['nycha_facilities_policeservice'],
 	-- hash,
-	md5(CAST((*) AS text)),
+	md5(CAST((nycha_facilities_policeservice.*) AS text)),
 	-- geom
 	geom,
 	-- idagency

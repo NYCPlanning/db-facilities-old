@@ -47,9 +47,9 @@ facilities (
 )
 SELECT
 	-- pgtable
-	'doitt_facilities_libraries',
+	ARRAY['doitt_facilities_libraries'],
 	-- hash,
-	md5(CAST((*) AS text)),
+	md5(CAST((doitt_facilities_libraries.*) AS text)),
 	-- geom
 	geom,
 	-- idagency

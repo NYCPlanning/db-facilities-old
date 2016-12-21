@@ -47,9 +47,9 @@ facilities (
 )
 SELECT
 	-- pgtable
-	'nysparks_facilities_parks',
+	ARRAY['nysparks_facilities_parks'],
 	-- hash,
-	md5(CAST((*) AS text)),
+	md5(CAST((nysparks_facilities_parks.*) AS text)),
 	-- geom
 	ST_SetSRID(ST_MakePoint(longitude, latitude),4326),
 	-- idagency

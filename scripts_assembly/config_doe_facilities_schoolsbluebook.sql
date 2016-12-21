@@ -47,9 +47,9 @@ facilities (
 )
 SELECT
 	-- pgtable
-	'doe_facilities_schoolsbluebook',
+	ARRAY['doe_facilities_schoolsbluebook'],
 	-- hash,
-	md5(CAST((*) AS text)),
+	md5(CAST((doe_facilities_schoolsbluebook.*) AS text)),
 	-- geom
 		(CASE
 			WHEN X <> '#N/A' THEN ST_Transform(ST_SetSRID(ST_MakePoint(X::double precision, Y::double precision),2263),4326)
