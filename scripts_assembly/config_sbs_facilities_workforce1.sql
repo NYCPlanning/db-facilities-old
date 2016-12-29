@@ -47,25 +47,25 @@ facilities (
 )
 SELECT
 	-- pgtable
-	ARRAY['dfta_facilities_contracts'],
+	ARRAY['sbs_facilities_workforce1'],
 	-- hash,
-	md5(CAST((dfta_facilities_contracts.*) AS text)),
+	md5(CAST((sbs_facilities_workforce1.*) AS text)),
 	-- geom
 	NULL,
 	-- idagency
-	ARRAY[Provider_ID],
+	NULL,
 	-- facilityname
-	initcap(Sponsor_Name),
+	name_of_center,
 	-- addressnumber
-	split_part(trim(both ' ' from initcap(Program_Address)), ' ', 1),
+	split_part(trim(both ' ' from address_line_1), ' ', 1),
 	-- streetname
-	trim(both ' ' from substr(trim(both ' ' from initcap(Program_Address)), strpos(trim(both ' ' from initcap(Program_Address)), ' ')+1, (length(trim(both ' ' from initcap(Program_Address)))-strpos(trim(both ' ' from initcap(Program_Address)), ' ')))),
+	trim(both ' ' from substr(trim(both ' ' from split_part(address_line_1,',',1)), strpos(trim(both ' ' from split_part(address_line_1,',',1)), ' ')+1, (length(trim(both ' ' from split_part(address_line_1,',',1)))-strpos(trim(both ' ' from split_part(address_line_1,',',1)), ' ')))),
 	-- address
-	initcap(Program_Address),
+ 	split_part(address_line_1,',',1),
 	-- borough
 	NULL,
 	-- zipcode
-	Program_Zipcode::integer,
+	ROUND(zip_code::numeric,0),
 	-- bbl
 	NULL,
 	-- bin
@@ -73,24 +73,17 @@ SELECT
 	-- parkid
 	NULL,
 	-- facilitytype
-		(CASE
-			WHEN Contract_Type LIKE '%INNOVATIVE%' AND RIGHT(Provider_ID) <> '01' THEN 'Satellite Senior Centers'
-			WHEN Contract_Type LIKE '%NEIGHBORHOOD%' AND RIGHT(Provider_ID) <> '01' THEN 'Satellite Senior Centers'
-			WHEN Contract_Type LIKE '%INNOVATIVE%' THEN 'Innovative Senior Centers'
-			WHEN Contract_Type LIKE '%NEIGHBORHOOD%' THEN 'Neighborhood Senior Centers'
-			WHEN Contract_Type LIKE '%MEALS%' THEN  initcap(Contract_Type)
-			ELSE 'Senior Services'
-		END),
+	'Workforce1 Career Centers',
 	-- domain
 	'Health and Human Services',
 	-- facilitygroup
 	'Human Services',
 	-- facilitysubgroup
-	'Senior Services',
+	'Workforce Development',
 	-- agencyclass1
-	Contract_Type,
+	NULL,
 	-- agencyclass2
-	'NA',
+	NULL,
 	-- capacity
 	NULL,
 	-- utilization
@@ -104,15 +97,15 @@ SELECT
 	-- areatype
 	NULL,
 	-- operatortype
-	'Non-public',
+	'Public',
 	-- operatorname
-	initcap(Sponsor_Name),
+	'New York City New York City Department of Small Business Services',
 	-- operatorabbrev
-	'Non-public',
+	'NYCSBS',
 	-- oversightagency
-	ARRAY['New York City Department for the Aging'],
+	ARRAY['New York City New York City Department of Small Business Services'],
 	-- oversightabbrev
-	ARRAY['NYCDFTA'],
+	ARRAY['NYCSBS'],
 	-- datecreated
 	CURRENT_TIMESTAMP,
 	-- buildingid
@@ -126,7 +119,7 @@ SELECT
 	-- youth
 	FALSE,
 	-- senior
-	TRUE,
+	FALSE,
 	-- family
 	FALSE,
 	-- disabilities
@@ -134,7 +127,7 @@ SELECT
 	-- dropouts
 	FALSE,
 	-- unemployed
-	FALSE,
+	TRUE,
 	-- homeless
 	FALSE,
 	-- immigrants
@@ -142,4 +135,4 @@ SELECT
 	-- groupquarters
 	FALSE
 FROM 
-	dfta_facilities_contracts
+	sbs_facilities_workforce1

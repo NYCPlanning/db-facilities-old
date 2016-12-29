@@ -62,15 +62,15 @@ psql $DATABASE_URL -f ./scripts_processing/setSRID_26918.sql
 psql $DATABASE_URL -f ./scripts_processing/vacuum.sql
 echo 'Done indexing and vacuuming facilities and dcp_mappluto'
 
-# ## 6. Do a spatial join with MapPLUTO to get BBL and addresses info if missing
+## 6. Do a spatial join with MapPLUTO to get BBL and addresses info if missing
 
 echo 'Spatially joining with dcp_mappluto...'
 time psql $DATABASE_URL -f ./scripts_processing/bbljoin.sql
 echo 'Done spatially joining with dcp_mappluto'
 psql $DATABASE_URL -f ./scripts_processing/vacuum.sql
 
-# ## 7. For facilities which did not overlap with a BBL in MapPLUTO but should be located on a BBL lot, 
-# ## 	  assign the closest BBL to the record
+## 7. For facilities which did not overlap with a BBL in MapPLUTO but should be located on a BBL lot, 
+## 	  assign the closest BBL to the record
 
 echo 'Spatially joining with dcp_mappluto - Finding closest...'
 time psql $DATABASE_URL -f ./scripts_processing/bbljoin_closest.sql
@@ -85,7 +85,7 @@ time psql $DATABASE_URL -f ./scripts_processing/calcxy.sql
 echo 'Done calculating x,y for all blank records'
 psql $DATABASE_URL -f ./scripts_processing/addID.sql
 
-## Doing spatial join to fill in City (zip code shapefile on M drive)
+## Doing spatial join to fill in City (https://data.cityofnewyork.us/download/i8iw-xf4u/application%2Fzip)
 ## Doing spatial join to fill in BIN (building footprints)
 
 ## 9. Final formatting -- find and properly capitalize acronyms and abbreviations
@@ -95,13 +95,19 @@ time psql $DATABASE_URL -f ./scripts_processing/fixallcaps.sql
 echo 'Done cleaning up capitalization'
 psql $DATABASE_URL -f ./scripts_processing/vacuum.sql
 
-## 10. Join on COLP attributes to records from other datasets
+## Create backup table before merging and dropping duplicates
+echo 'Creating backup before merging and dropping duplicates...'
+psql $DATABASE_URL -f ./scripts_processing/copy_backup1.sql
+
+# 10. Join on COLP attributes to records from other datasets
+
 
 # ## Merge Child Care and Pre-K Duplicate records
-# psql $DATABASE_URL -f ./scripts_processing/duplicates_ccprek_doe_acs.sql
-# psql $DATABASE_URL -f ./scripts_processing/duplicates_ccprek_doe_dohmh.sql
-# psql $DATABASE_URL -f ./scripts_processing/duplicates_ccprek_acs_dohmh.sql
-# psql $DATABASE_URL -f ./scripts_processing/duplicates_ccprek_dohmh.sql
+echo 'Merging and dropping Child Care and Pre-K duplicates...'
+psql $DATABASE_URL -f ./scripts_processing/duplicates_ccprek_doe_acs.sql
+psql $DATABASE_URL -f ./scripts_processing/duplicates_ccprek_doe_dohmh.sql
+psql $DATABASE_URL -f ./scripts_processing/duplicates_ccprek_acs_dohmh.sql
+psql $DATABASE_URL -f ./scripts_processing/duplicates_ccprek_dohmh.sql
 
 # ## 10. Remove DPR properties sourced from COLP that overlap with records from DPR's data
 # echo 'Updating DPR records with attributes from properties that came from COLP...'

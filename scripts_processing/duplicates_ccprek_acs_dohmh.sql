@@ -17,8 +17,8 @@ WITH matches AS (
 	ON a.bbl = b.bbl
 	WHERE
 		b.facilitytype NOT LIKE '%Camp%'
-		AND a.pgtable @> ARRAY['acs_facilities_daycareheadstart']::text[]
-		AND b.pgtable @> ARRAY['dohmh_facilities_daycare']::text[]
+		AND a.pgtable = ARRAY['acs_facilities_daycareheadstart']::text[]
+		AND b.pgtable = ARRAY['dohmh_facilities_daycare']::text[]
 		AND a.geom IS NOT NULL
 		AND b.geom IS NOT NULL
 		AND a.bbl IS NOT NULL
@@ -128,8 +128,8 @@ WITH matches AS (
 	ON a.bbl = b.bbl
 	WHERE
 		b.facilitytype NOT LIKE '%Camp%'
-		AND a.pgtable @> ARRAY['acs_facilities_daycareheadstart']::text[]
-		AND b.pgtable @> ARRAY['dohmh_facilities_daycare']::text[]
+		AND a.pgtable = ARRAY['acs_facilities_daycareheadstart']::text[]
+		AND b.pgtable = ARRAY['dohmh_facilities_daycare']::text[]
 		AND a.geom IS NOT NULL
 		AND b.geom IS NOT NULL
 		AND a.bbl IS NOT NULL
@@ -182,7 +182,6 @@ WITH matches AS (
 
 duplicates AS (
 	SELECT
-		id,
 		count(*) AS countofdups,
 		facilityname,
 		facilitytype,
@@ -199,7 +198,7 @@ duplicates AS (
 		array_agg(distinct pgtable_b) AS pgtable
 	FROM matches
 	GROUP BY
-	id, guid, facilityname, facilitytype
+	guid, facilityname, facilitytype
 	ORDER BY facilitytype, countofdups DESC )
 
 UPDATE facilities AS f
@@ -220,7 +219,7 @@ WHERE f.guid = d.guid
 -- 3. DROPPING DUPLICATE RECORDS AFTER ATTRIBUTES HAVE BEEN MERGED INTO PREFERRED RECORD
 --------------------------------------------------------------------------------------------------
 
--- DELETE FROM facilities
--- WHERE facilities.guid IN (SELECT duplicates_ccprek_acs_dohmh.guid FROM duplicates_ccprek_acs_dohmh)
--- ;
+DELETE FROM facilities
+WHERE facilities.guid IN (SELECT duplicates_ccprek_acs_dohmh.guid FROM duplicates_ccprek_acs_dohmh)
+;
 

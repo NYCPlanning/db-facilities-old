@@ -19,9 +19,11 @@ WITH matches AS (
 		a.facilitygroup LIKE '%Child Care%'
 		AND (a.facilitytype LIKE '%Early%'
 		OR a.facilitytype LIKE '%Charter%')
-		AND b.facilitytype LIKE '%Preschool%'
+		-- AND b.facilitytype LIKE '%Preschool%'
+		AND b.facilitytype NOT LIKE '%Camp%'
+		-- NEED TO CHECK IF OTHER TYPES STILL NEED TO BE CAPTURED, LIKE NON-PRESCHOOL AND THEN CHANGE TYPE TO DUAL
 		AND a.pgtable @> ARRAY['doe_facilities_universalprek']::text[]
-		AND b.pgtable @> ARRAY['dohmh_facilities_daycare']::text[]
+		AND b.pgtable = ARRAY['dohmh_facilities_daycare']::text[]
 		AND a.geom IS NOT NULL
 		AND b.geom IS NOT NULL
 		AND a.bbl IS NOT NULL
@@ -133,9 +135,10 @@ WITH matches AS (
 		a.facilitygroup LIKE '%Child Care%'
 		AND (a.facilitytype LIKE '%Early%'
 		OR a.facilitytype LIKE '%Charter%')
-		AND b.facilitytype LIKE '%Preschool%'
+		-- AND b.facilitytype LIKE '%Preschool%'
+		AND b.facilitytype NOT LIKE '%Camp%'
 		AND a.pgtable @> ARRAY['doe_facilities_universalprek']::text[]
-		AND b.pgtable @> ARRAY['dohmh_facilities_daycare']::text[]
+		AND b.pgtable = ARRAY['dohmh_facilities_daycare']::text[]
 		AND a.geom IS NOT NULL
 		AND b.geom IS NOT NULL
 		AND a.bbl IS NOT NULL
@@ -188,7 +191,6 @@ WITH matches AS (
 
 duplicates AS (
 	SELECT
-		id,
 		count(*) AS countofdups,
 		facilityname,
 		facilitytype,
@@ -205,7 +207,7 @@ duplicates AS (
 		array_agg(distinct pgtable_b) AS pgtable
 	FROM matches
 	GROUP BY
-	id, guid, facilityname, facilitytype
+	guid, facilityname, facilitytype
 	ORDER BY facilitytype, countofdups DESC )
 
 UPDATE facilities AS f
@@ -217,7 +219,12 @@ SET
 	pgtable = array_cat(f.pgtable,d.pgtable),
 	sourcedatasetname = array_cat(f.sourcedatasetname, d.sourcedatasetname),
 	oversightagency = array_cat(f.oversightagency, d.oversightagency),
-	oversightabbrev = array_cat(f.oversightabbrev, d.oversightabbrev)
+	oversightabbrev = array_cat(f.oversightabbrev, d.oversightabbrev),
+	-- MIGHT ADD CASE THAT CHANGES THE FACILITY TYPE IF WE INCLUDE MATCHES BEYOND PRESCHOOL (DAY CARE)
+	facilitysubgroup = (CASE
+		WHEN array_to_string(facilitytype_merged,',') LIKE '%Infants/Toddlers%' AND array_to_string(facilitytype_merged,',') LIKE '%Preschool%' THEN 'Dual Pre-K and Child Care'
+		ELSE facilitysubgroup
+		END)
 FROM duplicates AS d
 WHERE f.guid = d.guid
 ;
@@ -226,7 +233,7 @@ WHERE f.guid = d.guid
 -- 3. DROPPING DUPLICATE RECORDS AFTER ATTRIBUTES HAVE BEEN MERGED INTO PREFERRED RECORD
 --------------------------------------------------------------------------------------------------
 
--- DELETE FROM facilities
--- WHERE facilities.guid IN (SELECT duplicates_ccprek_doe_dohmh.guid FROM duplicates_ccprek_doe_dohmh)
--- ;
+DELETE FROM facilities
+WHERE facilities.guid IN (SELECT duplicates_ccprek_doe_dohmh.guid FROM duplicates_ccprek_doe_dohmh)
+;
 

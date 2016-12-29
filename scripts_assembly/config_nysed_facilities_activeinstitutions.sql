@@ -160,7 +160,6 @@ SELECT
 	Institution_Sub_Type_Desc,
 	-- agencyclass2
 	Institution_Type_Desc,
-
 	-- capacity
 	NULL,
 	-- utilization

@@ -47,56 +47,49 @@ facilities (
 )
 SELECT
 	-- pgtable
-	ARRAY['dfta_facilities_contracts'],
+	ARRAY['dhs_facilities_shelters'],
 	-- hash,
-	md5(CAST((dfta_facilities_contracts.*) AS text)),
+	md5(CAST((dhs_facilities_shelters.*) AS text)),
 	-- geom
-	NULL,
+	ST_Transform(ST_SetSRID(ST_MakePoint(x_coordinate, y_coordinate), 2236),4326),
 	-- idagency
-	ARRAY[Provider_ID],
+	ARRAY[Unique_ID],
 	-- facilityname
-	initcap(Sponsor_Name),
+	initcap(Facility_Name),
 	-- addressnumber
-	split_part(trim(both ' ' from initcap(Program_Address)), ' ', 1),
+	address_number,
 	-- streetname
-	trim(both ' ' from substr(trim(both ' ' from initcap(Program_Address)), strpos(trim(both ' ' from initcap(Program_Address)), ' ')+1, (length(trim(both ' ' from initcap(Program_Address)))-strpos(trim(both ' ' from initcap(Program_Address)), ' ')))),
+	initcap(street_name),
 	-- address
-	initcap(Program_Address),
+	CONCAT(address_number,' ',initcap(street_name)),
 	-- borough
-	NULL,
+	initcap(Borough),
 	-- zipcode
-	Program_Zipcode::integer,
-	-- bbl
 	NULL,
+	-- bbl
+	ARRAY[BBLs],
 	-- bin
 	NULL,
 	-- parkid
 	NULL,
 	-- facilitytype
-		(CASE
-			WHEN Contract_Type LIKE '%INNOVATIVE%' AND RIGHT(Provider_ID) <> '01' THEN 'Satellite Senior Centers'
-			WHEN Contract_Type LIKE '%NEIGHBORHOOD%' AND RIGHT(Provider_ID) <> '01' THEN 'Satellite Senior Centers'
-			WHEN Contract_Type LIKE '%INNOVATIVE%' THEN 'Innovative Senior Centers'
-			WHEN Contract_Type LIKE '%NEIGHBORHOOD%' THEN 'Neighborhood Senior Centers'
-			WHEN Contract_Type LIKE '%MEALS%' THEN  initcap(Contract_Type)
-			ELSE 'Senior Services'
-		END),
+	facility_type,
 	-- domain
 	'Health and Human Services',
 	-- facilitygroup
 	'Human Services',
 	-- facilitysubgroup
-	'Senior Services',
+	'Shelters and Transitional Housing',
 	-- agencyclass1
-	Contract_Type,
+	facility_type,
 	-- agencyclass2
-	'NA',
-	-- capacity
 	NULL,
+	-- capacity
+	capacity,
 	-- utilization
 	NULL,
 	-- capacitytype
-	NULL,
+	capacity_type,
 	-- utilizationrate
 	NULL,
 	-- area
@@ -104,15 +97,21 @@ SELECT
 	-- areatype
 	NULL,
 	-- operatortype
-	'Non-public',
+		(CASE
+			WHEN provider_name LIKE '%NYC Dept%' THEN 'Public'
+			ELSE 'Non-public'
+		END),
 	-- operatorname
-	initcap(Sponsor_Name),
+	provider_name,
 	-- operatorabbrev
-	'Non-public',
+		(CASE
+			WHEN provider_name LIKE '%NYC Dept%' THEN 'NYCDHS'
+			ELSE 'Non-public'
+		END),
 	-- oversightagency
-	ARRAY['New York City Department for the Aging'],
+	ARRAY['New York City Department of Homeless Services'],
 	-- oversightabbrev
-	ARRAY['NYCDFTA'],
+	ARRAY['NYCDHS'],
 	-- datecreated
 	CURRENT_TIMESTAMP,
 	-- buildingid
@@ -126,9 +125,12 @@ SELECT
 	-- youth
 	FALSE,
 	-- senior
-	TRUE,
-	-- family
 	FALSE,
+	-- family
+	(CASE
+		WHEN facility_type LIKE '%Family%' THEN TRUE
+		ELSE FALSE
+	END),
 	-- disabilities
 	FALSE,
 	-- dropouts
@@ -136,10 +138,10 @@ SELECT
 	-- unemployed
 	FALSE,
 	-- homeless
-	FALSE,
+	TRUE,
 	-- immigrants
 	FALSE,
 	-- groupquarters
-	FALSE
+	TRUE
 FROM 
-	dfta_facilities_contracts
+	dhs_facilities_shelters

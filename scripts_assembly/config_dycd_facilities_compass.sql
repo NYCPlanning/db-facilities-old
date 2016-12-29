@@ -47,25 +47,25 @@ facilities (
 )
 SELECT
 	-- pgtable
-	ARRAY['dfta_facilities_contracts'],
+	ARRAY['dycd_facilities_compass'],
 	-- hash,
-	md5(CAST((dfta_facilities_contracts.*) AS text)),
+	md5(CAST((dycd_facilities_compass.*) AS text)),
 	-- geom
 	NULL,
 	-- idagency
-	ARRAY[Provider_ID],
-	-- facilityname
-	initcap(Sponsor_Name),
-	-- addressnumber
-	split_part(trim(both ' ' from initcap(Program_Address)), ' ', 1),
-	-- streetname
-	trim(both ' ' from substr(trim(both ' ' from initcap(Program_Address)), strpos(trim(both ' ' from initcap(Program_Address)), ' ')+1, (length(trim(both ' ' from initcap(Program_Address)))-strpos(trim(both ' ' from initcap(Program_Address)), ' ')))),
-	-- address
-	initcap(Program_Address),
-	-- borough
 	NULL,
+	-- facilityname
+	'COMPASS Program',
+	-- addressnumber
+	address_number,
+	-- streetname
+	initcap(street_name),
+	-- address
+	CONCAT(address_number,' ',initcap(street_name)),
+	-- borough
+	initcap(Borough),
 	-- zipcode
-	Program_Zipcode::integer,
+	NULL,
 	-- bbl
 	NULL,
 	-- bin
@@ -73,24 +73,17 @@ SELECT
 	-- parkid
 	NULL,
 	-- facilitytype
-		(CASE
-			WHEN Contract_Type LIKE '%INNOVATIVE%' AND RIGHT(Provider_ID) <> '01' THEN 'Satellite Senior Centers'
-			WHEN Contract_Type LIKE '%NEIGHBORHOOD%' AND RIGHT(Provider_ID) <> '01' THEN 'Satellite Senior Centers'
-			WHEN Contract_Type LIKE '%INNOVATIVE%' THEN 'Innovative Senior Centers'
-			WHEN Contract_Type LIKE '%NEIGHBORHOOD%' THEN 'Neighborhood Senior Centers'
-			WHEN Contract_Type LIKE '%MEALS%' THEN  initcap(Contract_Type)
-			ELSE 'Senior Services'
-		END),
+	'COMPASS Program',
 	-- domain
-	'Health and Human Services',
+	'Education, Child Welfare, and Youth',
 	-- facilitygroup
-	'Human Services',
+	'Youth Services',
 	-- facilitysubgroup
-	'Senior Services',
+	'Comprehensive After School System (COMPASS) Sites',
 	-- agencyclass1
-	Contract_Type,
+	NULL,
 	-- agencyclass2
-	'NA',
+	NULL,
 	-- capacity
 	NULL,
 	-- utilization
@@ -106,13 +99,13 @@ SELECT
 	-- operatortype
 	'Non-public',
 	-- operatorname
-	initcap(Sponsor_Name),
+	provider_name,
 	-- operatorabbrev
 	'Non-public',
 	-- oversightagency
-	ARRAY['New York City Department for the Aging'],
+	ARRAY['New York City Department of Youth and Community Development'],
 	-- oversightabbrev
-	ARRAY['NYCDFTA'],
+	ARRAY['NYCDYCD'],
 	-- datecreated
 	CURRENT_TIMESTAMP,
 	-- buildingid
@@ -124,9 +117,9 @@ SELECT
 	-- children
 	FALSE,
 	-- youth
-	FALSE,
-	-- senior
 	TRUE,
+	-- senior
+	FALSE,
 	-- family
 	FALSE,
 	-- disabilities
@@ -142,4 +135,4 @@ SELECT
 	-- groupquarters
 	FALSE
 FROM 
-	dfta_facilities_contracts
+	dycd_facilities_compass

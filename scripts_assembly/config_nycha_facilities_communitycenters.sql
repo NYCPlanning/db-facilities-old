@@ -1,3 +1,5 @@
+-- Not finished
+
 INSERT INTO
 facilities (
 	pgtable,
@@ -47,25 +49,25 @@ facilities (
 )
 SELECT
 	-- pgtable
-	ARRAY['dfta_facilities_contracts'],
+	ARRAY['nycha_facilities_communitycenters'],
 	-- hash,
-	md5(CAST((dfta_facilities_contracts.*) AS text)),
+	md5(CAST((nycha_facilities_communitycenters.*) AS text)),
 	-- geom
 	NULL,
 	-- idagency
-	ARRAY[Provider_ID],
-	-- facilityname
-	initcap(Sponsor_Name),
-	-- addressnumber
-	split_part(trim(both ' ' from initcap(Program_Address)), ' ', 1),
-	-- streetname
-	trim(both ' ' from substr(trim(both ' ' from initcap(Program_Address)), strpos(trim(both ' ' from initcap(Program_Address)), ' ')+1, (length(trim(both ' ' from initcap(Program_Address)))-strpos(trim(both ' ' from initcap(Program_Address)), ' ')))),
-	-- address
-	initcap(Program_Address),
-	-- borough
 	NULL,
+	-- facilityname
+	initcap(development_name),
+	-- addressnumber
+	split_part(trim(both ' ' from address), ' ', 1),
+	-- streetname
+	initcap(trim(both ' ' from substr(trim(both ' ' from address), strpos(trim(both ' ' from address), ' ')+1, (length(trim(both ' ' from address))-strpos(trim(both ' ' from address), ' '))))),
+	-- address
+	initcap(address),
+	-- borough
+	initcap(borough),
 	-- zipcode
-	Program_Zipcode::integer,
+	ROUND(zip_code::numeric,0),
 	-- bbl
 	NULL,
 	-- bin
@@ -73,24 +75,17 @@ SELECT
 	-- parkid
 	NULL,
 	-- facilitytype
-		(CASE
-			WHEN Contract_Type LIKE '%INNOVATIVE%' AND RIGHT(Provider_ID) <> '01' THEN 'Satellite Senior Centers'
-			WHEN Contract_Type LIKE '%NEIGHBORHOOD%' AND RIGHT(Provider_ID) <> '01' THEN 'Satellite Senior Centers'
-			WHEN Contract_Type LIKE '%INNOVATIVE%' THEN 'Innovative Senior Centers'
-			WHEN Contract_Type LIKE '%NEIGHBORHOOD%' THEN 'Neighborhood Senior Centers'
-			WHEN Contract_Type LIKE '%MEALS%' THEN  initcap(Contract_Type)
-			ELSE 'Senior Services'
-		END),
+	'NYCHA Community Center',
 	-- domain
-	'Health and Human Services',
+	'Public Safety, Emergency Services, and Administration of Justice',
 	-- facilitygroup
-	'Human Services',
+	'Public Safety',
 	-- facilitysubgroup
-	'Senior Services',
+	'Police Services',
 	-- agencyclass1
-	Contract_Type,
+	Type,
 	-- agencyclass2
-	'NA',
+	Status,
 	-- capacity
 	NULL,
 	-- utilization
@@ -104,15 +99,15 @@ SELECT
 	-- areatype
 	NULL,
 	-- operatortype
-	'Non-public',
+	'Public',
 	-- operatorname
-	initcap(Sponsor_Name),
+	'New York City Housing Authority',
 	-- operatorabbrev
-	'Non-public',
+	'NYCHA',
 	-- oversightagency
-	ARRAY['New York City Department for the Aging'],
+	ARRAY['New York City Housing Authority'],
 	-- oversightabbrev
-	ARRAY['NYCDFTA'],
+	ARRAY['NYCHA'],
 	-- datecreated
 	CURRENT_TIMESTAMP,
 	-- buildingid
@@ -126,7 +121,7 @@ SELECT
 	-- youth
 	FALSE,
 	-- senior
-	TRUE,
+	FALSE,
 	-- family
 	FALSE,
 	-- disabilities
@@ -141,5 +136,5 @@ SELECT
 	FALSE,
 	-- groupquarters
 	FALSE
-FROM 
-	dfta_facilities_contracts
+FROM
+	nycha_facilities_communitycenters

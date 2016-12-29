@@ -88,6 +88,14 @@ SELECT
 	NULL,
 	-- facilitytype
 		(CASE
+			WHEN RIGHT(Org_ID,3) = 'ADM' THEN 'School Administration Site'
+			WHEN RIGHT(Org_ID,3) = 'CBO' THEN 'School-Based Community Based Organization'
+			WHEN RIGHT(Org_ID,3) = 'DRG' THEN 'School-Based Drug Program'
+			WHEN RIGHT(Org_ID,3) = 'DRG' THEN 'School-Based Health Program'
+			WHEN RIGHT(Org_ID,3) = 'SFS' THEN 'School-Based Food Services'
+			WHEN RIGHT(Org_ID,3) = 'OTH' THEN 'School-Based Community Service'
+			WHEN RIGHT(Org_ID,3) = 'SST' THEN 'School-Based Safety Program'
+			WHEN RIGHT(Org_ID,3) = 'CEP' THEN 'School-Based Continuing Education Program'
 			WHEN Charter IS NULL AND Org_Level = 'PS' THEN 'Elementary School - Public'
 			WHEN Charter IS NULL AND Org_Level = 'PSIS' THEN 'Elementary and Middle School - Public'
 			WHEN Charter IS NULL AND Org_Level = 'IS' THEN 'Middle School - Public'
@@ -107,16 +115,45 @@ SELECT
 			ELSE 'Other School - Unspecified'
 		END),
 	-- domain
-	'Education, Child Welfare, and Youth',
+		(CASE
+			WHEN RIGHT(Org_ID,3) = 'ADM' THEN 'Administration of Government'
+			WHEN RIGHT(Org_ID,3) = 'CBO' THEN 'Health and Human Services'
+			WHEN RIGHT(Org_ID,3) = 'DRG' THEN 'Health and Human Services'
+			WHEN RIGHT(Org_ID,3) = 'DRG' THEN 'Health and Human Services'
+			WHEN RIGHT(Org_ID,3) = 'SFS' THEN 'Education, Child Welfare, and Youth'
+			WHEN RIGHT(Org_ID,3) = 'OTH' THEN 'Health and Human Services'
+			WHEN RIGHT(Org_ID,3) = 'SST' THEN 'Public Safety, Emergency Services, and Administration of Government'
+			WHEN RIGHT(Org_ID,3) = 'CEP' THEN 'Health and Human Services'
+			ELSE 'Education, Child Welfare, and Youth'
+		END),
 	-- facilitygroup
-	'Schools (K-12)',
+		(CASE
+			WHEN RIGHT(Org_ID,3) = 'ADM' THEN 'Offices'
+			WHEN RIGHT(Org_ID,3) = 'CBO' THEN 'Human Services'
+			WHEN RIGHT(Org_ID,3) = 'DRG' THEN 'Human Services'
+			WHEN RIGHT(Org_ID,3) = 'DRG' THEN 'Health'
+			WHEN RIGHT(Org_ID,3) = 'SFS' THEN 'Child Welfare'
+			WHEN RIGHT(Org_ID,3) = 'OTH' THEN 'Human Services'
+			WHEN RIGHT(Org_ID,3) = 'SST' THEN 'Public Safety'
+			WHEN RIGHT(Org_ID,3) = 'CEP' THEN 'Workforce Development'
+			ELSE 'Schools (K-12)'
+		END),
 	-- facilitysubgroup
-	'Public Schools',
+		(CASE
+			WHEN RIGHT(Org_ID,3) = 'ADM' THEN 'School Administration Site'
+			WHEN RIGHT(Org_ID,3) = 'CBO' THEN 'School-Based Community Based Organization'
+			WHEN RIGHT(Org_ID,3) = 'DRG' THEN 'School-Based Drug Program'
+			WHEN RIGHT(Org_ID,3) = 'DRG' THEN 'School-Based Health Program'
+			WHEN RIGHT(Org_ID,3) = 'SFS' THEN 'School-Based Food Services'
+			WHEN RIGHT(Org_ID,3) = 'OTH' THEN 'School-Based Community Service'
+			WHEN RIGHT(Org_ID,3) = 'SST' THEN 'School-Based Safety Program'
+			WHEN RIGHT(Org_ID,3) = 'CEP' THEN 'School-Based Continuing Education Program'
+			ELSE 'Public Schools'
+		END),
 	-- agencyclass1
 	Charter,
 	-- agencyclass2
 	Org_Level,
-
 	-- capacity
 	PS_Capacity::numeric + MS_Capacity::numeric + HS_Capacity::numeric,
 	-- utilization
@@ -198,3 +235,7 @@ SELECT
 	FALSE
 FROM
 	doe_facilities_schoolsbluebook
+WHERE
+	RIGHT(Org_ID,3) <> 'SPE'
+	AND RIGHT(Org_ID,3) <> 'AAC'
+	AND RIGHT(Org_ID,3) <> 'UFT'
