@@ -121,31 +121,34 @@ SELECT
 		END),
 	-- domain
 		(CASE
+			WHEN Institution_Sub_Type_Desc LIKE '%PRE-K%' THEN 'Administration of Government'
 			WHEN Institution_Type_Desc LIKE '%MUSEUM%' THEN 'Parks, Cultural, and Other Community Facilities'
 			WHEN Institution_Type_Desc LIKE '%LIBRARIES%' THEN 'Parks, Cultural, and Other Community Facilities'
 			ELSE 'Education, Child Welfare, and Youth'
 		END),
 	-- facilitygroup
 		(CASE
+			WHEN Institution_Sub_Type_Desc LIKE '%PRE-K%' THEN 'Offices, Training, and Testing'
+			WHEN Institution_Sub_Type_Desc LIKE '%PRE-SCHOOL%' THEN 'Child Care and Pre-Kindergarten'
 			WHEN Institution_Type_Desc LIKE '%MUSEUM%' THEN 'Cultural Institutions'
 			WHEN Institution_Type_Desc LIKE '%LIBRARIES%' THEN 'Libraries'
 			WHEN Institution_Type_Desc LIKE '%CHILD NUTRITION%' THEN 'Child Welfare'
-			WHEN Institution_Type_Desc LIKE '%PROPRIETARY%' THEN 'Vocational and Proprietary Schools'
 			WHEN (Institution_Type_Desc LIKE '%COLLEGE%') OR (Institution_Type_Desc LIKE '%CUNY%') OR 
 				(Institution_Type_Desc LIKE '%SUNY%') OR (Institution_Type_Desc LIKE '%SUNY%')
 				THEN 'Higher Education'
+			WHEN Institution_Type_Desc LIKE '%PROPRIETARY%' THEN 'Vocational and Proprietary Schools'
 			ELSE 'Schools (K-12)'
 		END),
 	-- facilitysubgroup
 		(CASE
 			WHEN Institution_Sub_Type_Desc LIKE '%MUSEUM%' THEN 'Museums'
 			WHEN Institution_Sub_Type_Desc LIKE '%HISTORICAL%' THEN 'Historical Societies'
-			WHEN Institution_Type_Desc LIKE '%LIBRARIES%' THEN 'Academic Libraries'
+			WHEN Institution_Type_Desc LIKE '%LIBRARIES%' THEN 'Academic and Special Libraries'
 			WHEN Institution_Type_Desc LIKE '%CHILD NUTRITION%' THEN 'Child Nutrition'
 			WHEN (Institution_Type_Desc LIKE '%DISABILITIES%')
 				THEN 'Other Schools Serving Students with Disabilities'
-			WHEN Institution_Sub_Type_Desc LIKE '%PRE-K%' THEN 'Preschools'
-			WHEN Institution_Sub_Type_Desc LIKE '%PRE-SCHOOL%' THEN 'Preschools'
+			WHEN Institution_Sub_Type_Desc LIKE '%PRE-K%' THEN 'Offices'
+			WHEN Institution_Sub_Type_Desc LIKE '%PRE-SCHOOL%' THEN 'Preschools for Students with Disabilities'
 			WHEN (Institution_Type_Desc LIKE 'PUBLIC%') OR (Institution_Sub_Type_Desc LIKE 'PUBLIC%') THEN 'Public Schools'
 			WHEN (Institution_Type_Desc LIKE '%COLLEGE%') OR (Institution_Type_Desc LIKE '%CUNY%') OR 
 				(Institution_Type_Desc LIKE '%SUNY%') OR (Institution_Type_Desc LIKE '%SUNY%')
@@ -200,17 +203,17 @@ SELECT
 			ELSE 'Non-public'
 		END),
 	-- oversightagency
-		ARRAY[(CASE
+		(CASE
 			WHEN Institution_Type_Desc = 'PUBLIC SCHOOLS' THEN ARRAY['New York City Department of Education', 'New York State Education Department']
 			WHEN Institution_Type_Desc LIKE '%NON-IMF%' THEN ARRAY['New York City Department of Education', 'New York State Education Department']
 			ELSE ARRAY['New York State Education Department']
-		END)],
+		END),
 	-- oversightabbrev
-		ARRAY[(CASE
+		(CASE
 			WHEN Institution_Type_Desc = 'PUBLIC SCHOOLS' THEN ARRAY['NYCDOE', 'NYSED']
 			WHEN Institution_Type_Desc LIKE '%NON-IMF%' THEN ARRAY['NYCDOE', 'NYSED']
 			ELSE ARRAY['NYSED']
-		END)],
+		END),
 	-- datecreated
 	CURRENT_TIMESTAMP,
 	-- buildingid
@@ -254,16 +257,21 @@ FROM
 		LEFT JOIN nysed_nonpublicenrollment
 		ON trim(replace(nysed_nonpublicenrollment.beds_code,',',''),' ')::text = nysed_facilities_activeinstitutions.sed_code::text
 		) AS nysed_facilities_activeinstitutions
-WHERE 1=1
-	AND Institution_Sub_Type_Desc NOT LIKE '%BUREAU%'
+WHERE
+	(Institution_Type_Desc = 'PUBLIC SCHOOLS' AND Institution_Sub_Type_Desc LIKE '%GED%')
+	OR (Institution_Type_Desc <> 'PUBLIC SCHOOLS'
+	AND Institution_Type_Desc <> 'NON-IMF SCHOOLS'
+	AND Institution_Type_Desc <> 'GOVERNMENT AGENCIES' -- MAY ACTUALLY WANT TO USE THESE
+	AND Institution_Type_Desc <> 'INDEPENDENT ORGANIZATIONS'
 	AND Institution_Type_Desc <> 'LIBRARY SYSTEMS'
+	AND Institution_Type_Desc <> 'LOCAL GOVERNMENTS'
+	AND Institution_Type_Desc <> 'SCHOOL DISTRICTS'
 	AND Institution_Sub_Type_Desc <> 'PUBLIC LIBRARIES'
-	AND Institution_Sub_Type_Desc <> 'SPECIAL LIBRARIES'
 	AND Institution_Sub_Type_Desc <> 'HISTORICAL RECORDS REPOSITORIES'
 	AND Institution_Sub_Type_Desc <> 'CHARTER CORPORATION'
-	AND Institution_Type_Desc <> 'INDEPENDENT ORGANIZATIONS'
-	AND Institution_Type_Desc <> 'LOCAL GOVERNMENTS'
-	AND Institution_Type_Desc <> 'HOME BOUND'
-	AND Institution_Type_Desc <> 'HOME INSTRUCTED'
-	AND Institution_Type_Desc <> 'SCHOOL DISTRICTS'
-	AND Institution_Type_Desc <> 'GOVERNMENT AGENCIES' -- MAY ACTUALLY WANT TO USE THESE
+	AND Institution_Sub_Type_Desc <> 'HOME BOUND'
+	AND Institution_Sub_Type_Desc <> 'HOME INSTRUCTED'
+	AND Institution_Sub_Type_Desc <> 'NYC BUREAU'
+	AND Institution_Sub_Type_Desc <> 'NYC NETWORK'
+	AND Institution_Sub_Type_Desc <> 'OUT OF DISTRICT PLACEMENT'
+	AND Institution_Sub_Type_Desc <> 'BUILDINGS UNDER CONSTRUCTION')

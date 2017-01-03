@@ -28,5 +28,5 @@ UPDATE facilities
         ) AS j
     WHERE
         facilities.pgtable = j.pgtable
-        AND facilities.agencysource IS NULL
+--        AND facilities.agencysource IS NULL
     ;

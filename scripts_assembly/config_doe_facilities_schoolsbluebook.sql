@@ -131,23 +131,23 @@ SELECT
 			WHEN RIGHT(Org_ID,3) = 'ADM' THEN 'Offices'
 			WHEN RIGHT(Org_ID,3) = 'CBO' THEN 'Human Services'
 			WHEN RIGHT(Org_ID,3) = 'DRG' THEN 'Human Services'
-			WHEN RIGHT(Org_ID,3) = 'DRG' THEN 'Health'
+			WHEN RIGHT(Org_ID,3) = 'DRG' THEN 'Human Services'
 			WHEN RIGHT(Org_ID,3) = 'SFS' THEN 'Child Welfare'
 			WHEN RIGHT(Org_ID,3) = 'OTH' THEN 'Human Services'
 			WHEN RIGHT(Org_ID,3) = 'SST' THEN 'Public Safety'
-			WHEN RIGHT(Org_ID,3) = 'CEP' THEN 'Workforce Development'
+			WHEN RIGHT(Org_ID,3) = 'CEP' THEN 'Human Services'
 			ELSE 'Schools (K-12)'
 		END),
 	-- facilitysubgroup
 		(CASE
 			WHEN RIGHT(Org_ID,3) = 'ADM' THEN 'School Administration Site'
 			WHEN RIGHT(Org_ID,3) = 'CBO' THEN 'School-Based Community Based Organization'
-			WHEN RIGHT(Org_ID,3) = 'DRG' THEN 'School-Based Drug Program'
+			WHEN RIGHT(Org_ID,3) = 'DRG' THEN 'School-Based Drug Prevention Program'
 			WHEN RIGHT(Org_ID,3) = 'DRG' THEN 'School-Based Health Program'
 			WHEN RIGHT(Org_ID,3) = 'SFS' THEN 'School-Based Food Services'
 			WHEN RIGHT(Org_ID,3) = 'OTH' THEN 'School-Based Community Service'
 			WHEN RIGHT(Org_ID,3) = 'SST' THEN 'School-Based Safety Program'
-			WHEN RIGHT(Org_ID,3) = 'CEP' THEN 'School-Based Continuing Education Program'
+			WHEN RIGHT(Org_ID,3) = 'CEP' THEN 'Workforce Development'
 			ELSE 'Public Schools'
 		END),
 	-- agencyclass1

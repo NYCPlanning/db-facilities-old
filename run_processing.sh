@@ -119,7 +119,8 @@ psql $DATABASE_URL -f ./scripts_processing/duplicates_ccprek_dohmh.sql
 # ## 11. Final export to csv that excludes null geoms and geoms outside NYC
 
 # echo 'Exporting...'
-# time psql $DATABASE_URL -f ./scripts_processing/export.sql
+time psql $DATABASE_URL -f ./scripts_processing/export.sql
+sh ./scripts_processing/export_json.sh
 # echo 'All done!'
 
 

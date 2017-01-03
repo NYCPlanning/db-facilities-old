@@ -112,11 +112,11 @@ SELECT
 	-- operatortype
 	'Public',
 	-- operatorname
-	'New York State Department of Conservation',
+	'New York State Department of Environmental Conservation',
 	-- operatorabbrev
 	'NYSDEC',
 	-- oversightagency
-	ARRAY['New York State Department of Conservation'],
+	ARRAY['New York State Department of Environmental Conservation'],
 	-- oversightabbrev
 	ARRAY['NYSDEC'],
 	-- datecreated

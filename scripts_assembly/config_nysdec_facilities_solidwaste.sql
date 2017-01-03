@@ -98,7 +98,7 @@ SELECT
 	-- domain
 	'Core Infrastructure and Transportation',
 	-- facilitygroup
-	'Wastewater and Waste Management',
+	'Solid Waste',
 	-- facilitysubgroup
 	(CASE
 		WHEN activity_desc LIKE '%Transfer%' THEN 'Solid Waste Transfer and Carting'
@@ -143,7 +143,7 @@ SELECT
 	-- oversightagencyname
 		ARRAY[(CASE
 			WHEN owner_type = 'Municipal' THEN 'New York City Department of Sanitation'
-			ELSE 'New York Department of Environmental Conservation'
+			ELSE 'New York State Department of Environmental Conservation'
 		END)],
 	-- oversightabbrev
 		ARRAY[(CASE

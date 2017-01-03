@@ -74,8 +74,8 @@ SELECT
 	NULL,
 	-- facilitytype
 		(CASE
-			WHEN Contract_Type LIKE '%INNOVATIVE%' AND RIGHT(Provider_ID) <> '01' THEN 'Satellite Senior Centers'
-			WHEN Contract_Type LIKE '%NEIGHBORHOOD%' AND RIGHT(Provider_ID) <> '01' THEN 'Satellite Senior Centers'
+			WHEN Contract_Type LIKE '%INNOVATIVE%' AND RIGHT(Provider_ID,2) <> '01' THEN 'Satellite Senior Centers'
+			WHEN Contract_Type LIKE '%NEIGHBORHOOD%' AND RIGHT(Provider_ID,2) <> '01' THEN 'Satellite Senior Centers'
 			WHEN Contract_Type LIKE '%INNOVATIVE%' THEN 'Innovative Senior Centers'
 			WHEN Contract_Type LIKE '%NEIGHBORHOOD%' THEN 'Neighborhood Senior Centers'
 			WHEN Contract_Type LIKE '%MEALS%' THEN  initcap(Contract_Type)
