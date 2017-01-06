@@ -109,6 +109,10 @@ psql $DATABASE_URL -f ./scripts_processing/duplicates_ccprek_doe_dohmh.sql
 psql $DATABASE_URL -f ./scripts_processing/duplicates_ccprek_acs_dohmh.sql
 psql $DATABASE_URL -f ./scripts_processing/duplicates_ccprek_dohmh.sql
 
+echo 'Merging and dropping remaining duplicates...'
+psql $DATABASE_URL -f ./scripts_processing/duplicates_remaining.sql
+echo 'Deduped!'
+
 # ## 10. Remove DPR properties sourced from COLP that overlap with records from DPR's data
 # echo 'Updating DPR records with attributes from properties that came from COLP...'
 # time psql $DATABASE_URL -f ./scripts_processing/update_ParkDupsFromCOLP.sql
@@ -120,7 +124,7 @@ psql $DATABASE_URL -f ./scripts_processing/duplicates_ccprek_dohmh.sql
 
 # echo 'Exporting...'
 time psql $DATABASE_URL -f ./scripts_processing/export.sql
-sh ./scripts_processing/export_json.sh
+# sh ./scripts_processing/export_json.sh
 # echo 'All done!'
 
 

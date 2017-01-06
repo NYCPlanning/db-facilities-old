@@ -41,6 +41,8 @@ area double precision,
 areatype text,
 servicearea text,
 -- operator and agency information
+propertytype text,
+propertynycha boolean,
 operatortype text,
 operatorname text,
 operatorabbrev text,

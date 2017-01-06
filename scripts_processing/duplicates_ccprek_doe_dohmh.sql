@@ -199,7 +199,7 @@ duplicates AS (
 		guid,
 		array_agg(guid_b) AS guid_merged,
 		array_agg(distinct idagency_b) AS idagency_merged,
-		array_agg(distinct hash_b) AS hash_merged,
+		array_agg(hash_b) AS hash_merged,
 		array_agg(distinct agencysource_b) AS agencysource,
 		array_agg(distinct sourcedatasetname_b) AS sourcedatasetname,
 		array_agg(distinct oversightagency_b) AS oversightagency,

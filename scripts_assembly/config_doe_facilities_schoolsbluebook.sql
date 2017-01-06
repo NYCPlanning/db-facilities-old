@@ -128,7 +128,7 @@ SELECT
 		END),
 	-- facilitygroup
 		(CASE
-			WHEN RIGHT(Org_ID,3) = 'ADM' THEN 'Offices'
+			WHEN RIGHT(Org_ID,3) = 'ADM' THEN 'Offices, Training, and Testing'
 			WHEN RIGHT(Org_ID,3) = 'CBO' THEN 'Human Services'
 			WHEN RIGHT(Org_ID,3) = 'DRG' THEN 'Human Services'
 			WHEN RIGHT(Org_ID,3) = 'DRG' THEN 'Human Services'
@@ -140,7 +140,7 @@ SELECT
 		END),
 	-- facilitysubgroup
 		(CASE
-			WHEN RIGHT(Org_ID,3) = 'ADM' THEN 'School Administration Site'
+			WHEN RIGHT(Org_ID,3) = 'ADM' THEN 'Offices'
 			WHEN RIGHT(Org_ID,3) = 'CBO' THEN 'School-Based Community Based Organization'
 			WHEN RIGHT(Org_ID,3) = 'DRG' THEN 'School-Based Drug Prevention Program'
 			WHEN RIGHT(Org_ID,3) = 'DRG' THEN 'School-Based Health Program'

@@ -363,14 +363,14 @@ SELECT
 			-- Education, Children, Youth
 			WHEN use_type LIKE '%UNIVERSITY%' THEN 'Higher Education'
 			WHEN agency LIKE '%CUNY%' THEN 'Higher Education'
-			WHEN use_type LIKE '%EARLY CHILDHOOD%' THEN 'Schools'
-			WHEN use_type LIKE '%DAY CARE%' THEN 'Childcare'
+			WHEN use_type LIKE '%EARLY CHILDHOOD%' THEN 'Child Care and Pre-Kindergarten'
+			WHEN use_type LIKE '%DAY CARE%' THEN 'Child Care and Pre-Kindergarten'
 			WHEN agency LIKE '%ACS%' AND use_type LIKE '%RESIDENTIAL%' THEN 'Childrens Services'
-			WHEN agency LIKE '%ACS%' THEN 'Childcare'
-			WHEN agency LIKE '%EDUC%' and use_type LIKE '%PLAY AREA%' THEN 'Schools'
-			WHEN use_type LIKE '%HIGH SCHOOL%' THEN 'Schools'
-			WHEN AGENCY LIKE '%EDUC%' AND use_type LIKE '%SCHOOL%' THEN 'Schools'
-			WHEN use_type LIKE '%EDUCATIONAL SKILLS%' THEN 'Schools'
+			WHEN agency LIKE '%ACS%' THEN 'Child Care and Pre-Kindergarten'
+			WHEN agency LIKE '%EDUC%' and use_type LIKE '%PLAY AREA%' THEN 'Schools (K-12)'
+			WHEN use_type LIKE '%HIGH SCHOOL%' THEN 'Schools (K-12)'
+			WHEN AGENCY LIKE '%EDUC%' AND use_type LIKE '%SCHOOL%' THEN 'Schools (K-12)'
+			WHEN use_type LIKE '%EDUCATIONAL SKILLS%' THEN 'Schools (K-12)'
 
 			ELSE 'Other Property'
 		END),
@@ -458,7 +458,7 @@ SELECT
 				OR agency LIKE '%HPD%')
 				AND use_type LIKE '%RESIDENTIAL%'
 				THEN 'Public or Affordable Housing'
-			WHEN use_type LIKE '%COMMUNITY CENTER%' THEN 'Community Centers'
+			WHEN use_type LIKE '%COMMUNITY CENTER%' THEN 'Community Centers and Community School Programs'
 
 			-- Parks, Cultural
 			WHEN use_type LIKE '%LIBRARY%' THEN 'Public Libraries'
@@ -511,10 +511,10 @@ SELECT
 
 			-- Education, Children, Youth
 			WHEN use_type LIKE '%UNIVERSITY%' THEN 'Colleges or Universities'
-			WHEN use_type LIKE '%EARLY CHILDHOOD%' THEN 'Preschools'
-			WHEN use_type LIKE '%DAY CARE%' THEN 'Childcare'
+			WHEN use_type LIKE '%EARLY CHILDHOOD%' THEN 'Child Care'
+			WHEN use_type LIKE '%DAY CARE%' THEN 'Child Care'
 			WHEN agency LIKE '%ACS%' AND use_type LIKE '%RESIDENTIAL%' THEN 'Childrens Services'
-			WHEN agency LIKE '%ACS%' THEN 'Childcare'
+			WHEN agency LIKE '%ACS%' THEN 'Child Care'
 			WHEN agency LIKE '%EDUC%' and use_type LIKE '%PLAY AREA%' THEN 'Public Schools'
 			WHEN use_type LIKE '%HIGH SCHOOL%' THEN 'Public Schools'
 			WHEN agency LIKE '%CUNY%' THEN 'Colleges or Universities'

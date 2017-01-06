@@ -170,341 +170,107 @@ SELECT
 				THEN 'Youth Employment'
 			ELSE split_part(Program_name,' (',1)
 		END),
+
 	-- domain
-		(CASE 
-			WHEN services LIKE '%Non-secure Placement%' 
-				OR Program_name LIKE '%Non-secure%' 
-				OR Program_name LIKE '%Non-Secure%' 
-				AND (agency LIKE '%Children%'
-				OR agency LIKE '%ACS%')
+		(CASE
+			WHEN agency LIKE '%Children%' AND (Program_name LIKE '%Secure Placement%' OR Program_name LIKE '%secure Placement%')
 				THEN 'Public Safety, Emergency Services, and Administration of Justice'
-			WHEN services LIKE '%Homelessness Prevention%' 
-				OR Program_name LIKE '%Homelessness Prevention%'
-				THEN 'Health and Human Services'
-			WHEN agency LIKE '%DOE%' 
-				OR agency LIKE '%Education%'
-				THEN 'Education, Child Welfare, and Youth'
-			WHEN (agency LIKE '%ACS%' 
-				OR agency LIKE '%Children%')
-				AND Program_name NOT LIKE '%Disabilities%'
-				AND services NOT LIKE '%Mental%' 
-				AND Program_name NOT LIKE '%Behavioral Health%'
-				AND Program_name NOT LIKE '%Mental Health%'
-				THEN 'Education, Child Welfare, and Youth'
-			WHEN agency LIKE '%DYCD%' 
-				OR agency LIKE '%Youth%' 
-				OR Program_name LIKE '%Youth%'
-				AND Program_name NOT LIKE '%Behavioral Health%'
-				AND Program_name NOT LIKE '%Mental Health%'
+			WHEN agency LIKE '%Children%' OR (agency LIKE '%Youth%' AND Program_name NOT LIKE '%Homeless%')
 				THEN 'Education, Child Welfare, and Youth'
 			ELSE 'Health and Human Services'
 		END),
+
 	-- facilitygroup
 		(CASE
-
-			WHEN services LIKE '%Non-secure Placement%' 
-				OR Program_name LIKE '%Non-secure%' 
-				OR Program_name LIKE '%Non-Secure%' 
-				AND (agency LIKE '%Children%'
-				OR agency LIKE '%ACS%')
+			
+			WHEN agency LIKE '%Children%' AND (Program_name LIKE '%secure Placement%' OR Program_name LIKE '%Secure Placement%')
 				THEN 'Justice and Corrections'
-			-- domain: Education, Child Welfare, and Youth
-
-			-- facilitygroup: Schools
-			-- facilitysubgroup: Preschools
-			WHEN Program_name LIKE '%Early Learn%'
+			WHEN agency LIKE '%Children%' AND Program_name LIKE '%Early Learn%'
 				THEN 'Child Care and Pre-Kindergarten'
-			-- facilitysubgroup: Public Schools
-			WHEN agency LIKE '%DOE%'
-				OR agency LIKE '%Education%'
-				THEN 'Schools'
-			
-			-- facilitygroup: Childrens Services
-			-- facilitysubgroup: Childrens Services
-			WHEN (agency LIKE '%ACS%'
-				OR agency LIKE '%Children%')
-				AND Program_name NOT LIKE '%Disabilities%'
-				AND services NOT LIKE '%Mental%' 
-				AND Program_name NOT LIKE '%Behavioral Health%'
-				AND Program_name NOT LIKE '%Mental Health%'
+			WHEN agency LIKE '%Children%'
 				THEN 'Childrens Services'
-			
-			-- facilitygroup: Youth Services
-			-- facilitysubgroup: Youth Services
-			WHEN (agency LIKE '%DYCD%'
-				OR agency LIKE '%Youth%' 
-				OR Program_name LIKE '%Youth%') 
-				AND services NOT LIKE '%Homelessness Prevention%'
-				AND Program_name NOT LIKE '%Behavioral Health%'
-				AND Program_name NOT LIKE '%Mental Health%'
+
+			WHEN agency LIKE '%Education%'
+				THEN 'Human Services'
+
+			WHEN agency LIKE '%Youth%' AND Program_name LIKE '%Homeless%'
+				THEN 'Human Services'
+			WHEN agency LIKE '%Youth%'
 				THEN 'Youth Services'
-			
-			-- domain: Health and Human Services
-			-- facilitygroup: Human Services
-			-- facilitysubgroup: Housing and Homeless Services
-			WHEN ( agency LIKE '%HPD%'
-				OR agency LIKE '%Housing%'
-				OR agency LIKE '%DHS%'
-				OR agency LIKE '%Homeless Services%'
-				OR Program_name LIKE '%Re-Housing%'
-				OR services LIKE '%Homelessness Prevention%'
-				OR services LIKE '%Housing%'
-				OR Program_name LIKE '%Homelessness Prevention%'
-				OR services LIKE '%Shelter%'
-				OR Program_name LIKE '%Shelter%')
-				AND Program_name NOT LIKE '%AIDS%'
-				THEN 'Human Services'
-			-- facilitysubgroup: Workforce Development
-			WHEN agency LIKE '%SBS%'
-				OR agency LIKE '%Business%'
-				OR Program_name LIKE '%Job%'
-				OR Program_name LIKE '%Work%'
-				OR Program_name LIKE '%WEP%'
-				OR Program_name LIKE '%Employment%'
-				OR Program_name LIKE '%Family Self Sufficiency%'
-				OR Program_name LIKE '%Vocational%'
-				THEN 'Human Services'
-			-- facilitysubgroup: Senior Services
-			WHEN agency LIKE '%DFTA%'
-				OR agency LIKE '%Department for the Aging%'
-				THEN 'Human Services'
-			-- facilitysubgroup: Legal and Intervention Services
-			WHEN Program_name NOT LIKE '%AIDS%'
-				AND (agency LIKE '%DOP%'
-					OR agency LIKE '%Probation%'
-					OR agency LIKE '%Correction%'
-					OR agency LIKE '%NYPD%'
-					OR agency LIKE '%Police%'
-					OR agency LIKE '%MOCJ%'
-					OR agency LIKE '%Criminal Justice%'
-					OR agency LIKE '%Social%'
-					OR Program_name LIKE '%Legal%'
-					OR Program_name LIKE '%Court%'
-					OR Program_name LIKE '%Justice%'
-					OR Program_name LIKE '%Discharge%'
-					OR Program_name LIKE '%Incarceration%'
-					OR Program_name LIKE '%Detention%'
-					OR Program_name LIKE '%Intervention%'
-					OR Program_name LIKE '%Mediation%'
-					OR Program_name LIKE '%Defense%'
-					OR Program_name LIKE '%Protective%'
-					OR Program_name LIKE '%Advocacy%'
-					OR Program_name LIKE '%Parent Pledge%'
-					OR Program_name LIKE '%Gambling%')
-				THEN 'Human Services'
-			-- facilitysubgroup: Programs for People with Disabilities
-			WHEN Program_name LIKE '%Disabilities%'
-				THEN 'Human Services'
 
-			-- facilitygroup: Health Care
-			-- facilitysubgroup: Hospitals and Clinics
-			WHEN Program_name LIKE '%Clinic%'
-				OR Program_name LIKE '%Diagnostic%'
-				THEN 'Health Care'
-			-- facilitysubgroup: Residential Health Care
-			WHEN Program_name LIKE '%Residential%'
-				OR Program_name LIKE '%Housing%'
-				OR Program_name LIKE '%Home Based%'
-				THEN 'Health Care'
-			-- facilitysubgroup: Chemical Dependency
-			WHEN (Program_name LIKE '%Withdrawal%'
-				OR services LIKE '%Substance Abuse%')
-				AND services NOT LIKE '%Health%'
-				AND services NOT LIKE '%Shelter%'
-				AND Program_name NOT LIKE '%AIDS%'
-				THEN 'Health Care'
-			-- facilitysubgroup: Mental Health
-			WHEN Program_name LIKE '%Mental%'
-				OR Program_name LIKE '%Behavior%'
-				OR services LIKE '%Mental%'
-				THEN 'Health Care'
-			-- facilitysubgroup: Other Health Care
-			WHEN 
-				Program_name LIKE '%AIDS%'
-				OR Program_name NOT LIKE '%Disabilities%'
-				AND (agency NOT LIKE '%DOP%'
-					AND agency NOT LIKE '%Probation%'
-					AND agency NOT LIKE '%Correction%'
-					AND agency NOT LIKE '%NYPD%'
-					AND agency NOT LIKE '%Police%'
-					AND agency NOT LIKE '%MOCJ%'
-					AND agency NOT LIKE '%Criminal Justice%'
-					AND Program_name NOT LIKE '%Legal%'
-					AND Program_name NOT LIKE '%Mental'
-					AND Program_name NOT LIKE '%Court%'
-					AND Program_name NOT LIKE '%Justice%'
-					AND Program_name NOT LIKE '%Discharge%'
-					AND Program_name NOT LIKE '%Incarceration%'
-					AND Program_name NOT LIKE '%Detention%'
-					AND Program_name NOT LIKE '%Intervention%'
-					AND Program_name NOT LIKE '%Mediation%'
-					AND Program_name NOT LIKE '%Defense%'
-					AND Program_name NOT LIKE '%Protective%'
-					AND Program_name NOT LIKE '%Advocacy%'
-					AND Program_name NOT LIKE '%Parent Pledge%')
+			WHEN agency LIKE '%Health%'
 				THEN 'Health Care'
 
-			ELSE 'Uncategorized'
+			ELSE 'Human Services'
 		END),
+
 	-- facilitysubgroup
 		(CASE
 
-			WHEN services LIKE '%Non-secure Placement%' 
-				OR Program_name LIKE '%Non-secure%' 
-				OR Program_name LIKE '%Non-Secure%' 
-				AND (agency LIKE '%Children%'
-				OR agency LIKE '%ACS%')
+			WHEN agency LIKE '%Children%' AND (Program_name LIKE '%secure Placement%' OR Program_name LIKE '%Secure Placement%')
 				THEN 'Detention and Correctional'
-			-- domain: Education, Child Welfare, and Youth
+			WHEN agency LIKE '%Children%' AND Program_name LIKE '%Early Learn%'
+				THEN 'Child Care'
+			WHEN agency LIKE '%Children%' AND (Program_name LIKE '%FFC%' OR Program_name LIKE '%Foster%' OR Program_name LIKE '%Residential%')
+				THEN 'Foster Care Services and Residential Care'
+			WHEN agency LIKE '%Children%'
+				THEN 'Preventative Care, Evaluation Services, and Respite'
 
-			-- facilitygroup: Schools
-			-- facilitysubgroup: Preschools
-			WHEN Program_name LIKE '%Early Learn%'
-				THEN 'Preschools'
-			-- facilitysubgroup: Public Schools
-			WHEN agency LIKE '%DOE%'
-				OR agency LIKE '%Education%'
-				THEN 'Public Schools'
-			
-			-- facilitygroup: Childrens Services
-			-- facilitysubgroup: Childrens Services
-			WHEN (agency LIKE '%ACS%'
-				OR agency LIKE '%Children%')
-				AND Program_name NOT LIKE '%Disabilities%'
-				AND services NOT LIKE '%Mental%' 
-				AND Program_name NOT LIKE '%Behavioral Health%'
-				AND Program_name NOT LIKE '%Mental Health%'
-				THEN 'Childrens Services'
-			
-			-- facilitygroup: Youth Services
-			-- facilitysubgroup: Youth Services
-			WHEN (agency LIKE '%DYCD%'
-				OR agency LIKE '%Youth%' 
-				OR Program_name LIKE '%Youth%') 
-				AND services NOT LIKE '%Homelessness Prevention%'
-				AND Program_name NOT LIKE '%Behavioral Health%'
-				AND Program_name NOT LIKE '%Mental Health%'
-				THEN 'Youth Services'
-			
-			-- domain: Health and Human Services
-			-- facilitygroup: Human Services
-			-- facilitysubgroup: Housing and Homeless Services
-			WHEN (Program_name LIKE '%Safe Haven%'
-				OR services LIKE '%Shelter%'
-				OR Program_name LIKE '%Shelter%')
-				AND Program_name NOT LIKE '%AIDS%'
-				AND service_settings LIKE '%Residential%'
+			WHEN agency LIKE '%Education%'
+				THEN 'Community Centers and Community School Programs'
+				
+			WHEN agency LIKE '%Youth%' AND Program_name LIKE '%COMPASS%'
+				THEN 'Comprehensive After School System (COMPASS) Sites'
+			WHEN agency LIKE '%Youth%' AND Program_name LIKE '%Summer%'
+				THEN 'Summer Youth Employment Site'
+			WHEN agency LIKE '%Youth%' AND Program_name LIKE '%Homeless%'
 				THEN 'Shelters and Transitional Housing'
-			WHEN (Program_name LIKE '%Homelessness Prevention%'
-				OR agency LIKE '%HPD%'
-				OR agency LIKE '%Housing%'
-				OR agency LIKE '%DHS%'
-				OR agency LIKE '%Homeless Services%'
-				OR Program_name LIKE '%Re-Housing%'
-				OR services LIKE '%Homelessness Prevention%'
-				OR services LIKE '%Housing%')
-				AND Program_name NOT LIKE '%AIDS%'
+			WHEN agency LIKE '%Youth%'
+				THEN 'Youth Centers, Literacy Programs, Job Training, and Immigrant Services'
+
+			WHEN agency LIKE '%Homeless%' AND (Program_name LIKE '%Outreach%' OR Program_name LIKE '%Prevention%')
 				THEN 'Non-residential Housing and Homeless Services'
-			-- facilitysubgroup: Workforce Development
-			WHEN agency LIKE '%SBS%'
-				OR agency LIKE '%Business%'
-				OR Program_name LIKE '%Job%'
-				OR Program_name LIKE '%Work%'
-				OR Program_name LIKE '%WEP%'
-				OR Program_name LIKE '%Employment%'
-				OR Program_name LIKE '%Family Self Sufficiency%'
-				OR Program_name LIKE '%Vocational%'
-				THEN 'Workforce Development'
-			-- facilitysubgroup: Senior Services
-			WHEN agency LIKE '%DFTA%'
-				OR agency LIKE '%Department for the Aging%'
-				THEN 'Senior Services'
-			-- facilitysubgroup: Legal and Intervention Services
-			WHEN Program_name NOT LIKE '%AIDS%'
-				AND Program_name NOT LIKE '%Homelessness%'
-				AND (agency LIKE '%DOP%'
-					OR agency LIKE '%Probation%'
-					OR agency LIKE '%Correction%'
-					OR agency LIKE '%NYPD%'
-					OR agency LIKE '%Police%'
-					OR agency LIKE '%MOCJ%'
-					OR agency LIKE '%Criminal Justice%'
-					OR agency LIKE '%Social%'
-					OR Program_name LIKE '%Legal%'
-					OR Program_name LIKE '%Court%'
-					OR Program_name LIKE '%Justice%'
-					OR Program_name LIKE '%Discharge%'
-					OR Program_name LIKE '%Incarceration%'
-					OR Program_name LIKE '%Detention%'
-					OR Program_name LIKE '%Intervention%'
-					OR Program_name LIKE '%Mediation%'
-					OR Program_name LIKE '%Defense%'
-					OR Program_name LIKE '%Protective%'
-					OR Program_name LIKE '%Advocacy%'
-					OR Program_name LIKE '%Parent Pledge%'
-					OR Program_name LIKE '%Gambling%')
-				THEN 'Legal and Intervention Services'
-			-- facilitysubgroup: Programs for People with Disabilities
-			WHEN Program_name LIKE '%Disabilities%'
-				THEN 'Programs for People with Disabilities'
+			WHEN agency LIKE '%Homeless%'
+				THEN 'Shelters and Transitional Housing'
 
-			-- facilitygroup: Health Care
-			-- facilitysubgroup: Hospitals and Clinics
-			WHEN Program_name LIKE '%Clinic%'
-				OR Program_name LIKE '%Diagnostic%'
-				THEN 'Hospitals and Clinics'
-			-- facilitysubgroup: Residential Health Care
-			WHEN Program_name LIKE '%Residential%'
-				OR Program_name LIKE '%Housing%'
-				OR Program_name LIKE '%Home Based%'
-				OR (Program_name LIKE '%AIDS%'
-				AND services LIKE '%Housing%')
-				THEN 'Residential Health Care'
-			-- facilitysubgroup: Chemical Dependency
-			WHEN (Program_name LIKE '%Withdrawal%'
-				OR services LIKE '%Substance Abuse%')
-				AND services NOT LIKE '%Health%'
-				AND services NOT LIKE '%Shelter%'
-				AND Program_name NOT LIKE '%AIDS%'
-				THEN 'Chemical Dependency'
-			-- facilitysubgroup: Mental Health
-			WHEN Program_name LIKE '%Mental%'
-				OR Program_name LIKE '%Behavior%'
-				OR services LIKE '%Mental%'
+			WHEN agency LIKE '%Health%' AND Program_name LIKE '%HPDP%'
+				THEN 'Health Promotion and Disease Prevention'
+			WHEN agency LIKE '%Health%' AND Program_name LIKE '%MHy%'
 				THEN 'Mental Health'
-			-- facilitysubgroup: Other Health Care
-			WHEN 
-				Program_name LIKE '%AIDS%'
-				OR Program_name NOT LIKE '%Disabilities%'
-				AND (agency NOT LIKE '%DOP%'
-					AND agency NOT LIKE '%Probation%'
-					AND agency NOT LIKE '%Correction%'
-					AND agency NOT LIKE '%NYPD%'
-					AND agency NOT LIKE '%Police%'
-					AND agency NOT LIKE '%MOCJ%'
-					AND agency NOT LIKE '%Criminal Justice%'
-					AND Program_name NOT LIKE '%Legal%'
-					AND Program_name NOT LIKE '%Mental'
-					AND Program_name NOT LIKE '%Court%'
-					AND Program_name NOT LIKE '%Justice%'
-					AND Program_name NOT LIKE '%Discharge%'
-					AND Program_name NOT LIKE '%Incarceration%'
-					AND Program_name NOT LIKE '%Detention%'
-					AND Program_name NOT LIKE '%Intervention%'
-					AND Program_name NOT LIKE '%Mediation%'
-					AND Program_name NOT LIKE '%Defense%'
-					AND Program_name NOT LIKE '%Protective%'
-					AND Program_name NOT LIKE '%Advocacy%'
-					AND Program_name NOT LIKE '%Parent Pledge%')
-				THEN 'Other Health Care'
 
-			ELSE 'Uncategorized'
+			WHEN agency LIKE '%Probation%' OR agency LIKE '%Correction%' OR agency LIKE '%Mayor%' OR agency LIKE '%Police%'
+				THEN 'Legal and Intervention Services'
+
+			WHEN agency LIKE '%Housing%' AND Program_name LIKE '%Family Centers%'
+				THEN 'Shelters and Transitional Housing'
+			WHEN agency LIKE '%Housing%'
+				THEN 'Non-residential Housing and Homeless Services'
+
+			WHEN agency LIKE '%Business%'
+				THEN 'Workforce Development'
+
+			WHEN agency LIKE '%Aging%'
+				THEN 'Senior Services'
+
+			WHEN agency LIKE '%Social%' AND (Program_name LIKE '%Job%' OR Program_name LIKE '%Work%')
+				THEN 'Workforce Development'
+
+			WHEN (agency LIKE '%Human%' OR agency LIKE '%Social%') AND Program_name LIKE '%AIDS%'
+				THEN 'Shelters and Transitional Housing'
+
+			WHEN agency LIKE '%Human%' AND Program_name LIKE '%Adult Protective%'
+				THEN 'Programs for People with Disabilities'
+			WHEN agency LIKE '%Human%' AND Program_name LIKE '%Housing%'
+				THEN 'Shelters and Transitional Housing'
+			WHEN agency LIKE '%Human%' AND Program_name LIKE '%WEP%'
+				THEN 'Workforce Development'
+			WHEN agency LIKE '%Human%'
+				THEN 'Legal and Intervention Services'
 		END),
 	-- agencyclass1
 	Services,
 	-- agencyclass2
 	Program_name,
-
 	-- capacity
 	NULL,
 	-- utilization
@@ -657,3 +423,4 @@ SELECT
 		END)
 FROM
 	hhs_facilities_acceleratorall
+WHERE flag <> 'contracts'
