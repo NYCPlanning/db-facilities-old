@@ -8,7 +8,7 @@ idold text,
 idagency text ARRAY,
 --name
 facilityname text,
---location information
+--service location information
 addressnumber text,
 streetname text,
 address text,
@@ -16,6 +16,14 @@ city text,
 borough text,
 boroughcode smallint,
 zipcode integer,
+--administrative location information
+admin_addressnumber text,
+admin_streetname text,
+admin_address text,
+admin_city text,
+admin_borough text,
+admin_boroughcode smallint,
+admin_zipcode integer,
 -- spatial joins to polygons
 bbl text ARRAY,
 bin text ARRAY,
@@ -40,12 +48,13 @@ utilizationrate double precision,
 area double precision,
 areatype text,
 servicearea text,
--- operator and agency information
+-- operator, oversight, and property information
 propertytype text,
 propertynycha boolean,
 operatortype text,
 operatorname text,
 operatorabbrev text,
+oversighttype text ARRAY,
 oversightagency text ARRAY,
 oversightabbrev text ARRAY,
 -- information on when the facility opened/closed and tags classifing the facility

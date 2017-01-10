@@ -104,7 +104,6 @@ SELECT
 	Description,
 	-- agencyclass2
 	ownership_type,
-
 	-- capacity
 	capacity,
 	-- utilization
@@ -133,14 +132,14 @@ SELECT
 	-- operatorname
 		(CASE
 			WHEN operator_name = 'City of New York' THEN 'New York City Department of Health and Mental Hygiene'
-			WHEN operator_name = 'New York City Health and Hospital Corporation' THEN 'New York City Health and Hospital Corporation'
+			WHEN operator_name = 'New York City Health and Hospital Corporation' THEN 'New York City Health and Hospitals Corporation'
 			WHEN ownership_type = 'State' THEN 'New York State Department of Health'
 			ELSE operator_name
 		END),
 	-- operatorabbrev
 		(CASE
 			WHEN operator_name = 'City of New York' THEN 'NYCDOHMH'
-			WHEN operator_name = 'New York City Health and Hospital Corporation' THEN 'NYCHHC'
+			WHEN operator_name = 'New York City Health and Hospitals Corporation' THEN 'NYCHHC'
 			WHEN ownership_type = 'State' THEN 'NYSDOH'
 			ELSE 'Non-public'
 		END),
@@ -187,7 +186,7 @@ FROM
 		(c.total_capacity-c.total_available) AS utilization,
 		c.bed_census_date
 		FROM nysdoh_facilities_healthfacilities AS f
-		JOIN nysdoh_nursinghomebedcensus AS c
+		LEFT JOIN nysdoh_nursinghomebedcensus AS c
 		ON f.facility_id::numeric=c.facility_id::numeric
 		ORDER BY f.facility_id, c.bed_census_date DESC) AS nysdoh_facilities_healthfacilities
 WHERE

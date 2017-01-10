@@ -18,7 +18,7 @@ UPDATE facilities AS f
         	END),
         streetname = 
         	(CASE
-	        	WHEN f.addressnumber IS NULL THEN initcap(split_part(p.address,' ',2))
+	        	WHEN f.addressnumber IS NULL THEN initcap(trim(both ' ' from substr(trim(both ' ' from p.address), strpos(trim(both ' ' from p.address), ' ')+1, (length(trim(both ' ' from p.address))-strpos(trim(both ' ' from p.address), ' ')))))
 	        	ELSE f.streetname
         	END),
         address = 
@@ -34,6 +34,7 @@ UPDATE facilities AS f
     FROM 
         dcp_mappluto AS p
     WHERE
-        f.bbl IS NULL
+        (f.bbl IS NULL
+            OR f.addressnumber IS NULL)
         AND f.geom IS NOT NULL
         AND ST_Intersects(p.geom,f.geom)

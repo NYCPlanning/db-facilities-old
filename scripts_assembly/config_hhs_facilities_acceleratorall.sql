@@ -49,7 +49,11 @@ groupquarters
 )
 SELECT
 	-- pgtable
-	ARRAY['hhs_facilities_acceleratorall'],
+	(CASE
+		WHEN flag = 'contracts' THEN ARRAY['hhs_facilities_contracts']
+		WHEN flag = 'financials' THEN ARRAY['hhs_facilities_financials']
+		WHEN flag = 'proposals' THEN ARRAY['hhs_facilities_proposals']
+	END),
 	-- hash,
 	md5(CAST((hhs_facilities_acceleratorall.*) AS text)),
 	-- geom

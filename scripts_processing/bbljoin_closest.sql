@@ -18,7 +18,7 @@ UPDATE facilities
         	END),
         streetname = 
         	(CASE
-	        	WHEN facilities.addressnumber IS NULL THEN initcap(split_part(j.address,' ',2))
+	        	WHEN facilities.addressnumber IS NULL THEN initcap(trim(both ' ' from substr(trim(both ' ' from j.address), strpos(trim(both ' ' from j.address), ' ')+1, (length(trim(both ' ' from j.address))-strpos(trim(both ' ' from j.address), ' ')))))
 	        	ELSE facilities.streetname
         	END),
         address = 
@@ -43,7 +43,8 @@ UPDATE facilities
 		JOIN facilities f ON ST_DWithin(p.geom, f.geom, 100)
 		WHERE
 			f.geom IS NOT NULL
-			AND f.bbl IS NULL
+			AND (f.bbl IS NULL
+            OR f.addressnumber IS NULL)
 			AND NOT f.facilitygroup ~ 'Parks and Plazas'
 		ORDER BY
 		    f.guid,
