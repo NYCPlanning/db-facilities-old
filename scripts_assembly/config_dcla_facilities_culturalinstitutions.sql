@@ -12,7 +12,6 @@ facilities (
 	zipcode,
 	bbl,
 	bin,
-	parkid,
 	facilitytype,
 	domain,
 	facilitygroup,
@@ -57,11 +56,11 @@ SELECT
 	-- facilityname
 	Organization_Name,
 	-- addressnumber
-	split_part(trim(both ' ' from Address), ' ', 1),
+	split_part(trim(both ' ' from initcap(Address)), ' ', 1),
 	-- streetname
-	trim(both ' ' from substr(trim(both ' ' from Address), strpos(trim(both ' ' from Address), ' ')+1, (length(trim(both ' ' from Address))-strpos(trim(both ' ' from Address), ' ')))),
+	trim(both ' ' from substr(trim(both ' ' from initcap(Address)), strpos(trim(both ' ' from initcap(Address)), ' ')+1, (length(trim(both ' ' from initcap(Address)))-strpos(trim(both ' ' from initcap(Address)), ' ')))),
 	-- address
-	Address,
+	initcap(Address),
 	-- borough
 	borough,
 	-- zipcode
@@ -69,8 +68,6 @@ SELECT
 	-- bbl
 	NULL,
 	-- bin
-	NULL,
-	-- parkid
 	NULL,
 	-- facilitytype
 		(CASE

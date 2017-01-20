@@ -190,7 +190,6 @@ duplicates AS (
 		facilityname,
 		facilitytype,
 		array_agg(distinct facilitytype_b) AS facilitytype_merged,
-		array_agg(distinct bin_b) AS BIN,
 		guid,
 		array_agg(guid_b) AS guid_merged,
 		array_agg(distinct idagency_b) AS idagency_merged,

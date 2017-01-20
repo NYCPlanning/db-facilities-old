@@ -12,7 +12,6 @@ facilities (
 	zipcode,
 	bbl,
 	bin,
-	parkid,
 	facilitytype,
 	domain,
 	facilitygroup,
@@ -70,8 +69,6 @@ SELECT
 	ARRAY[ROUND(bbl::numeric,0)],
 	-- bin
 	ARRAY[ROUND(bin::numeric,0)],
-	-- parkid
-	NULL,
 	-- facilitytype
 	'Public Libraries',
 	-- domain

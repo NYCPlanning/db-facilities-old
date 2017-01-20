@@ -84,8 +84,6 @@ SELECT
 	NULL,
 	-- bin
 	NULL,
-	-- parkid
-	NULL,
 	-- facilitytype
 		(CASE
 			WHEN Program_name LIKE '%Blended Case%' 

@@ -1,14 +1,17 @@
 DROP TABLE IF EXISTS facilities;
 CREATE TABLE facilities (
+
+-- PUBLISHED FIELDS
+
 -- ids
 guid UUID PRIMARY KEY DEFAULT gen_random_uuid(),
 hash text,
 id text,
 idold text,
 idagency text ARRAY,
---name
+-- name
 facilityname text,
---service location information
+-- core address information
 addressnumber text,
 streetname text,
 address text,
@@ -16,30 +19,23 @@ city text,
 borough text,
 boroughcode smallint,
 zipcode integer,
---administrative location information
-admin_addressnumber text,
-admin_streetname text,
-admin_address text,
-admin_city text,
-admin_borough text,
-admin_boroughcode smallint,
-admin_zipcode integer,
--- spatial joins to polygons
-bbl text ARRAY,
-bin text ARRAY,
-parkid text,
-xcoord double precision,
-ycoord double precision,
+-- core geospatial reference information
+geom geometry,
 latitude double precision,
 longitude double precision,
--- classification
-facilitytype text,
+xcoord double precision,
+ycoord double precision,
+bin text ARRAY,
+bbl text ARRAY,
+communityboard text,
+councildistrict text,
+censustract text,
+nta text,
+-- dcp classification
 domain text,
 facilitygroup text,
 facilitysubgroup text,
-agencyclass1 text,
-agencyclass2 text,
-colpusetype text,
+facilitytype text,
 -- size
 capacity double precision,
 utilization double precision,
@@ -47,16 +43,29 @@ capacitytype text,
 utilizationrate double precision,
 area double precision,
 areatype text,
-servicearea text,
+-- servicearea text,
 -- operator, oversight, and property information
 propertytype text,
-propertynycha boolean,
+-- propertynycha boolean,
 operatortype text,
 operatorname text,
 operatorabbrev text,
 oversighttype text ARRAY,
 oversightagency text ARRAY,
 oversightabbrev text ARRAY,
+-- published data source details
+agencysource text ARRAY,
+sourcedatasetname text ARRAY,
+linkdata text ARRAY,
+datesourceupdated date ARRAY,
+processingflag text,
+
+-- NON-PUBLISHED FIELDS
+
+-- agency classification
+agencyclass1 text,
+agencyclass2 text,
+colpusetype text,
 -- information on when the facility opened/closed and tags classifing the facility
 dateactive date,
 dateinactive date,
@@ -65,25 +74,26 @@ tags text ARRAY,
 -- information to be tracked by the data admin
 notes text,
 datesourcereceived date ARRAY,
-datesourceupdated date ARRAY,
 datecreated date,
 dateedited date,
 creator text,
 editor text,
-geom geometry,
-pgtable text ARRAY,
-agencysource text ARRAY,
-sourcedatasetname text ARRAY,
-linkdata text ARRAY,
 linkdownload text ARRAY,
 datatype text ARRAY,
 refreshmeans text ARRAY,
 refreshfrequency text ARRAY,
-processingflag text,
+pgtable text ARRAY,
 -- details on duplicate records merged into the primary record
 guid_merged text ARRAY,
 hash_merged text ARRAY,
 idagency_merged text ARRAY,
+-- administrative location information
+-- admin_addressnumber text,
+-- admin_streetname text,
+-- admin_address text,
+-- admin_borough text,
+-- admin_boroughcode smallint,
+-- admin_zipcode integer,
 -- attributes specific to schools
 buildingid text,
 buildingname text,

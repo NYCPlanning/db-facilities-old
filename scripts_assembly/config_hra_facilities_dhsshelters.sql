@@ -12,7 +12,6 @@ facilities (
 	zipcode,
 	bbl,
 	bin,
-	parkid,
 	facilitytype,
 	domain,
 	facilitygroup,
@@ -70,8 +69,6 @@ SELECT
 	NULL,
 	-- bin
 	ARRAY[Corrected_BIN],
-	-- parkid
-	NULL,
 	-- facilitytype
 	Shelter_Facility_Type_Cares,
 	-- domain

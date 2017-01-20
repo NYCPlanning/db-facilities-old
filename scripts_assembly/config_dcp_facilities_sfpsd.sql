@@ -15,7 +15,6 @@ borough,
 zipcode,
 bbl,
 bin,
-parkid,
 facilitytype,
 domain,
 facilitygroup,
@@ -81,8 +80,6 @@ SELECT
 	-- bbl
 	ARRAY[ROUND(bbl,0)::text],
 	-- bin
-	NULL,
-	-- parkid
 	NULL,
 	-- facilitytype
 	ft_decode,

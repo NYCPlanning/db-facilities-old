@@ -12,7 +12,6 @@ facilities (
 	zipcode,
 	bbl,
 	bin,
-	parkid,
 	facilitytype,
 	domain,
 	facilitygroup,
@@ -83,8 +82,6 @@ SELECT
 	-- bbl
 	NULL,
 	-- bin
-	NULL,
-	-- parkid
 	NULL,
 	-- facilitytype
 		(CASE
@@ -157,7 +154,7 @@ SELECT
 	-- capacity
 	PS_Capacity::numeric + MS_Capacity::numeric + HS_Capacity::numeric,
 	-- utilization
-	Org_Enroll::numeric,
+	ROUND(Org_Enroll::numeric,3),
 	-- capacitytype
 	'Seats',
 	-- utilizationrate

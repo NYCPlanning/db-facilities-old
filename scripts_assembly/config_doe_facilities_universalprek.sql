@@ -12,7 +12,6 @@ facilities (
 	zipcode,
 	bbl,
 	bin,
-	parkid,
 	facilitytype,
 	domain,
 	facilitygroup,
@@ -75,8 +74,6 @@ SELECT
 	-- bbl
 	NULL,
 	-- bin
-	NULL,
-	-- parkid
 	NULL,
 	-- facilitytype
 		(CASE

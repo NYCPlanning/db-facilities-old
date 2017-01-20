@@ -12,7 +12,6 @@ facilities (
 	zipcode,
 	bbl,
 	bin,
-	parkid,
 	facilitytype,
 	domain,
 	facilitygroup,
@@ -69,8 +68,6 @@ SELECT
 	-- bbl
 	ARRAY[BBLs],
 	-- bin
-	NULL,
-	-- parkid
 	NULL,
 	-- facilitytype
 	facility_type,

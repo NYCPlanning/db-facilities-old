@@ -12,7 +12,6 @@ facilities (
 	zipcode,
 	bbl,
 	bin,
-	parkid,
 	facilitytype,
 	domain,
 	facilitygroup,
@@ -70,8 +69,6 @@ SELECT
 	NULL,
 	-- bin
 	NULL,
-	-- parkid
-	NULL,
 	-- facilitytype
 	unit_type,
 	-- domain
@@ -84,7 +81,6 @@ SELECT
 	unit_type,
 	-- agencyclass2
 	'NA',
-
 	-- capacity
 	NULL,
 	-- utilization

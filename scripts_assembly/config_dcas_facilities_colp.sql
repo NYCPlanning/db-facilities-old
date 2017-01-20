@@ -14,7 +14,6 @@ facilities (
 	zipcode,
 	bbl,
 	bin,
-	parkid,
 	facilitytype,
 	domain,
 	facilitygroup,
@@ -54,178 +53,176 @@ SELECT
 	-- hash,
 	md5(CAST((dcas_facilities_colp.*) AS text)),
 	-- geom
-		(CASE
-			WHEN xcoord <> ' ' THEN ST_Transform(ST_SetSRID(ST_MakePoint(xcoord::numeric, ycoord::numeric),2263),4326)
-		END),
+	geom,
 	-- idagency
 	NULL,
 	-- facilityname
 		(CASE
-			WHEN parcel_name <> ' ' THEN initcap(Parcel_Name)
+			WHEN name <> ' ' THEN initcap(name)
 			ELSE 'Unnamed'
 		END),
 	-- addressnumber
-	initcap(house_number),
+	split_part(trim(both ' ' from initcap(Address)), ' ', 1),
 	-- streetname
-	initcap(street_name),
+	trim(both ' ' from substr(trim(both ' ' from initcap(Address)), strpos(trim(both ' ' from initcap(Address)), ' ')+1, (length(trim(both ' ' from initcap(Address)))-strpos(trim(both ' ' from initcap(Address)), ' ')))),
 	-- address
-		(CASE
-			WHEN house_number IS NOT NULL
-				AND house_number <> ' '
-				THEN initcap(CONCAT(house_number,' ',street_name))
-		END),
+	initcap(Address),
 	-- borough
-	initcap(Borough),
+	initcap(boro),
 	-- zipcode
 	NULL,
 	-- bbl
-	ARRAY[BBL::text],
+	(CASE
+		WHEN boro = 'MANHATTAN' THEN ARRAY[CONCAT('1',LPAD(block::text, 5, '0'),LPAD(lot::text, 4, '0'))::text]
+		WHEN boro = 'BRONX' THEN ARRAY[CONCAT('2',LPAD(block::text, 5, '0'),LPAD(lot::text, 4, '0'))::text]
+		WHEN boro = 'BROOKLYN' THEN ARRAY[CONCAT('3',LPAD(block::text, 5, '0'),LPAD(lot::text, 4, '0'))::text]
+		WHEN boro = 'QUEENS' THEN ARRAY[CONCAT('4',LPAD(block::text, 5, '0'),LPAD(lot::text, 4, '0'))::text]
+		WHEN boro = 'STATEN ISLAND' THEN ARRAY[CONCAT('5',LPAD(block::text, 5, '0'),LPAD(lot::text, 4, '0'))::text]
+	END),
 	-- bin
 	NULL,
-	-- parkid
-	NULL,
 	-- facilitytype
-	initcap(use_type),
+	initcap(usedec),
 	-- domain
 		(CASE
 			-- Admin of Gov
-			WHEN use_type LIKE '%AGREEMENT%'
-				OR use_type LIKE '%DISPOSITION%'
-				OR use_type LIKE '%COMMITMENT%'
+			WHEN usedec LIKE '%AGREEMENT%'
+				OR usedec LIKE '%DISPOSITION%'
+				OR usedec LIKE '%COMMITMENT%'
 				OR agency LIKE '%PRIVATE%'
 				THEN 'Administration of Government'
-			WHEN use_type LIKE '%SECURITY%' THEN 'Administration of Government'
-			WHEN (use_type LIKE '%PARKING%'
-				OR use_type LIKE '%PKNG%')
-				AND use_type NOT LIKE '%MUNICIPAL%'
+			WHEN usedec LIKE '%SECURITY%' THEN 'Administration of Government'
+			WHEN (usedec LIKE '%PARKING%'
+				OR usedec LIKE '%PKNG%')
+				AND usedec NOT LIKE '%MUNICIPAL%'
 				THEN 'Administration of Government'
-			WHEN use_type LIKE '%STORAGE%' OR use_type LIKE '%STRG%' THEN 'Administration of Government'
-			WHEN use_type LIKE '%CUSTODIAL%' THEN 'Administration of Government'
-			WHEN use_type LIKE '%GARAGE%' THEN 'Administration of Government'
-			WHEN use_type LIKE '%OFFICE%' THEN 'Administration of Government'
-			WHEN use_type LIKE '%MAINTENANCE%' THEN 'Administration of Government'
-			WHEN use_type LIKE '%NO USE%' THEN 'Administration of Government'
-			WHEN use_type LIKE '%MISCELLANEOUS USE%' THEN 'Administration of Government'
-			WHEN use_type LIKE '%OTHER HEALTH%' AND parcel_name LIKE '%ANIMAL%' THEN 'Administration of Government'
-			WHEN agency LIKE '%DCA%' and use_type LIKE '%OTHER%' THEN 'Administration of Government'
-			WHEN use_type LIKE '%UNDEVELOPED%' THEN 'Administration of Government'
-			WHEN (use_type LIKE '%TRAINING%' 
-				OR use_type LIKE '%TESTING%')
-				AND use_type NOT LIKE '%LABORATORY%'
+			WHEN usedec LIKE '%STORAGE%' OR usedec LIKE '%STRG%' THEN 'Administration of Government'
+			WHEN usedec LIKE '%CUSTODIAL%' THEN 'Administration of Government'
+			WHEN usedec LIKE '%GARAGE%' THEN 'Administration of Government'
+			WHEN usedec LIKE '%OFFICE%' THEN 'Administration of Government'
+			WHEN usedec LIKE '%MAINTENANCE%' THEN 'Administration of Government'
+			WHEN usedec LIKE '%NO USE%' THEN 'Administration of Government'
+			WHEN usedec LIKE '%MISCELLANEOUS USE%' THEN 'Administration of Government'
+			WHEN usedec LIKE '%OTHER HEALTH%' AND name LIKE '%ANIMAL%' THEN 'Administration of Government'
+			WHEN agency LIKE '%DCA%' and usedec LIKE '%OTHER%' THEN 'Administration of Government'
+			WHEN usedec LIKE '%UNDEVELOPED%' THEN 'Administration of Government'
+			WHEN (usedec LIKE '%TRAINING%' 
+				OR usedec LIKE '%TESTING%')
+				AND usedec NOT LIKE '%LABORATORY%'
 				THEN 'Administration of Government'
 
 
 			-- Trans and Infra
-			WHEN use_type LIKE '%MUNICIPAL PARKING%' THEN 'Core Infrastructure and Transportation'
-			WHEN use_type LIKE '%MARKET%' THEN 'Core Infrastructure and Transportation'
-			WHEN use_type LIKE '%MATERIAL PROCESSING%' THEN 'Core Infrastructure and Transportation'
-			WHEN use_type LIKE '%ASPHALT%' THEN 'Core Infrastructure and Transportation'
-			WHEN use_type LIKE '%AIRPORT%' THEN 'Core Infrastructure and Transportation'
-			WHEN use_type LIKE '%ROAD/HIGHWAY%'
-				OR use_type LIKE '%TRANSIT WAY%'
-				OR use_type LIKE '%OTHER TRANSPORTATION%'
+			WHEN usedec LIKE '%MUNICIPAL PARKING%' THEN 'Core Infrastructure and Transportation'
+			WHEN usedec LIKE '%MARKET%' THEN 'Core Infrastructure and Transportation'
+			WHEN usedec LIKE '%MATERIAL PROCESSING%' THEN 'Core Infrastructure and Transportation'
+			WHEN usedec LIKE '%ASPHALT%' THEN 'Core Infrastructure and Transportation'
+			WHEN usedec LIKE '%AIRPORT%' THEN 'Core Infrastructure and Transportation'
+			WHEN usedec LIKE '%ROAD/HIGHWAY%'
+				OR usedec LIKE '%TRANSIT WAY%'
+				OR usedec LIKE '%OTHER TRANSPORTATION%'
 				THEN 'Core Infrastructure and Transportation'
 			WHEN agency LIKE '%DEP%'
-				AND (use_type LIKE '%WATER SUPPLY%'
-				OR use_type LIKE '%RESERVOIR%'
-				OR use_type LIKE '%AQUEDUCT%')
+				AND (usedec LIKE '%WATER SUPPLY%'
+				OR usedec LIKE '%RESERVOIR%'
+				OR usedec LIKE '%AQUEDUCT%')
 				THEN 'Core Infrastructure and Transportation'
 			WHEN agency LIKE '%DEP%'
-				AND use_type NOT LIKE '%NATURE AREA%'
-				AND use_type NOT LIKE '%NATURAL AREA%'
-				AND use_type NOT LIKE '%OPEN SPACE%'
+				AND usedec NOT LIKE '%NATURE AREA%'
+				AND usedec NOT LIKE '%NATURAL AREA%'
+				AND usedec NOT LIKE '%OPEN SPACE%'
 				THEN 'Core Infrastructure and Transportation'
-			WHEN use_type LIKE '%WASTEWATER%' THEN 'Core Infrastructure and Transportation'
-			WHEN use_type LIKE '%LANDFILL%' 
-				OR use_type LIKE '%SOLID WASTE INCINERATOR%'
+			WHEN usedec LIKE '%WASTEWATER%' THEN 'Core Infrastructure and Transportation'
+			WHEN usedec LIKE '%LANDFILL%' 
+				OR usedec LIKE '%SOLID WASTE INCINERATOR%'
 				THEN 'Core Infrastructure and Transportation'
-			WHEN use_type LIKE '%SOLID WASTE TRANSFER%'
-				OR (agency LIKE '%SANIT%' AND use_type LIKE '%SANITATION SECTION%')
+			WHEN usedec LIKE '%SOLID WASTE TRANSFER%'
+				OR (agency LIKE '%SANIT%' AND usedec LIKE '%SANITATION SECTION%')
 				THEN 'Core Infrastructure and Transportation'
-			WHEN use_type LIKE '%ANTENNA%' OR use_type LIKE '%TELE/COMP%' THEN 'Core Infrastructure and Transportation'
-			WHEN use_type LIKE '%PIER - MARITIME%'
-				OR use_type LIKE '%FERRY%' 
-				OR use_type LIKE '%WATERFRONT TRANSPORTATION%'
-				OR use_type LIKE '%MARINA%'
+			WHEN usedec LIKE '%ANTENNA%' OR usedec LIKE '%TELE/COMP%' THEN 'Core Infrastructure and Transportation'
+			WHEN usedec LIKE '%PIER - MARITIME%'
+				OR usedec LIKE '%FERRY%' 
+				OR usedec LIKE '%WATERFRONT TRANSPORTATION%'
+				OR usedec LIKE '%MARINA%'
 				THEN 'Core Infrastructure and Transportation'
-			WHEN use_type LIKE '%RAIL%'
-				OR (use_type LIKE '%TRANSIT%'
-					AND use_type NOT LIKE '%TRANSITIONAL%')
+			WHEN usedec LIKE '%RAIL%'
+				OR (usedec LIKE '%TRANSIT%'
+					AND usedec NOT LIKE '%TRANSITIONAL%')
 				THEN 'Core Infrastructure and Transportation'
-			WHEN use_type LIKE '%BUS%' THEN 'Core Infrastructure and Transportation'
+			WHEN usedec LIKE '%BUS%' THEN 'Core Infrastructure and Transportation'
 
 			-- Health and Human
 			WHEN agency LIKE '%HHC%' THEN 'Health and Human Services'
-			WHEN use_type LIKE '%HOSPITAL%' THEN 'Health and Human Services'
-			WHEN use_type LIKE '%AMBULATORY HEALTH%' THEN 'Health and Human Services'
+			WHEN usedec LIKE '%HOSPITAL%' THEN 'Health and Human Services'
+			WHEN usedec LIKE '%AMBULATORY HEALTH%' THEN 'Health and Human Services'
 			WHEN agency LIKE '%OCME%' THEN 'Health and Human Services'
-			WHEN agency LIKE '%ACS%' AND use_type LIKE '%HOUSING%' THEN 'Health and Human Services'
+			WHEN agency LIKE '%ACS%' AND usedec LIKE '%HOUSING%' THEN 'Health and Human Services'
 			WHEN agency LIKE '%AGING%' THEN 'Health and Human Services'
 			WHEN agency LIKE '%DHS%' THEN 'Health and Human Services'
 			WHEN (agency LIKE '%NYCHA%' 
 				OR agency LIKE '%HPD%')
-				AND use_type LIKE '%RESIDENTIAL%'
+				AND usedec LIKE '%RESIDENTIAL%'
 				THEN 'Health and Human Services'
-			WHEN use_type LIKE '%COMMUNITY CENTER%' THEN 'Health and Human Services'
+			WHEN usedec LIKE '%COMMUNITY CENTER%' THEN 'Health and Human Services'
 
 			-- Parks, Cultural
-			WHEN use_type LIKE '%LIBRARY%' THEN 'Parks, Cultural, and Other Community Facilities'
-			WHEN use_type LIKE '%MUSEUM%' THEN 'Parks, Cultural, and Other Community Facilities'
-			WHEN use_type LIKE '%CULTURAL%' THEN 'Parks, Cultural, and Other Community Facilities'
-			WHEN use_type LIKE '%ZOO%' THEN 'Parks, Cultural, and Other Community Facilities'
-			WHEN use_type LIKE '%CEMETERY%' THEN 'Parks, Cultural, and Other Community Facilities'
-			WHEN agency LIKE '%CULT%' AND use_type LIKE '%MUSEUM%' THEN 'Parks, Cultural, and Other Community Facilities'
+			WHEN usedec LIKE '%LIBRARY%' THEN 'Parks, Cultural, and Other Community Facilities'
+			WHEN usedec LIKE '%MUSEUM%' THEN 'Parks, Cultural, and Other Community Facilities'
+			WHEN usedec LIKE '%CULTURAL%' THEN 'Parks, Cultural, and Other Community Facilities'
+			WHEN usedec LIKE '%ZOO%' THEN 'Parks, Cultural, and Other Community Facilities'
+			WHEN usedec LIKE '%CEMETERY%' THEN 'Parks, Cultural, and Other Community Facilities'
+			WHEN agency LIKE '%CULT%' AND usedec LIKE '%MUSEUM%' THEN 'Parks, Cultural, and Other Community Facilities'
 			WHEN agency LIKE '%CULT%' THEN 'Parks, Cultural, and Other Community Facilities'
-			WHEN use_type LIKE '%NATURAL AREA%'
-				OR (use_type LIKE '%OPEN SPACE%'
+			WHEN usedec LIKE '%NATURAL AREA%'
+				OR (usedec LIKE '%OPEN SPACE%'
 					AND agency LIKE '%DEP%')
 				THEN 'Parks, Cultural, and Other Community Facilities'
-			WHEN use_type LIKE '%BOTANICAL GARDENS%' THEN 'Parks, Cultural, and Other Community Facilities'
-			WHEN use_type LIKE '%GARDEN%' THEN 'Parks, Cultural, and Other Community Facilities'
-			WHEN use_type LIKE '%PARK%' THEN 'Parks, Cultural, and Other Community Facilities'
-			WHEN use_type LIKE '%PLAZA%'
-				OR use_type LIKE '%SITTING AREA%' 
+			WHEN usedec LIKE '%BOTANICAL GARDENS%' THEN 'Parks, Cultural, and Other Community Facilities'
+			WHEN usedec LIKE '%GARDEN%' THEN 'Parks, Cultural, and Other Community Facilities'
+			WHEN usedec LIKE '%PARK%' THEN 'Parks, Cultural, and Other Community Facilities'
+			WHEN usedec LIKE '%PLAZA%'
+				OR usedec LIKE '%SITTING AREA%' 
 				THEN 'Parks, Cultural, and Other Community Facilities'
-			WHEN use_type LIKE '%PLAYGROUND%'
-				OR use_type LIKE '%SPORTS%'
-				OR use_type LIKE '%TENNIS COURT%'
-				OR (use_type LIKE '%RECREATION%'
+			WHEN usedec LIKE '%PLAYGROUND%'
+				OR usedec LIKE '%SPORTS%'
+				OR usedec LIKE '%TENNIS COURT%'
+				OR (usedec LIKE '%RECREATION%'
 					AND agency NOT LIKE '%ACS%')
-				OR use_type LIKE '%BEACH%'
-				OR use_type LIKE '%PLAYING FIELD%'
-				OR use_type LIKE '%GOLF COURSE%'
-				OR use_type LIKE '%POOL%'
-				OR use_type LIKE '%STADIUM%'
+				OR usedec LIKE '%BEACH%'
+				OR usedec LIKE '%PLAYING FIELD%'
+				OR usedec LIKE '%GOLF COURSE%'
+				OR usedec LIKE '%POOL%'
+				OR usedec LIKE '%STADIUM%'
 				THEN 'Parks, Cultural, and Other Community Facilities'
 			WHEN agency LIKE '%PARKS%'
-				AND use_type LIKE '%OPEN SPACE%'
+				AND usedec LIKE '%OPEN SPACE%'
 				THEN 'Parks, Cultural, and Other Community Facilities'
-			WHEN use_type LIKE '%THEATER%' AND agency LIKE '%DSBS%'
+			WHEN usedec LIKE '%THEATER%' AND agency LIKE '%DSBS%'
 				THEN 'Parks, Cultural, and Other Community Facilities'
 
 			-- Public Safety, Justice etc
-			WHEN agency LIKE '%ACS%' AND use_type LIKE '%DETENTION%' THEN 'Public Safety, Emergency Services, and Administration of Justice'
-			WHEN agency LIKE '%CORR%' AND use_type LIKE '%COURT%' THEN 'Public Safety, Emergency Services, and Administration of Justice'
+			WHEN agency LIKE '%ACS%' AND usedec LIKE '%DETENTION%' THEN 'Public Safety, Emergency Services, and Administration of Justice'
+			WHEN agency LIKE '%CORR%' AND usedec LIKE '%COURT%' THEN 'Public Safety, Emergency Services, and Administration of Justice'
 			WHEN agency LIKE '%CORR%' THEN 'Public Safety, Emergency Services, and Administration of Justice'
-			WHEN agency LIKE '%COURT%' AND use_type LIKE '%COURT%' THEN 'Public Safety, Emergency Services, and Administration of Justice'
-			WHEN use_type LIKE '%AMBULANCE%' THEN 'Public Safety, Emergency Services, and Administration of Justice'
-			WHEN use_type LIKE '%EMERGENCY MEDICAL%' THEN 'Public Safety, Emergency Services, and Administration of Justice'
-			WHEN use_type LIKE '%FIREHOUSE%' THEN 'Public Safety, Emergency Services, and Administration of Justice'
-			WHEN use_type LIKE '%POLICE STATION%' THEN 'Public Safety, Emergency Services, and Administration of Justice'
-			WHEN use_type LIKE '%PUBLIC SAFETY%' THEN 'Public Safety, Emergency Services, and Administration of Justice'
+			WHEN agency LIKE '%COURT%' AND usedec LIKE '%COURT%' THEN 'Public Safety, Emergency Services, and Administration of Justice'
+			WHEN usedec LIKE '%AMBULANCE%' THEN 'Public Safety, Emergency Services, and Administration of Justice'
+			WHEN usedec LIKE '%EMERGENCY MEDICAL%' THEN 'Public Safety, Emergency Services, and Administration of Justice'
+			WHEN usedec LIKE '%FIREHOUSE%' THEN 'Public Safety, Emergency Services, and Administration of Justice'
+			WHEN usedec LIKE '%POLICE STATION%' THEN 'Public Safety, Emergency Services, and Administration of Justice'
+			WHEN usedec LIKE '%PUBLIC SAFETY%' THEN 'Public Safety, Emergency Services, and Administration of Justice'
 			WHEN agency LIKE '%OCME%' THEN 'Public Safety, Emergency Services, and Administration of Justice'
 
 			-- Education, Children, Youth
-			WHEN use_type LIKE '%UNIVERSITY%' THEN 'Education, Child Welfare, and Youth'
-			WHEN use_type LIKE '%EARLY CHILDHOOD%' THEN 'Education, Child Welfare, and Youth'
-			WHEN use_type LIKE '%DAY CARE%' THEN 'Education, Child Welfare, and Youth'
-			WHEN agency LIKE '%ACS%' AND use_type LIKE '%RESIDENTIAL%' THEN 'Education, Child Welfare, and Youth'
+			WHEN usedec LIKE '%UNIVERSITY%' THEN 'Education, Child Welfare, and Youth'
+			WHEN usedec LIKE '%EARLY CHILDHOOD%' THEN 'Education, Child Welfare, and Youth'
+			WHEN usedec LIKE '%DAY CARE%' THEN 'Education, Child Welfare, and Youth'
+			WHEN agency LIKE '%ACS%' AND usedec LIKE '%RESIDENTIAL%' THEN 'Education, Child Welfare, and Youth'
 			WHEN agency LIKE '%ACS%' THEN 'Education, Child Welfare, and Youth'
-			WHEN agency LIKE '%EDUC%' and use_type LIKE '%PLAY AREA%' THEN 'Education, Child Welfare, and Youth'
-			WHEN use_type LIKE '%HIGH SCHOOL%' THEN 'Education, Child Welfare, and Youth'
+			WHEN agency LIKE '%EDUC%' and usedec LIKE '%PLAY AREA%' THEN 'Education, Child Welfare, and Youth'
+			WHEN usedec LIKE '%HIGH SCHOOL%' THEN 'Education, Child Welfare, and Youth'
 			WHEN agency LIKE '%CUNY%' THEN 'Education, Child Welfare, and Youth'
-			WHEN AGENCY LIKE '%EDUC%' AND use_type LIKE '%SCHOOL%' THEN 'Education, Child Welfare, and Youth'
-			WHEN use_type LIKE '%EDUCATIONAL SKILLS%' THEN 'Education, Child Welfare, and Youth'
+			WHEN AGENCY LIKE '%EDUC%' AND usedec LIKE '%SCHOOL%' THEN 'Education, Child Welfare, and Youth'
+			WHEN usedec LIKE '%EDUCATIONAL SKILLS%' THEN 'Education, Child Welfare, and Youth'
 
 			ELSE 'Administration of Government'
 		END),
@@ -234,143 +231,143 @@ SELECT
 	-- facilitygroup
 		(CASE
 			-- Admin of Gov
-			WHEN use_type LIKE '%AGREEMENT%'
-				OR use_type LIKE '%DISPOSITION%'
-				OR use_type LIKE '%COMMITMENT%'
+			WHEN usedec LIKE '%AGREEMENT%'
+				OR usedec LIKE '%DISPOSITION%'
+				OR usedec LIKE '%COMMITMENT%'
 				OR agency LIKE '%PRIVATE%'
 				THEN 'Other Property'
-			WHEN use_type LIKE '%SECURITY%' THEN 'Other Property'
-			WHEN (use_type LIKE '%PARKING%'
-				OR use_type LIKE '%PKNG%')
-				AND use_type NOT LIKE '%MUNICIPAL%'
+			WHEN usedec LIKE '%SECURITY%' THEN 'Other Property'
+			WHEN (usedec LIKE '%PARKING%'
+				OR usedec LIKE '%PKNG%')
+				AND usedec NOT LIKE '%MUNICIPAL%'
 				THEN 'Parking, Maintenance, and Storage'
-			WHEN use_type LIKE '%STORAGE%' OR use_type LIKE '%STRG%' THEN 'Parking, Maintenance, and Storage'
-			WHEN use_type LIKE '%CUSTODIAL%' THEN 'Parking, Maintenance, and Storage'
-			WHEN use_type LIKE '%GARAGE%' THEN 'Parking, Maintenance, and Storage'
-			WHEN use_type LIKE '%OFFICE%' THEN 'Offices, Training, and Testing'
-			WHEN use_type LIKE '%MAINTENANCE%' THEN 'Parking, Maintenance, and Storage'
-			WHEN use_type LIKE '%NO USE%' THEN 'Other Property'
-			WHEN use_type LIKE '%MISCELLANEOUS USE%' THEN 'Other Property'
-			WHEN use_type LIKE '%OTHER HEALTH%' AND parcel_name LIKE '%ANIMAL%' THEN 'Other Property'
-			WHEN agency LIKE '%DCA%' and use_type LIKE '%OTHER%' THEN 'Other Property'
-			WHEN use_type LIKE '%UNDEVELOPED%' THEN 'Other Property'
-			WHEN (use_type LIKE '%TRAINING%' 
-				OR use_type LIKE '%TESTING%')
-				AND use_type NOT LIKE '%LABORATORY%'
+			WHEN usedec LIKE '%STORAGE%' OR usedec LIKE '%STRG%' THEN 'Parking, Maintenance, and Storage'
+			WHEN usedec LIKE '%CUSTODIAL%' THEN 'Parking, Maintenance, and Storage'
+			WHEN usedec LIKE '%GARAGE%' THEN 'Parking, Maintenance, and Storage'
+			WHEN usedec LIKE '%OFFICE%' THEN 'Offices, Training, and Testing'
+			WHEN usedec LIKE '%MAINTENANCE%' THEN 'Parking, Maintenance, and Storage'
+			WHEN usedec LIKE '%NO USE%' THEN 'Other Property'
+			WHEN usedec LIKE '%MISCELLANEOUS USE%' THEN 'Other Property'
+			WHEN usedec LIKE '%OTHER HEALTH%' AND name LIKE '%ANIMAL%' THEN 'Other Property'
+			WHEN agency LIKE '%DCA%' and usedec LIKE '%OTHER%' THEN 'Other Property'
+			WHEN usedec LIKE '%UNDEVELOPED%' THEN 'Other Property'
+			WHEN (usedec LIKE '%TRAINING%' 
+				OR usedec LIKE '%TESTING%')
+				AND usedec NOT LIKE '%LABORATORY%'
 				THEN 'Offices, Training, and Testing'
 
 
 			-- Trans and Infra
-			WHEN use_type LIKE '%MUNICIPAL PARKING%' THEN 'Transportation'
-			WHEN use_type LIKE '%MARKET%' THEN 'Material Supplies and Markets'
-			WHEN use_type LIKE '%MATERIAL PROCESSING%' THEN 'Material Supplies and Markets'
-			WHEN use_type LIKE '%ASPHALT%' THEN 'Material Supplies and Markets'
-			WHEN use_type LIKE '%AIRPORT%' THEN 'Transportation'
-			WHEN use_type LIKE '%ROAD/HIGHWAY%'
-				OR use_type LIKE '%TRANSIT WAY%'
-				OR use_type LIKE '%OTHER TRANSPORTATION%'
+			WHEN usedec LIKE '%MUNICIPAL PARKING%' THEN 'Transportation'
+			WHEN usedec LIKE '%MARKET%' THEN 'Material Supplies and Markets'
+			WHEN usedec LIKE '%MATERIAL PROCESSING%' THEN 'Material Supplies and Markets'
+			WHEN usedec LIKE '%ASPHALT%' THEN 'Material Supplies and Markets'
+			WHEN usedec LIKE '%AIRPORT%' THEN 'Transportation'
+			WHEN usedec LIKE '%ROAD/HIGHWAY%'
+				OR usedec LIKE '%TRANSIT WAY%'
+				OR usedec LIKE '%OTHER TRANSPORTATION%'
 				THEN 'Transportation'
 			WHEN agency LIKE '%DEP%'
-				AND (use_type LIKE '%WATER SUPPLY%'
-				OR use_type LIKE '%RESERVOIR%'
-				OR use_type LIKE '%AQUEDUCT%')
+				AND (usedec LIKE '%WATER SUPPLY%'
+				OR usedec LIKE '%RESERVOIR%'
+				OR usedec LIKE '%AQUEDUCT%')
 				THEN 'Water and Wastewater'
 			WHEN agency LIKE '%DEP%'
-				AND use_type NOT LIKE '%NATURAL AREA%'
-				AND use_type NOT LIKE '%NATURE AREA%'
-				AND use_type NOT LIKE '%OPEN SPACE%'
+				AND usedec NOT LIKE '%NATURAL AREA%'
+				AND usedec NOT LIKE '%NATURE AREA%'
+				AND usedec NOT LIKE '%OPEN SPACE%'
 				THEN 'Water and Wastewater'
-			WHEN use_type LIKE '%WASTEWATER%' THEN 'Water and Wastewater'
-			WHEN use_type LIKE '%LANDFILL%' 
-				OR use_type LIKE '%SOLID WASTE INCINERATOR%'
+			WHEN usedec LIKE '%WASTEWATER%' THEN 'Water and Wastewater'
+			WHEN usedec LIKE '%LANDFILL%' 
+				OR usedec LIKE '%SOLID WASTE INCINERATOR%'
 				THEN 'Solid Waste'
-			WHEN use_type LIKE '%SOLID WASTE TRANSFER%'
-				OR (agency LIKE '%SANIT%' AND use_type LIKE '%SANITATION SECTION%')
+			WHEN usedec LIKE '%SOLID WASTE TRANSFER%'
+				OR (agency LIKE '%SANIT%' AND usedec LIKE '%SANITATION SECTION%')
 				THEN 'Solid Waste'
-			WHEN use_type LIKE '%ANTENNA%' OR use_type LIKE '%TELE/COMP%' THEN 'Telecommunications'
-			WHEN use_type LIKE '%PIER - MARITIME%'
-				OR use_type LIKE '%FERRY%' 
-				OR use_type LIKE '%WATERFRONT TRANSPORTATION%'
-				OR use_type LIKE '%MARINA%'
+			WHEN usedec LIKE '%ANTENNA%' OR usedec LIKE '%TELE/COMP%' THEN 'Telecommunications'
+			WHEN usedec LIKE '%PIER - MARITIME%'
+				OR usedec LIKE '%FERRY%' 
+				OR usedec LIKE '%WATERFRONT TRANSPORTATION%'
+				OR usedec LIKE '%MARINA%'
 				THEN 'Transportation'
-			WHEN use_type LIKE '%RAIL%'
-				OR (use_type LIKE '%TRANSIT%'
-					AND use_type NOT LIKE '%TRANSITIONAL%')
+			WHEN usedec LIKE '%RAIL%'
+				OR (usedec LIKE '%TRANSIT%'
+					AND usedec NOT LIKE '%TRANSITIONAL%')
 				THEN 'Transportation'
-			WHEN use_type LIKE '%BUS%' THEN 'Transportation'
+			WHEN usedec LIKE '%BUS%' THEN 'Transportation'
 
 			-- Health and Human
 			WHEN agency LIKE '%HHC%' THEN 'Health Care'
-			WHEN use_type LIKE '%HOSPITAL%' THEN 'Health Care'
-			WHEN use_type LIKE '%AMBULATORY HEALTH%' THEN 'Health Care'
+			WHEN usedec LIKE '%HOSPITAL%' THEN 'Health Care'
+			WHEN usedec LIKE '%AMBULATORY HEALTH%' THEN 'Health Care'
 			WHEN agency LIKE '%OCME%' THEN 'Health Care'
-			WHEN agency LIKE '%ACS%' AND use_type LIKE '%HOUSING%' THEN 'Human Services'
+			WHEN agency LIKE '%ACS%' AND usedec LIKE '%HOUSING%' THEN 'Human Services'
 			WHEN agency LIKE '%AGING%' THEN 'Human Services'
 			WHEN agency LIKE '%DHS%' THEN 'Human Services'
 			WHEN (agency LIKE '%NYCHA%' 
 				OR agency LIKE '%HPD%')
-				AND use_type LIKE '%RESIDENTIAL%'
+				AND usedec LIKE '%RESIDENTIAL%'
 				THEN 'Human Services'
-			WHEN use_type LIKE '%COMMUNITY CENTER%' THEN 'Human Services'
+			WHEN usedec LIKE '%COMMUNITY CENTER%' THEN 'Human Services'
 
 			-- Parks, Cultural
-			WHEN use_type LIKE '%LIBRARY%' THEN 'Libraries'
-			WHEN use_type LIKE '%MUSEUM%' THEN 'Cultural Institutions'
-			WHEN use_type LIKE '%CULTURAL%' THEN 'Cultural Institutions'
-			WHEN use_type LIKE '%ZOO%' THEN 'Cultural Institutions'
-			WHEN use_type LIKE '%CEMETERY%' THEN 'Parks and Plazas'
-			WHEN agency LIKE '%CULT%' AND use_type LIKE '%MUSEUM%' THEN 'Cultural Institutions'
+			WHEN usedec LIKE '%LIBRARY%' THEN 'Libraries'
+			WHEN usedec LIKE '%MUSEUM%' THEN 'Cultural Institutions'
+			WHEN usedec LIKE '%CULTURAL%' THEN 'Cultural Institutions'
+			WHEN usedec LIKE '%ZOO%' THEN 'Cultural Institutions'
+			WHEN usedec LIKE '%CEMETERY%' THEN 'Parks and Plazas'
+			WHEN agency LIKE '%CULT%' AND usedec LIKE '%MUSEUM%' THEN 'Cultural Institutions'
 			WHEN agency LIKE '%CULT%' THEN 'Cultural Institutions'
-			WHEN use_type LIKE '%NATURAL AREA%'
-				OR (use_type LIKE '%OPEN SPACE%'
+			WHEN usedec LIKE '%NATURAL AREA%'
+				OR (usedec LIKE '%OPEN SPACE%'
 					AND agency LIKE '%DEP%')
 				THEN 'Parks and Plazas'
-			WHEN use_type LIKE '%BOTANICAL GARDENS%' THEN 'Cultural Institutions'
-			WHEN use_type LIKE '%GARDEN%' THEN 'Parks and Plazas'
-			WHEN use_type LIKE '%PARK%' THEN 'Parks and Plazas'
-			WHEN use_type LIKE '%PLAZA%'
-				OR use_type LIKE '%SITTING AREA%' 
+			WHEN usedec LIKE '%BOTANICAL GARDENS%' THEN 'Cultural Institutions'
+			WHEN usedec LIKE '%GARDEN%' THEN 'Parks and Plazas'
+			WHEN usedec LIKE '%PARK%' THEN 'Parks and Plazas'
+			WHEN usedec LIKE '%PLAZA%'
+				OR usedec LIKE '%SITTING AREA%' 
 				THEN 'Parks and Plazas'
-			WHEN use_type LIKE '%PLAYGROUND%'
-				OR use_type LIKE '%SPORTS%'
-				OR use_type LIKE '%TENNIS COURT%'
-				OR (use_type LIKE '%RECREATION%'
+			WHEN usedec LIKE '%PLAYGROUND%'
+				OR usedec LIKE '%SPORTS%'
+				OR usedec LIKE '%TENNIS COURT%'
+				OR (usedec LIKE '%RECREATION%'
 					AND agency NOT LIKE '%ACS%')
-				OR use_type LIKE '%BEACH%'
-				OR use_type LIKE '%PLAYING FIELD%'
-				OR use_type LIKE '%GOLF COURSE%'
-				OR use_type LIKE '%POOL%'
-				OR use_type LIKE '%STADIUM%'
+				OR usedec LIKE '%BEACH%'
+				OR usedec LIKE '%PLAYING FIELD%'
+				OR usedec LIKE '%GOLF COURSE%'
+				OR usedec LIKE '%POOL%'
+				OR usedec LIKE '%STADIUM%'
 				THEN 'Parks and Plazas'
 			WHEN agency LIKE '%PARKS%'
-				AND use_type LIKE '%OPEN SPACE%'
+				AND usedec LIKE '%OPEN SPACE%'
 				THEN 'Parks and Plazas'
-			WHEN use_type LIKE '%THEATER%' AND agency LIKE '%DSBS%'
+			WHEN usedec LIKE '%THEATER%' AND agency LIKE '%DSBS%'
 				THEN 'Cultural Institutions'
 
 			-- Public Safety, Justice etc
-			WHEN agency LIKE '%ACS%' AND use_type LIKE '%DETENTION%' THEN 'Justice and Corrections'
-			WHEN agency LIKE '%CORR%' AND use_type LIKE '%COURT%' THEN 'Justice and Corrections'
+			WHEN agency LIKE '%ACS%' AND usedec LIKE '%DETENTION%' THEN 'Justice and Corrections'
+			WHEN agency LIKE '%CORR%' AND usedec LIKE '%COURT%' THEN 'Justice and Corrections'
 			WHEN agency LIKE '%CORR%' THEN 'Justice and Corrections'
-			WHEN agency LIKE '%COURT%' AND use_type LIKE '%COURT%' THEN 'Justice and Corrections'
-			WHEN use_type LIKE '%AMBULANCE%' THEN 'Emergency Services'
-			WHEN use_type LIKE '%EMERGENCY MEDICAL%' THEN 'Emergency Services'
-			WHEN use_type LIKE '%FIREHOUSE%' THEN 'Emergency Services'
-			WHEN use_type LIKE '%POLICE STATION%' THEN 'Public Safety'
-			WHEN use_type LIKE '%PUBLIC SAFETY%' THEN 'Public Safety'
+			WHEN agency LIKE '%COURT%' AND usedec LIKE '%COURT%' THEN 'Justice and Corrections'
+			WHEN usedec LIKE '%AMBULANCE%' THEN 'Emergency Services'
+			WHEN usedec LIKE '%EMERGENCY MEDICAL%' THEN 'Emergency Services'
+			WHEN usedec LIKE '%FIREHOUSE%' THEN 'Emergency Services'
+			WHEN usedec LIKE '%POLICE STATION%' THEN 'Public Safety'
+			WHEN usedec LIKE '%PUBLIC SAFETY%' THEN 'Public Safety'
 			WHEN agency LIKE '%OCME%' THEN 'Justice and Corrections'
 
 			-- Education, Children, Youth
-			WHEN use_type LIKE '%UNIVERSITY%' THEN 'Higher Education'
+			WHEN usedec LIKE '%UNIVERSITY%' THEN 'Higher Education'
 			WHEN agency LIKE '%CUNY%' THEN 'Higher Education'
-			WHEN use_type LIKE '%EARLY CHILDHOOD%' THEN 'Child Care and Pre-Kindergarten'
-			WHEN use_type LIKE '%DAY CARE%' THEN 'Child Care and Pre-Kindergarten'
-			WHEN agency LIKE '%ACS%' AND use_type LIKE '%RESIDENTIAL%' THEN 'Childrens Services'
+			WHEN usedec LIKE '%EARLY CHILDHOOD%' THEN 'Child Care and Pre-Kindergarten'
+			WHEN usedec LIKE '%DAY CARE%' THEN 'Child Care and Pre-Kindergarten'
+			WHEN agency LIKE '%ACS%' AND usedec LIKE '%RESIDENTIAL%' THEN 'Childrens Services'
 			WHEN agency LIKE '%ACS%' THEN 'Child Care and Pre-Kindergarten'
-			WHEN agency LIKE '%EDUC%' and use_type LIKE '%PLAY AREA%' THEN 'Schools (K-12)'
-			WHEN use_type LIKE '%HIGH SCHOOL%' THEN 'Schools (K-12)'
-			WHEN AGENCY LIKE '%EDUC%' AND use_type LIKE '%SCHOOL%' THEN 'Schools (K-12)'
-			WHEN use_type LIKE '%EDUCATIONAL SKILLS%' THEN 'Schools (K-12)'
+			WHEN agency LIKE '%EDUC%' and usedec LIKE '%PLAY AREA%' THEN 'Schools (K-12)'
+			WHEN usedec LIKE '%HIGH SCHOOL%' THEN 'Schools (K-12)'
+			WHEN AGENCY LIKE '%EDUC%' AND usedec LIKE '%SCHOOL%' THEN 'Schools (K-12)'
+			WHEN usedec LIKE '%EDUCATIONAL SKILLS%' THEN 'Schools (K-12)'
 
 			ELSE 'Other Property'
 		END),
@@ -378,160 +375,160 @@ SELECT
 	-- facilitysubgroup
 		(CASE
 			-- Admin of Gov
-			WHEN use_type LIKE '%AGREEMENT%'
-				OR use_type LIKE '%DISPOSITION%'
-				OR use_type LIKE '%COMMITMENT%'
+			WHEN usedec LIKE '%AGREEMENT%'
+				OR usedec LIKE '%DISPOSITION%'
+				OR usedec LIKE '%COMMITMENT%'
 				OR agency LIKE '%PRIVATE%'
 				THEN 'Properties Leased or Licensed to Non-public Entities'
-			WHEN use_type LIKE '%SECURITY%' THEN 'Miscellaneous Use'
-			WHEN (use_type LIKE '%PARKING%'
-				OR use_type LIKE '%PKNG%')
-				AND use_type NOT LIKE '%MUNICIPAL%'
+			WHEN usedec LIKE '%SECURITY%' THEN 'Miscellaneous Use'
+			WHEN (usedec LIKE '%PARKING%'
+				OR usedec LIKE '%PKNG%')
+				AND usedec NOT LIKE '%MUNICIPAL%'
 				THEN 'Parking'
-			WHEN use_type LIKE '%STORAGE%' OR use_type LIKE '%STRG%' THEN 'Storage'
-			WHEN use_type LIKE '%CUSTODIAL%' THEN 'Custodial'
-			WHEN use_type LIKE '%GARAGE%' THEN 'Maintenance and Garages'
-			WHEN use_type LIKE '%OFFICE%' THEN 'Offices'
-			WHEN use_type LIKE '%MAINTENANCE%' THEN 'Maintenance and Garages'
-			WHEN use_type LIKE '%NO USE%' THEN 'Undeveloped or No Use'
-			WHEN use_type LIKE '%MISCELLANEOUS USE%' THEN 'Miscellaneous Use'
-			WHEN use_type LIKE '%OTHER HEALTH%' AND parcel_name LIKE '%ANIMAL%' THEN 'Miscellaneous Use'
-			WHEN agency LIKE '%DCA%' and use_type LIKE '%OTHER%' THEN 'Miscellaneous Use'
-			WHEN use_type LIKE '%UNDEVELOPED%' THEN 'Undeveloped or No Use'
-			WHEN (use_type LIKE '%TRAINING%' 
-				OR use_type LIKE '%TESTING%')
-				AND use_type NOT LIKE '%LABORATORY%'
+			WHEN usedec LIKE '%STORAGE%' OR usedec LIKE '%STRG%' THEN 'Storage'
+			WHEN usedec LIKE '%CUSTODIAL%' THEN 'Custodial'
+			WHEN usedec LIKE '%GARAGE%' THEN 'Maintenance and Garages'
+			WHEN usedec LIKE '%OFFICE%' THEN 'Offices'
+			WHEN usedec LIKE '%MAINTENANCE%' THEN 'Maintenance and Garages'
+			WHEN usedec LIKE '%NO USE%' THEN 'Undeveloped or No Use'
+			WHEN usedec LIKE '%MISCELLANEOUS USE%' THEN 'Miscellaneous Use'
+			WHEN usedec LIKE '%OTHER HEALTH%' AND name LIKE '%ANIMAL%' THEN 'Miscellaneous Use'
+			WHEN agency LIKE '%DCA%' and usedec LIKE '%OTHER%' THEN 'Miscellaneous Use'
+			WHEN usedec LIKE '%UNDEVELOPED%' THEN 'Undeveloped or No Use'
+			WHEN (usedec LIKE '%TRAINING%' 
+				OR usedec LIKE '%TESTING%')
+				AND usedec NOT LIKE '%LABORATORY%'
 				THEN 'Training and Testing'
 
 			-- Trans and Infra
-			WHEN use_type LIKE '%MUNICIPAL PARKING%' THEN 'Public Parking Lots and Garages'
-			WHEN use_type LIKE '%MARKET%' THEN 'Wholesale Markets'
-			WHEN use_type LIKE '%MATERIAL PROCESSING%' THEN 'Material Supplies'
-			WHEN use_type LIKE '%ASPHALT%' THEN 'Material Supplies'
-			WHEN use_type LIKE '%AIRPORT%' THEN 'Airports and Heliports'
-			WHEN use_type LIKE '%ROAD/HIGHWAY%'
-				OR use_type LIKE '%TRANSIT WAY%'
-				OR use_type LIKE '%OTHER TRANSPORTATION%'
+			WHEN usedec LIKE '%MUNICIPAL PARKING%' THEN 'Public Parking Lots and Garages'
+			WHEN usedec LIKE '%MARKET%' THEN 'Wholesale Markets'
+			WHEN usedec LIKE '%MATERIAL PROCESSING%' THEN 'Material Supplies'
+			WHEN usedec LIKE '%ASPHALT%' THEN 'Material Supplies'
+			WHEN usedec LIKE '%AIRPORT%' THEN 'Airports and Heliports'
+			WHEN usedec LIKE '%ROAD/HIGHWAY%'
+				OR usedec LIKE '%TRANSIT WAY%'
+				OR usedec LIKE '%OTHER TRANSPORTATION%'
 				THEN 'Other Transportation'
 			WHEN agency LIKE '%DEP%'
-				AND (use_type LIKE '%WATER SUPPLY%'
-				OR use_type LIKE '%RESERVOIR%'
-				OR use_type LIKE '%AQUEDUCT%')
+				AND (usedec LIKE '%WATER SUPPLY%'
+				OR usedec LIKE '%RESERVOIR%'
+				OR usedec LIKE '%AQUEDUCT%')
 				THEN 'Water Supply'
 			WHEN agency LIKE '%DEP%'
-				AND use_type NOT LIKE '%NATURE AREA%'
-				AND use_type NOT LIKE '%NATURAL AREA%'
-				AND use_type NOT LIKE '%OPEN SPACE%'
+				AND usedec NOT LIKE '%NATURE AREA%'
+				AND usedec NOT LIKE '%NATURAL AREA%'
+				AND usedec NOT LIKE '%OPEN SPACE%'
 				THEN 'Wastewater and Pollution Control'
-			WHEN use_type LIKE '%WASTEWATER%' THEN 'Wastewater and Pollution Control'
-			WHEN use_type LIKE '%LANDFILL%' 
-				OR use_type LIKE '%SOLID WASTE INCINERATOR%'
+			WHEN usedec LIKE '%WASTEWATER%' THEN 'Wastewater and Pollution Control'
+			WHEN usedec LIKE '%LANDFILL%' 
+				OR usedec LIKE '%SOLID WASTE INCINERATOR%'
 				THEN 'Solid Waste Processing'
-			WHEN use_type LIKE '%SOLID WASTE TRANSFER%'
-				OR (agency LIKE '%SANIT%' AND use_type LIKE '%SANITATION SECTION%')
+			WHEN usedec LIKE '%SOLID WASTE TRANSFER%'
+				OR (agency LIKE '%SANIT%' AND usedec LIKE '%SANITATION SECTION%')
 				THEN 'Solid Waste Transfer and Carting'
-			WHEN use_type LIKE '%ANTENNA%' OR use_type LIKE '%TELE/COMP%' THEN 'Telecommunications'
-			WHEN use_type LIKE '%PIER - MARITIME%'
-				OR use_type LIKE '%FERRY%' 
-				OR use_type LIKE '%WATERFRONT TRANSPORTATION%'
-				OR use_type LIKE '%MARINA%'
+			WHEN usedec LIKE '%ANTENNA%' OR usedec LIKE '%TELE/COMP%' THEN 'Telecommunications'
+			WHEN usedec LIKE '%PIER - MARITIME%'
+				OR usedec LIKE '%FERRY%' 
+				OR usedec LIKE '%WATERFRONT TRANSPORTATION%'
+				OR usedec LIKE '%MARINA%'
 				THEN 'Ports and Ferry Landings'
-			WHEN use_type LIKE '%RAIL%'
-				OR (use_type LIKE '%TRANSIT%'
-					AND use_type NOT LIKE '%TRANSITIONAL%')
+			WHEN usedec LIKE '%RAIL%'
+				OR (usedec LIKE '%TRANSIT%'
+					AND usedec NOT LIKE '%TRANSITIONAL%')
 				THEN 'Rail Yards and Maintenance'
-			WHEN use_type LIKE '%BUS%' THEN 'Bus Depots and Terminals'
+			WHEN usedec LIKE '%BUS%' THEN 'Bus Depots and Terminals'
 
 			-- Health and Human
 			WHEN agency LIKE '%HHC%' THEN 'Hospitals and Clinics'
-			WHEN use_type LIKE '%HOSPITAL%' THEN 'Hospitals and Clinics'
-			WHEN use_type LIKE '%AMBULATORY HEALTH%' THEN 'Hospitals and Clinics'
+			WHEN usedec LIKE '%HOSPITAL%' THEN 'Hospitals and Clinics'
+			WHEN usedec LIKE '%AMBULATORY HEALTH%' THEN 'Hospitals and Clinics'
 			WHEN agency LIKE '%OCME%' THEN 'Other Health Care'
-			WHEN agency LIKE '%ACS%' AND use_type LIKE '%HOUSING%' THEN 'Shelters and Transitional Housing'
+			WHEN agency LIKE '%ACS%' AND usedec LIKE '%HOUSING%' THEN 'Shelters and Transitional Housing'
 			WHEN agency LIKE '%AGING%' THEN 'Senior Services'
 			WHEN agency LIKE '%DHS%'
-				AND (use_type LIKE '%RESIDENTIAL%'
-				OR use_type LIKE '%TRANSITIONAL HOUSING%')
+				AND (usedec LIKE '%RESIDENTIAL%'
+				OR usedec LIKE '%TRANSITIONAL HOUSING%')
 				THEN 'Shelters and Transitional Housing'
 			WHEN agency LIKE '%DHS%' THEN 'Non-residential Housing and Homeless Services'
 			WHEN (agency LIKE '%NYCHA%' 
 				OR agency LIKE '%HPD%')
-				AND use_type LIKE '%RESIDENTIAL%'
+				AND usedec LIKE '%RESIDENTIAL%'
 				THEN 'Public or Affordable Housing'
-			WHEN use_type LIKE '%COMMUNITY CENTER%' THEN 'Community Centers and Community School Programs'
+			WHEN usedec LIKE '%COMMUNITY CENTER%' THEN 'Community Centers and Community School Programs'
 
 			-- Parks, Cultural
-			WHEN use_type LIKE '%LIBRARY%' THEN 'Public Libraries'
-			WHEN use_type LIKE '%MUSEUM%' THEN 'Museums'
-			WHEN use_type LIKE '%CULTURAL%' THEN 'Other Cultural Institutions'
-			WHEN use_type LIKE '%ZOO%' THEN 'Other Cultural Institutions'
-			WHEN use_type LIKE '%CEMETERY%' THEN 'Cemeteries'
-			WHEN agency LIKE '%CULT%' AND use_type LIKE '%MUSEUM%' THEN 'Museums'
+			WHEN usedec LIKE '%LIBRARY%' THEN 'Public Libraries'
+			WHEN usedec LIKE '%MUSEUM%' THEN 'Museums'
+			WHEN usedec LIKE '%CULTURAL%' THEN 'Other Cultural Institutions'
+			WHEN usedec LIKE '%ZOO%' THEN 'Other Cultural Institutions'
+			WHEN usedec LIKE '%CEMETERY%' THEN 'Cemeteries'
+			WHEN agency LIKE '%CULT%' AND usedec LIKE '%MUSEUM%' THEN 'Museums'
 			WHEN agency LIKE '%CULT%' THEN 'Other Cultural Institutions'
-			WHEN use_type LIKE '%NATURAL AREA%'
-				OR (use_type LIKE '%OPEN SPACE%'
+			WHEN usedec LIKE '%NATURAL AREA%'
+				OR (usedec LIKE '%OPEN SPACE%'
 					AND agency LIKE '%DEP%')
 				THEN 'Preserves and Conservation Areas'
-			WHEN use_type LIKE '%BOTANICAL GARDENS%' THEN 'Other Cultural Institutions'
-			WHEN use_type LIKE '%GARDEN%' THEN 'Gardens'
+			WHEN usedec LIKE '%BOTANICAL GARDENS%' THEN 'Other Cultural Institutions'
+			WHEN usedec LIKE '%GARDEN%' THEN 'Gardens'
 			WHEN agency LIKE '%PARKS%'
-				AND use_type LIKE '%OPEN SPACE%'
+				AND usedec LIKE '%OPEN SPACE%'
 				THEN 'Streetscapes, Plazas, and Malls'
-			WHEN use_type = 'MALL/TRIANGLE/HIGHWAY STRIP/PARK STRIP'
+			WHEN usedec = 'MALL/TRIANGLE/HIGHWAY STRIP/PARK STRIP'
 				THEN 'Streetscapes, Plazas, and Malls'
-			WHEN use_type LIKE '%PARK%' THEN 'Parks'
-			WHEN use_type LIKE '%PLAZA%'
-				OR use_type LIKE '%SITTING AREA%' 
+			WHEN usedec LIKE '%PARK%' THEN 'Parks'
+			WHEN usedec LIKE '%PLAZA%'
+				OR usedec LIKE '%SITTING AREA%' 
 				THEN 'Streetscapes, Plazas, and Malls'
-			WHEN use_type LIKE '%PLAYGROUND%'
-				OR use_type LIKE '%SPORTS%'
-				OR use_type LIKE '%TENNIS COURT%'
-				OR (use_type LIKE '%RECREATION%'
+			WHEN usedec LIKE '%PLAYGROUND%'
+				OR usedec LIKE '%SPORTS%'
+				OR usedec LIKE '%TENNIS COURT%'
+				OR (usedec LIKE '%RECREATION%'
 					AND agency NOT LIKE '%ACS%')
-				OR use_type LIKE '%BEACH%'
-				OR use_type LIKE '%PLAYING FIELD%'
-				OR use_type LIKE '%GOLF COURSE%'
-				OR use_type LIKE '%POOL%'
-				OR use_type LIKE '%STADIUM%'
+				OR usedec LIKE '%BEACH%'
+				OR usedec LIKE '%PLAYING FIELD%'
+				OR usedec LIKE '%GOLF COURSE%'
+				OR usedec LIKE '%POOL%'
+				OR usedec LIKE '%STADIUM%'
 				THEN 'Recreation and Waterfront Sites'
-			WHEN use_type LIKE '%THEATER%' AND agency LIKE '%DSBS%'
+			WHEN usedec LIKE '%THEATER%' AND agency LIKE '%DSBS%'
 				THEN 'Other Cultural Institutions'
 
 			-- Public Safety, Justice etc
-			WHEN agency LIKE '%ACS%' AND use_type LIKE '%DETENTION%' THEN 'Detention and Correctional'
-			WHEN agency LIKE '%CORR%' AND use_type LIKE '%COURT%' THEN 'Courthouses and Judicial'
+			WHEN agency LIKE '%ACS%' AND usedec LIKE '%DETENTION%' THEN 'Detention and Correctional'
+			WHEN agency LIKE '%CORR%' AND usedec LIKE '%COURT%' THEN 'Courthouses and Judicial'
 			WHEN agency LIKE '%CORR%' THEN 'Detention and Correctional'
-			WHEN agency LIKE '%COURT%' AND use_type LIKE '%COURT%' THEN 'Courthouses and Judicial'
-			WHEN use_type LIKE '%AMBULANCE%' THEN 'Other Emergency Services'
-			WHEN use_type LIKE '%EMERGENCY MEDICAL%' THEN 'Other Emergency Services'
-			WHEN use_type LIKE '%FIREHOUSE%' THEN 'Fire Services'
-			WHEN use_type LIKE '%POLICE STATION%' THEN 'Police Services'
-			WHEN use_type LIKE '%PUBLIC SAFETY%' THEN 'Other Public Safety'
+			WHEN agency LIKE '%COURT%' AND usedec LIKE '%COURT%' THEN 'Courthouses and Judicial'
+			WHEN usedec LIKE '%AMBULANCE%' THEN 'Other Emergency Services'
+			WHEN usedec LIKE '%EMERGENCY MEDICAL%' THEN 'Other Emergency Services'
+			WHEN usedec LIKE '%FIREHOUSE%' THEN 'Fire Services'
+			WHEN usedec LIKE '%POLICE STATION%' THEN 'Police Services'
+			WHEN usedec LIKE '%PUBLIC SAFETY%' THEN 'Other Public Safety'
 			WHEN agency LIKE '%OCME%' THEN 'Forensics'
 
 			-- Education, Children, Youth
-			WHEN use_type LIKE '%UNIVERSITY%' THEN 'Colleges or Universities'
-			WHEN use_type LIKE '%EARLY CHILDHOOD%' THEN 'Child Care'
-			WHEN use_type LIKE '%DAY CARE%' THEN 'Child Care'
-			WHEN agency LIKE '%ACS%' AND use_type LIKE '%RESIDENTIAL%' THEN 'Childrens Services'
+			WHEN usedec LIKE '%UNIVERSITY%' THEN 'Colleges or Universities'
+			WHEN usedec LIKE '%EARLY CHILDHOOD%' THEN 'Child Care'
+			WHEN usedec LIKE '%DAY CARE%' THEN 'Child Care'
+			WHEN agency LIKE '%ACS%' AND usedec LIKE '%RESIDENTIAL%' THEN 'Childrens Services'
 			WHEN agency LIKE '%ACS%' THEN 'Child Care'
-			WHEN agency LIKE '%EDUC%' and use_type LIKE '%PLAY AREA%' THEN 'Public Schools'
-			WHEN use_type LIKE '%HIGH SCHOOL%' THEN 'Public Schools'
+			WHEN agency LIKE '%EDUC%' and usedec LIKE '%PLAY AREA%' THEN 'Public Schools'
+			WHEN usedec LIKE '%HIGH SCHOOL%' THEN 'Public Schools'
 			WHEN agency LIKE '%CUNY%' THEN 'Colleges or Universities'
-			WHEN AGENCY LIKE '%EDUC%' AND use_type LIKE '%SCHOOL%' THEN 'Public Schools'
-			WHEN use_type LIKE '%EDUCATIONAL SKILLS%' THEN 'Public Schools'
+			WHEN AGENCY LIKE '%EDUC%' AND usedec LIKE '%SCHOOL%' THEN 'Public Schools'
+			WHEN usedec LIKE '%EDUCATIONAL SKILLS%' THEN 'Public Schools'
 
 			ELSE 'Miscellaneous Use'
 		END),
 	-- agencyclass1
-	use_type,
+	usedec,
 	-- agencyclass2
 		(CASE
 			WHEN type='OF' THEN 'City Owned - OF'
 			WHEN type='LF' THEN 'City Leased - LF'
 		END),
 	-- colpusetype
-	use_type,
+	usedec,
 	-- capacity
 	NULL,
 	-- utilization
@@ -839,7 +836,7 @@ SELECT
 	-- immigrants
 	FALSE,
 	-- groupquarters
-		(CASE WHEN use_type LIKE '%RESIDENTIAL%' AND use_type NOT LIKE '%NON RESIDENTIAL%' THEN TRUE
+		(CASE WHEN usedec LIKE '%RESIDENTIAL%' AND usedec NOT LIKE '%NON RESIDENTIAL%' THEN TRUE
 			ELSE FALSE
 		END)
 FROM 
@@ -847,5 +844,5 @@ FROM
 WHERE
 	agency <> 'NYCHA'
 	AND agency <> 'HPD'
-	AND use_type <> 'ROAD/HIGHWAY'
-	AND use_type <> 'TRANSIT WAY'
+	AND usedec <> 'ROAD/HIGHWAY'
+	AND usedec <> 'TRANSIT WAY'

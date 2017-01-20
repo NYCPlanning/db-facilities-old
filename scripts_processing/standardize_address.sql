@@ -1,5 +1,9 @@
 UPDATE facilities
-    SET addressnumber = REPLACE(addressnumber,'One','1');
+    SET
+        addressnumber = REPLACE(addressnumber,'One','1'),
+        address = split_part(trim(split_part(address, 'New York, N', 1),' '),',',1),
+        streetname = split_part(trim(split_part(streetname, 'New York, N', 1),' '),',',1)
+        ;
 
 CREATE OR REPLACE FUNCTION isnumeric(text) RETURNS BOOLEAN AS $$
 DECLARE x NUMERIC;
@@ -16,11 +20,11 @@ LANGUAGE plpgsql IMMUTABLE;
 UPDATE facilities
     SET
     addressnumber = 
-    	(CASE WHEN isnumeric(REPLACE(addressnumber,'-','')) THEN addressnumber
+    	(CASE WHEN isnumeric(REPLACE(addressnumber,'-','')) AND addressnumber <> '0' THEN addressnumber
     		ELSE NULL
     	END),
     streetname =
-        (CASE WHEN isnumeric(REPLACE(addressnumber,'-','')) THEN streetname
+        (CASE WHEN isnumeric(REPLACE(addressnumber,'-','')) AND addressnumber <> '0' THEN streetname
     		ELSE NULL
     	END)
     ;

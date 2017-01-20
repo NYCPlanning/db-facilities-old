@@ -2,8 +2,9 @@
 // PROCESS OVERVIEW
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// Select all records with null geoms and borough value
+// Select all records with null geoms and a borough value
 // Geocode using borough and address -- prints errors and and skips to keep going
+// Reject records do not get updated in the database.
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 // STEP 1 --- LOADING DEPENDENCIES
@@ -63,7 +64,7 @@ var geoclientTemplate1 = 'https://api.cityofnewyork.us/geoclient/v1/address.json
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
-// STEP 5 --- DEFINES/RUNS FUNCTION WHICH LOOKS UP ADDRESSES USING geoclientTemplate
+// STEP 5 --- DEFINES AND RUNS FUNCTION WHICH LOOKS UP ADDRESSES USING geoclientTemplate
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -80,7 +81,7 @@ function addressLookup1(row) {
         app_key: apiCredentials.app_key
       })
 
-      console.log(apiCall1);
+      // console.log(apiCall1);
 
       request(apiCall1, function(err, response, body) {
           console.log(err)
@@ -144,15 +145,15 @@ function updateFacilities(data, row) {
       bin: data.buildingIdentificationNumber,
       zipcode: data.zipCode,
       city: data.uspsPreferredCityName,
+      newaddressnumber: data.houseNumber,
+      newstreetname: data.boePreferredStreetName,
 
       // row. comes from original table row from psql query
-      newaddressnumber: row.addressnumber.replace("/", "").replace("\"", "").replace("!", "").trim(),
-      newstreetname: row.streetname.split(',')[0].split('#')[0].split(' - ')[0].split('(')[0].split(';')[0].split('Suite')[0].split('Ste')[0].split('Apt')[0].split('apt')[0].split('Room')[0].split('Rm')[0].split('Box')[0].split('Unit')[0].trim(),
       oldaddressnumber: row.addressnumber,
       oldstreetname: row.streetname
     })
 
-    console.log(insert);
+    // console.log(insert);
 
     db.none(insert)
     .then(function(data) {
