@@ -144,12 +144,12 @@ SELECT
 	NULL,
 	-- operatortype
 		(CASE
-			WHEN ft_decode = 'MTA Paratransit Vehicle Depot' THEN 'Proprietary'
+			WHEN ft_decode = 'MTA Paratransit Vehicle Depot' THEN 'Non-public'
 			ELSE 'Public'
 		END),
 	-- operatorname
 		(CASE 
-			WHEN ft_decode = 'PANYNJ Bus Terminal' THEN 'Port Authority of New York & New Jersey'
+			WHEN ft_decode = 'PANYNJ Bus Terminal' THEN 'Port Authority of New York and New Jersey'
 			WHEN ft_decode = 'Wastewater Treatment Plant' THEN 'New York City Department of Environmental Protection'
 			WHEN ft_decode = 'MTA Paratransit Vehicle Depot' THEN 'Proprietary'
 			WHEN ft_decode = 'MTA Bus Depot' THEN 'Metropolitan Transportation Authority'
@@ -193,7 +193,7 @@ SELECT
 		END),
 	-- oversightagency
 		ARRAY[(CASE 
-			WHEN ft_decode = 'PANYNJ Bus Terminal' THEN 'Port Authority of New York & New Jersey'
+			WHEN ft_decode = 'PANYNJ Bus Terminal' THEN 'Port Authority of New York and New Jersey'
 			WHEN ft_decode = 'Wastewater Treatment Plant' THEN 'New York City Department of Environmental Protection'
 			WHEN ft_decode = 'MTA Paratransit Vehicle Depot' THEN 'Metropolitan Transportation Authority'
 			WHEN ft_decode = 'MTA Bus Depot' THEN 'Metropolitan Transportation Authority'

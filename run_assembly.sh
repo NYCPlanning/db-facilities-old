@@ -24,7 +24,7 @@ echo 'Loading open source datasets...'
 	# node loader.js install dfta_facilities_contracts
 	# node loader.js install doe_facilities_busroutesgarages
 	# node loader.js install doe_facilities_universalprek
-	node loader.js install dohmh_facilities_daycare
+	# node loader.js install dohmh_facilities_daycare
 	# node loader.js install hhc_facilities_hospitals
 	# node loader.js install nycha_facilities_policeservice
 	# node loader.js install nysdec_facilities_lands
@@ -40,7 +40,7 @@ echo 'Loading open source datasets...'
 	# node loader.js install usnps_facilities_parks
 echo 'Done loading open source datasets. Moving on to "other" datasets...'
 # # other_datasets - PULLING FROM FTP SITE
-	node loader.js install acs_facilities_daycareheadstart
+	# node loader.js install acs_facilities_daycareheadstart
 # 	node loader.js install dcas_facilities_colp
 # 	node loader.js install doe_facilities_schoolsbluebook
 # 	node loader.js install dot_facilities_pedplazas
@@ -50,7 +50,7 @@ echo 'Done loading open source datasets. Moving on to "other" datasets...'
 # 	node loader.js install foodbankny_facilities_foodbanks
 # 	node loader.js install hhs_facilities_acceleratorall ##Actually is open but need to ask about url
 	# node loader.js install nysoasas_facilities_programs ##Being shared with us monthly by email in xlsx
-	node loader.js install nysed_facilities_activeinstitutions ##Actually is open but need to figue out url
+	# node loader.js install nysed_facilities_activeinstitutions ##Actually is open but need to figue out url
 # 	node loader.js install nysed_nonpublicenrollment ##Actually is open but in xlsx that needs to be formatted
 # 	node loader.js install omb_facilities_libraryvisits
 echo 'Done loading other source datasets'

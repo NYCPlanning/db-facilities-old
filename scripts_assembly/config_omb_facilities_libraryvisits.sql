@@ -98,17 +98,17 @@ SELECT
 	'Non-public',
 	-- operatorname
 		(CASE
-			WHEN system = 'QPL' THEN 'Queens Public Libraries'
-			WHEN system = 'BPL' THEN 'Brooklyn Public Libraries'
-			WHEN system = 'NYPL' THEN 'New York Public Libraries'
+			WHEN system = 'QPL' THEN 'Queens Public Library'
+			WHEN system = 'BPL' THEN 'Brooklyn Public Library'
+			WHEN system = 'NYPL' THEN 'New York Public Library'
 		END),
 	-- operatorabbrev
 	system,
 	-- oversightagency
 		(CASE
-			WHEN system = 'QPL' THEN ARRAY['Queens Public Libraries']
-			WHEN system = 'BPL' THEN ARRAY['Brooklyn Public Libraries']
-			WHEN system = 'NYPL' THEN ARRAY['New York Public Libraries']
+			WHEN system = 'QPL' THEN ARRAY['Queens Public Library']
+			WHEN system = 'BPL' THEN ARRAY['Brooklyn Public Library']
+			WHEN system = 'NYPL' THEN ARRAY['New York Public Library']
 		END),
 	-- oversightabbrev
 	ARRAY[system],
