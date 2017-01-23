@@ -50,7 +50,10 @@ SELECT
 	-- hash,
 	md5(CAST((dca_facilities_operatingbusinesses.*) AS text)),
 	-- geom
-	NULL,
+	(CASE 
+		WHEN longitude IS NOT NULL THEN ST_SetSRID(ST_MakePoint(longitude, latitude), 4326)
+		ELSE NULL
+	END),
 	-- idagency
 	ARRAY[DCA_License_Number],
 	-- facilityname

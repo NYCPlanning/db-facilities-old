@@ -5,17 +5,17 @@
 ## NOTE: This script requires that your setup the DATABASE_URL environment variable. 
 ## Directions are in the README.md.
 
-## Joining on source data info
-psql $DATABASE_URL -f ./scripts_processing/join_sourcedatainfo.sql
+# ## Joining on source data info
+# psql $DATABASE_URL -f ./scripts_processing/join_sourcedatainfo.sql
 
-## Standardizing agency names and abbreviations
-## NEED TO FINISH
+# ## Standardizing agency names and abbreviations
+# ## NEED TO FINISH
 
-## Standardizing borough and assigning borough code
-psql $DATABASE_URL -f ./scripts_processing/standardize_borough.sql
+# ## Standardizing borough and assigning borough code
+# psql $DATABASE_URL -f ./scripts_processing/standardize_borough.sql
 
-## 0. Switching One to 1 for geocoding and removing invalid (string) address numbers
-psql $DATABASE_URL -f ./scripts_processing/standardize_address.sql
+# ## 0. Switching One to 1 for geocoding and removing invalid (string) address numbers
+# psql $DATABASE_URL -f ./scripts_processing/standardize_address.sql
 
 ## 1. Run the geocoding script using address and borough - get BBL, BIN, lat/long
 
@@ -28,6 +28,12 @@ echo 'Done geocoding using address and borough'
 echo 'Running geocoding script using address and zip code...'
 time node ./scripts_processing/address2geom_zipcode.js
 echo 'Done geocoding using address and zip code'
+
+## 3. Run the geocoding script using address get BBL and BIN and standardize address
+
+echo 'Running geocoding script getting BBL using address and borough...'
+time node ./scripts_processing/address2bbl_borough.js
+echo 'Done getting BBL using address and borough'
 
 # ## 3. Run the geocoding script using place name (facilityname) - get BBL, BIN, lat/long
 
@@ -46,9 +52,9 @@ echo 'Done geocoding using address and zip code'
 ## 3. If record could not be geocoded but came with a BBL, use BBL to get geom
 ##    Should only be relevant for Gazetteer/COLP records
 
-echo 'Joining on geometry using BBL...'
-time psql $DATABASE_URL -f ./scripts_processing/bbl2geom.sql
-echo 'Done joining on geometry using BBL'
+# echo 'Joining on geometry using BBL...'
+# time psql $DATABASE_URL -f ./scripts_processing/bbl2geom.sql
+# echo 'Done joining on geometry using BBL'
 
 # 4. Create backup table of records with no geom or outside NYC and then delete from database
 
@@ -56,44 +62,44 @@ echo 'Done joining on geometry using BBL'
 ## 5. Create a spatial index for the facilities database and for MapPLUTO and VACUUM
 ##	  (Reindex and vacuum after each spatial join)
 
-echo 'Indexing and vacuuming facilities and dcp_mappluto...'
-psql $DATABASE_URL -f ./scripts_processing/force2D.sql
-psql $DATABASE_URL -f ./scripts_processing/setSRID_26918.sql
-psql $DATABASE_URL -f ./scripts_processing/vacuum.sql
-echo 'Done indexing and vacuuming facilities and dcp_mappluto'
+# echo 'Indexing and vacuuming facilities and dcp_mappluto...'
+# psql $DATABASE_URL -f ./scripts_processing/force2D.sql
+# psql $DATABASE_URL -f ./scripts_processing/setSRID_26918.sql
+# psql $DATABASE_URL -f ./scripts_processing/vacuum.sql
+# echo 'Done indexing and vacuuming facilities and dcp_mappluto'
 
 ## 6. Do a spatial join with MapPLUTO to get BBL and addresses info if missing
 
-echo 'Spatially joining with dcp_mappluto...'
-time psql $DATABASE_URL -f ./scripts_processing/bbljoin.sql
-echo 'Done spatially joining with dcp_mappluto'
-psql $DATABASE_URL -f ./scripts_processing/vacuum.sql
+# echo 'Spatially joining with dcp_mappluto...'
+# time psql $DATABASE_URL -f ./scripts_processing/bbljoin.sql
+# echo 'Done spatially joining with dcp_mappluto'
+# psql $DATABASE_URL -f ./scripts_processing/vacuum.sql
 
-## 7. For facilities which did not overlap with a BBL in MapPLUTO but should be located on a BBL lot, 
-## 	  assign the closest BBL to the record
+# ## 7. For facilities which did not overlap with a BBL in MapPLUTO but should be located on a BBL lot, 
+# ## 	  assign the closest BBL to the record
 
-echo 'Spatially joining with dcp_mappluto - Finding closest...'
-time psql $DATABASE_URL -f ./scripts_processing/bbljoin_closest.sql
-echo 'Done spatially joining with dcp_mappluto - Found closest'
-psql $DATABASE_URL -f ./scripts_processing/vacuum.sql
+# echo 'Spatially joining with dcp_mappluto - Finding closest...'
+# time psql $DATABASE_URL -f ./scripts_processing/bbljoin_closest.sql
+# echo 'Done spatially joining with dcp_mappluto - Found closest'
+# psql $DATABASE_URL -f ./scripts_processing/vacuum.sql
 
-## 8. Convert back to 4326, calculating lat,long and x,y for all blank records, and create ID for all records at once to use for deduping
+# ## 8. Convert back to 4326, calculating lat,long and x,y for all blank records, and create ID for all records at once to use for deduping
 
-psql $DATABASE_URL -f ./scripts_processing/setSRID_4326.sql
-echo 'Calculating x,y for all blank records...'
-time psql $DATABASE_URL -f ./scripts_processing/calcxy.sql
-echo 'Done calculating x,y for all blank records'
-psql $DATABASE_URL -f ./scripts_processing/addID.sql
+# psql $DATABASE_URL -f ./scripts_processing/setSRID_4326.sql
+# echo 'Calculating x,y for all blank records...'
+# time psql $DATABASE_URL -f ./scripts_processing/calcxy.sql
+# echo 'Done calculating x,y for all blank records'
+# psql $DATABASE_URL -f ./scripts_processing/addID.sql
 
-## Doing spatial join to fill in City (https://data.cityofnewyork.us/download/i8iw-xf4u/application%2Fzip)
-## Doing spatial join to fill in BIN (building footprints)
+# ## Doing spatial join to fill in City (https://data.cityofnewyork.us/download/i8iw-xf4u/application%2Fzip)
+# ## Doing spatial join to fill in BIN (building footprints)
 
-## 9. Final formatting -- find and properly capitalize acronyms and abbreviations
+# ## 9. Final formatting -- find and properly capitalize acronyms and abbreviations
 
-echo 'Cleaning up capitalization...'
-time psql $DATABASE_URL -f ./scripts_processing/fixallcaps.sql
-echo 'Done cleaning up capitalization'
-psql $DATABASE_URL -f ./scripts_processing/vacuum.sql
+# echo 'Cleaning up capitalization...'
+# time psql $DATABASE_URL -f ./scripts_processing/fixallcaps.sql
+# echo 'Done cleaning up capitalization'
+# psql $DATABASE_URL -f ./scripts_processing/vacuum.sql
 
 ## Create backup table before merging and dropping duplicates
 # echo 'Creating backup before merging and dropping duplicates...'

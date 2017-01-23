@@ -146,10 +146,10 @@ function updateFacilities(data, row) {
       boroughcode: data.bblBoroughCode,
       borough: data.firstBoroughName,
       city: data.uspsPreferredCityName,
+      newaddressnumber: data.houseNumber,
+      newstreetname: data.boePreferredStreetName,
 
       // row. comes from original table row from psql query
-      newaddressnumber: row.addressnumber.replace("/", "").replace("\"", "").replace("!", "").trim(),
-      newstreetname: row.streetname.split(',')[0].split('#')[0].split(' - ')[0].trim(),
       oldaddressnumber: row.addressnumber,
       oldstreetname: row.streetname
     })

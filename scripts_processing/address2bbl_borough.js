@@ -30,7 +30,7 @@ var db = pgp(config);
 
 
 // querying for records without geoms
-var nullGeomQuery = 'SELECT DISTINCT borough, addressnumber, streetname FROM facilities WHERE geom IS NULL AND addressnumber IS NOT NULL AND streetname IS NOT NULL AND borough IS NOT NULL';
+var nullGeomQuery = 'SELECT DISTINCT borough, addressnumber, streetname FROM facilities WHERE (BBL IS NULL OR BIN IS NULL) AND geom IS NOT NULL AND addressnumber IS NOT NULL AND streetname IS NOT NULL AND borough IS NOT NULL';
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -80,7 +80,7 @@ function addressLookup1(row) {
         app_key: apiCredentials.app_key
       })
 
-      console.log(apiCall1);
+      // console.log(apiCall1);
 
       request(apiCall1, function(err, response, body) {
           console.log(err)
@@ -128,7 +128,7 @@ function addressLookup1(row) {
 
 function updateFacilities(data, row) {
 
-  var insertTemplate = 'UPDATE facilities SET geom=ST_SetSRID(ST_GeomFromText(\'POINT({{longitude}} {{latitude}})\'),4326), latitude=\'{{latitude}}\', longitude=\'{{longitude}}\', addressnumber=\'{{newaddressnumber}}\', streetname=initcap(\'{{newstreetname}}\'), address=initcap(CONCAT(\'{{newaddressnumber}}\',\' \',\'{{newstreetname}}\')), bbl=ARRAY[\'{{bbl}}\'], bin=ARRAY[\'{{bin}}\'], zipcode=\'{{zipcode}}\', city=initcap(\'{{city}}\'), processingflag=\'address2geom_borough\' WHERE (addressnumber=\'{{oldaddressnumber}}\' AND streetname=\'{{oldstreetname}}\')'
+  var insertTemplate = 'UPDATE facilities SET addressnumber=\'{{newaddressnumber}}\', streetname=initcap(\'{{newstreetname}}\'), address=initcap(CONCAT(\'{{newaddressnumber}}\',\' \',\'{{newstreetname}}\')), bbl=ARRAY[\'{{bbl}}\'], bin=ARRAY[\'{{bin}}\'], zipcode=\'{{zipcode}}\', city=initcap(\'{{city}}\'), processingflag=\'address2bbl_borough\' WHERE (addressnumber=\'{{oldaddressnumber}}\' AND streetname=\'{{oldstreetname}}\')'
 
   if(data.latitude && data.longitude) {
     console.log('Updating facilities');
@@ -144,15 +144,15 @@ function updateFacilities(data, row) {
       bin: data.buildingIdentificationNumber,
       zipcode: data.zipCode,
       city: data.uspsPreferredCityName,
+      newaddressnumber: data.houseNumber,
+      newstreetname: data.boePreferredStreetName,
 
       // row. comes from original table row from psql query
-      newaddressnumber: row.addressnumber.replace("/", "").replace("\"", "").replace("!", "").trim(),
-      newstreetname: row.streetname.split(',')[0].split('#')[0].split(' - ')[0].split('(')[0].split(';')[0].split('Suite')[0].split('Ste')[0].split('Apt')[0].split('apt')[0].split('Room')[0].split('Rm')[0].split('Box')[0].split('Unit')[0].trim(),
       oldaddressnumber: row.addressnumber,
       oldstreetname: row.streetname
     })
 
-    console.log(insert);
+    // console.log(insert);
 
 
     db.none(insert)
