@@ -22,6 +22,7 @@ UPDATE facilities
                 WHEN trim(borough, ' ') = 'RICHMOND' THEN 'Staten Island'
                 WHEN trim(borough, ' ') = 'STATEN ISLAND' THEN 'Staten Island'
                 WHEN trim(borough, ' ') = 'Staten Island' THEN 'Staten Island'
+                WHEN trim(borough, ' ') = 'Staten Is' THEN 'Staten Island'
 	    	END),
         boroughcode =
             (CASE
@@ -45,4 +46,5 @@ UPDATE facilities
                 WHEN trim(borough, ' ') = 'RICHMOND' THEN 5
                 WHEN trim(borough, ' ') = 'STATEN ISLAND' THEN 5
                 WHEN trim(borough, ' ') = 'Staten Island' THEN 5
+                WHEN trim(borough, ' ') = 'Staten Is' THEN 5
             END)

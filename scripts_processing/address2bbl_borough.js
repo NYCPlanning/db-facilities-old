@@ -30,7 +30,7 @@ var db = pgp(config);
 
 
 // querying for records without geoms
-var nullGeomQuery = 'SELECT DISTINCT borough, addressnumber, streetname FROM facilities WHERE (BBL IS NULL OR BIN IS NULL) AND geom IS NOT NULL AND addressnumber IS NOT NULL AND streetname IS NOT NULL AND borough IS NOT NULL';
+var nullGeomQuery = 'SELECT DISTINCT borough, addressnumber, streetname FROM facilities WHERE processingflag IS NULL AND geom IS NOT NULL AND addressnumber IS NOT NULL AND streetname IS NOT NULL AND borough IS NOT NULL';
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -128,7 +128,7 @@ function addressLookup1(row) {
 
 function updateFacilities(data, row) {
 
-  var insertTemplate = 'UPDATE facilities SET addressnumber=\'{{newaddressnumber}}\', streetname=initcap(\'{{newstreetname}}\'), address=initcap(CONCAT(\'{{newaddressnumber}}\',\' \',\'{{newstreetname}}\')), bbl=ARRAY[\'{{bbl}}\'], bin=ARRAY[\'{{bin}}\'], zipcode=\'{{zipcode}}\', city=initcap(\'{{city}}\'), processingflag=\'address2bbl_borough\' WHERE (addressnumber=\'{{oldaddressnumber}}\' AND streetname=\'{{oldstreetname}}\')'
+  var insertTemplate = 'UPDATE facilities SET addressnumber=\'{{newaddressnumber}}\', streetname=initcap(\'{{newstreetname}}\'), address=initcap(CONCAT(\'{{newaddressnumber}}\',\' \',\'{{newstreetname}}\')), bbl=ARRAY[\'{{bbl}}\'], bin=ARRAY[\'{{bin}}\'], zipcode=\'{{zipcode}}\', city=initcap(\'{{city}}\'), processingflag=\'address2bbl_borough\' WHERE (addressnumber=\'{{oldaddressnumber}}\' AND streetname=\'{{oldstreetname}}\') AND processingflag IS NULL'
 
   if(data.latitude && data.longitude) {
     console.log('Updating facilities');

@@ -217,7 +217,7 @@ SELECT
 		ARRAY[(CASE 
 			WHEN ft_decode = 'PANYNJ Bus Terminal' THEN 'PANYNJ'
 			WHEN ft_decode = 'Wastewater Treatment Plant' THEN 'NYCDEP'
-			WHEN ft_decode = 'MTA Paratransit Vehicle Depot' THEN 'Non-public'
+			WHEN ft_decode = 'MTA Paratransit Vehicle Depot' THEN 'MTA'
 			WHEN ft_decode = 'MTA Bus Depot' THEN 'MTA'
 			WHEN ft_decode = 'NYCT Maintenance and Other Facility' THEN 'MTA'
 			WHEN ft_decode = 'NYCT Subway Yard' THEN 'MTA'

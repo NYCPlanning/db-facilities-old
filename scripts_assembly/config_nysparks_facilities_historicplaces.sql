@@ -48,7 +48,7 @@ SELECT
 	-- pgtable
 	ARRAY['nysparks_facilities_historicplaces'],
 	-- hash,
-	md5(CAST((nysparks_facilities_historicplaces.*) AS text)),
+	md5(CAST((Resource_Name,County,National_Register_Date,National_Register_Number,Longitude,Latitude,Location) AS text)),
 	-- geom
 	-- ST_SetSRID(ST_MakePoint(long, lat),4326)
 	ST_SetSRID(ST_MakePoint(longitude, latitude),4326),
@@ -142,3 +142,11 @@ WHERE
 	OR County = 'Kings'
 	OR County = 'Queens'
 	OR County = 'Richmond')
+GROUP BY
+	Resource_Name,
+	County,
+	National_Register_Date,
+	National_Register_Number,
+	Longitude,
+	Latitude,
+	Location

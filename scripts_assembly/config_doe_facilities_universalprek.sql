@@ -77,8 +77,8 @@ SELECT
 	NULL,
 	-- facilitytype
 		(CASE
-			WHEN PreK_Type = 'DOE' THEN 'Universal Pre-K'
-			WHEN PreK_Type = 'CHARTER' OR PreK_Type = 'Charter' THEN 'Universal Pre-K - Charter '
+			WHEN PreK_Type = 'DOE' THEN 'DOE Universal Pre-K'
+			WHEN PreK_Type = 'CHARTER' OR PreK_Type = 'Charter' THEN 'DOE Universal Pre-K - Charter '
 			WHEN PreK_Type = 'NYCEEC' THEN 'NYC Early Education Center'
 		END),
 	-- domain
@@ -86,7 +86,7 @@ SELECT
 	-- facilitygroup
 	'Child Care and Pre-Kindergarten',
 	-- facilitysubgroup
-	'Pre-Kindergarten',
+	'DOE Universal Pre-Kindergarten',
 	-- agencyclass1
 	PreK_Type,
 	-- agencyclass2
@@ -106,9 +106,7 @@ SELECT
 	-- operatortype
 		(CASE
 			WHEN PreK_Type = 'DOE' THEN 'Public'
-			WHEN PreK_Type = 'CHARTER' THEN 'Charter'
-			WHEN PreK_Type = 'NYCEEC' THEN 'Non-public'
-			ELSE 'Unknown'
+			ELSE 'Non-public'
 		END),
 	-- operatorname
 		(CASE

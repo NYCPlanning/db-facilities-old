@@ -11,19 +11,19 @@ WITH primaries AS (
 		(array_agg(distinct guid))[1] AS guid,
 		array_agg(distinct guid) AS guid_merged,
 		(array_agg(distinct facilityname))[1] AS facilityname,
-		BBL,
+		bin,
 		facilitysubgroup
 		-- ^ grabs first guid to keep for the primary record
 	FROM facilities
 	WHERE
 		pgtable = ARRAY['dohmh_facilities_daycare']::text[]
 		AND geom IS NOT NULL
-		AND BBL IS NOT NULL
-		AND BBL <> '{""}'
-		AND BBL <> '{0.00000000000}'
+		AND bin IS NOT NULL
+		AND bin <> ARRAY['']
+		AND bin <> ARRAY['0.00000000000']
 	GROUP BY
 		facilitysubgroup,
-		BBL,
+		bin,
 		(LEFT(
 			TRIM(
 		split_part(
@@ -49,7 +49,7 @@ matches AS (
 		b.guid AS guid_b
 	FROM primaries AS a
 	LEFT JOIN facilities AS b
-	ON a.bbl = b.bbl
+	ON a.bin = b.bin
 	WHERE
 		b.pgtable = ARRAY['dohmh_facilities_daycare']::text[]
 		AND a.facilitysubgroup = b.facilitysubgroup
@@ -118,19 +118,19 @@ WITH primaries AS (
 		(array_agg(distinct guid))[1] AS guid,
 		(array_agg(distinct facilityname))[1] AS facilityname,
 		array_to_string((array_agg(distinct facilitytype)),' & ') AS facilitytype,
-		BBL,
+		bin,
 		(SELECT SUM(s) FROM UNNEST(array_agg(capacity)) s) AS capacity,
 		facilitysubgroup
 	FROM facilities
 	WHERE
 		pgtable = ARRAY['dohmh_facilities_daycare']::text[]
 		AND geom IS NOT NULL
-		AND BBL IS NOT NULL
-		AND BBL <> '{""}'
-		AND BBL <> '{0.00000000000}'
+		AND bin IS NOT NULL
+		AND bin <> '{""}'
+		AND bin <> '{0.00000000000}'
 	GROUP BY
 		facilitysubgroup,
-		BBL,
+		bin,
 		(LEFT(
 			TRIM(
 		split_part(
@@ -163,7 +163,7 @@ matches AS (
 	FROM primaries AS a
 	LEFT JOIN facilities AS b
 	ON
-	a.bbl = b.bbl
+	a.bin = b.bin
 	WHERE
 		b.pgtable = ARRAY['dohmh_facilities_daycare']::text[]
 		AND a.facilitysubgroup = b.facilitysubgroup

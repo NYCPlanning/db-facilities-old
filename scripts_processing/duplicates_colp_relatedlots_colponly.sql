@@ -2,28 +2,21 @@
 -- 1. CREATING A TABLE TO BACKUP THE DUPLICATE RECORDS BEFORE DROPPING THEM FROM THE DATABASE
 --------------------------------------------------------------------------------------------------
 
-DROP TABLE IF EXISTS duplicates_colp_relateddots;
-CREATE TABLE duplicates_colp_relateddots AS (
+DROP TABLE IF EXISTS duplicates_colp_relatedlots_colponly;
+CREATE TABLE duplicates_colp_relatedlots_colponly AS (
 
 -- starting with all records in table, 
-WITH primaries AS (
+WITH primaryguids AS (
 	SELECT
-		(array_agg(distinct guid))[1] AS guid,
-		array_agg(distinct guid) AS guid_merged,
-		(array_agg(distinct facilityname))[1] AS facilityname,
-		BBL,
-		facilitysubgroup
-		-- ^ grabs first guid to keep for the primary record
+		(array_agg(distinct guid))[1] AS guid
 	FROM facilities
 	WHERE
 		pgtable = ARRAY['dcas_facilities_colp']::text[]
 		AND geom IS NOT NULL
-		AND BBL IS NOT NULL
-		AND BBL <> '{""}'
-		AND BBL <> '{0.00000000000}'
 	GROUP BY
 		facilitysubgroup,
-		BBL,
+		oversightagency,
+		nta,
 		(LEFT(
 			TRIM(
 		split_part(
@@ -43,54 +36,60 @@ WITH primaries AS (
 		,4))
 ),
 
+primaries AS (
+	SELECT *
+	FROM facilities
+	WHERE guid IN (SELECT guid from primaryguids)
+),
+
 matches AS (
 	SELECT
 		a.guid,
 		b.guid AS guid_b
 	FROM primaries AS a
 	LEFT JOIN facilities AS b
-	ON a.bbl = b.bbl
+	ON
+		(LEFT(
+			TRIM(
+		split_part(
+			REPLACE(
+		REPLACE(
+			REPLACE(
+		REPLACE(
+			REPLACE(
+		UPPER(a.facilityname)
+			,'THE ','')
+		,'-','')
+			,' ','')
+		,'.','')
+			,',','')
+		,'(',1)
+			,' ')
+		,4))
+		=
+		(LEFT(
+			TRIM(
+		split_part(
+			REPLACE(
+		REPLACE(
+			REPLACE(
+		REPLACE(
+			REPLACE(
+		UPPER(b.facilityname)
+			,'THE ','')
+		,'-','')
+			,' ','')
+		,'.','')
+			,',','')
+		,'(',1)
+			,' ')
+		,4))
 	WHERE
 		b.pgtable = ARRAY['dcas_facilities_colp']::text[]
 		AND a.facilitysubgroup = b.facilitysubgroup
 		AND a.guid <> b.guid
+		AND ST_DWithin(a.geom::geography, b.geom::geography, 100)
 		AND b.geom IS NOT NULL
-		AND
-			LEFT(
-				TRIM(
-					split_part(
-				REPLACE(
-					REPLACE(
-				REPLACE(
-					REPLACE(
-				REPLACE(
-					UPPER(a.facilityname)
-				,'THE ','')
-					,'-','')
-				,' ','')
-					,'.','')
-				,',','')
-					,'(',1)
-				,' ')
-			,4)
-			LIKE
-			LEFT(
-				TRIM(
-					split_part(
-				REPLACE(
-					REPLACE(
-				REPLACE(
-					REPLACE(
-				REPLACE(
-					UPPER(b.facilityname)
-				,'THE ','')
-					,'-','')
-				,' ','')
-					,'.','')
-				,',','')
-					,'(',1)
-				,' ')
-			,4)
 ),
 
 duplicates AS (
@@ -113,24 +112,17 @@ ORDER BY guid
 -- 2. UPDATING FACDB BY MERGING ATTRIBUTES FROM DUPLICATE RECORDS INTO PREFERRED RECORD
 --------------------------------------------------------------------------------------------------
 
-WITH primaries AS (
+WITH primaryguids AS (
 	SELECT
-		(array_agg(distinct guid))[1] AS guid,
-		(array_agg(distinct facilityname))[1] AS facilityname,
-		array_to_string((array_agg(distinct facilitytype)),' & ') AS facilitytype,
-		BBL,
-		(SELECT SUM(s) FROM UNNEST(array_agg(capacity)) s) AS capacity,
-		facilitysubgroup
+		(array_agg(distinct guid))[1] AS guid
 	FROM facilities
 	WHERE
 		pgtable = ARRAY['dcas_facilities_colp']::text[]
 		AND geom IS NOT NULL
-		AND BBL IS NOT NULL
-		AND BBL <> '{""}'
-		AND BBL <> '{0.00000000000}'
 	GROUP BY
 		facilitysubgroup,
-		BBL,
+		oversightagency,
+		nta,
 		(LEFT(
 			TRIM(
 		split_part(
@@ -150,61 +142,65 @@ WITH primaries AS (
 		,4))
 ),
 
+primaries AS (
+	SELECT *
+	FROM facilities
+	WHERE guid IN (SELECT guid from primaryguids)
+),
+
 matches AS (
 	SELECT
 		a.guid,
 		a.facilityname,
 		a.facilitytype,
-		a.capacity,
 		b.guid AS guid_b,
 		b.hash AS hash_b,
-		b.idagency AS idagency_b,
-		b.bin AS bin_b
+		b.bin AS bin_b,
+		b.bbl AS bbl_b
 	FROM primaries AS a
 	LEFT JOIN facilities AS b
 	ON
-	a.bbl = b.bbl
+		(LEFT(
+			TRIM(
+		split_part(
+			REPLACE(
+		REPLACE(
+			REPLACE(
+		REPLACE(
+			REPLACE(
+		UPPER(a.facilityname)
+			,'THE ','')
+		,'-','')
+			,' ','')
+		,'.','')
+			,',','')
+		,'(',1)
+			,' ')
+		,4))
+		=
+		(LEFT(
+			TRIM(
+		split_part(
+			REPLACE(
+		REPLACE(
+			REPLACE(
+		REPLACE(
+			REPLACE(
+		UPPER(b.facilityname)
+			,'THE ','')
+		,'-','')
+			,' ','')
+		,'.','')
+			,',','')
+		,'(',1)
+			,' ')
+		,4))
 	WHERE
 		b.pgtable = ARRAY['dcas_facilities_colp']::text[]
 		AND a.facilitysubgroup = b.facilitysubgroup
 		AND a.guid <> b.guid
 		AND b.geom IS NOT NULL
-		AND
-			LEFT(
-				TRIM(
-					split_part(
-				REPLACE(
-					REPLACE(
-				REPLACE(
-					REPLACE(
-				REPLACE(
-					UPPER(a.facilityname)
-				,'THE ','')
-					,'-','')
-				,' ','')
-					,'.','')
-				,',','')
-					,'(',1)
-				,' ')
-			,4)
-			LIKE
-			LEFT(
-				TRIM(
-					split_part(
-				REPLACE(
-					REPLACE(
-				REPLACE(
-					REPLACE(
-				REPLACE(
-					UPPER(b.facilityname)
-				,'THE ','')
-					,'-','')
-				,' ','')
-					,'.','')
-				,',','')
-					,'(',1)
-				,' ')
-			,4)
+		AND ST_DWithin(a.geom::geography, b.geom::geography, 100)
 ),
 
 duplicates AS (
@@ -213,23 +209,21 @@ duplicates AS (
 		count(*) AS countofdups,
 		facilityname,
 		facilitytype,
-		array_agg(BIN_b) AS bin_merged,
+		-- array_agg(BIN_b) AS bin_merged,
+		array_agg(BBL_b) AS bbl_merged,
 		array_agg(guid_b) AS guid_merged,
-		array_agg(distinct idagency_b) AS idagency_merged,
-		array_agg(distinct hash_b) AS hash_merged,
-		capacity
+		array_agg(distinct hash_b) AS hash_merged
 	FROM matches
 	GROUP BY
-		guid, facilityname, facilitytype, capacity
+		guid, facilityname, facilitytype
 	ORDER BY facilitytype, countofdups DESC )
 
 UPDATE facilities AS f
 SET
-	BIN = array_cat(BIN, d.bin_merged),
-	idagency = array_cat(idagency, d.idagency_merged),
+	-- BIN = array_cat(BIN, d.bin_merged),
+	BBL = array_cat(BBL, d.bbl_merged),
 	guid_merged = d.guid_merged,
-	hash_merged = d.hash_merged,
-	capacity = d.capacity
+	hash_merged = d.hash_merged
 FROM duplicates AS d
 WHERE f.guid = d.guid
 ;
@@ -239,6 +233,6 @@ WHERE f.guid = d.guid
 --------------------------------------------------------------------------------------------------
 
 DELETE FROM facilities
-WHERE facilities.guid IN (SELECT duplicates_colp_relateddots.guid FROM duplicates_colp_relateddots)
+WHERE facilities.guid IN (SELECT duplicates_colp_relatedlots_colponly.guid FROM duplicates_colp_relatedlots_colponly)
 ;
 

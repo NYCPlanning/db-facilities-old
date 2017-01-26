@@ -1,7 +1,11 @@
 UPDATE facilities AS f
     SET
         geom = ST_Centroid(p.geom),
-        processingflag = 'bbl2geom'
+        processingflag = 
+        	(CASE
+	        	WHEN processingflag IS NULL THEN 'bbl2geom'
+	        	ELSE CONCAT(processingflag, '_bbl2geom')
+        	END)
     FROM
         dcp_mappluto AS p
     WHERE

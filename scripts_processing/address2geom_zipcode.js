@@ -128,7 +128,7 @@ function addressLookup1(row) {
 
 function updateFacilities(data, row) {
 
-  var insertTemplate = 'UPDATE facilities SET geom=ST_SetSRID(ST_GeomFromText(\'POINT({{longitude}} {{latitude}})\'),4326), latitude=\'{{latitude}}\', longitude=\'{{longitude}}\', addressnumber=\'{{newaddressnumber}}\', streetname=initcap(\'{{newstreetname}}\'), address=CONCAT(\'{{newaddressnumber}}\',\' \',initcap(\'{{newstreetname}}\')), bbl=ARRAY[\'{{bbl}}\'], bin=ARRAY[\'{{bin}}\'], borough=initcap(\'{{borough}}\'), boroughcode=(CASE WHEN \'{{borough}}\'=\'MANHATTAN\' THEN 1 WHEN \'{{borough}}\'=\'BRONX\' THEN 2 WHEN \'{{borough}}\'=\'BROOKLYN\' THEN 3 WHEN \'{{borough}}\'=\'QUEENS\' THEN 4 WHEN \'{{borough}}\'=\'STATEN ISLAND\' THEN 5 END), city=initcap(\'{{city}}\'), processingflag=\'address2geom_zipcode\' WHERE (addressnumber=\'{{oldaddressnumber}}\' AND streetname=\'{{oldstreetname}}\')'
+  var insertTemplate = 'UPDATE facilities SET geom=ST_SetSRID(ST_GeomFromText(\'POINT({{longitude}} {{latitude}})\'),4326), latitude=\'{{latitude}}\', longitude=\'{{longitude}}\', addressnumber=\'{{newaddressnumber}}\', streetname=initcap(\'{{newstreetname}}\'), address=CONCAT(\'{{newaddressnumber}}\',\' \',initcap(\'{{newstreetname}}\')), bbl=ARRAY[\'{{bbl}}\'], bin=ARRAY[\'{{bin}}\'], borough=initcap(\'{{borough}}\'), boroughcode=(CASE WHEN \'{{borough}}\'=\'MANHATTAN\' THEN 1 WHEN \'{{borough}}\'=\'BRONX\' THEN 2 WHEN \'{{borough}}\'=\'BROOKLYN\' THEN 3 WHEN \'{{borough}}\'=\'QUEENS\' THEN 4 WHEN \'{{borough}}\'=\'STATEN ISLAND\' THEN 5 END), zipcode=\'{{zipcode}}\', city=initcap(\'{{city}}\'), processingflag=\'address2geom_zipcode\' WHERE (addressnumber=\'{{oldaddressnumber}}\' AND streetname=\'{{oldstreetname}}\')'
   // var insertTemplate = 'UPDATE facilities SET geom=ST_SetSRID(ST_GeomFromText(\'POINT({{longitude}} {{latitude}})\'),4326), latitude=\'{{latitude}}\', longitude=\'{{longitude}}\', bbl=ARRAY[\'{{bbl}}\'], bin=ARRAY[\'{{bin}}\'], borough=\'{{borough}}\', boroughcode=\'{{boroughcode}}\' WHERE (addressnumber=\'{{oldaddressnumber}}\' AND streetname=\'{{oldstreetname}}\')'
 
   if(data.latitude && data.longitude) {
@@ -145,6 +145,7 @@ function updateFacilities(data, row) {
       bin: data.buildingIdentificationNumber,
       boroughcode: data.bblBoroughCode,
       borough: data.firstBoroughName,
+      zipcode: data.zipCode,
       city: data.uspsPreferredCityName,
       newaddressnumber: data.houseNumber,
       newstreetname: data.boePreferredStreetName,

@@ -14,7 +14,7 @@ WITH matches AS (
 		b.facilityname as facilityname_b
 	FROM facilities a
 	LEFT JOIN facilities b
-	ON a.bbl = b.bbl
+	ON a.bin = b.bin
 	WHERE
 		a.pgtable = ARRAY['acs_facilities_daycareheadstart']::text[]
 		AND (b.pgtable = ARRAY['hhs_facilities_contracts']::text[]
@@ -23,12 +23,12 @@ WITH matches AS (
 		AND b.facilitygroup LIKE '%Child Care%'
 		AND a.geom IS NOT NULL
 		AND b.geom IS NOT NULL
-		AND a.bbl IS NOT NULL
-		AND b.bbl IS NOT NULL
-		AND a.bbl <> '{""}'
-		AND b.bbl <> '{""}'
-		AND a.bbl <> '{0.00000000000}'
-		AND b.bbl <> '{0.00000000000}'
+		AND a.bin IS NOT NULL
+		AND b.bin IS NOT NULL
+		AND a.bin <> ARRAY['']
+		AND b.bin <> ARRAY['']
+		AND a.bin <> ARRAY['0.00000000000']
+		AND b.bin <> ARRAY['0.00000000000']
 		AND
 			LEFT(
 				TRIM(
@@ -67,7 +67,6 @@ WITH matches AS (
 			,4)
 		AND a.pgtable <> b.pgtable
 		AND a.guid <> b.guid
-		AND a.id <> b.id
 		ORDER BY CONCAT(a.pgtable,'-',b.pgtable), a.facilityname, a.facilitysubgroup
 	),  
 
@@ -93,8 +92,6 @@ ORDER BY guid
 WITH matches AS (
 	SELECT
 		CONCAT(a.pgtable,'-',b.pgtable) as sourcecombo,
-		a.id,
-		b.id as id_b,
 		a.idagency,
 		b.idagency as idagency_b,
 		a.guid,
@@ -109,7 +106,7 @@ WITH matches AS (
 		b.facilitytype as facilitytype_b,
 		a.processingflag,
 		b.processingflag as processingflag_b,
-		a.bbl,
+		-- a.bin,
 		a.bin,
 		b.bin as bin_b,
 		a.address,
@@ -127,7 +124,7 @@ WITH matches AS (
 		b.oversightabbrev as oversightabbrev_b
 	FROM facilities a
 	LEFT JOIN facilities b
-	ON a.bbl = b.bbl
+	ON a.bin = b.bin
 	WHERE
 		a.pgtable = ARRAY['acs_facilities_daycareheadstart']::text[]
 		AND (b.pgtable = ARRAY['hhs_facilities_contracts']::text[]
@@ -136,12 +133,12 @@ WITH matches AS (
 		AND b.facilitygroup LIKE '%Child Care%'
 		AND a.geom IS NOT NULL
 		AND b.geom IS NOT NULL
-		AND a.bbl IS NOT NULL
-		AND b.bbl IS NOT NULL
-		AND a.bbl <> '{""}'
-		AND b.bbl <> '{""}'
-		AND a.bbl <> '{0.00000000000}'
-		AND b.bbl <> '{0.00000000000}'
+		AND a.bin IS NOT NULL
+		AND b.bin IS NOT NULL
+		AND a.bin <> ARRAY['']
+		AND b.bin <> ARRAY['']
+		AND a.bin <> ARRAY['0.00000000000']
+		AND b.bin <> ARRAY['0.00000000000']
 		AND
 			LEFT(
 				TRIM(
@@ -180,7 +177,6 @@ WITH matches AS (
 			,4)
 		AND a.pgtable <> b.pgtable
 		AND a.guid <> b.guid
-		AND a.id <> b.id
 		ORDER BY CONCAT(a.pgtable,'-',b.pgtable), a.facilityname, a.facilitysubgroup
 	), 
 

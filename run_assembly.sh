@@ -85,7 +85,7 @@ psql $DATABASE_URL -f ./scripts_assembly/config_dsny_facilities_mtsgaragemainten
 psql $DATABASE_URL -f ./scripts_assembly/config_dycd_facilities_compass.sql ##Needs to be geocoded
 psql $DATABASE_URL -f ./scripts_assembly/config_dycd_facilities_otherprograms.sql ##Needs to be geocoded
 psql $DATABASE_URL -f ./scripts_assembly/config_foodbankny_facilities_foodbanks.sql ##OK
-psql $DATABASE_URL -f ./scripts_assembly/config_hhc_facilities_hospitals.sql ##OK
+# psql $DATABASE_URL -f ./scripts_assembly/config_hhc_facilities_hospitals.sql ##OK
 psql $DATABASE_URL -f ./scripts_assembly/config_hhs_facilities_acceleratorall.sql ##OK need to review facility categories
 # psql $DATABASE_URL -f ./scripts_assembly/config_nycha_facilities_communitycenters.sql ##Not using yet - Needs to be geocoded
 psql $DATABASE_URL -f ./scripts_assembly/config_nycha_facilities_policeservice.sql ##OK

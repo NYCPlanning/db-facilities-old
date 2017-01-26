@@ -65,7 +65,7 @@ SELECT
 	-- addressnumber
 	initcap(split_part(REPLACE(REPLACE(Mailing_Office,' - ','-'),' -','-'), ' ', 1)),
 	-- streetname
-	initcap(split_part(split_part(REPLACE(REPLACE(Mailing_Office,' - ','-'),' -','-'), ' ', 2),'(',1)),
+	trim(both ' ' from substr(trim(both ' ' from initcap(split_part(REPLACE(REPLACE(Mailing_Office,' - ','-'),' -','-'), '(', 1))), strpos(trim(both ' ' from initcap(split_part(REPLACE(REPLACE(Mailing_Office,' - ','-'),' -','-'), '(', 1))), ' ')+1, (length(trim(both ' ' from initcap(split_part(REPLACE(REPLACE(Mailing_Office,' - ','-'),' -','-'), '(', 1))))-strpos(trim(both ' ' from initcap(split_part(REPLACE(REPLACE(Mailing_Office,' - ','-'),' -','-'), '(', 1))), ' ')))),
 	-- address
 	initcap(split_part(REPLACE(REPLACE(Mailing_Office,' - ','-'),' -','-'), '(', 1)),
 	-- borough

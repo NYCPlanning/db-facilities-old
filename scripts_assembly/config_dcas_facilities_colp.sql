@@ -27,6 +27,7 @@ facilities (
 	utilizationrate,
 	area,
 	areatype,
+	propertytype,
 	operatortype,
 	operatorname,
 	operatorabbrev,
@@ -541,8 +542,16 @@ SELECT
 	NULL,
 	-- areatype
 	NULL,
+	-- propertytype
+	(CASE
+		WHEN type='OF' THEN 'City Owned'
+		WHEN type='LF' THEN 'City Leased'
+	END),
 	-- operatortype
-	'Public',
+	(CASE
+		WHEN agency = 'PRIV' THEN 'Non-public'
+		ELSE 'Public'
+	END),
 	-- operatorname
 		(CASE
 			WHEN agency='ACS' THEN 'New York City Administration for Childrens Services'
@@ -674,6 +683,7 @@ SELECT
 			WHEN agency='TAX' THEN 'NYCTC'
 			WHEN agency='COURT' THEN 'NYCOURTS'
 			WHEN agency='CUNY' THEN 'CUNY'
+			WHEN agency='PRIV' THEN 'Non-public'
 			ELSE CONCAT('NYC',agency)
 		END),
 	-- oversightagency
@@ -807,6 +817,7 @@ SELECT
 			WHEN agency='TAX' THEN 'NYCTC'
 			WHEN agency='COURT' THEN 'NYCOURTS'
 			WHEN agency='CUNY' THEN 'CUNY'
+			WHEN agency='PRIV' THEN 'Non-public'
 			ELSE CONCAT('NYC',agency)
 		END)],
 	-- datecreated

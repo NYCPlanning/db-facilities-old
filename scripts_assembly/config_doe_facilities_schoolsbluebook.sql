@@ -119,7 +119,7 @@ SELECT
 			WHEN RIGHT(Org_ID,3) = 'DRG' THEN 'Health and Human Services'
 			WHEN RIGHT(Org_ID,3) = 'SFS' THEN 'Education, Child Welfare, and Youth'
 			WHEN RIGHT(Org_ID,3) = 'OTH' THEN 'Health and Human Services'
-			WHEN RIGHT(Org_ID,3) = 'SST' THEN 'Public Safety, Emergency Services, and Administration of Government'
+			WHEN RIGHT(Org_ID,3) = 'SST' THEN 'Public Safety, Emergency Services, and Administration of Justice'
 			WHEN RIGHT(Org_ID,3) = 'CEP' THEN 'Health and Human Services'
 			ELSE 'Education, Child Welfare, and Youth'
 		END),

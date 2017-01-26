@@ -48,7 +48,7 @@ SELECT
 	-- pgtable
 	ARRAY['dycd_facilities_compass'],
 	-- hash,
-	md5(CAST((dycd_facilities_compass.*) AS text)),
+	md5(CAST((Address_Number,Street_Name,Borough,BBLs,BIN,X_Coordinate,Y_Coordinate,Provider_Name,Date_Source_Data_Updated) AS text)),
 	-- geom
 	NULL,
 	-- idagency
@@ -133,3 +133,13 @@ SELECT
 	FALSE
 FROM 
 	dycd_facilities_compass
+GROUP BY
+	Address_Number,
+	Street_Name,
+	Borough,
+	BBLs,
+	BIN,
+	X_Coordinate,
+	Y_Coordinate,
+	Provider_Name,
+	Date_Source_Data_Updated
