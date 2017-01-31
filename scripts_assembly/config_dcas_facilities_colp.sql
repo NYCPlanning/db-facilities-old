@@ -83,7 +83,9 @@ SELECT
 	-- bin
 	NULL,
 	-- facilitytype
-	initcap(usedec),
+	initcap(
+		REPLACE(usedec, 'OTHER ', '')
+		),
 	-- domain
 		(CASE
 			-- Admin of Gov
@@ -159,7 +161,7 @@ SELECT
 			WHEN agency LIKE '%OCME%' THEN 'Health and Human Services'
 			WHEN agency LIKE '%ACS%' AND usedec LIKE '%HOUSING%' THEN 'Health and Human Services'
 			WHEN agency LIKE '%AGING%' THEN 'Health and Human Services'
-			WHEN agency LIKE '%DHS%' THEN 'Health and Human Services'
+			WHEN (agency LIKE '%DHS%' OR agency LIKE '%HRA%') AND usedec NOT LIKE '%OPEN SPACE%' THEN 'Health and Human Services'
 			WHEN (agency LIKE '%NYCHA%' 
 				OR agency LIKE '%HPD%')
 				AND usedec LIKE '%RESIDENTIAL%'
@@ -187,8 +189,8 @@ SELECT
 			WHEN usedec LIKE '%PLAYGROUND%'
 				OR usedec LIKE '%SPORTS%'
 				OR usedec LIKE '%TENNIS COURT%'
-				OR (usedec LIKE '%RECREATION%'
-					AND agency NOT LIKE '%ACS%')
+				OR usedec LIKE '%PLAY AREA%'
+				OR usedec LIKE '%RECREATION%'
 				OR usedec LIKE '%BEACH%'
 				OR usedec LIKE '%PLAYING FIELD%'
 				OR usedec LIKE '%GOLF COURSE%'
@@ -221,7 +223,7 @@ SELECT
 			WHEN agency LIKE '%ACS%' THEN 'Education, Child Welfare, and Youth'
 			WHEN agency LIKE '%EDUC%' and usedec LIKE '%PLAY AREA%' THEN 'Education, Child Welfare, and Youth'
 			WHEN usedec LIKE '%HIGH SCHOOL%' THEN 'Education, Child Welfare, and Youth'
-			WHEN agency LIKE '%CUNY%' THEN 'Education, Child Welfare, and Youth'
+			WHEN agency LIKE '%CUNY%' AND usedec NOT LIKE '%OPEN SPACE%' THEN 'Education, Child Welfare, and Youth'
 			WHEN AGENCY LIKE '%EDUC%' AND usedec LIKE '%SCHOOL%' THEN 'Education, Child Welfare, and Youth'
 			WHEN usedec LIKE '%EDUCATIONAL SKILLS%' THEN 'Education, Child Welfare, and Youth'
 
@@ -304,7 +306,7 @@ SELECT
 			WHEN agency LIKE '%OCME%' THEN 'Health Care'
 			WHEN agency LIKE '%ACS%' AND usedec LIKE '%HOUSING%' THEN 'Human Services'
 			WHEN agency LIKE '%AGING%' THEN 'Human Services'
-			WHEN agency LIKE '%DHS%' THEN 'Human Services'
+			WHEN (agency LIKE '%DHS%' OR agency LIKE '%HRA%') AND usedec NOT LIKE '%OPEN SPACE%' THEN 'Human Services'
 			WHEN (agency LIKE '%NYCHA%' 
 				OR agency LIKE '%HPD%')
 				AND usedec LIKE '%RESIDENTIAL%'
@@ -332,8 +334,8 @@ SELECT
 			WHEN usedec LIKE '%PLAYGROUND%'
 				OR usedec LIKE '%SPORTS%'
 				OR usedec LIKE '%TENNIS COURT%'
-				OR (usedec LIKE '%RECREATION%'
-					AND agency NOT LIKE '%ACS%')
+				OR usedec LIKE '%PLAY AREA%'
+				OR usedec LIKE '%RECREATION%'
 				OR usedec LIKE '%BEACH%'
 				OR usedec LIKE '%PLAYING FIELD%'
 				OR usedec LIKE '%GOLF COURSE%'
@@ -360,7 +362,7 @@ SELECT
 
 			-- Education, Children, Youth
 			WHEN usedec LIKE '%UNIVERSITY%' THEN 'Higher Education'
-			WHEN agency LIKE '%CUNY%' THEN 'Higher Education'
+			WHEN agency LIKE '%CUNY%' AND usedec NOT LIKE '%OPEN SPACE%' THEN 'Higher Education'
 			WHEN usedec LIKE '%EARLY CHILDHOOD%' THEN 'Child Care and Pre-Kindergarten'
 			WHEN usedec LIKE '%DAY CARE%' THEN 'Child Care and Pre-Kindergarten'
 			WHEN agency LIKE '%ACS%' AND usedec LIKE '%RESIDENTIAL%' THEN 'Childrens Services'
@@ -447,11 +449,11 @@ SELECT
 			WHEN agency LIKE '%OCME%' THEN 'Other Health Care'
 			WHEN agency LIKE '%ACS%' AND usedec LIKE '%HOUSING%' THEN 'Shelters and Transitional Housing'
 			WHEN agency LIKE '%AGING%' THEN 'Senior Services'
-			WHEN agency LIKE '%DHS%'
+			WHEN (agency LIKE '%DHS%' OR agency LIKE '%HRA%')
 				AND (usedec LIKE '%RESIDENTIAL%'
 				OR usedec LIKE '%TRANSITIONAL HOUSING%')
 				THEN 'Shelters and Transitional Housing'
-			WHEN agency LIKE '%DHS%' THEN 'Non-residential Housing and Homeless Services'
+			WHEN agency LIKE '%DHS%' AND usedec NOT LIKE '%OPEN SPACE%' THEN 'Non-residential Housing and Homeless Services'
 			WHEN (agency LIKE '%NYCHA%' 
 				OR agency LIKE '%HPD%')
 				AND usedec LIKE '%RESIDENTIAL%'
@@ -484,8 +486,8 @@ SELECT
 			WHEN usedec LIKE '%PLAYGROUND%'
 				OR usedec LIKE '%SPORTS%'
 				OR usedec LIKE '%TENNIS COURT%'
-				OR (usedec LIKE '%RECREATION%'
-					AND agency NOT LIKE '%ACS%')
+				OR usedec LIKE '%PLAY AREA%'
+				OR usedec LIKE '%RECREATION%'
 				OR usedec LIKE '%BEACH%'
 				OR usedec LIKE '%PLAYING FIELD%'
 				OR usedec LIKE '%GOLF COURSE%'
@@ -515,7 +517,7 @@ SELECT
 			WHEN agency LIKE '%ACS%' THEN 'Child Care'
 			WHEN agency LIKE '%EDUC%' and usedec LIKE '%PLAY AREA%' THEN 'Public Schools'
 			WHEN usedec LIKE '%HIGH SCHOOL%' THEN 'Public Schools'
-			WHEN agency LIKE '%CUNY%' THEN 'Colleges or Universities'
+			WHEN agency LIKE '%CUNY%' AND usedec NOT LIKE '%OPEN SPACE%' THEN 'Colleges or Universities'
 			WHEN AGENCY LIKE '%EDUC%' AND usedec LIKE '%SCHOOL%' THEN 'Public Schools'
 			WHEN usedec LIKE '%EDUCATIONAL SKILLS%' THEN 'Public Schools'
 

@@ -179,4 +179,13 @@ UPDATE facilities AS f
 			'Ccc', 'CCC'),
 			'Dcc', 'DCC'),
 			'Ura', 'URA'),
-			'Ta ', 'TA ')
+			'Ta ', 'TA ');
+
+UPDATE facilities
+	SET facilitytype = initcap(facilitytype)
+	WHERE
+		upper(facilitytype) = facilitytype
+		AND facilitytype <> 'IMPACT'
+		AND facilitytype <> 'COMPASS'
+		AND facilitytype <> 'WIOA CUNY MOU'
+	;

@@ -89,7 +89,11 @@ SELECT
 				THEN 'School Based Child Care - Preschool'
 			WHEN (facility_type = 'SBCC') AND (program_type = 'INFANT TODDLER')
 				THEN 'School Based Child Care - Infants/Toddlers'
-			ELSE CONCAT(facility_type,'-',program_type)
+			WHEN facility_type = 'SBCC'
+				THEN 'School Based Child Care - Age Unspecified'
+			WHEN facility_type = 'GDC'
+				THEN 'Group Day Care - Age Unspecified'
+			ELSE CONCAT(facility_type,' - ',program_type)
 		END),
 	-- domain
 	'Education, Child Welfare, and Youth',

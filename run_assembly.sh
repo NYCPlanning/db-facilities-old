@@ -106,3 +106,13 @@ psql $DATABASE_URL -f ./scripts_assembly/config_usnps_facilities_parks.sql ##OK
 psql $DATABASE_URL -f ./scripts_assembly/config_facilities_togeocode.sql ##Needs to be geocoded
 echo 'Done transforming and inserting records from source data'
 
+## STEP 4 
+## Joining on source data info and standardizing capitalization
+psql $DATABASE_URL -f ./scripts_assembly/join_sourcedatainfo.sql
+echo 'Cleaning up capitalization...'
+time psql $DATABASE_URL -f ./scripts_assembly/fixallcaps.sql
+echo 'Done cleaning up capitalization'
+
+
+
+

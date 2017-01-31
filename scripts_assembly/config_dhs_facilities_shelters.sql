@@ -70,7 +70,7 @@ SELECT
 	-- bin
 	NULL,
 	-- facilitytype
-	facility_type,
+	initcap(facility_type),
 	-- domain
 	'Health and Human Services',
 	-- facilitygroup

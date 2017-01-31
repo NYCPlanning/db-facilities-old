@@ -218,7 +218,7 @@ SET
 	oversightabbrev = array_cat(f.oversightabbrev, d.oversightabbrev),
 	-- MIGHT ADD CASE THAT CHANGES THE FACILITY TYPE IF WE INCLUDE MATCHES BEYOND PRESCHOOL (DAY CARE)
 	facilitysubgroup = (CASE
-		WHEN array_to_string(facilitytype_merged,',') LIKE '%Infants/Toddlers%' AND array_to_string(facilitytype_merged,',') LIKE '%Preschool%' THEN 'Dual Pre-K and Child Care'
+		WHEN array_to_string(facilitytype_merged,',') LIKE '%Infants/Toddlers%' AND array_to_string(facilitytype_merged,',') LIKE '%Preschool%' THEN 'Dual Child Care and Universal Pre-K'
 		ELSE facilitysubgroup
 		END)
 FROM duplicates AS d
