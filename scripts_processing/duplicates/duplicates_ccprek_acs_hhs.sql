@@ -206,6 +206,7 @@ SET
 	guid_merged = d.guid_merged,
 	hash_merged = d.hash_merged,
 	pgtable = array_cat(f.pgtable,d.pgtable),
+	agencysource = array_cat(f.agencysource, d.agencysource),
 	sourcedatasetname = array_cat(f.sourcedatasetname, d.sourcedatasetname),
 	oversightagency = array_cat(f.oversightagency, d.oversightagency),
 	oversightabbrev = array_cat(f.oversightabbrev, d.oversightabbrev)

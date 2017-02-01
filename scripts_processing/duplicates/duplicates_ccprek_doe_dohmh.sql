@@ -109,7 +109,6 @@ WITH matches AS (
 		b.facilitytype as facilitytype_b,
 		a.processingflag,
 		b.processingflag as processingflag_b,
-		-- a.bin,
 		a.bin,
 		b.bin as bin_b,
 		a.address,
@@ -124,7 +123,9 @@ WITH matches AS (
 		a.oversightagency,
 		b.oversightagency as oversightagency_b,
 		a.oversightabbrev,
-		b.oversightabbrev as oversightabbrev_b
+		b.oversightabbrev as oversightabbrev_b,
+		b.capacity as capacity_b,
+		b.capacitytype as capacitytype_b
 	FROM facilities a
 	LEFT JOIN facilities b
 	ON a.bin = b.bin
@@ -191,7 +192,6 @@ duplicates AS (
 		facilityname,
 		facilitytype,
 		array_agg(distinct facilitytype_b) AS facilitytype_merged,
-		-- array_agg(distinct bin_b) AS BIN,
 		guid,
 		array_agg(guid_b) AS guid_merged,
 		array_agg(distinct idagency_b) AS idagency_merged,
@@ -200,7 +200,9 @@ duplicates AS (
 		array_agg(distinct sourcedatasetname_b) AS sourcedatasetname,
 		array_agg(distinct oversightagency_b) AS oversightagency,
 		array_agg(distinct oversightabbrev_b) AS oversightabbrev,
-		array_agg(distinct pgtable_b) AS pgtable
+		array_agg(distinct pgtable_b) AS pgtable,
+		array_agg(capacity_b) AS capacity,
+		array_agg(distinct capacitytype_b) AS capacitytype
 	FROM matches
 	GROUP BY
 	guid, facilityname, facilitytype
@@ -208,15 +210,16 @@ duplicates AS (
 
 UPDATE facilities AS f
 SET
-	-- BIN = d.BIN,
 	idagency = array_cat(idagency, d.idagency_merged),
 	guid_merged = d.guid_merged,
 	hash_merged = d.hash_merged,
 	pgtable = array_cat(f.pgtable,d.pgtable),
+	agencysource = array_cat(f.agencysource, d.agencysource),
 	sourcedatasetname = array_cat(f.sourcedatasetname, d.sourcedatasetname),
 	oversightagency = array_cat(f.oversightagency, d.oversightagency),
 	oversightabbrev = array_cat(f.oversightabbrev, d.oversightabbrev),
-	-- MIGHT ADD CASE THAT CHANGES THE FACILITY TYPE IF WE INCLUDE MATCHES BEYOND PRESCHOOL (DAY CARE)
+	capacity = array_cat(f.capacity, d.capacity),
+	capacitytype = array_cat(f.capacitytype, d.capacitytype),
 	facilitysubgroup = (CASE
 		WHEN array_to_string(facilitytype_merged,',') LIKE '%Infants/Toddlers%' AND array_to_string(facilitytype_merged,',') LIKE '%Preschool%' THEN 'Dual Child Care and Universal Pre-K'
 		ELSE facilitysubgroup

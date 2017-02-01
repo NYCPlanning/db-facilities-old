@@ -88,103 +88,19 @@ SELECT
 	-- bin
 	NULL,
 	-- facilitytype
-		(CASE
-			WHEN Program_name LIKE '%Blended Case%' 
-				THEN 'Blended Case Management'
-			WHEN Program_name LIKE '%AIM%' 
-				THEN 'Advocate Intervene Mentor'
-			WHEN Program_name LIKE '%Disabilities%' 
-				THEN 'Programs for People with Disabilities'
-			WHEN Program_name LIKE '%Residential Health Care%'
-				THEN 'Residential Health Care'
-			WHEN Program_name LIKE '%Support%' 
-				AND Program_name LIKE '%Housing%'
-				THEN 'Supportive Housing'
-			WHEN Program_name LIKE '%Alternative%'
-				AND (Program_name LIKE '%Detention%'
-				OR Program_name LIKE '%Incarceration%')
-				THEN 'Alternative to Incarceration'
-			WHEN Program_name LIKE '%Crime%'
-				AND Program_name LIKE '%Victim%'
-				THEN 'Crime Victim Services'
-			WHEN Program_name LIKE '%Court%'
-				AND Program_name LIKE '%Based%'
-				THEN 'Court Based Programs'
-			WHEN Program_name LIKE '%Workforce1%'
-				THEN 'Workforce1 Centers'
-			WHEN services LIKE '%Shelter%' 
-				OR Program_name LIKE '%Shelter%'
-				THEN 'Shelter'
-			WHEN services LIKE '%SRO%' 
-				OR Program_name LIKE '%SRO%'
-				THEN 'Single Room Occupancy'
-			WHEN (services LIKE '%Homelessness Prevention%' 
-				OR Program_name LIKE '%Homelessness Prevention%')
-				AND Program_name NOT LIKE '%AIDS%'
-				THEN 'Homelessness Prevention and Outreach'
-			WHEN Program_name LIKE '%Legal%'
-				AND Program_name LIKE '%Services%'
-				THEN 'Legal Services'
-			WHEN services LIKE '%Non-secure Placement%' 
-				OR Program_name LIKE '%Non-secure%' 
-				OR Program_name LIKE '%Non-Secure%'
-				THEN 'Juvenile Non-Secure Placement'
-			WHEN services LIKE '%Foster Care%' 
-				OR Program_name LIKE '%Specialized FFC%' 
-				THEN 'Foster Care Services'
-			WHEN (services LIKE '%Substance Abuse%'
-				AND services NOT LIKE '%Shelter%'
-				AND services NOT LIKE '%Health%')
-				AND service_settings LIKE '%Inpatient%'
-				THEN 'Inpatient'
-			WHEN (services LIKE '%Substance Abuse%'
-				AND services NOT LIKE '%Shelter%'
-				AND services NOT LIKE '%Health%')
-				AND service_settings LIKE '%Outpatient%'
-				THEN 'Outpatient'
-			WHEN (services LIKE '%Substance Abuse%' 
-				AND services NOT LIKE '%Shelter%'
-				AND services NOT LIKE '%Health%'
-				AND services NOT LIKE '%Housing%')
-				AND (service_settings NOT LIKE '%Inpatient%'
-				AND service_settings NOT LIKE '%Outpatient%'
-				AND Program_name NOT LIKE '%AIDS%')
-				THEN 'Monitored Support'
-			WHEN Program_name LIKE '%Crisis%'
-				AND services LIKE '%Mental%'
-				THEN 'Emergency'
-			WHEN (services LIKE '%Mental%' 
-				OR Program_name LIKE '%Behavioral Health%')
-				AND services NOT LIKE '%Housing%'
-				AND Program_name NOT LIKE '%School Based Health%'
-				AND Program_name NOT LIKE '%School Based Hospital%'
-				AND Program_name NOT LIKE '%School Based Diagnostic%'
-				THEN 'Support'
-			WHEN (Program_name LIKE '%Youth%' 
-				OR Program_name LIKE '%Adolescent%')
-				AND Program_name LIKE '%Literacy%'
-				THEN 'Youth Literacy'
-			WHEN (Program_name LIKE '%Youth%' 
-				OR Program_name LIKE '%Young Adult%')
-				AND (Program_name LIKE '%Employment%'
-				OR Program_name LIKE '%Internship%')
-				THEN 'Youth Employment'
-			ELSE split_part(Program_name,' (',1)
-		END),
-
+	split_part(Program_name,' (',1),
 	-- domain
 		(CASE
-			WHEN agency LIKE '%Children%' AND (Program_name LIKE '%Secure Placement%' OR Program_name LIKE '%secure Placement%')
+			WHEN agency LIKE '%Children%' AND (Program_name LIKE '%Secure Placement%' OR Program_name LIKE '%secure Placement%' OR Program_name LIKE '%Detention%')
 				THEN 'Public Safety, Emergency Services, and Administration of Justice'
 			WHEN agency LIKE '%Children%' OR (agency LIKE '%Youth%' AND Program_name NOT LIKE '%Homeless%')
 				THEN 'Education, Child Welfare, and Youth'
 			ELSE 'Health and Human Services'
 		END),
-
 	-- facilitygroup
 		(CASE
 			
-			WHEN agency LIKE '%Children%' AND (Program_name LIKE '%secure Placement%' OR Program_name LIKE '%Secure Placement%')
+			WHEN agency LIKE '%Children%' AND (Program_name LIKE '%secure Placement%' OR Program_name LIKE '%Secure Placement%' OR Program_name LIKE '%Detention%')
 				THEN 'Justice and Corrections'
 			WHEN agency LIKE '%Children%' AND Program_name LIKE '%Early Learn%'
 				THEN 'Child Care and Pre-Kindergarten'
@@ -204,11 +120,10 @@ SELECT
 
 			ELSE 'Human Services'
 		END),
-
 	-- facilitysubgroup
 		(CASE
 
-			WHEN agency LIKE '%Children%' AND (Program_name LIKE '%secure Placement%' OR Program_name LIKE '%Secure Placement%')
+			WHEN agency LIKE '%Children%' AND (Program_name LIKE '%secure Placement%' OR Program_name LIKE '%Secure Placement%' OR Program_name LIKE '%Detention%')
 				THEN 'Detention and Correctional'
 			WHEN agency LIKE '%Children%' AND Program_name LIKE '%Early Learn%'
 				THEN 'Child Care'
@@ -236,8 +151,14 @@ SELECT
 
 			WHEN agency LIKE '%Health%' AND Program_name LIKE '%HPDP%'
 				THEN 'Health Promotion and Disease Prevention'
-			WHEN agency LIKE '%Health%' AND Program_name LIKE '%MHy%'
+			WHEN agency LIKE '%Health%' AND Program_name LIKE '%Housing%'
+				THEN 'Residential Health Care'
+			WHEN agency LIKE '%Health%' AND (Program_name LIKE '%MHy%' OR Program_name LIKE '%Mental%' OR Program_name LIKE '%Psychosocial%')
 				THEN 'Mental Health'
+			WHEN agency LIKE '%Health%' AND (Program_name LIKE '%Withdrawal%' OR Program_name LIKE '%Drug%')
+				THEN 'Chemical Dependency'
+			WHEN agency LIKE '%Health%'
+				THEN 'Other Health Care'
 
 			WHEN agency LIKE '%Probation%' OR agency LIKE '%Correction%' OR agency LIKE '%Mayor%' OR agency LIKE '%Police%'
 				THEN 'Legal and Intervention Services'
@@ -265,7 +186,7 @@ SELECT
 				THEN 'Shelters and Transitional Housing'
 			WHEN agency LIKE '%Human%' AND Program_name LIKE '%WEP%'
 				THEN 'Workforce Development'
-			WHEN agency LIKE '%Human%'
+			WHEN agency LIKE '%Human%' OR agency LIKE '%Social%'
 				THEN 'Legal and Intervention Services'
 		END),
 	-- agencyclass1
@@ -424,7 +345,10 @@ SELECT
 		END)
 FROM
 	hhs_facilities_acceleratorall
-WHERE flag <> 'contracts'
+WHERE
+	-- flag <> 'contracts'
+	-- AND 
+	Program_name NOT LIKE '%Summer Youth%'
 GROUP BY
 	the_geom,
 	agency,

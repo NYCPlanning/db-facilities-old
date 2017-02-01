@@ -362,7 +362,7 @@ SELECT
 
 			-- Education, Children, Youth
 			WHEN usedec LIKE '%UNIVERSITY%' THEN 'Higher Education'
-			WHEN agency LIKE '%CUNY%' AND usedec NOT LIKE '%OPEN SPACE%' THEN 'Higher Education'
+			WHEN agency LIKE '%CUNY%' AND usedec NOT LIKE '%OPEN SPACE%' AND usedec NOT LIKE '%HIGH SCHOOL%' THEN 'Higher Education'
 			WHEN usedec LIKE '%EARLY CHILDHOOD%' THEN 'Child Care and Pre-Kindergarten'
 			WHEN usedec LIKE '%DAY CARE%' THEN 'Child Care and Pre-Kindergarten'
 			WHEN agency LIKE '%ACS%' AND usedec LIKE '%RESIDENTIAL%' THEN 'Childrens Services'
@@ -513,7 +513,7 @@ SELECT
 			WHEN usedec LIKE '%UNIVERSITY%' THEN 'Colleges or Universities'
 			WHEN usedec LIKE '%EARLY CHILDHOOD%' THEN 'Child Care'
 			WHEN usedec LIKE '%DAY CARE%' THEN 'Child Care'
-			WHEN agency LIKE '%ACS%' AND usedec LIKE '%RESIDENTIAL%' THEN 'Childrens Services'
+			WHEN agency LIKE '%ACS%' AND usedec LIKE '%RESIDENTIAL%' THEN 'Foster Care Services and Residential Care'
 			WHEN agency LIKE '%ACS%' THEN 'Child Care'
 			WHEN agency LIKE '%EDUC%' and usedec LIKE '%PLAY AREA%' THEN 'Public Schools'
 			WHEN usedec LIKE '%HIGH SCHOOL%' THEN 'Public Schools'

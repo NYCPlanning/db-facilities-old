@@ -114,7 +114,7 @@ WITH matches AS (
 	SELECT
 		CONCAT(a.pgtable,'-',b.pgtable) as sourcecombo,
 		a.idagency,
-		b.idagency as idagency_b,
+		(CASE WHEN b.idagency IS NULL THEN 'FAKE!' ELSE b.idagency END) as idagency_b,
 		a.guid,
 		b.guid as guid_b,
 		a.hash,
@@ -125,7 +125,6 @@ WITH matches AS (
 		b.facilitysubgroup as facilitysubgroup_b,
 		a.processingflag,
 		b.processingflag as processingflag_b,
-		-- a.bin,
 		a.bin,
 		b.bin as bin_b,
 		a.address,
@@ -141,8 +140,6 @@ WITH matches AS (
 		b.oversightagency as oversightagency_b,
 		a.oversightabbrev,
 		b.oversightabbrev as oversightabbrev_b
-		-- a.propertytype,
-		-- b.propertytype as propertytype_b
 	FROM facilities a
 	LEFT JOIN facilities b
 	ON a.bin = b.bin
@@ -203,10 +200,9 @@ WITH matches AS (
 duplicates AS (
 	SELECT
 		count(*) AS countofdups,
-		-- array_agg(distinct bin_b) AS BIN,
 		guid,
 		array_agg(guid_b) AS guid_merged,
-		--array_agg(distinct idagency_b) AS idagency_merged,
+		array_agg(distinct idagency_b) AS idagency_merged,
 		array_agg(distinct hash_b) AS hash_merged,
 		array_agg(distinct agencysource_b) AS agencysource,
 		array_agg(distinct sourcedatasetname_b) AS sourcedatasetname,
@@ -241,7 +237,11 @@ duplicates AS (
 
 UPDATE facilities AS f
 SET
-	-- idagency = array_cat(idagency, d.idagency_merged),
+	idagency = 
+		(CASE
+			WHEN d.idagency_merged <> ARRAY['FAKE!'] THEN array_cat(idagency, d.idagency_merged)
+			ELSE idagency
+		END),
 	guid_merged = d.guid_merged,
 	hash_merged = d.hash_merged,
 	pgtable = array_cat(f.pgtable,d.pgtable),

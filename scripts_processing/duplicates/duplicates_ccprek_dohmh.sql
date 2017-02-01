@@ -156,6 +156,7 @@ matches AS (
 		a.facilityname,
 		a.facilitytype,
 		a.capacity,
+		b.capacity_b,
 		b.guid AS guid_b,
 		b.hash AS hash_b,
 		b.idagency AS idagency_b,
@@ -217,7 +218,7 @@ duplicates AS (
 		array_agg(guid_b) AS guid_merged,
 		array_agg(distinct idagency_b) AS idagency_merged,
 		array_agg(distinct hash_b) AS hash_merged,
-		capacity
+		array_agg(capacity_b)
 	FROM matches
 	GROUP BY
 		guid, facilityname, facilitytype, capacity
@@ -229,7 +230,7 @@ SET
 	idagency = array_cat(idagency, d.idagency_merged),
 	guid_merged = d.guid_merged,
 	hash_merged = d.hash_merged,
-	capacity = d.capacity
+	capacity = array_cat(capacity, d.capacity)
 FROM duplicates AS d
 WHERE f.guid = d.guid
 ;
