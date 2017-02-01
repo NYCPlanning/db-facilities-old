@@ -138,3 +138,4 @@ FROM
 	dycd_facilities_otherprograms
 WHERE
 	facility_type NOT LIKE '%Summer%'
+	AND facility_type NOT LIKE '%Work, Learn & Grow Employment Program%'

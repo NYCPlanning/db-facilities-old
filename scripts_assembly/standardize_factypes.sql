@@ -18,3 +18,9 @@ UPDATE facilities AS f
 	WHERE
 		facilitysubgroup = 'Chemical Dependency'
 		AND facilitytype NOT LIKE '%Chemical Dependency%';
+
+UPDATE facilities AS f
+    SET 
+		facilitytype = REPLACE(facilitytype, 'Structurese', 'Structure')
+	WHERE
+		facilitytype LIKE '%Structurese%';
