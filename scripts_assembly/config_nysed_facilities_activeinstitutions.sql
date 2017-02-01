@@ -119,8 +119,8 @@ SELECT
 	-- domain
 		(CASE
 			WHEN Institution_Sub_Type_Desc LIKE '%PRE-K%' THEN 'Administration of Government'
-			WHEN Institution_Type_Desc LIKE '%MUSEUM%' THEN 'Parks, Cultural, and Other Community Facilities'
-			WHEN Institution_Type_Desc LIKE '%LIBRARIES%' THEN 'Parks, Cultural, and Other Community Facilities'
+			WHEN Institution_Type_Desc LIKE '%MUSEUM%' THEN 'Libraries and Cultural Programs'
+			WHEN Institution_Type_Desc LIKE '%LIBRARIES%' THEN 'Libraries and Cultural Programs'
 			ELSE 'Education, Child Welfare, and Youth'
 		END),
 	-- facilitygroup
@@ -163,10 +163,10 @@ SELECT
 	-- capacity
 	NULL,
 	-- utilization
-	enrollment,
+	ARRAY[enrollment::text],
 	-- capacitytype
 		(CASE 
-			WHEN enrollment IS NOT NULL THEN 'Seats'
+			WHEN enrollment IS NOT NULL THEN ARRAY['Seats']
 			ELSE NULL
 		END),
 	-- utlizationrate

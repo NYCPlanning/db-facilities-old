@@ -78,7 +78,7 @@ SELECT
 	-- facilitytype
 	'Public Library',
 	-- domain
-	'Parks, Cultural, and Other Community Facilities',
+	'Libraries and Cultural Programs',
 	-- facilitygroup
 	'Libraries',
 	-- facilitysubgroup

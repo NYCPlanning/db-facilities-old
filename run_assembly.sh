@@ -112,7 +112,8 @@ psql $DATABASE_URL -f ./scripts_assembly/join_sourcedatainfo.sql
 echo 'Cleaning up capitalization...'
 time psql $DATABASE_URL -f ./scripts_assembly/fixallcaps.sql
 echo 'Done cleaning up capitalization'
-
+psql $DATABASE_URL -f ./scripts_assembly/standardize_agencytag.sql
+psql $DATABASE_URL -f ./scripts_assembly/standardize_factypes.sql
 
 
 

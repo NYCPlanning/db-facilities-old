@@ -102,17 +102,17 @@ SELECT
 	-- agencyclass2
 	ownership_type,
 	-- capacity
-	capacity,
+	ARRAY[capacity::text],
 	-- utilization
-	utilization,
+	ARRAY[utilization::text],
 	-- capacitytype
 		(CASE
-			WHEN capacity IS NOT NULL THEN 'Beds'
+			WHEN capacity IS NOT NULL THEN ARRAY['Beds']
 			ELSE NULL
 		END),
 	-- utilizationrate
 		(CASE
-			WHEN capacity IS NOT NULL THEN ROUND((utilization::numeric/capacity::numeric),3)
+			WHEN capacity IS NOT NULL THEN ARRAY[ROUND((utilization::numeric/capacity::numeric),3)::text]
 			ELSE NULL
 		END),
 	-- area

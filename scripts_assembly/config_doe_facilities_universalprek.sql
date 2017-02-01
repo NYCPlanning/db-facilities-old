@@ -92,11 +92,11 @@ SELECT
 	-- agencyclass2
 	'NA',
 	-- capacity
-	Seats,
+	ARRAY[Seats::text],
 	-- utilization
 	NULL,
 	-- capacitytype
-	'Seats',
+	ARRAY['Seats'],
 	-- utilizationrate
 	NULL,
 	-- area

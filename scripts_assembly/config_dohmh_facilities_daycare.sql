@@ -115,13 +115,13 @@ SELECT
 	program_type,
 	-- capacity
 		(CASE
-			WHEN Maximum_Capacity <> '0' THEN Maximum_Capacity::integer
+			WHEN Maximum_Capacity <> '0' THEN ARRAY[Maximum_Capacity::text]
 			WHEN Maximum_Capacity = '0' THEN NULL
 		END),
 	-- utilization
 	NULL,
 	-- capacitytype
-	'Seats',
+	ARRAY['Seats'],
 	-- utilizationrate
 	NULL,
 	-- area

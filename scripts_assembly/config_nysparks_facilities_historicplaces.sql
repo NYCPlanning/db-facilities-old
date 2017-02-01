@@ -73,7 +73,7 @@ SELECT
 	-- facilitytype
 	'State Historic Place',
 	-- domain
-	'Parks, Cultural, and Other Community Facilities',
+	'Parks, Gardens, and Historical Sites',
 	-- facilitygroup
 	'Historical Sites',
 	-- facilitysubgroup

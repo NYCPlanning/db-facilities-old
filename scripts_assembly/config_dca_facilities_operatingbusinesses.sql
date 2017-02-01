@@ -119,14 +119,14 @@ SELECT
 
 	-- capacity
 		(CASE
-			WHEN Detail LIKE '%Vehicle Spaces%' THEN split_part(split_part(Detail,': ',2),',',1)::double precision
+			WHEN Detail LIKE '%Vehicle Spaces%' THEN ARRAY[split_part(split_part(Detail,': ',2),',',1)::text]
 			ELSE NULL
 		END),
 	-- utilization
 	NULL,
 	-- capacitytype
 		(CASE
-			WHEN Detail LIKE '%Vehicle Spaces%' THEN 'Parking Spaces'
+			WHEN Detail LIKE '%Vehicle Spaces%' THEN ARRAY['Parking Spaces']
 			ELSE NULL
 		END),
 	-- utilizationrate

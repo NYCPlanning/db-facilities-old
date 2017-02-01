@@ -85,7 +85,7 @@ SELECT
 	ft_decode,
 	-- domain
 		(CASE 
-			WHEN ft_decode = 'City-State Park' THEN 'Parks, Cultural, and Other Community Facilities'
+			WHEN ft_decode = 'City-State Park' THEN 'Parks, Gardens, and Historical Sites'
 			ELSE 'Core Infrastructure and Transportation'
 		END),
 	-- facilitygroup
@@ -126,15 +126,13 @@ SELECT
 	'NA',
 	-- agencyclass2
 	'NA',
-
 	-- capacity
-	capacity,
+	ARRAY[capacity::text],
 	-- utilization
 	NULL,
 	-- capacitytype
 		(CASE 
-			WHEN ft_decode = 'City-State Park' THEN 'Acres'
-			ELSE 'NA'
+			WHEN ft_decode = 'City-State Park' THEN ARRAY['Acres']
 		END),
 	-- utilizationrate
 	NULL,

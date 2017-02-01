@@ -104,7 +104,7 @@ echo 'Overwriting geometry using BBL centroid...'
 time psql $DATABASE_URL -f ./scripts_processing/bbl2overwritegeom.sql
 echo 'Done overwriting geometry using BBL centroid'
 
-# ## Convert back to 4326, calculating lat,long and x,y for all blank records, and create ID for all records at once to use for deduping
+## Convert back to 4326, calculating lat,long and x,y for all blank records, and create ID for all records at once to use for deduping
 
 psql $DATABASE_URL -f ./scripts_processing/cleanup_spatial/setSRID_4326.sql
 echo 'Calculating x,y for all blank records...'
@@ -127,7 +127,7 @@ psql $DATABASE_URL -f ./scripts_processing/cleanup_spatial/vacuum.sql
 echo 'Creating backup before merging and dropping duplicates...'
 psql $DATABASE_URL -f ./scripts_processing/backup/copy_backup3.sql
 
-# # DEDUPING
+## DEDUPING
 
 ## Merge Child Care and Pre-K Duplicate records
 echo 'Merging and dropping Child Care and Pre-K duplicates...'

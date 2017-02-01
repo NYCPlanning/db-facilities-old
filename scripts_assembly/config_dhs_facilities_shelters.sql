@@ -82,11 +82,11 @@ SELECT
 	-- agencyclass2
 	NULL,
 	-- capacity
-	capacity,
+	ARRAY[capacity::text],
 	-- utilization
 	NULL,
 	-- capacitytype
-	capacity_type,
+	ARRAY[capacity_type],
 	-- utilizationrate
 	NULL,
 	-- area

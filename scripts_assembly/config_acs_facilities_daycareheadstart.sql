@@ -93,11 +93,11 @@ SELECT
 	-- agencyclass2
 	'NA',
 	-- capacity
-	ROUND(Total::numeric,0),
+	ARRAY[ROUND(Total::numeric,0)::text],
 	-- utilization
 	NULL,
 	-- capacitytype
-	'Seats',
+	ARRAY['Seats'],
 	-- utilizationrate
 	NULL,
 	-- area

@@ -72,7 +72,7 @@ SELECT
 	-- facilitytype
 	'Public Libraries',
 	-- domain
-	'Parks, Cultural, and Other Community Facilities',
+	'Libraries and Cultural Programs',
 	-- facilitygroup
 	'Libraries',
 	-- facilitysubgroup
@@ -85,9 +85,9 @@ SELECT
 	-- capacity
 	NULL,
 	-- utilization
-	visits,
+	ARRAY[visits::text],
 	-- capacitytype
-	'Visits',
+	ARRAY['Visits'],
 	-- utilizationrate
 	NULL,
 	-- area

@@ -81,7 +81,7 @@ SELECT
 			ELSE initcap(category)
 		END),
 	-- domain
-	'Parks, Cultural, and Other Community Facilities',
+	'Parks, Gardens, and Historical Sites',
 	-- facilitygroup
 	'Parks and Plazas',
 	-- facilitysubgroup

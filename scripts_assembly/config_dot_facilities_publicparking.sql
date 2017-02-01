@@ -82,11 +82,11 @@ SELECT
 	-- agencyclass2
 	'NA',
 	-- capacity
-	capacity,
+	ARRAY[capacity::text],
 	-- utilization
 	NULL,
 	-- capacitytype
-	'Parking Spaces',
+	ARRAY['Parking Spaces'],
 	-- utilizationrate
 	NULL,
 	-- area

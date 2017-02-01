@@ -75,7 +75,7 @@ SELECT
 			ELSE 'Unspecified Discipline'
 		END),
 	-- domain
-	'Parks, Cultural, and Other Community Facilities',
+	'Libraries and Cultural Programs',
 	-- facilitygroup
 	'Cultural Institutions',
 	-- facilitysubgroup

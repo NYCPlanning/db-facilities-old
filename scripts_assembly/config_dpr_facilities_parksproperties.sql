@@ -83,7 +83,7 @@ SELECT
 			WHEN typecatego = 'Undeveloped' THEN 'Administration of Government'
 			WHEN typecatego = 'Lot' THEN 'Administration of Government'
 			-- parks
-			ELSE 'Parks, Cultural, and Other Community Facilities'
+			ELSE 'Parks, Gardens, and Historical Sites'
 		END),
 	-- facilitygroup
 		(CASE
