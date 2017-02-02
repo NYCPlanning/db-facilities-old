@@ -2,8 +2,10 @@
 -- 1. CREATING A TABLE TO BACKUP THE DUPLICATE RECORDS BEFORE DROPPING THEM FROM THE DATABASE
 --------------------------------------------------------------------------------------------------
 
-DROP TABLE IF EXISTS duplicates_colp_relatedlots_colponly;
-CREATE TABLE duplicates_colp_relatedlots_colponly AS (
+-- still need to figure out distance issues, especially for unnamed
+
+DROP TABLE IF EXISTS duplicates_colp_relatedlots_colponly_p2;
+CREATE TABLE duplicates_colp_relatedlots_colponly_p2 AS (
 
 -- starting with all records in table, 
 WITH primaryguids AS (
@@ -13,27 +15,32 @@ WITH primaryguids AS (
 	WHERE
 		pgtable = ARRAY['dcas_facilities_colp']::text[]
 		AND geom IS NOT NULL
+		AND guid_merged IS NULL
+		AND (facilityname = 'Unnamed'
+		OR facilityname = 'Park'
+		OR facilityname = 'Office Bldg'
+		OR facilityname = 'Park Strip'
+		OR facilityname = 'Playground'
+		OR facilityname = 'NYPD Parking'
+		OR facilityname = 'Multi-Service Center'
+		OR facilityname = 'Animal Shelter'
+		OR facilityname = 'Garden'
+		OR facilityname = 'L.U.W'
+		OR facilityname = 'Long Term Tenant: NYCHA'
+		OR facilityname = 'Help Social Service Corporation'
+		OR facilityname = 'Day Care Center'
+		OR facilityname = 'Safety City Site'
+		OR facilityname = 'Public Place'
+		OR facilityname = 'Sanitation Garage'
+		OR facilityname = 'MTA Bus Depot'
+		OR facilityname = 'Mta Bus Depot'
+		OR facilityname = 'Mall'
+		OR oversightabbrev = ARRAY['NYCDOE'])
 	GROUP BY
 		facilitytype,
 		oversightagency,
-		nta,
-		(LEFT(
-			TRIM(
-		split_part(
-			REPLACE(
-		REPLACE(
-			REPLACE(
-		REPLACE(
-			REPLACE(
-		UPPER(facilityname)
-			,'THE ','')
-		,'-','')
-			,' ','')
-		,'.','')
-			,',','')
-		,'(',1)
-			,' ')
-		,4))
+		councildistrict,
+		facilityname
 ),
 
 primaries AS (
@@ -47,49 +54,17 @@ matches AS (
 		a.guid,
 		b.guid AS guid_b
 	FROM primaries AS a
-	LEFT JOIN facilities AS b
+	INNER JOIN facilities AS b
 	ON
-		(LEFT(
-			TRIM(
-		split_part(
-			REPLACE(
-		REPLACE(
-			REPLACE(
-		REPLACE(
-			REPLACE(
-		UPPER(a.facilityname)
-			,'THE ','')
-		,'-','')
-			,' ','')
-		,'.','')
-			,',','')
-		,'(',1)
-			,' ')
-		,4))
-		=
-		(LEFT(
-			TRIM(
-		split_part(
-			REPLACE(
-		REPLACE(
-			REPLACE(
-		REPLACE(
-			REPLACE(
-		UPPER(b.facilityname)
-			,'THE ','')
-		,'-','')
-			,' ','')
-		,'.','')
-			,',','')
-		,'(',1)
-			,' ')
-		,4))
+		a.facilityname = b.facilityname
 	WHERE
 		b.pgtable = ARRAY['dcas_facilities_colp']::text[]
-		AND a.facilitysubgroup = b.facilitysubgroup
+		AND a.facilitytype = b.facilitytype
+		AND a.oversightagency = b.oversightagency
+		AND a.councildistrict = b.councildistrict
 		AND a.guid <> b.guid
-		AND ST_DWithin(a.geom::geography, b.geom::geography, 100)
 		AND b.geom IS NOT NULL
+		AND b.guid_merged IS NULL
 ),
 
 duplicates AS (
@@ -119,27 +94,32 @@ WITH primaryguids AS (
 	WHERE
 		pgtable = ARRAY['dcas_facilities_colp']::text[]
 		AND geom IS NOT NULL
+		AND guid_merged IS NULL
+		AND (facilityname = 'Unnamed'
+		OR facilityname = 'Park'
+		OR facilityname = 'Office Bldg'
+		OR facilityname = 'Park Strip'
+		OR facilityname = 'Playground'
+		OR facilityname = 'NYPD Parking'
+		OR facilityname = 'Multi-Service Center'
+		OR facilityname = 'Animal Shelter'
+		OR facilityname = 'Garden'
+		OR facilityname = 'L.U.W'
+		OR facilityname = 'Long Term Tenant: NYCHA'
+		OR facilityname = 'Help Social Service Corporation'
+		OR facilityname = 'Day Care Center'
+		OR facilityname = 'Safety City Site'
+		OR facilityname = 'Public Place'
+		OR facilityname = 'Sanitation Garage'
+		OR facilityname = 'MTA Bus Depot'
+		OR facilityname = 'Mta Bus Depot'
+		OR facilityname = 'Mall'
+		OR oversightabbrev = ARRAY['NYCDOE'])
 	GROUP BY
 		facilitytype,
 		oversightagency,
-		nta,
-		(LEFT(
-			TRIM(
-		split_part(
-			REPLACE(
-		REPLACE(
-			REPLACE(
-		REPLACE(
-			REPLACE(
-		UPPER(facilityname)
-			,'THE ','')
-		,'-','')
-			,' ','')
-		,'.','')
-			,',','')
-		,'(',1)
-			,' ')
-		,4))
+		councildistrict,
+		facilityname
 ),
 
 primaries AS (
@@ -158,49 +138,17 @@ matches AS (
 		(CASE WHEN b.bin IS NULL THEN ARRAY['FAKE!'] ELSE b.bin END) AS bin_b,
 		(CASE WHEN b.bbl IS NULL THEN ARRAY['FAKE!'] ELSE b.bbl END) AS bbl_b
 	FROM primaries AS a
-	LEFT JOIN facilities AS b
+	INNER JOIN facilities AS b
 	ON
-		(LEFT(
-			TRIM(
-		split_part(
-			REPLACE(
-		REPLACE(
-			REPLACE(
-		REPLACE(
-			REPLACE(
-		UPPER(a.facilityname)
-			,'THE ','')
-		,'-','')
-			,' ','')
-		,'.','')
-			,',','')
-		,'(',1)
-			,' ')
-		,4))
-		=
-		(LEFT(
-			TRIM(
-		split_part(
-			REPLACE(
-		REPLACE(
-			REPLACE(
-		REPLACE(
-			REPLACE(
-		UPPER(b.facilityname)
-			,'THE ','')
-		,'-','')
-			,' ','')
-		,'.','')
-			,',','')
-		,'(',1)
-			,' ')
-		,4))
+		a.facilityname = b.facilityname
 	WHERE
 		b.pgtable = ARRAY['dcas_facilities_colp']::text[]
-		AND a.facilitysubgroup = b.facilitysubgroup
+		AND a.facilitytype = b.facilitytype
+		AND a.oversightagency = b.oversightagency
+		AND a.councildistrict = b.councildistrict
 		AND a.guid <> b.guid
 		AND b.geom IS NOT NULL
-		AND ST_DWithin(a.geom::geography, b.geom::geography, 100)
+		AND b.guid_merged IS NULL
 ),
 
 duplicates AS (
@@ -209,8 +157,8 @@ duplicates AS (
 		count(*) AS countofdups,
 		facilityname,
 		facilitytype,
-		array_agg(BIN_b) AS bin_merged,
-		array_agg(BBL_b) AS bbl_merged,
+		array_agg(distinct BIN_b) AS bin_merged,
+		array_agg(distinct BBL_b) AS bbl_merged,
 		array_agg(guid_b) AS guid_merged,
 		array_agg(distinct hash_b) AS hash_merged
 	FROM matches
@@ -222,13 +170,13 @@ UPDATE facilities AS f
 SET
 	BIN = 
 		(CASE
-			WHEN d.bin_merged <> ARRAY['FAKE!'] THEN array_cat(f.BIN, d.bin_merged)
-			ELSE f.BIN
+			WHEN d.bin_merged <> ARRAY['FAKE!'] THEN array_cat(BIN, d.bin_merged)
+			ELSE BIN
 		END),
 	BBL = 
 		(CASE
-			WHEN d.BBL_merged <> ARRAY['FAKE!'] THEN array_cat(f.BBL, d.BBL_merged)
-			ELSE f.BBL
+			WHEN d.BBL_merged <> ARRAY['FAKE!'] THEN array_cat(BBL, d.BBL_merged)
+			ELSE BBL
 		END),
 	guid_merged = d.guid_merged,
 	hash_merged = d.hash_merged
@@ -241,6 +189,6 @@ WHERE f.guid = d.guid
 --------------------------------------------------------------------------------------------------
 
 DELETE FROM facilities
-WHERE facilities.guid IN (SELECT duplicates_colp_relatedlots_colponly.guid FROM duplicates_colp_relatedlots_colponly)
+WHERE facilities.guid IN (SELECT duplicates_colp_relatedlots_colponly_p2.guid FROM duplicates_colp_relatedlots_colponly_p2)
 ;
 

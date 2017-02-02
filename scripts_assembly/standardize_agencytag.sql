@@ -5,6 +5,8 @@ UPDATE facilities AS f
 				WHEN idagency IS NOT NULL THEN ARRAY[CONCAT(array_to_string(agencysource,','),': ', array_to_string(idagency,','))]
 			END),
 		sourcedatasetname = ARRAY[CONCAT(array_to_string(agencysource,','),': ', array_to_string(sourcedatasetname,','))],
+		linkdata = ARRAY[CONCAT(array_to_string(agencysource,','),': ', array_to_string(linkdata,','))],
+		-- datesourceupdated = ARRAY[CONCAT(array_to_string(agencysource,','),': ', array_to_string(datesourceupdated,','))],
 		capacity = 
 			(CASE
 				WHEN capacity IS NOT NULL THEN ARRAY[CONCAT(array_to_string(agencysource,','),': ', array_to_string(capacity,','))]

@@ -2,24 +2,22 @@
 -- 1. CREATING A TABLE TO BACKUP THE DUPLICATE RECORDS BEFORE DROPPING THEM FROM THE DATABASE
 --------------------------------------------------------------------------------------------------
 
-DROP TABLE IF EXISTS duplicates_ccprek_dohmh;
-CREATE TABLE duplicates_ccprek_dohmh AS (
+DROP TABLE IF EXISTS duplicates_colp_relatedlots_colponly;
+CREATE TABLE duplicates_colp_relatedlots_colponly AS (
 
 -- starting with all records in table, 
 WITH primaryguids AS (
 	SELECT
 		(array_agg(distinct guid))[1] AS guid
-		-- ^ grabs first guid to keep for the primary record
 	FROM facilities
 	WHERE
-		pgtable = ARRAY['dohmh_facilities_daycare']::text[]
+		pgtable = ARRAY['dcas_facilities_colp']::text[]
 		AND geom IS NOT NULL
-		AND bin IS NOT NULL
-		AND bin <> ARRAY['']
-		AND bin <> ARRAY['0.00000000000']
+		AND facilityname <> 'Unnamed'
 	GROUP BY
-		facilitysubgroup,
-		bin,
+		facilitytype,
+		oversightagency,
+		councildistrict,
 		(LEFT(
 			TRIM(
 		split_part(
@@ -51,48 +49,48 @@ matches AS (
 		b.guid AS guid_b
 	FROM primaries AS a
 	LEFT JOIN facilities AS b
-	ON a.bin = b.bin
+	ON
+		(LEFT(
+			TRIM(
+		split_part(
+			REPLACE(
+		REPLACE(
+			REPLACE(
+		REPLACE(
+			REPLACE(
+		UPPER(a.facilityname)
+			,'THE ','')
+		,'-','')
+			,' ','')
+		,'.','')
+			,',','')
+		,'(',1)
+			,' ')
+		,4))
+		=
+		(LEFT(
+			TRIM(
+		split_part(
+			REPLACE(
+		REPLACE(
+			REPLACE(
+		REPLACE(
+			REPLACE(
+		UPPER(b.facilityname)
+			,'THE ','')
+		,'-','')
+			,' ','')
+		,'.','')
+			,',','')
+		,'(',1)
+			,' ')
+		,4))
 	WHERE
-		b.pgtable = ARRAY['dohmh_facilities_daycare']::text[]
+		b.pgtable = ARRAY['dcas_facilities_colp']::text[]
 		AND a.facilitysubgroup = b.facilitysubgroup
 		AND a.guid <> b.guid
+		AND ST_DWithin(a.geom::geography, b.geom::geography, 100)
 		AND b.geom IS NOT NULL
-		AND
-			LEFT(
-				TRIM(
-					split_part(
-				REPLACE(
-					REPLACE(
-				REPLACE(
-					REPLACE(
-				REPLACE(
-					UPPER(a.facilityname)
-				,'THE ','')
-					,'-','')
-				,' ','')
-					,'.','')
-				,',','')
-					,'(',1)
-				,' ')
-			,4)
-			LIKE
-			LEFT(
-				TRIM(
-					split_part(
-				REPLACE(
-					REPLACE(
-				REPLACE(
-					REPLACE(
-				REPLACE(
-					UPPER(b.facilityname)
-				,'THE ','')
-					,'-','')
-				,' ','')
-					,'.','')
-				,',','')
-					,'(',1)
-				,' ')
-			,4)
 ),
 
 duplicates AS (
@@ -120,14 +118,12 @@ WITH primaryguids AS (
 		(array_agg(distinct guid))[1] AS guid
 	FROM facilities
 	WHERE
-		pgtable = ARRAY['dohmh_facilities_daycare']::text[]
+		pgtable = ARRAY['dcas_facilities_colp']::text[]
 		AND geom IS NOT NULL
-		AND bin IS NOT NULL
-		AND bin <> ARRAY['']
-		AND bin <> ARRAY['0.00000000000']
 	GROUP BY
-		facilitysubgroup,
-		bin,
+		facilitytype,
+		oversightagency,
+		councildistrict,
 		(LEFT(
 			TRIM(
 		split_part(
@@ -158,57 +154,54 @@ matches AS (
 		a.guid,
 		a.facilityname,
 		a.facilitytype,
-		a.capacity,
-		(CASE WHEN b.capacity IS NULL THEN ARRAY['FAKE!'] ELSE b.capacity END) AS capacity_b,
 		b.guid AS guid_b,
 		b.hash AS hash_b,
-		(CASE WHEN b.idagency IS NULL THEN ARRAY['FAKE!'] ELSE b.idagency END) AS idagency_b,
-		(CASE WHEN b.bin IS NULL THEN ARRAY['FAKE!'] ELSE b.bin END) AS bin_b
+		(CASE WHEN b.bin IS NULL THEN ARRAY['FAKE!'] ELSE b.bin END) AS bin_b,
+		(CASE WHEN b.bbl IS NULL THEN ARRAY['FAKE!'] ELSE b.bbl END) AS bin_b
 	FROM primaries AS a
 	LEFT JOIN facilities AS b
 	ON
-	a.bin = b.bin
+		(LEFT(
+			TRIM(
+		split_part(
+			REPLACE(
+		REPLACE(
+			REPLACE(
+		REPLACE(
+			REPLACE(
+		UPPER(a.facilityname)
+			,'THE ','')
+		,'-','')
+			,' ','')
+		,'.','')
+			,',','')
+		,'(',1)
+			,' ')
+		,4))
+		=
+		(LEFT(
+			TRIM(
+		split_part(
+			REPLACE(
+		REPLACE(
+			REPLACE(
+		REPLACE(
+			REPLACE(
+		UPPER(b.facilityname)
+			,'THE ','')
+		,'-','')
+			,' ','')
+		,'.','')
+			,',','')
+		,'(',1)
+			,' ')
+		,4))
 	WHERE
-		b.pgtable = ARRAY['dohmh_facilities_daycare']::text[]
+		b.pgtable = ARRAY['dcas_facilities_colp']::text[]
 		AND a.facilitysubgroup = b.facilitysubgroup
 		AND a.guid <> b.guid
 		AND b.geom IS NOT NULL
-		AND
-			LEFT(
-				TRIM(
-					split_part(
-				REPLACE(
-					REPLACE(
-				REPLACE(
-					REPLACE(
-				REPLACE(
-					UPPER(a.facilityname)
-				,'THE ','')
-					,'-','')
-				,' ','')
-					,'.','')
-				,',','')
-					,'(',1)
-				,' ')
-			,4)
-			LIKE
-			LEFT(
-				TRIM(
-					split_part(
-				REPLACE(
-					REPLACE(
-				REPLACE(
-					REPLACE(
-				REPLACE(
-					UPPER(b.facilityname)
-				,'THE ','')
-					,'-','')
-				,' ','')
-					,'.','')
-				,',','')
-					,'(',1)
-				,' ')
-			,4)
+		AND ST_DWithin(a.geom::geography, b.geom::geography, 100)
 ),
 
 duplicates AS (
@@ -217,35 +210,29 @@ duplicates AS (
 		count(*) AS countofdups,
 		facilityname,
 		facilitytype,
-		array_agg(bin_b) AS bin_merged,
+		array_agg(BIN_b) AS bin_merged,
+		array_agg(BBL_b) AS bbl_merged,
 		array_agg(guid_b) AS guid_merged,
-		array_agg(distinct idagency_b) AS idagency_merged,
-		array_agg(distinct hash_b) AS hash_merged,
-		array_agg(capacity_b) AS capacity_merged
+		array_agg(distinct hash_b) AS hash_merged
 	FROM matches
 	GROUP BY
-		guid, facilityname, facilitytype, capacity
+		guid, facilityname, facilitytype
 	ORDER BY facilitytype, countofdups DESC )
 
 UPDATE facilities AS f
 SET
-	bin = 
-		(CASE 
-			WHEN d.bin_merged <> ARRAY['FAKE!'] THEN array_cat(f.bin, d.bin_merged)
-			ELSE f.bin
+	BIN = 
+		(CASE
+			WHEN d.bin_merged <> ARRAY['FAKE!'] THEN array_cat(BIN, d.bin_merged)
+			ELSE BIN
 		END),
-	idagency = 
-		(CASE 
-			WHEN d.idagency_merged <> ARRAY['FAKE!'] THEN array_cat(f.idagency, d.idagency_merged)
-			ELSE f.idagency
+	BBL = 
+		(CASE
+			WHEN d.BBL_merged <> ARRAY['FAKE!'] THEN array_cat(BBL, d.BBL_merged)
+			ELSE BBL
 		END),
 	guid_merged = d.guid_merged,
-	hash_merged = d.hash_merged,
-	capacity = 
-		(CASE 
-			WHEN d.capacity_merged <> ARRAY['FAKE!'] THEN array_cat(f.capacity, d.capacity_merged)
-			ELSE f.capacity
-		END)
+	hash_merged = d.hash_merged
 FROM duplicates AS d
 WHERE f.guid = d.guid
 ;
@@ -255,6 +242,6 @@ WHERE f.guid = d.guid
 --------------------------------------------------------------------------------------------------
 
 DELETE FROM facilities
-WHERE facilities.guid IN (SELECT duplicates_ccprek_dohmh.guid FROM duplicates_ccprek_dohmh)
+WHERE facilities.guid IN (SELECT duplicates_colp_relatedlots_colponly.guid FROM duplicates_colp_relatedlots_colponly)
 ;
 

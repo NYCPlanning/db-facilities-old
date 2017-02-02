@@ -120,12 +120,13 @@ WITH matches AS (
 		b.agencysource as agencysource_b,
 		a.sourcedatasetname,
 		b.sourcedatasetname as sourcedatasetname_b,
+		b.linkdata as linkdata_b,
 		a.oversightagency,
 		b.oversightagency as oversightagency_b,
 		a.oversightabbrev,
 		b.oversightabbrev as oversightabbrev_b,
-		b.capacity as capacity_b,
-		b.capacitytype as capacitytype_b
+		(CASE WHEN b.capacity IS NULL THEN ARRAY['FAKE!'] ELSE b.capacity END) as capacity_b,
+		(CASE WHEN b.capacitytype IS NULL THEN ARRAY['FAKE!'] ELSE b.capacitytype END) capacitytype_b
 	FROM facilities a
 	LEFT JOIN facilities b
 	ON a.bin = b.bin
@@ -198,6 +199,7 @@ duplicates AS (
 		array_agg(hash_b) AS hash_merged,
 		array_agg(distinct agencysource_b) AS agencysource,
 		array_agg(distinct sourcedatasetname_b) AS sourcedatasetname,
+		array_agg(distinct linkdata_b) AS linkdata,
 		array_agg(distinct oversightagency_b) AS oversightagency,
 		array_agg(distinct oversightabbrev_b) AS oversightabbrev,
 		array_agg(distinct pgtable_b) AS pgtable,
@@ -216,10 +218,11 @@ SET
 	pgtable = array_cat(f.pgtable,d.pgtable),
 	agencysource = array_cat(f.agencysource, d.agencysource),
 	sourcedatasetname = array_cat(f.sourcedatasetname, d.sourcedatasetname),
+	linkdata = array_cat(f.linkdata, d.linkdata),
 	oversightagency = array_cat(f.oversightagency, d.oversightagency),
 	oversightabbrev = array_cat(f.oversightabbrev, d.oversightabbrev),
-	capacity = array_cat(f.capacity, d.capacity),
-	capacitytype = array_cat(f.capacitytype, d.capacitytype),
+	capacity = (CASE WHEN d.capacity <> ARRAY['FAKE!'] THEN array_cat(f.capacity, d.capacity) END),
+	capacitytype = (CASE WHEN d.capacitytype <> ARRAY['FAKE!'] THEN array_cat(f.capacitytype, d.capacitytype) END),
 	facilitysubgroup = (CASE
 		WHEN array_to_string(facilitytype_merged,',') LIKE '%Infants/Toddlers%' AND array_to_string(facilitytype_merged,',') LIKE '%Preschool%' THEN 'Dual Child Care and Universal Pre-K'
 		ELSE facilitysubgroup

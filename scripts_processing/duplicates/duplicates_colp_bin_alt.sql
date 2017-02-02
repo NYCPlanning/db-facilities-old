@@ -2,8 +2,8 @@
 -- 1. CREATING A TABLE TO BACKUP THE DUPLICATE RECORDS BEFORE DROPPING THEM FROM THE DATABASE
 --------------------------------------------------------------------------------------------------
 
-DROP TABLE IF EXISTS duplicates_ccprek_doe_acs;
-CREATE TABLE duplicates_ccprek_doe_acs AS (
+DROP TABLE IF EXISTS duplicates_colp_bin;
+CREATE TABLE duplicates_colp_bin AS (
 
 WITH matches AS (
 	SELECT
@@ -16,11 +16,9 @@ WITH matches AS (
 	LEFT JOIN facilities b
 	ON a.bin = b.bin
 	WHERE
-		a.facilitygroup LIKE '%Child Care%'
-		AND (a.facilitytype LIKE '%Early%'
-		OR a.facilitytype LIKE '%Charter%')
-		AND a.pgtable = ARRAY['doe_facilities_universalprek']::text[]
-		AND b.pgtable = ARRAY['acs_facilities_daycareheadstart']::text[]
+		a.facilitysubgroup = b.facilitysubgroup
+		AND b.pgtable = ARRAY['dcas_facilities_colp']
+		AND a.oversightabbrev @> b.oversightabbrev
 		AND a.geom IS NOT NULL
 		AND b.geom IS NOT NULL
 		AND a.bin IS NOT NULL
@@ -29,42 +27,6 @@ WITH matches AS (
 		AND b.bin <> ARRAY['']
 		AND a.bin <> ARRAY['0.00000000000']
 		AND b.bin <> ARRAY['0.00000000000']
-		AND
-			LEFT(
-				TRIM(
-					split_part(
-				REPLACE(
-					REPLACE(
-				REPLACE(
-					REPLACE(
-				REPLACE(
-					UPPER(a.facilityname)
-				,'THE ','')
-					,'-','')
-				,' ','')
-					,'.','')
-				,',','')
-					,'(',1)
-				,' ')
-			,4)
-			LIKE
-			LEFT(
-				TRIM(
-					split_part(
-				REPLACE(
-					REPLACE(
-				REPLACE(
-					REPLACE(
-				REPLACE(
-					UPPER(b.facilityname)
-				,'THE ','')
-					,'-','')
-				,' ','')
-					,'.','')
-				,',','')
-					,'(',1)
-				,' ')
-			,4)
 		AND a.pgtable <> b.pgtable
 		AND a.guid <> b.guid
 		ORDER BY CONCAT(a.pgtable,'-',b.pgtable), a.facilityname, a.facilitysubgroup
@@ -122,17 +84,16 @@ WITH matches AS (
 		b.oversightagency as oversightagency_b,
 		a.oversightabbrev,
 		b.oversightabbrev as oversightabbrev_b,
-		b.capacity as capacity_b,
-		b.capacitytype as capacitytype_b
+		b.propertytype as propertytype_b,
+		b.agencyclass2,
+		b.colpusetype
 	FROM facilities a
 	LEFT JOIN facilities b
 	ON a.bin = b.bin
 	WHERE
-		a.facilitygroup LIKE '%Child Care%'
-		AND (a.facilitytype LIKE '%Early%'
-		OR a.facilitytype LIKE '%Charter%')
-		AND a.pgtable = ARRAY['doe_facilities_universalprek']::text[]
-		AND b.pgtable = ARRAY['acs_facilities_daycareheadstart']::text[]
+		a.facilitysubgroup = b.facilitysubgroup
+		AND b.pgtable = ARRAY['dcas_facilities_colp']
+		AND a.oversightabbrev @> b.oversightabbrev
 		AND a.geom IS NOT NULL
 		AND b.geom IS NOT NULL
 		AND a.bin IS NOT NULL
@@ -141,42 +102,6 @@ WITH matches AS (
 		AND b.bin <> ARRAY['']
 		AND a.bin <> ARRAY['0.00000000000']
 		AND b.bin <> ARRAY['0.00000000000']
-		AND
-			LEFT(
-				TRIM(
-					split_part(
-				REPLACE(
-					REPLACE(
-				REPLACE(
-					REPLACE(
-				REPLACE(
-					UPPER(a.facilityname)
-				,'THE ','')
-					,'-','')
-				,' ','')
-					,'.','')
-				,',','')
-					,'(',1)
-				,' ')
-			,4)
-			LIKE
-			LEFT(
-				TRIM(
-					split_part(
-				REPLACE(
-					REPLACE(
-				REPLACE(
-					REPLACE(
-				REPLACE(
-					UPPER(b.facilityname)
-				,'THE ','')
-					,'-','')
-				,' ','')
-					,'.','')
-				,',','')
-					,'(',1)
-				,' ')
-			,4)
 		AND a.pgtable <> b.pgtable
 		AND a.guid <> b.guid
 		ORDER BY CONCAT(a.pgtable,'-',b.pgtable), a.facilityname, a.facilitysubgroup
@@ -190,16 +115,15 @@ duplicates AS (
 		array_agg(distinct facilitytype_b) AS facilitytype_merged,
 		guid,
 		array_agg(guid_b) AS guid_merged,
-		array_agg(distinct idagency_b) AS idagency_merged,
-		array_agg(distinct hash_b) AS hash_merged,
+		array_agg(hash_b) AS hash_merged,
 		array_agg(distinct agencysource_b) AS agencysource,
 		array_agg(distinct sourcedatasetname_b) AS sourcedatasetname,
 		array_agg(distinct linkdata_b) AS linkdata,
 		array_agg(distinct oversightagency_b) AS oversightagency,
 		array_agg(distinct oversightabbrev_b) AS oversightabbrev,
 		array_agg(distinct pgtable_b) AS pgtable,
-		array_agg(capacity_b) AS capacity,
-		array_agg(distinct capacitytype_b) AS capacitytype
+		array_agg(distinct colpusetype) AS colpusetype,
+		unnest(array_agg(distinct propertytype_b)) AS propertytype
 	FROM matches
 	GROUP BY
 	guid, facilityname, facilitytype
@@ -207,19 +131,14 @@ duplicates AS (
 
 UPDATE facilities AS f
 SET
-	-- BIN = d.BIN,
-	idagency = array_cat(idagency, d.idagency_merged),
 	guid_merged = d.guid_merged,
 	hash_merged = d.hash_merged,
 	pgtable = array_cat(f.pgtable,d.pgtable),
-	agencysource = array_cat(f.agencysource, d.agencysource),
-	sourcedatasetname = array_cat(f.sourcedatasetname, d.sourcedatasetname),
-	linkdata = array_cat(f.linkdata, d.linkdata),
-	oversightagency = array_cat(f.oversightagency, d.oversightagency),
-	oversightabbrev = array_cat(f.oversightabbrev, d.oversightabbrev),
-	capacity = array_cat(f.capacity, d.capacity),
-	capacitytype = array_cat(f.capacitytype, d.capacitytype),
-	facilitysubgroup = 'Dual Child Care and Universal Pre-K'
+	agencysource = array_cat(f.agencysource,d.agencysource),
+	sourcedatasetname = array_cat(f.sourcedatasetname,d.sourcedatasetname),
+	linkdata = array_cat(f.linkdata,d.linkdata),
+	colpusetype = d.colpusetype,
+	propertytype = d.propertytype
 FROM duplicates AS d
 WHERE f.guid = d.guid
 ;
@@ -229,6 +148,6 @@ WHERE f.guid = d.guid
 --------------------------------------------------------------------------------------------------
 
 DELETE FROM facilities
-WHERE facilities.guid IN (SELECT duplicates_ccprek_doe_acs.guid FROM duplicates_ccprek_doe_acs)
+WHERE facilities.guid IN (SELECT duplicates_colp_bin.guid FROM duplicates_colp_bin)
 ;
 

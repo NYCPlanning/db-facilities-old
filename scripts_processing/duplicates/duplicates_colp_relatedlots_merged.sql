@@ -117,9 +117,8 @@ matches AS (
 		a.facilitysubgroup,
 		b.guid AS guid_b,
 		b.hash AS hash_b,
-		b.idagency AS idagency_b,
-		b.bin AS bin_b,
-		b.bbl AS bbl_b
+		(CASE WHEN b.bin IS NULL THEN ARRAY['FAKE!'] ELSE b.bin END) AS bin_b,
+		(CASE WHEN b.bbl IS NULL THEN ARRAY['FAKE!'] ELSE b.bbl END) AS bbl_b
 	FROM primaries AS a
 	LEFT JOIN facilities AS b
 	ON
@@ -173,8 +172,8 @@ duplicates AS (
 		facilityname,
 		facilitysubgroup,
 		array_agg(guid_b::text) AS guid_merged_b,
-		-- ( CASE WHEN array_agg(bin_b) IS NULL THEN NULL ELSE array_agg(bin_b) END ) AS bin_merged,
-		( CASE WHEN array_agg(bbl_b) IS NULL THEN NULL ELSE array_agg(bbl_b) END ) AS bbl_merged,
+		array_agg(bin_b) AS bin_merged,
+		array_agg(bbl_b) AS bbl_merged,
 		array_agg(distinct hash_b) AS hash_merged_b
 	FROM matches
 	GROUP BY
@@ -183,8 +182,16 @@ duplicates AS (
 
 UPDATE facilities AS f
 SET
-	-- BIN = array_cat(BIN, d.bin_merged),
-	BBL = array_cat(BBL, d.bbl_merged),
+	BIN = 
+		(CASE
+			WHEN d.bin_merged <> ARRAY['FAKE!'] THEN array_cat(BIN, d.bin_merged)
+			ELSE BIN
+		END),
+	BBL = 
+		(CASE
+			WHEN d.BBL_merged <> ARRAY['FAKE!'] THEN array_cat(BBL, d.BBL_merged)
+			ELSE BBL
+		END),
 	guid_merged = array_cat(guid_merged, d.guid_merged_b),
 	hash_merged = array_cat(hash_merged, d.hash_merged_b)
 FROM duplicates AS d

@@ -111,7 +111,8 @@ echo 'Done transforming and inserting records from source data'
 psql $DATABASE_URL -f ./scripts_assembly/join_sourcedatainfo.sql
 echo 'Cleaning up capitalization...'
 time psql $DATABASE_URL -f ./scripts_assembly/fixallcaps.sql
-echo 'Done cleaning up capitalization'
+echo 'Cleaning up other values and adding agency tags in arrays'
+psql $DATABASE_URL -f ./scripts_assembly/standardize_capacity.sql
 psql $DATABASE_URL -f ./scripts_assembly/standardize_agencytag.sql
 psql $DATABASE_URL -f ./scripts_assembly/standardize_factypes.sql
 

@@ -2,50 +2,30 @@
 -- 1. CREATING A TABLE TO BACKUP THE DUPLICATE RECORDS BEFORE DROPPING THEM FROM THE DATABASE
 --------------------------------------------------------------------------------------------------
 
-DROP TABLE IF EXISTS duplicates_colp_relatedlots_colponly;
-CREATE TABLE duplicates_colp_relatedlots_colponly AS (
+DROP TABLE IF EXISTS duplicates_colp_relatedlots_merged;
+CREATE TABLE duplicates_colp_relatedlots_merged AS (
 
--- starting with all records in table, 
-WITH primaryguids AS (
+-- starting with all COLP records that found non-COLP matches in FacDB and were merged/dropped 
+WITH primaries AS (
 	SELECT
-		(array_agg(distinct guid))[1] AS guid
-	FROM facilities
-	WHERE
-		pgtable = ARRAY['dcas_facilities_colp']::text[]
-		AND geom IS NOT NULL
-	GROUP BY
+		guid,
+		geom,
+		facilityname,
 		facilitytype,
-		oversightagency,
-		nta,
-		(LEFT(
-			TRIM(
-		split_part(
-			REPLACE(
-		REPLACE(
-			REPLACE(
-		REPLACE(
-			REPLACE(
-		UPPER(facilityname)
-			,'THE ','')
-		,'-','')
-			,' ','')
-		,'.','')
-			,',','')
-		,'(',1)
-			,' ')
-		,4))
+		oversightabbrev
+	FROM (SELECT * FROM duplicates_colp_bin UNION SELECT * FROM duplicates_colp_bbl) AS unioned
 ),
 
-primaries AS (
-	SELECT *
-	FROM facilities
-	WHERE guid IN (SELECT guid from primaryguids)
-),
-
+-- find other related COLP records, matching on agency, name, subgroup, and proximity (within 100m)
 matches AS (
 	SELECT
 		a.guid,
-		b.guid AS guid_b
+		b.guid AS guid_b,
+		a.geom,
+		a.facilityname,
+		b.facilityname as facilityname_b,
+		a.facilitytype,
+		a.oversightabbrev
 	FROM primaries AS a
 	LEFT JOIN facilities AS b
 	ON
@@ -86,16 +66,17 @@ matches AS (
 		,4))
 	WHERE
 		b.pgtable = ARRAY['dcas_facilities_colp']::text[]
-		AND a.facilitysubgroup = b.facilitysubgroup
+		AND a.facilitytype = b.facilitytype
+		AND a.oversightabbrev = b.oversightabbrev
 		AND a.guid <> b.guid
-		AND ST_DWithin(a.geom::geography, b.geom::geography, 100)
 		AND b.geom IS NOT NULL
+		AND ST_DWithin(a.geom::geography, b.geom::geography, 500)
 ),
 
 duplicates AS (
 	SELECT
 		guid,
-		array_agg(guid_b) AS guid_merged
+		array_agg(guid_b::text) AS guid_merged_b
 	FROM matches
 	GROUP BY
 	guid
@@ -103,7 +84,7 @@ duplicates AS (
 
 SELECT facilities.*
 FROM facilities
-WHERE facilities.guid IN (SELECT unnest(duplicates.guid_merged) FROM duplicates)
+WHERE facilities.guid::text IN (SELECT unnest(duplicates.guid_merged_b) FROM duplicates)
 ORDER BY guid
 
 );
@@ -112,45 +93,23 @@ ORDER BY guid
 -- 2. UPDATING FACDB BY MERGING ATTRIBUTES FROM DUPLICATE RECORDS INTO PREFERRED RECORD
 --------------------------------------------------------------------------------------------------
 
-WITH primaryguids AS (
+-- starting with all COLP records that found non-COLP matches in FacDB and were merged/dropped 
+WITH primaries AS (
 	SELECT
-		(array_agg(distinct guid))[1] AS guid
-	FROM facilities
-	WHERE
-		pgtable = ARRAY['dcas_facilities_colp']::text[]
-		AND geom IS NOT NULL
-	GROUP BY
+		guid,
+		geom,
+		facilityname,
+		BBL,
 		facilitytype,
-		oversightagency,
-		nta,
-		(LEFT(
-			TRIM(
-		split_part(
-			REPLACE(
-		REPLACE(
-			REPLACE(
-		REPLACE(
-			REPLACE(
-		UPPER(facilityname)
-			,'THE ','')
-		,'-','')
-			,' ','')
-		,'.','')
-			,',','')
-		,'(',1)
-			,' ')
-		,4))
+		oversightabbrev
+	FROM (SELECT * FROM duplicates_colp_bin UNION SELECT * FROM duplicates_colp_bbl) AS unioned
 ),
 
-primaries AS (
-	SELECT *
-	FROM facilities
-	WHERE guid IN (SELECT guid from primaryguids)
-),
-
+-- find other related COLP records, matching on agency, name, subgroup, and proximity (within 100m)
 matches AS (
 	SELECT
 		a.guid,
+		a.geom,
 		a.facilityname,
 		a.facilitytype,
 		b.guid AS guid_b,
@@ -197,10 +156,11 @@ matches AS (
 		,4))
 	WHERE
 		b.pgtable = ARRAY['dcas_facilities_colp']::text[]
-		AND a.facilitysubgroup = b.facilitysubgroup
+		AND a.facilitytype = b.facilitytype
+		AND a.oversightabbrev = b.oversightabbrev
 		AND a.guid <> b.guid
 		AND b.geom IS NOT NULL
-		AND ST_DWithin(a.geom::geography, b.geom::geography, 100)
+		AND ST_DWithin(a.geom::geography, b.geom::geography, 500)
 ),
 
 duplicates AS (
@@ -209,10 +169,10 @@ duplicates AS (
 		count(*) AS countofdups,
 		facilityname,
 		facilitytype,
-		array_agg(BIN_b) AS bin_merged,
-		array_agg(BBL_b) AS bbl_merged,
-		array_agg(guid_b) AS guid_merged,
-		array_agg(distinct hash_b) AS hash_merged
+		array_agg(guid_b::text) AS guid_merged_b,
+		array_agg(distinct bin_b) AS bin_merged,
+		array_agg(distinct bbl_b) AS bbl_merged,
+		array_agg(distinct hash_b) AS hash_merged_b
 	FROM matches
 	GROUP BY
 		guid, facilityname, facilitytype
@@ -222,18 +182,18 @@ UPDATE facilities AS f
 SET
 	BIN = 
 		(CASE
-			WHEN d.bin_merged <> ARRAY['FAKE!'] THEN array_cat(f.BIN, d.bin_merged)
-			ELSE f.BIN
+			WHEN d.bin_merged <> ARRAY['FAKE!'] THEN array_cat(BIN, d.bin_merged)
+			ELSE BIN
 		END),
 	BBL = 
 		(CASE
-			WHEN d.BBL_merged <> ARRAY['FAKE!'] THEN array_cat(f.BBL, d.BBL_merged)
-			ELSE f.BBL
+			WHEN d.BBL_merged <> ARRAY['FAKE!'] THEN array_cat(BBL, d.BBL_merged)
+			ELSE BBL
 		END),
-	guid_merged = d.guid_merged,
-	hash_merged = d.hash_merged
+	guid_merged = array_cat(guid_merged, d.guid_merged_b),
+	hash_merged = array_cat(hash_merged, d.hash_merged_b)
 FROM duplicates AS d
-WHERE f.guid = d.guid
+WHERE f.guid_merged @> ARRAY[d.guid::text]
 ;
 
 --------------------------------------------------------------------------------------------------
@@ -241,6 +201,6 @@ WHERE f.guid = d.guid
 --------------------------------------------------------------------------------------------------
 
 DELETE FROM facilities
-WHERE facilities.guid IN (SELECT duplicates_colp_relatedlots_colponly.guid FROM duplicates_colp_relatedlots_colponly)
+WHERE facilities.guid IN (SELECT duplicates_colp_relatedlots_merged.guid FROM duplicates_colp_relatedlots_merged)
 ;
 

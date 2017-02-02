@@ -152,14 +152,16 @@ SELECT
 	-- agencyclass2
 	Org_Level,
 	-- capacity
-	ARRAY[ROUND((PS_Capacity::numeric + MS_Capacity::numeric + HS_Capacity::numeric),0)::text],
+	(CASE
+		WHEN Org_Target_Cap <> 0 THEN ARRAY[ROUND(Org_Target_Cap::numeric,0)::text]
+	END),
 	-- utilization
 	ARRAY[ROUND(Org_Enroll::numeric,0)::text],
 	-- capacitytype
 	ARRAY['Seats'],
 	-- utilizationrate
 		(CASE
-			WHEN (PS_Capacity::numeric + MS_Capacity::numeric + HS_Capacity::numeric) <> 0 THEN ARRAY[ROUND(Org_Enroll::numeric/(PS_Capacity::numeric + MS_Capacity::numeric + HS_Capacity::numeric),3)::text]
+			WHEN (Org_Enroll <> 0 AND Org_Target_Cap <> 0) THEN ARRAY[ROUND((Org_Enroll::numeric/Org_Target_Cap::numeric),3)::text]
 		END),
 	-- area
 	NULL,

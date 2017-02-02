@@ -115,6 +115,7 @@ WITH matches AS (
 		b.agencysource as agencysource_b,
 		a.sourcedatasetname,
 		b.sourcedatasetname as sourcedatasetname_b,
+		b.linkdata as linkdata_b,
 		a.oversightagency,
 		b.oversightagency as oversightagency_b,
 		a.oversightabbrev,
@@ -189,6 +190,7 @@ duplicates AS (
 		array_agg(hash_b) AS hash_merged,
 		array_agg(distinct agencysource_b) AS agencysource,
 		array_agg(distinct sourcedatasetname_b) AS sourcedatasetname,
+		array_agg(distinct linkdata_b) AS linkdata,
 		array_agg(distinct oversightagency_b) AS oversightagency,
 		array_agg(distinct oversightabbrev_b) AS oversightabbrev,
 		array_agg(distinct pgtable_b) AS pgtable,
@@ -204,6 +206,9 @@ SET
 	guid_merged = d.guid_merged,
 	hash_merged = d.hash_merged,
 	pgtable = array_cat(f.pgtable,d.pgtable),
+	agencysource = array_cat(f.agencysource,d.agencysource),
+	sourcedatasetname = array_cat(f.sourcedatasetname,d.sourcedatasetname),
+	linkdata = array_cat(f.linkdata,d.linkdata),
 	colpusetype = d.colpusetype,
 	propertytype = d.propertytype
 FROM duplicates AS d
