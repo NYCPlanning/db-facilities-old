@@ -4,9 +4,8 @@ UPDATE facilities AS f
 			(CASE
 				WHEN idagency IS NOT NULL THEN ARRAY[CONCAT(array_to_string(agencysource,','),': ', array_to_string(idagency,','))]
 			END),
-		sourcedatasetname = ARRAY[CONCAT(array_to_string(agencysource,','),': ', array_to_string(sourcedatasetname,','))],
-		linkdata = ARRAY[CONCAT(array_to_string(agencysource,','),': ', array_to_string(linkdata,','))],
-		-- datesourceupdated = ARRAY[CONCAT(array_to_string(agencysource,','),': ', array_to_string(datesourceupdated,','))],
+		oversightlevel = 
+			ARRAY[CONCAT(array_to_string(oversightabbrev,','),': ', array_to_string(oversightlevel,','))],
 		capacity = 
 			(CASE
 				WHEN capacity IS NOT NULL THEN ARRAY[CONCAT(array_to_string(agencysource,','),': ', array_to_string(capacity,','))]
@@ -22,6 +21,14 @@ UPDATE facilities AS f
 		utilizationrate = 
 			(CASE
 				WHEN utilizationrate IS NOT NULL THEN ARRAY[CONCAT(array_to_string(agencysource,','),': ', array_to_string(utilizationrate,','))]
+			END),
+		area = 
+			(CASE
+				WHEN area IS NOT NULL THEN ARRAY[CONCAT(array_to_string(agencysource,','),': ', array_to_string(area,','))]
+			END),
+		areatype = 
+			(CASE
+				WHEN areatype IS NOT NULL THEN ARRAY[CONCAT(array_to_string(agencysource,','),': ', array_to_string(areatype,','))]
 			END)
 		;
 
@@ -49,3 +56,13 @@ UPDATE facilities
 	SET utilizationrate = NULL
 	WHERE utilizationrate IS NOT NULL 
 	AND split_part(array_to_string(utilizationrate,','),': ',2) = '';
+
+UPDATE facilities
+	SET area = NULL
+	WHERE area IS NOT NULL 
+	AND split_part(array_to_string(area,','),': ',2) = '';
+
+UPDATE facilities
+	SET areatype = NULL
+	WHERE areatype IS NOT NULL 
+	AND split_part(array_to_string(areatype,','),': ',2) = '';

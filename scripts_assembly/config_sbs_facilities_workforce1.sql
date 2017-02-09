@@ -96,11 +96,11 @@ SELECT
 	-- operatortype
 	'Public',
 	-- operatorname
-	'New York City New York City Department of Small Business Services',
+	'NYC Department of Small Business Services',
 	-- operatorabbrev
 	'NYCSBS',
 	-- oversightagency
-	ARRAY['New York City New York City Department of Small Business Services'],
+	ARRAY['NYC Department of Small Business Services'],
 	-- oversightabbrev
 	ARRAY['NYCSBS'],
 	-- datecreated

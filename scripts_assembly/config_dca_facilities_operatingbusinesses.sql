@@ -142,7 +142,7 @@ SELECT
 	-- operatorabbrev
 	'Non-public',
 	-- oversightagency
-	ARRAY['New York City Department of Consumer Affairs'],
+	ARRAY['NYC Department of Consumer Affairs'],
 	-- oversightabbrev
 	ARRAY['NYCDCA'],
 	-- datecreated

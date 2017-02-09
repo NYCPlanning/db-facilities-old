@@ -128,7 +128,7 @@ SELECT
 		END),
 	-- operatorname
 		(CASE
-			WHEN owner_type = 'Municipal' THEN 'New York City Department of Sanitation'
+			WHEN owner_type = 'Municipal' THEN 'NYC Department of Sanitation'
 			WHEN owner_name IS NOT NULL THEN owner_name
 			ELSE 'Unknown'
 		END),
@@ -139,8 +139,8 @@ SELECT
 		END),
 	-- oversightagencyname
 		ARRAY[(CASE
-			WHEN owner_type = 'Municipal' THEN 'New York City Department of Sanitation'
-			ELSE 'New York State Department of Environmental Conservation'
+			WHEN owner_type = 'Municipal' THEN 'NYC Department of Sanitation'
+			ELSE 'NYS Department of Environmental Conservation'
 		END)],
 	-- oversightabbrev
 		ARRAY[(CASE

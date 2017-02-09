@@ -106,7 +106,7 @@ SELECT
 	-- operatorabbrev
 	'Non-public',
 	-- oversightagencyn
-	ARRAY['New York City Department of Cultural Affairs'],
+	ARRAY['NYC Department of Cultural Affairs'],
 	-- oversightabbrev
 	ARRAY['NYCDCLA'],
 	-- datecreated

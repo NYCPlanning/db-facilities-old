@@ -11,10 +11,10 @@ UPDATE facilities
 
 UPDATE facilities 
     SET 
-        BIN = 
+        BBL = 
         	(CASE 
-        		WHEN BBL = ARRAY[''] THEN NULL 
-        		ELSE BIN 
+        		WHEN BBL = ARRAY[''] OR BBL = ARRAY['0'] THEN NULL 
+        		ELSE BBL
         	END),
         BIN = 
         	(CASE 

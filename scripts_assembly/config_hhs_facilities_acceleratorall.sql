@@ -88,7 +88,15 @@ SELECT
 	-- bin
 	NULL,
 	-- facilitytype
-	split_part(Program_name,' (',1),
+		(CASE
+			WHEN agency LIKE '%Youth%' AND Program_name LIKE '%COMPASS%' THEN 'COMPASS Program'
+			WHEN agency LIKE '%Youth%' AND Program_name LIKE '%Cornerstone%' THEN 'Cornerstone Community Center Program'
+			WHEN agency LIKE '%Youth%' AND Program_name LIKE '%Beacon%' THEN 'Beacon Community Center Program'
+			WHEN agency LIKE '%Youth%' AND Program_name LIKE '%Literacy%' THEN 'Literacy Program'
+			WHEN agency LIKE '%Youth%' AND Program_name LIKE '%Neighborhood Development%' THEN 'Neighborhood Development Area Program'
+			WHEN agency LIKE '%Youth%' THEN 'Other Youth Program'
+			ELSE split_part(Program_name,' (',1)
+		END),
 	-- domain
 		(CASE
 			WHEN agency LIKE '%Children%' AND (Program_name LIKE '%Secure Placement%' OR Program_name LIKE '%secure Placement%' OR Program_name LIKE '%Detention%')
@@ -213,21 +221,21 @@ SELECT
 	'Non-public',
 	-- oversightagency
 		ARRAY[(CASE
-			WHEN agency LIKE '%DOE%' THEN 'New York City Department of Education'
-			WHEN agency LIKE '%SBS%' THEN 'New York City Department of Small Business Services'
-			WHEN agency LIKE '%DHS%' THEN 'New York City Department of Homeless Services'
-			WHEN agency LIKE '%HRA%' OR agency LIKE '%Social Services%' OR agency LIKE '%DSS%'THEN 'New York City Human Resources Administration/Department of Social Services'
-			WHEN agency LIKE '%DFTA%' THEN 'New York City Department for the Aging'
-			WHEN agency LIKE '%HPD%' OR agency LIKE '%Housing Preservation%' THEN 'New York City Department of Housing Preservation and Development'
-			WHEN agency LIKE '%DOHMH%' THEN 'New York City Department of Health and Mental Hygiene'
-			WHEN agency LIKE '%ACS%' OR agency LIKE '%Children%' THEN 'New York City Administration for Childrens Services'
-			WHEN agency LIKE '%NYPD%' THEN 'New York Police Department'
-			WHEN agency LIKE '%DOP%' THEN 'New York City Department of Probation'
-			WHEN agency LIKE '%DYCD%' OR agency LIKE '%Youth%' THEN 'New York City Department of Youth and Community Development'
-			WHEN agency LIKE '%MOCJ%' THEN 'New York City Office of the Mayor'
-			WHEN agency LIKE '%Mayor%' OR agency LIKE '%MAYOR%' THEN 'New York City Office of the Mayor'
-			WHEN agency LIKE '%DOC%' THEN 'New York City Department of Correction'
-			ELSE CONCAT('New York City ', agency)
+			WHEN agency LIKE '%DOE%' THEN 'NYC Department of Education'
+			WHEN agency LIKE '%SBS%' THEN 'NYC Department of Small Business Services'
+			WHEN agency LIKE '%DHS%' THEN 'NYC Department of Homeless Services'
+			WHEN agency LIKE '%HRA%' OR agency LIKE '%Social Services%' OR agency LIKE '%DSS%'THEN 'NYC Human Resources Administration/Department of Social Services'
+			WHEN agency LIKE '%DFTA%' THEN 'NYC Department for the Aging'
+			WHEN agency LIKE '%HPD%' OR agency LIKE '%Housing Preservation%' THEN 'NYC Department of Housing Preservation and Development'
+			WHEN agency LIKE '%DOHMH%' THEN 'NYC Department of Health and Mental Hygiene'
+			WHEN agency LIKE '%ACS%' OR agency LIKE '%Children%' THEN 'NYC Administration for Childrens Services'
+			WHEN agency LIKE '%NYPD%' THEN 'NYC Police Department'
+			WHEN agency LIKE '%DOP%' THEN 'NYC Department of Probation'
+			WHEN agency LIKE '%DYCD%' OR agency LIKE '%Youth%' THEN 'NYC Department of Youth and Community Development'
+			WHEN agency LIKE '%MOCJ%' THEN 'NYC Office of the Mayor'
+			WHEN agency LIKE '%Mayor%' OR agency LIKE '%MAYOR%' THEN 'NYC Office of the Mayor'
+			WHEN agency LIKE '%DOC%' THEN 'NYC Department of Correction'
+			ELSE CONCAT('NYC ', agency)
 		END)],
 	-- oversightabbrev
 		ARRAY[(CASE

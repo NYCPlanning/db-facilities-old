@@ -95,7 +95,6 @@ SELECT
 	Program_Type_Description,
 	-- agencyclass2
 	Program_Subcategory_Description,
-
 	-- capacity
 	NULL,
 	-- utilization
@@ -116,8 +115,8 @@ SELECT
 		END),
 	-- operatorname
 		(CASE
-			WHEN program_type_description LIKE '%State%' THEN 'New York State Office of Mental Health'
-			WHEN sponsor_name LIKE '%Health and Hospitals Corporation%' THEN 'New York City Health and Hospitals Corporation'
+			WHEN program_type_description LIKE '%State%' THEN 'NYS Office of Mental Health'
+			WHEN sponsor_name LIKE '%Health and Hospitals Corporation%' THEN 'NYC Health and Hospitals Corporation'
 			ELSE Agency_Name
 		END),
 	-- operatorabbrev
@@ -127,7 +126,7 @@ SELECT
 			ELSE 'Non-public'
 		END),
 	-- oversightagency
-	ARRAY['New York State Office of Mental Health'],
+	ARRAY['NYS Office of Mental Health'],
 	-- oversightabbrev
 	ARRAY['NYSOMH'],
 	-- datecreated

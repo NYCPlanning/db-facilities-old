@@ -1,3 +1,5 @@
+-- REMEMBER NOT TO COPY AND PASTE FACILITYNAME IN THE OTHER FIELDS
+
 UPDATE facilities AS f
     SET 
 		facilityname =
@@ -30,7 +32,11 @@ UPDATE facilities AS f
 			replace(
 			replace(
 			replace(
+			replace(
+			replace(
 			replace(facilityname, 'Nycha', 'NYCHA'),
+			'Nycta', 'NYCTA'),
+			'Nyct', 'NYCT'),
 			'Nyc', 'NYC'),
 			'Nypd', 'NYPD'),
 			'Ny', 'NY'),
@@ -90,7 +96,11 @@ UPDATE facilities AS f
 			replace(
 			replace(
 			replace(
+			replace(
+			replace(
 			replace(facilitytype, 'Nycha', 'NYCHA'),
+			'Nycta', 'NYCTA'),
+			'Nyct', 'NYCT'),
 			'Nyc', 'NYC'),
 			'Nypd', 'NYPD'),
 			'Ny', 'NY'),
@@ -150,7 +160,11 @@ UPDATE facilities AS f
 			replace(
 			replace(
 			replace(
+			replace(
+			replace(
 			replace(operatorname, 'Nycha', 'NYCHA'),
+			'Nycta', 'NYCTA'),
+			'Nyct', 'NYCT'),
 			'Nyc', 'NYC'),
 			'Nypd', 'NYPD'),
 			'Ny', 'NY'),

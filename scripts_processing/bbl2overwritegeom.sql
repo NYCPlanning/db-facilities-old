@@ -13,8 +13,8 @@ UPDATE facilities AS f
         AND f.bbl IS NOT NULL
         AND f.processingflag NOT LIKE '%bbl2overwritegeom%'
         -- AND f.processingflag NOT LIKE '%bin2geom%'
-        AND f.guid NOT IN (
-            SELECT facilities.guid
+        AND f.hash NOT IN (
+            SELECT facilities.hash
             FROM facilities
             INNER JOIN dcp_mappluto
             ON ST_Intersects (facilities.geom, dcp_mappluto.geom)

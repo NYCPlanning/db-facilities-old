@@ -100,7 +100,7 @@ SELECT
 	-- operatorabbrev
 	'Non-public',
 	-- oversightagency
-	ARRAY['New York City Department of Education'],
+	ARRAY['NYC Department of Education'],
 	-- oversightabbrev
 	ARRAY['NYCDOE'],
 	-- datecreated

@@ -106,11 +106,11 @@ SELECT
 	-- operatortype
 	'Public',
 	-- operatorname
-	'New York City Health and Hospitals Corporation',
+	'NYC Health and Hospitals Corporation',
 	-- operatorabbrev
 	'NYCHHC',
 	-- oversightagency
-	ARRAY['New York State Department of Health'],
+	ARRAY['NYS Department of Health'],
 	-- oversightabbrev
 	ARRAY['NYSDOH'],
 	-- datecreated

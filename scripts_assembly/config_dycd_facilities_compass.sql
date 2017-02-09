@@ -100,7 +100,7 @@ SELECT
 	-- operatorabbrev
 	'Non-public',
 	-- oversightagency
-	ARRAY['New York City Department of Youth and Community Development'],
+	ARRAY['NYC Department of Youth and Community Development'],
 	-- oversightabbrev
 	ARRAY['NYCDYCD'],
 	-- datecreated

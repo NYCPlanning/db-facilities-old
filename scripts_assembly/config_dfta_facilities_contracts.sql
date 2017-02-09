@@ -107,7 +107,7 @@ SELECT
 	-- operatorabbrev
 	'Non-public',
 	-- oversightagency
-	ARRAY['New York City Department for the Aging'],
+	ARRAY['NYC Department for the Aging'],
 	-- oversightabbrev
 	ARRAY['NYCDFTA'],
 	-- datecreated

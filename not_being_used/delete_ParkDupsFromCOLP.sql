@@ -1,10 +1,6 @@
-UPDATE facilities
-SET
-	colpusetype = 
-
-FROM	
-WHERE guid IN (
-	SELECT facilities.guid
+DELETE FROM facilities
+WHERE uid IN (
+	SELECT facilities.uid
 	FROM facilities, dpr_parksproperties
 	WHERE
 		ST_Intersects(facilities.geom, dpr_parksproperties.geom)

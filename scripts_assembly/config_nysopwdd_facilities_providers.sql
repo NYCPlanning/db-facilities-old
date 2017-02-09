@@ -128,7 +128,6 @@ SELECT
 		CONCAT('Developmental_Centers_And_Special_Population_Services',Developmental_Centers_And_Special_Population_Services)],
 	-- agencyclass2
 	'NA',
-
 	-- capacity
 	NULL,
 	-- utilization
@@ -148,7 +147,7 @@ SELECT
 	-- operatorabbrev
 	'Non-public',
 	-- oversightagency
-	ARRAY['New York State Office for People With Developmental Disabilities'],
+	ARRAY['NYS Office for People With Developmental Disabilities'],
 	-- oversightabbrev
 	ARRAY['NYSOPWDD'],
 	-- datecreated

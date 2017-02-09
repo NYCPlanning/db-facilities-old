@@ -99,14 +99,14 @@ SELECT
 			ELSE 'Non-public'
 		END),
 	-- operatorname
-	provider_name,
+	initcap(provider_name),
 	-- operatorabbrev
 		(CASE
 			WHEN provider_name LIKE '%NYC Dept%' THEN 'NYCDHS'
 			ELSE 'Non-public'
 		END),
 	-- oversightagency
-	ARRAY['New York City Department of Homeless Services'],
+	ARRAY['NYC Department of Homeless Services'],
 	-- oversightabbrev
 	ARRAY['NYCDHS'],
 	-- datecreated

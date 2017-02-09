@@ -82,7 +82,6 @@ SELECT
 	'NA',
 	-- agencyclass2
 	'NA',
-
 	-- capacity
 	NULL,
 	-- utilization
@@ -96,13 +95,13 @@ SELECT
 	-- areatype
 	NULL,
 	-- operatortype
-	'FIX THIS (Previosly said Mix)',
+	'Non-public',
 	-- operatorname
-	'New York State Office of Parks, Recreation and Historic Preservation',
+	'NYS Office of Parks, Recreation and Historic Preservation',
 	-- operatorabbrev
 	'NYSOPRHP',
 	-- oversightagency
-	ARRAY['New York State Office of Parks, Recreation and Historic Preservation'],
+	ARRAY['NYS Office of Parks, Recreation and Historic Preservation'],
 	-- oversightabbrev
 	ARRAY['NYSOPRHP'],
 	-- datecreated

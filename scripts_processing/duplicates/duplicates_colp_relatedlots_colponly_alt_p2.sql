@@ -8,14 +8,14 @@ DROP TABLE IF EXISTS duplicates_colp_relatedlots_colponly_p2;
 CREATE TABLE duplicates_colp_relatedlots_colponly_p2 AS (
 
 -- starting with all records in table, 
-WITH primaryguids AS (
+WITH primaryhashs AS (
 	SELECT
-		(array_agg(distinct guid))[1] AS guid
+		(array_agg(distinct hash))[1] AS hash
 	FROM facilities
 	WHERE
 		pgtable = ARRAY['dcas_facilities_colp']::text[]
 		AND geom IS NOT NULL
-		AND guid_merged IS NULL
+		AND hash_merged IS NULL
 		AND (facilityname = 'Unnamed'
 		OR facilityname = 'Park'
 		OR facilityname = 'Office Bldg'
@@ -39,20 +39,20 @@ WITH primaryguids AS (
 	GROUP BY
 		facilitytype,
 		oversightagency,
-		councildistrict,
+		censustract,
 		facilityname
 ),
 
 primaries AS (
 	SELECT *
 	FROM facilities
-	WHERE guid IN (SELECT guid from primaryguids)
+	WHERE hash IN (SELECT hash from primaryhashs)
 ),
 
 matches AS (
 	SELECT
-		a.guid,
-		b.guid AS guid_b
+		a.hash,
+		b.hash AS hash_b
 	FROM primaries AS a
 	INNER JOIN facilities AS b
 	ON
@@ -61,25 +61,26 @@ matches AS (
 		b.pgtable = ARRAY['dcas_facilities_colp']::text[]
 		AND a.facilitytype = b.facilitytype
 		AND a.oversightagency = b.oversightagency
-		AND a.councildistrict = b.councildistrict
-		AND a.guid <> b.guid
+		AND a.censustract = b.censustract
+		AND a.hash <> b.hash
 		AND b.geom IS NOT NULL
-		AND b.guid_merged IS NULL
+		AND b.hash_merged IS NULL
+		AND ST_DWithin(a.geom::geography, b.geom::geography, 200)
 ),
 
 duplicates AS (
 	SELECT
-		guid,
-		array_agg(guid_b) AS guid_merged
+		hash,
+		array_agg(hash_b) AS hash_merged
 	FROM matches
 	GROUP BY
-	guid
+	hash
 )
 
 SELECT facilities.*
 FROM facilities
-WHERE facilities.guid IN (SELECT unnest(duplicates.guid_merged) FROM duplicates)
-ORDER BY guid
+WHERE facilities.hash IN (SELECT unnest(duplicates.hash_merged) FROM duplicates)
+ORDER BY hash
 
 );
 
@@ -87,14 +88,14 @@ ORDER BY guid
 -- 2. UPDATING FACDB BY MERGING ATTRIBUTES FROM DUPLICATE RECORDS INTO PREFERRED RECORD
 --------------------------------------------------------------------------------------------------
 
-WITH primaryguids AS (
+WITH primaryhashs AS (
 	SELECT
-		(array_agg(distinct guid))[1] AS guid
+		(array_agg(distinct hash))[1] AS hash
 	FROM facilities
 	WHERE
 		pgtable = ARRAY['dcas_facilities_colp']::text[]
 		AND geom IS NOT NULL
-		AND guid_merged IS NULL
+		AND hash_merged IS NULL
 		AND (facilityname = 'Unnamed'
 		OR facilityname = 'Park'
 		OR facilityname = 'Office Bldg'
@@ -118,22 +119,22 @@ WITH primaryguids AS (
 	GROUP BY
 		facilitytype,
 		oversightagency,
-		councildistrict,
+		censustract,
 		facilityname
 ),
 
 primaries AS (
 	SELECT *
 	FROM facilities
-	WHERE guid IN (SELECT guid from primaryguids)
+	WHERE hash IN (SELECT hash from primaryhashs)
 ),
 
 matches AS (
 	SELECT
-		a.guid,
+		a.hash,
 		a.facilityname,
 		a.facilitytype,
-		b.guid AS guid_b,
+		b.uid AS uid_b,
 		b.hash AS hash_b,
 		(CASE WHEN b.bin IS NULL THEN ARRAY['FAKE!'] ELSE b.bin END) AS bin_b,
 		(CASE WHEN b.bbl IS NULL THEN ARRAY['FAKE!'] ELSE b.bbl END) AS bbl_b
@@ -145,25 +146,26 @@ matches AS (
 		b.pgtable = ARRAY['dcas_facilities_colp']::text[]
 		AND a.facilitytype = b.facilitytype
 		AND a.oversightagency = b.oversightagency
-		AND a.councildistrict = b.councildistrict
-		AND a.guid <> b.guid
+		AND a.censustract = b.censustract
+		AND a.hash <> b.hash
 		AND b.geom IS NOT NULL
-		AND b.guid_merged IS NULL
+		AND b.hash_merged IS NULL
+		AND ST_DWithin(a.geom::geography, b.geom::geography, 200)
 ),
 
 duplicates AS (
 	SELECT
-		guid,
+		hash,
 		count(*) AS countofdups,
 		facilityname,
 		facilitytype,
 		array_agg(distinct BIN_b) AS bin_merged,
 		array_agg(distinct BBL_b) AS bbl_merged,
-		array_agg(guid_b) AS guid_merged,
+		array_agg(uid_b) AS uid_merged,
 		array_agg(distinct hash_b) AS hash_merged
 	FROM matches
 	GROUP BY
-		guid, facilityname, facilitytype
+		hash, facilityname, facilitytype
 	ORDER BY facilitytype, countofdups DESC )
 
 UPDATE facilities AS f
@@ -178,10 +180,10 @@ SET
 			WHEN d.BBL_merged <> ARRAY['FAKE!'] THEN array_cat(BBL, d.BBL_merged)
 			ELSE BBL
 		END),
-	guid_merged = d.guid_merged,
+	uid_merged = d.uid_merged,
 	hash_merged = d.hash_merged
 FROM duplicates AS d
-WHERE f.guid = d.guid
+WHERE f.hash = d.hash
 ;
 
 --------------------------------------------------------------------------------------------------
@@ -189,6 +191,6 @@ WHERE f.guid = d.guid
 --------------------------------------------------------------------------------------------------
 
 DELETE FROM facilities
-WHERE facilities.guid IN (SELECT duplicates_colp_relatedlots_colponly_p2.guid FROM duplicates_colp_relatedlots_colponly_p2)
+WHERE facilities.hash IN (SELECT duplicates_colp_relatedlots_colponly_p2.hash FROM duplicates_colp_relatedlots_colponly_p2)
 ;
 

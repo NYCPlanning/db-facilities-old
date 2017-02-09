@@ -1,7 +1,7 @@
 CREATE TABLE duplicates_samesource FROM (
 	SELECT
 		a.*,
-		b.guid as guid_b
+		b.uid as uid_b
 	FROM facilities as a
 	LEFT JOIN facilities as b
 	ON a.id = b.id

@@ -175,7 +175,7 @@ SELECT
 	-- operatorname
 		(CASE
 			WHEN Charter IS NOT NULL THEN 'Organization_Name'
-			ELSE 'New York City Department of Education'
+			ELSE 'NYC Department of Education'
 		END),
 	-- operator abbrev
 		(CASE
@@ -183,7 +183,7 @@ SELECT
 			ELSE 'NYCDOE'
 		END),
 	-- oversightagency
-	ARRAY['New York City Department of Education'],
+	ARRAY['NYC Department of Education'],
 	-- oversightabbrev
 	ARRAY['NYCDOE'],
 	-- datecreated

@@ -32,8 +32,8 @@ UPDATE facilities
 	        	ELSE 'bbljoin_closest'
         	END)
     FROM 
-        (SELECT DISTINCT ON(f.guid)
-		    f.guid,
+        (SELECT DISTINCT ON(f.uid)
+		    f.uid,
 		    p.bbl,
 		    p.address,
 		    p.borough,
@@ -47,8 +47,8 @@ UPDATE facilities
             OR f.addressnumber IS NULL)
 			AND NOT f.facilitygroup ~ 'Parks and Plazas'
 		ORDER BY
-		    f.guid,
+		    f.uid,
 		    ST_Distance(f.geom, p.geom)
         ) AS j
     WHERE
-        facilities.guid = j.guid
+        facilities.uid = j.uid

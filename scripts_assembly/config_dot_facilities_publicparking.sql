@@ -70,13 +70,13 @@ SELECT
 	-- bin
 	NULL,
 	-- facilitytype
-	'Public Parking Facility',
+	'Public Parking',
 	-- domain
 	'Core Infrastructure and Transportation',
 	-- facilitygroup
 	'Transportation',
 	-- facilitysubgroup
-	'Parking Lots and Garages',
+	'Public Parking Lots and Garages',
 	-- agencyclass1
 	'NA',
 	-- agencyclass2
@@ -96,11 +96,11 @@ SELECT
 	-- operatortype
 	'Public',
 	-- operatorname
-	'New York City Department of Transportation',
+	'NYC Department of Transportation',
 	-- operatorabbrev
 	'NYCDOT',
 	-- oversightagency
-	ARRAY['New York City Department of Transportation'],
+	ARRAY['NYC Department of Transportation'],
 	-- oversightabbrev
 	ARRAY['NYCDOT'],
 	-- datecreated

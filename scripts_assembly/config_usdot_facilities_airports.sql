@@ -87,7 +87,6 @@ SELECT
 	facilityty,
 	-- agencyclass2
 	'NA',
-
 	-- capacity
 	NULL,
 	-- utilization
@@ -97,9 +96,9 @@ SELECT
 	-- utilizationrate
 	NULL,
 	-- area
-	acres,
+	ARRAY[acres],
 	-- areatype
-	'Acres',
+	ARRAY['Acres'],
 	-- operatortype
 		(CASE
 			WHEN ownertype = 'Pr' THEN 'Non-public'
@@ -116,7 +115,7 @@ SELECT
 			ELSE 'Public'
 		END),
 	-- oversightagency
-	ARRAY['United States Department of Transportation'],
+	ARRAY['US Department of Transportation'],
 	-- oversightabbrev
 	ARRAY['USDOT'],
 	-- datecreated

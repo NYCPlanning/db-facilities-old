@@ -106,7 +106,7 @@ SELECT
 	-- operatorabbrev
 	'Non-public',
 	-- oversightagency
-	ARRAY['New York State Office of Alcoholism and Substance Abuse Services'],
+	ARRAY['NYS Office of Alcoholism and Substance Abuse Services'],
 	-- oversightabbrev
 	ARRAY['NYSOASAS'],
 	-- datecreated

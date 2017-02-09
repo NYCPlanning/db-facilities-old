@@ -103,17 +103,17 @@ SELECT
 	-- utilizationrate
 	NULL,
 	-- area
-	acres,
+	ARRAY[acres],
 	-- areatype
-	'Acres',
+	ARRAY['Acres'],
 	-- operatortype
 	'Public',
 	-- operatorname
-	'New York State Department of Environmental Conservation',
+	'NYS Department of Environmental Conservation',
 	-- operatorabbrev
 	'NYSDEC',
 	-- oversightagency
-	ARRAY['New York State Department of Environmental Conservation'],
+	ARRAY['NYS Department of Environmental Conservation'],
 	-- oversightabbrev
 	ARRAY['NYSDEC'],
 	-- datecreated

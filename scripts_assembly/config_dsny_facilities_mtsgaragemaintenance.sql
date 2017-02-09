@@ -103,11 +103,11 @@ SELECT
 	-- operatortype
 	'Public',
 	-- operatorname
-	'New York City Department of Sanitation',
+	'NYC Department of Sanitation',
 	-- operatorabbrev
 	'NYCDSNY',
 	-- oversightagency
-	ARRAY['New York City Department of Sanitation'],
+	ARRAY['NYC Department of Sanitation'],
 	-- oversightabbrev
 	ARRAY['NYCDSNY'],
 	-- datecreated

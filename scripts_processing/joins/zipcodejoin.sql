@@ -1,6 +1,10 @@
 UPDATE facilities AS f
     SET
-        zipcode = p.zipcode::integer,
+        zipcode = 
+        	(CASE
+        		WHEN p.zipcode::integer <> 83::integer THEN p.zipcode::integer
+        		ELSE f.zipcode
+        	END),
         city = p.po_name
     FROM 
         doitt_zipcodes AS p

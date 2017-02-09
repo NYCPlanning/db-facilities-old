@@ -102,11 +102,11 @@ SELECT
 	-- operatortype
 	'Public',
 	-- operatorname
-	'New York City Department of Transportation',
+	'NYC Department of Transportation',
 	-- operatorabbrev
 	'NYCDOT',
 	-- oversightagency
-	ARRAY['New York City Department of Transportation'],
+	ARRAY['NYC Department of Transportation'],
 	-- oversightabbrev
 	ARRAY['NYCDOT'],
 	-- datecreated

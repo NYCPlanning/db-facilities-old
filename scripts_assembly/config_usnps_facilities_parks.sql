@@ -96,11 +96,11 @@ SELECT
 	-- operatortype
 	'Public',
 	-- operatorname
-	'United States National Park Service',
+	'National Park Service',
 	-- operatorabbrev
 	'USNPS',
 	-- oversightagency
-	ARRAY['United States National Park Service'],
+	ARRAY['National Park Service'],
 	-- oversightabbrev
 	ARRAY['USNPS'],
 	-- datecreated

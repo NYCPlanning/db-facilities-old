@@ -104,7 +104,7 @@ SELECT
 		END),
 	-- operatorname
 		(CASE
-			WHEN NYC_Owned_Property LIKE '%NYC Owned%' THEN '%New York City Department of Homeless Services%'
+			WHEN NYC_Owned_Property LIKE '%NYC Owned%' THEN '%NYC Department of Homeless Services%'
 			ELSE initcap(Service_Provider)
 		END),
 	-- operatorabbrev
@@ -113,7 +113,7 @@ SELECT
 			ELSE 'Non-public'
 		END),
 	-- oversightagency
-	ARRAY['New York City Department of Homeless Services'],
+	ARRAY['NYC Department of Homeless Services'],
 	-- oversightabbrev
 	ARRAY['NYCDHS'],
 	-- datecreated

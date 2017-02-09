@@ -185,8 +185,8 @@ SELECT
 		END),
 	-- operatorname
 		(CASE
-			WHEN Institution_Type_Desc = 'PUBLIC SCHOOLS' THEN 'New York City Department of Education'
-			WHEN Institution_Type_Desc LIKE '%NON-IMF%' THEN 'New York City Department of Education'
+			WHEN Institution_Type_Desc = 'PUBLIC SCHOOLS' THEN 'NYC Department of Education'
+			WHEN Institution_Type_Desc LIKE '%NON-IMF%' THEN 'NYC Department of Education'
 			WHEN Institution_Type_Desc = 'CUNY' THEN 'City University of New York'
 			WHEN Institution_Type_Desc = 'SUNY' THEN 'State University of New York'
 			ELSE initcap(Legal_Name)
@@ -201,9 +201,9 @@ SELECT
 		END),
 	-- oversightagency
 		(CASE
-			WHEN Institution_Type_Desc = 'PUBLIC SCHOOLS' THEN ARRAY['New York City Department of Education', 'New York State Education Department']
-			WHEN Institution_Type_Desc LIKE '%NON-IMF%' THEN ARRAY['New York City Department of Education', 'New York State Education Department']
-			ELSE ARRAY['New York State Education Department']
+			WHEN Institution_Type_Desc = 'PUBLIC SCHOOLS' THEN ARRAY['NYC Department of Education', 'NYS Education Department']
+			WHEN Institution_Type_Desc LIKE '%NON-IMF%' THEN ARRAY['NYC Department of Education', 'NYS Education Department']
+			ELSE ARRAY['NYS Education Department']
 		END),
 	-- oversightabbrev
 		(CASE

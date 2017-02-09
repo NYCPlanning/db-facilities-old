@@ -96,7 +96,7 @@ SELECT
 	-- utilization
 	NULL,
 	-- capacitytype
-	ARRAY['Seats'],
+	ARRAY['Seats in Contract'],
 	-- utilizationrate
 	NULL,
 	-- area
@@ -110,7 +110,7 @@ SELECT
 		END),
 	-- operatorname
 		(CASE
-			WHEN PreK_Type = 'DOE' THEN 'New York City Department of Education'
+			WHEN PreK_Type = 'DOE' THEN 'NYC Department of Education'
 			WHEN PreK_Type = 'CHARTER' THEN LocName
 			WHEN PreK_Type = 'NYCEEC' THEN LocName
 			ELSE 'Unknown'
@@ -123,7 +123,7 @@ SELECT
 			ELSE 'Unknown'
 		END),
 	-- oversightagency
-	ARRAY['New York City Department of Education'],
+	ARRAY['NYC Department of Education'],
 	-- oversightabbrev
 	ARRAY['NYCDOE'],
 	-- datecreated

@@ -6,10 +6,10 @@ DROP TABLE IF EXISTS duplicates_ccprek_dohmh;
 CREATE TABLE duplicates_ccprek_dohmh AS (
 
 -- starting with all records in table, 
-WITH primaryguids AS (
+WITH primaryhashs AS (
 	SELECT
-		(array_agg(distinct guid))[1] AS guid
-		-- ^ grabs first guid to keep for the primary record
+		(array_agg(distinct hash))[1] AS hash
+		-- ^ grabs first hash to keep for the primary record
 	FROM facilities
 	WHERE
 		pgtable = ARRAY['dohmh_facilities_daycare']::text[]
@@ -42,20 +42,20 @@ WITH primaryguids AS (
 primaries AS (
 	SELECT *
 	FROM facilities
-	WHERE guid IN (SELECT guid from primaryguids)
+	WHERE hash IN (SELECT hash from primaryhashs)
 ),
 
 matches AS (
 	SELECT
-		a.guid,
-		b.guid AS guid_b
+		a.hash,
+		b.hash AS hash_b
 	FROM primaries AS a
 	LEFT JOIN facilities AS b
 	ON a.bin = b.bin
 	WHERE
 		b.pgtable = ARRAY['dohmh_facilities_daycare']::text[]
 		AND a.facilitysubgroup = b.facilitysubgroup
-		AND a.guid <> b.guid
+		AND a.hash <> b.hash
 		AND b.geom IS NOT NULL
 		AND
 			LEFT(
@@ -97,17 +97,17 @@ matches AS (
 
 duplicates AS (
 	SELECT
-		guid,
-		array_agg(guid_b) AS guid_merged
+		hash,
+		array_agg(hash_b) AS hash_merged
 	FROM matches
 	GROUP BY
-	guid
+	hash
 )
 
 SELECT facilities.*
 FROM facilities
-WHERE facilities.guid IN (SELECT unnest(duplicates.guid_merged) FROM duplicates)
-ORDER BY guid
+WHERE facilities.hash IN (SELECT unnest(duplicates.hash_merged) FROM duplicates)
+ORDER BY hash
 
 );
 
@@ -115,9 +115,9 @@ ORDER BY guid
 -- 2. UPDATING FACDB BY MERGING ATTRIBUTES FROM DUPLICATE RECORDS INTO PREFERRED RECORD
 --------------------------------------------------------------------------------------------------
 
-WITH primaryguids AS (
+WITH primaryhashs AS (
 	SELECT
-		(array_agg(distinct guid))[1] AS guid
+		(array_agg(distinct hash))[1] AS hash
 	FROM facilities
 	WHERE
 		pgtable = ARRAY['dohmh_facilities_daycare']::text[]
@@ -150,17 +150,17 @@ WITH primaryguids AS (
 primaries AS (
 	SELECT *
 	FROM facilities
-	WHERE guid IN (SELECT guid from primaryguids)
+	WHERE hash IN (SELECT hash from primaryhashs)
 ),
 
 matches AS (
 	SELECT
-		a.guid,
+		a.hash,
 		a.facilityname,
 		a.facilitytype,
 		a.capacity,
 		(CASE WHEN b.capacity IS NULL THEN ARRAY['FAKE!'] ELSE b.capacity END) AS capacity_b,
-		b.guid AS guid_b,
+		b.uid AS uid_b,
 		b.hash AS hash_b,
 		(CASE WHEN b.idagency IS NULL THEN ARRAY['FAKE!'] ELSE b.idagency END) AS idagency_b,
 		(CASE WHEN b.bin IS NULL THEN ARRAY['FAKE!'] ELSE b.bin END) AS bin_b
@@ -171,7 +171,7 @@ matches AS (
 	WHERE
 		b.pgtable = ARRAY['dohmh_facilities_daycare']::text[]
 		AND a.facilitysubgroup = b.facilitysubgroup
-		AND a.guid <> b.guid
+		AND a.hash <> b.hash
 		AND b.geom IS NOT NULL
 		AND
 			LEFT(
@@ -213,18 +213,18 @@ matches AS (
 
 duplicates AS (
 	SELECT
-		guid,
+		hash,
 		count(*) AS countofdups,
 		facilityname,
 		facilitytype,
 		array_agg(bin_b) AS bin_merged,
-		array_agg(guid_b) AS guid_merged,
+		array_agg(uid_b) AS uid_merged,
 		array_agg(distinct idagency_b) AS idagency_merged,
 		array_agg(distinct hash_b) AS hash_merged,
 		array_agg(capacity_b) AS capacity_merged
 	FROM matches
 	GROUP BY
-		guid, facilityname, facilitytype, capacity
+		hash, facilityname, facilitytype, capacity
 	ORDER BY facilitytype, countofdups DESC )
 
 UPDATE facilities AS f
@@ -239,7 +239,7 @@ SET
 			WHEN d.idagency_merged <> ARRAY['FAKE!'] THEN array_cat(f.idagency, d.idagency_merged)
 			ELSE f.idagency
 		END),
-	guid_merged = d.guid_merged,
+	uid_merged = d.uid_merged,
 	hash_merged = d.hash_merged,
 	capacity = 
 		(CASE 
@@ -247,7 +247,7 @@ SET
 			ELSE f.capacity
 		END)
 FROM duplicates AS d
-WHERE f.guid = d.guid
+WHERE f.hash = d.hash
 ;
 
 --------------------------------------------------------------------------------------------------
@@ -255,6 +255,6 @@ WHERE f.guid = d.guid
 --------------------------------------------------------------------------------------------------
 
 DELETE FROM facilities
-WHERE facilities.guid IN (SELECT duplicates_ccprek_dohmh.guid FROM duplicates_ccprek_dohmh)
+WHERE facilities.hash IN (SELECT duplicates_ccprek_dohmh.hash FROM duplicates_ccprek_dohmh)
 ;
 

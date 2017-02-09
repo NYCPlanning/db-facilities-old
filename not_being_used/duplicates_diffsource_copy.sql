@@ -2,7 +2,7 @@ CREATE TABLE duplicates_diffsource FROM (
 	SELECT
 		CONCAT(a.agencysource,'-',b.agencysource) as sourcecombo,
 		a.id,
-		a.guid,
+		a.uid,
 		a.facilityname,
 		a.facilitysubgroup,
 		a.bbl,
@@ -10,7 +10,7 @@ CREATE TABLE duplicates_diffsource FROM (
 		a.agencysource,
 		a.sourcedatasetname,
 		b.id as id_b,
-		b.guid as guid_b,
+		b.uid as uid_b,
 		b.facilityname as facilityname_b,
 		b.facilitysubgroup as facilitysubgroup_b,
 		b.agencysource as agencysource_b,
@@ -31,7 +31,7 @@ CREATE TABLE duplicates_diffsource FROM (
 			LIKE TRIM(split_part(REPLACE(REPLACE(REPLACE(UPPER(b.facilityname),' ',''),'.',''),',',''),'(',1),' ') 
 		AND a.facilitysubgroup = b.facilitysubgroup
 		AND a.agencysource <> b.agencysource
-		AND a.guid <> b.guid
+		AND a.uid <> b.uid
 		AND a.id <> b.id
 	ORDER BY a.facilitysubgroup, a.bbl, a.facilityname
 )

@@ -3,8 +3,8 @@ SELECT
 	CONCAT(a.agencysource,'-',b.agencysource) as sourcecombo,
 	a.id,
 	b.id as id_b,
-	a.guid,
-	b.guid as guid_b,
+	a.uid,
+	b.uid as uid_b,
 	a.facilityname,
 	b.facilityname as facilityname_b,
 	LEFT(
@@ -110,7 +110,7 @@ WHERE
 			,' ')
 		,4)
 	AND a.agencysource <> b.agencysource
-	AND a.guid <> b.guid
+	AND a.uid <> b.uid
 	AND a.id <> b.id
 	ORDER BY CONCAT(a.agencysource,'-',b.agencysource), a.facilityname, a.facilitysubgroup
 )
@@ -124,10 +124,10 @@ SELECT
 	array_agg(distinct facilityname_b),
 	facilitytype,
 	array_agg(distinct facilitytype_b),
-	guid,
-	array_agg(guid_b) AS guid_duplicate
+	uid,
+	array_agg(uid_b) AS uid_duplicate
 FROM matches
 GROUP BY
-id, guid, facilityname, facilitytype
+id, uid, facilityname, facilitytype
 ORDER BY facilitytype, count DESC
 --)

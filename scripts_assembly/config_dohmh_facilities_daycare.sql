@@ -121,7 +121,7 @@ SELECT
 	-- utilization
 	NULL,
 	-- capacitytype
-	ARRAY['Seats'],
+	ARRAY['Seats Based on Sq Ft'],
 	-- utilizationrate
 	NULL,
 	-- area
@@ -135,7 +135,7 @@ SELECT
 	-- operatorabbrev
 	'Non-public',
 	-- oversightagency
-	ARRAY['New York City Department of Health and Mental Hygiene'],
+	ARRAY['NYC Department of Health and Mental Hygiene'],
 	-- oversightabbrev
 	ARRAY['NYCDOHMH'],
 	-- datecreated

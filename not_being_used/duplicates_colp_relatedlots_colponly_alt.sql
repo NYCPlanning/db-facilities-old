@@ -6,9 +6,9 @@ DROP TABLE IF EXISTS duplicates_colp_relatedlots_colponly;
 CREATE TABLE duplicates_colp_relatedlots_colponly AS (
 
 -- starting with all records in table, 
-WITH primaryguids AS (
+WITH primaryuids AS (
 	SELECT
-		(array_agg(distinct guid))[1] AS guid
+		(array_agg(distinct uid))[1] AS uid
 	FROM facilities
 	WHERE
 		pgtable = ARRAY['dcas_facilities_colp']::text[]
@@ -40,13 +40,13 @@ WITH primaryguids AS (
 primaries AS (
 	SELECT *
 	FROM facilities
-	WHERE guid IN (SELECT guid from primaryguids)
+	WHERE uid IN (SELECT uid from primaryuids)
 ),
 
 matches AS (
 	SELECT
-		a.guid,
-		b.guid AS guid_b
+		a.uid,
+		b.uid AS uid_b
 	FROM primaries AS a
 	LEFT JOIN facilities AS b
 	ON
@@ -88,24 +88,24 @@ matches AS (
 	WHERE
 		b.pgtable = ARRAY['dcas_facilities_colp']::text[]
 		AND a.facilitysubgroup = b.facilitysubgroup
-		AND a.guid <> b.guid
+		AND a.uid <> b.uid
 		AND ST_DWithin(a.geom::geography, b.geom::geography, 100)
 		AND b.geom IS NOT NULL
 ),
 
 duplicates AS (
 	SELECT
-		guid,
-		array_agg(guid_b) AS guid_merged
+		uid,
+		array_agg(uid_b) AS uid_merged
 	FROM matches
 	GROUP BY
-	guid
+	uid
 )
 
 SELECT facilities.*
 FROM facilities
-WHERE facilities.guid IN (SELECT unnest(duplicates.guid_merged) FROM duplicates)
-ORDER BY guid
+WHERE facilities.uid IN (SELECT unnest(duplicates.uid_merged) FROM duplicates)
+ORDER BY uid
 
 );
 
@@ -113,9 +113,9 @@ ORDER BY guid
 -- 2. UPDATING FACDB BY MERGING ATTRIBUTES FROM DUPLICATE RECORDS INTO PREFERRED RECORD
 --------------------------------------------------------------------------------------------------
 
-WITH primaryguids AS (
+WITH primaryuids AS (
 	SELECT
-		(array_agg(distinct guid))[1] AS guid
+		(array_agg(distinct uid))[1] AS uid
 	FROM facilities
 	WHERE
 		pgtable = ARRAY['dcas_facilities_colp']::text[]
@@ -146,15 +146,15 @@ WITH primaryguids AS (
 primaries AS (
 	SELECT *
 	FROM facilities
-	WHERE guid IN (SELECT guid from primaryguids)
+	WHERE uid IN (SELECT uid from primaryuids)
 ),
 
 matches AS (
 	SELECT
-		a.guid,
+		a.uid,
 		a.facilityname,
 		a.facilitytype,
-		b.guid AS guid_b,
+		b.uid AS uid_b,
 		b.hash AS hash_b,
 		(CASE WHEN b.bin IS NULL THEN ARRAY['FAKE!'] ELSE b.bin END) AS bin_b,
 		(CASE WHEN b.bbl IS NULL THEN ARRAY['FAKE!'] ELSE b.bbl END) AS bin_b
@@ -199,24 +199,24 @@ matches AS (
 	WHERE
 		b.pgtable = ARRAY['dcas_facilities_colp']::text[]
 		AND a.facilitysubgroup = b.facilitysubgroup
-		AND a.guid <> b.guid
+		AND a.uid <> b.uid
 		AND b.geom IS NOT NULL
 		AND ST_DWithin(a.geom::geography, b.geom::geography, 100)
 ),
 
 duplicates AS (
 	SELECT
-		guid,
+		uid,
 		count(*) AS countofdups,
 		facilityname,
 		facilitytype,
 		array_agg(BIN_b) AS bin_merged,
 		array_agg(BBL_b) AS bbl_merged,
-		array_agg(guid_b) AS guid_merged,
+		array_agg(uid_b) AS uid_merged,
 		array_agg(distinct hash_b) AS hash_merged
 	FROM matches
 	GROUP BY
-		guid, facilityname, facilitytype
+		uid, facilityname, facilitytype
 	ORDER BY facilitytype, countofdups DESC )
 
 UPDATE facilities AS f
@@ -231,10 +231,10 @@ SET
 			WHEN d.BBL_merged <> ARRAY['FAKE!'] THEN array_cat(BBL, d.BBL_merged)
 			ELSE BBL
 		END),
-	guid_merged = d.guid_merged,
+	uid_merged = d.uid_merged,
 	hash_merged = d.hash_merged
 FROM duplicates AS d
-WHERE f.guid = d.guid
+WHERE f.uid = d.uid
 ;
 
 --------------------------------------------------------------------------------------------------
@@ -242,6 +242,6 @@ WHERE f.guid = d.guid
 --------------------------------------------------------------------------------------------------
 
 DELETE FROM facilities
-WHERE facilities.guid IN (SELECT duplicates_colp_relatedlots_colponly.guid FROM duplicates_colp_relatedlots_colponly)
+WHERE facilities.uid IN (SELECT duplicates_colp_relatedlots_colponly.uid FROM duplicates_colp_relatedlots_colponly)
 ;
 

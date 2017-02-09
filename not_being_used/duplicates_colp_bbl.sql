@@ -8,8 +8,8 @@ CREATE TABLE duplicates_colp_bbl AS (
 WITH matches AS (
 	SELECT
 		CONCAT(a.pgtable,'-',b.pgtable) as sourcecombo,
-		a.guid,
-		b.guid as guid_b,
+		a.uid,
+		b.uid as uid_b,
 		a.facilityname,
 		b.facilityname as facilityname_b
 	FROM facilities a
@@ -65,22 +65,22 @@ WITH matches AS (
 				,' ')
 			,4)
 		AND a.pgtable <> b.pgtable
-		AND a.guid <> b.guid
+		AND a.uid <> b.uid
 		ORDER BY CONCAT(a.pgtable,'-',b.pgtable), a.facilityname, a.facilitysubgroup
 	),  
 
 duplicates AS (
 	SELECT
-		guid,
-		array_agg(guid_b) AS guid_merged
+		uid,
+		array_agg(uid_b) AS uid_merged
 	FROM matches
 	GROUP BY
-	guid)
+	uid)
 
 SELECT facilities.*
 FROM facilities
-WHERE facilities.guid IN (SELECT unnest(duplicates.guid_merged) FROM duplicates)
-ORDER BY guid
+WHERE facilities.uid IN (SELECT unnest(duplicates.uid_merged) FROM duplicates)
+ORDER BY uid
 
 );
 
@@ -93,8 +93,8 @@ WITH matches AS (
 		CONCAT(a.pgtable,'-',b.pgtable) as sourcecombo,
 		a.idagency,
 		b.idagency as idagency_b,
-		a.guid,
-		b.guid as guid_b,
+		a.uid,
+		b.uid as uid_b,
 		a.hash,
 		b.hash as hash_b,
 		a.facilityname,
@@ -177,7 +177,7 @@ WITH matches AS (
 				,' ')
 			,4)
 		AND a.pgtable <> b.pgtable
-		AND a.guid <> b.guid
+		AND a.uid <> b.uid
 		ORDER BY CONCAT(a.pgtable,'-',b.pgtable), a.facilityname, a.facilitysubgroup
 	), 
 
@@ -187,8 +187,8 @@ duplicates AS (
 		facilityname,
 		facilitytype,
 		array_agg(distinct facilitytype_b) AS facilitytype_merged,
-		guid,
-		array_agg(guid_b) AS guid_merged,
+		uid,
+		array_agg(uid_b) AS uid_merged,
 		array_agg(hash_b) AS hash_merged,
 		array_agg(bin_b) AS bin,
 		array_agg(distinct agencysource_b) AS agencysource,
@@ -201,12 +201,12 @@ duplicates AS (
 		unnest(array_agg(distinct propertytype_b)) AS propertytype
 	FROM matches
 	GROUP BY
-	guid, facilityname, facilitytype
+	uid, facilityname, facilitytype
 	ORDER BY facilitytype, countofdups DESC )
 
 UPDATE facilities AS f
 SET
-	guid_merged = d.guid_merged,
+	uid_merged = d.uid_merged,
 	hash_merged = d.hash_merged,
 	bin = 
 		(CASE
@@ -220,7 +220,7 @@ SET
 	colpusetype = d.colpusetype,
 	propertytype = d.propertytype
 FROM duplicates AS d
-WHERE f.guid = d.guid
+WHERE f.uid = d.uid
 ;
 
 --------------------------------------------------------------------------------------------------
@@ -228,6 +228,6 @@ WHERE f.guid = d.guid
 --------------------------------------------------------------------------------------------------
 
 DELETE FROM facilities
-WHERE facilities.guid IN (SELECT duplicates_colp_bbl.guid FROM duplicates_colp_bbl)
+WHERE facilities.uid IN (SELECT duplicates_colp_bbl.uid FROM duplicates_colp_bbl)
 ;
 

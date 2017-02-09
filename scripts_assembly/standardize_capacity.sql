@@ -21,3 +21,19 @@ UPDATE facilities AS f
 		capacity IS NULL
 		AND utilization IS NULL
 		;
+
+UPDATE facilities AS f
+    SET 
+		area =
+			(CASE
+				WHEN area[1]::numeric <> 0 THEN ARRAY[ROUND(area[1]::numeric,3)]
+				ELSE NULL
+			END),
+		areatype =
+			(CASE
+				WHEN area[1]::numeric <> 0 THEN areatype
+				ELSE NULL
+			END)
+	WHERE
+		area IS NOT NULL
+		;

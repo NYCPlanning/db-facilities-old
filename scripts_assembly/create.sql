@@ -4,9 +4,9 @@ CREATE TABLE facilities (
 -- PUBLISHED FIELDS
 
 -- ids
-guid UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+-- guid UUID PRIMARY KEY DEFAULT gen_random_uuid(),
 hash text,
-id text,
+uid text,
 idold text,
 idagency text ARRAY,
 -- name
@@ -41,8 +41,8 @@ capacity text ARRAY,
 utilization text ARRAY,
 capacitytype text ARRAY,
 utilizationrate text ARRAY,
-area double precision,
-areatype text,
+area text ARRAY,
+areatype text ARRAY,
 -- servicearea text,
 -- operator, oversight, and property information
 propertytype text,
@@ -51,13 +51,14 @@ operatortype text,
 operatorname text,
 operatorabbrev text,
 oversighttype text ARRAY,
+oversightlevel text ARRAY,
 oversightagency text ARRAY,
 oversightabbrev text ARRAY,
 -- published data source details
 agencysource text ARRAY,
 sourcedatasetname text ARRAY,
 linkdata text ARRAY,
-datesourceupdated date ARRAY,
+datesourceupdated text ARRAY,
 processingflag text,
 
 -- NON-PUBLISHED FIELDS
@@ -73,7 +74,7 @@ inactivestatus boolean,
 tags text ARRAY,
 -- information to be tracked by the data admin
 notes text,
-datesourcereceived date ARRAY,
+datesourcereceived text ARRAY,
 datecreated date,
 dateedited date,
 creator text,
@@ -84,7 +85,7 @@ refreshmeans text ARRAY,
 refreshfrequency text ARRAY,
 pgtable text ARRAY,
 -- details on duplicate records merged into the primary record
-guid_merged text ARRAY,
+uid_merged text ARRAY,
 hash_merged text ARRAY,
 idagency_merged text ARRAY,
 -- administrative location information

@@ -128,17 +128,17 @@ SELECT
 	-- utilizationrate
 	NULL,
 	-- area
-	ST_Area(geom::geography)::numeric*.000247105,
+	ARRAY[ST_Area(geom::geography)::numeric*.000247105],
 	-- areatype
-	'Acres',
+	ARRAY['Acres'],
 	-- operatortype
 	'Public',
 	-- operatorname
-	'New York City Department of Parks and Recreation',
+	'NYC Department of Parks and Recreation',
 	-- operatorabbrev
 	'NYCDPR',
 	-- oversightagency
-	ARRAY['New York City Department of Parks and Recreation'],
+	ARRAY['NYC Department of Parks and Recreation'],
 	-- oversightabbrev
 	ARRAY['NYCDPR'],
 	-- datecreated

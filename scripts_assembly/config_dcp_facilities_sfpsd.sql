@@ -56,7 +56,7 @@ SELECT
 	-- geom
 	geom,
 	-- idold
-	id,
+	id::text,
 	-- idagency
 	NULL,
 	-- facilityname
@@ -127,19 +127,21 @@ SELECT
 	-- agencyclass2
 	'NA',
 	-- capacity
-	ARRAY[capacity::text],
+	NULL,
 	-- utilization
 	NULL,
 	-- capacitytype
-		(CASE 
-			WHEN ft_decode = 'City-State Park' THEN ARRAY['Acres']
-		END),
+	NULL,
 	-- utilizationrate
 	NULL,
 	-- area
-	NULL,
+	(CASE 
+		WHEN ft_decode = 'City-State Park' AND acreage::numeric > 0 THEN ARRAY[ROUND(acreage::numeric,3)::text]
+	END),
 	-- areatype
-	NULL,
+	(CASE 
+		WHEN ft_decode = 'City-State Park' AND acreage::numeric > 0 THEN ARRAY['Acres']
+	END),
 	-- operatortype
 		(CASE
 			WHEN ft_decode = 'MTA Paratransit Vehicle Depot' THEN 'Non-public'
@@ -148,7 +150,7 @@ SELECT
 	-- operatorname
 		(CASE 
 			WHEN ft_decode = 'PANYNJ Bus Terminal' THEN 'Port Authority of New York and New Jersey'
-			WHEN ft_decode = 'Wastewater Treatment Plant' THEN 'New York City Department of Environmental Protection'
+			WHEN ft_decode = 'Wastewater Treatment Plant' THEN 'NYC Department of Environmental Protection'
 			WHEN ft_decode = 'MTA Paratransit Vehicle Depot' THEN 'Proprietary'
 			WHEN ft_decode = 'MTA Bus Depot' THEN 'Metropolitan Transportation Authority'
 			WHEN ft_decode = 'NYCT Maintenance and Other Facility' THEN 'Metropolitan Transportation Authority'
@@ -159,8 +161,8 @@ SELECT
 			WHEN ft_decode = 'LIRR Yard' THEN 'Metropolitan Transportation Authority'
 			WHEN ft_decode = 'Amtrak Maintenance and Other Facility' THEN 'Amtrak'
 			WHEN ft_decode = 'Amtrak Yard' THEN 'Amtrak'
-			WHEN agencyoper = '24.0000000000' THEN 'New York City Department of Transportation'
-			WHEN agencyoper = '63.0000000000' THEN 'New York State Department of Transportation'
+			WHEN agencyoper = '24.0000000000' THEN 'NYC Department of Transportation'
+			WHEN agencyoper = '63.0000000000' THEN 'NYS Department of Transportation'
 			WHEN agencyoper = '80.0000000000' THEN 'Hudson River Park Trust'
 			WHEN agencyoper = '81.0000000000' THEN 'Brooklyn Bridge Park Corporation'
 			WHEN agencyoper = '83.0000000000' THEN 'Roosevelt Island Operating Corporation'
@@ -192,7 +194,7 @@ SELECT
 	-- oversightagency
 		ARRAY[(CASE 
 			WHEN ft_decode = 'PANYNJ Bus Terminal' THEN 'Port Authority of New York and New Jersey'
-			WHEN ft_decode = 'Wastewater Treatment Plant' THEN 'New York City Department of Environmental Protection'
+			WHEN ft_decode = 'Wastewater Treatment Plant' THEN 'NYC Department of Environmental Protection'
 			WHEN ft_decode = 'MTA Paratransit Vehicle Depot' THEN 'Metropolitan Transportation Authority'
 			WHEN ft_decode = 'MTA Bus Depot' THEN 'Metropolitan Transportation Authority'
 			WHEN ft_decode = 'NYCT Maintenance and Other Facility' THEN 'Metropolitan Transportation Authority'
@@ -203,8 +205,8 @@ SELECT
 			WHEN ft_decode = 'LIRR Yard' THEN 'Metropolitan Transportation Authority'
 			WHEN ft_decode = 'Amtrak Maintenance and Other Facility' THEN 'Amtrak'
 			WHEN ft_decode = 'Amtrak Yard' THEN 'Amtrak'
-			WHEN agencyoper = '24.0000000000' THEN 'New York City Department of Transportation'
-			WHEN agencyoper = '63.0000000000' THEN 'New York State Department of Transportation'
+			WHEN agencyoper = '24.0000000000' THEN 'NYC Department of Transportation'
+			WHEN agencyoper = '63.0000000000' THEN 'NYS Department of Transportation'
 			WHEN agencyoper = '80.0000000000' THEN 'Hudson River Park Trust'
 			WHEN agencyoper = '81.0000000000' THEN 'Brooklyn Bridge Park Corporation'
 			WHEN agencyoper = '83.0000000000' THEN 'Roosevelt Island Operating Corporation'

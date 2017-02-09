@@ -109,12 +109,16 @@ echo 'Done transforming and inserting records from source data'
 ## STEP 4 
 ## Joining on source data info and standardizing capitalization
 psql $DATABASE_URL -f ./scripts_assembly/join_sourcedatainfo.sql
-echo 'Cleaning up capitalization...'
-time psql $DATABASE_URL -f ./scripts_assembly/fixallcaps.sql
-echo 'Cleaning up other values and adding agency tags in arrays'
+echo 'Cleaning up capitalization, standardizing values, and adding agency tags in arrays...'
+psql $DATABASE_URL -f ./scripts_assembly/standardize_fixallcaps.sql
 psql $DATABASE_URL -f ./scripts_assembly/standardize_capacity.sql
+psql $DATABASE_URL -f ./scripts_assembly/standardize_oversightlevel.sql
 psql $DATABASE_URL -f ./scripts_assembly/standardize_agencytag.sql
 psql $DATABASE_URL -f ./scripts_assembly/standardize_factypes.sql
+## Standardizing borough and assigning borough code
+psql $DATABASE_URL -f ./scripts_assembly/standardize_borough.sql
+## Switching One to 1 for geocoding and removing invalid (string) address numbers
+psql $DATABASE_URL -f ./scripts_assembly/standardize_address.sql
 
 
 

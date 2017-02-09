@@ -70,13 +70,21 @@ SELECT
 	-- bin
 	NULL,
 	-- facilitytype
-	facility_type,
+	(CASE
+		WHEN facility_type LIKE '%Literacy%' THEN 'Literacy Program'
+		WHEN facility_type LIKE '%Beacon%' THEN 'Beacon Community Center Program'
+		WHEN facility_type LIKE '%COMPASS%' THEN 'COMPASS Program'
+		WHEN facility_type LIKE '%Cornerstone%' THEN 'Cornerstone Community Center Program'
+		WHEN facility_type LIKE '%NDA%' OR facility_type LIKE '%Neighborhood Development%' THEN 'Neighborhood Development Area Program'
+		ELSE 'Other Youth Program'
+	END),
 	-- domain
 	'Education, Child Welfare, and Youth',
 	-- facilitygroup
 	'Youth Services',
 	-- facilitysubgroup
 		(CASE
+			WHEN facility_type LIKE '%COMPASS%' THEN 'Comprehensive After School System (COMPASS) Sites'
 			WHEN facility_type LIKE '%Summer%' THEN 'Summer Youth Employment Site'
 			ELSE 'Youth Centers, Literacy Programs, Job Training, and Immigrant Services'
 		END),
@@ -103,7 +111,7 @@ SELECT
 	-- operatorabbrev
 	'Non-public',
 	-- oversightagency
-	ARRAY['New York City Department of Youth and Community Development'],
+	ARRAY['NYC Department of Youth and Community Development'],
 	-- oversightabbrev
 	ARRAY['NYCDYCD'],
 	-- datecreated

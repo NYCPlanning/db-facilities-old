@@ -122,26 +122,26 @@ SELECT
 	-- operatortype
 		(CASE
 			WHEN operator_name = 'City of New York' THEN 'Public'
-			WHEN operator_name = 'New York City Health and Hospital Corporation' THEN 'Public'
+			WHEN operator_name = 'NYC Health and Hospital Corporation' THEN 'Public'
 			WHEN ownership_type = 'State' THEN 'Public'
 			ELSE 'Non-public'
 		END),	
 	-- operatorname
 		(CASE
-			WHEN operator_name = 'City of New York' THEN 'New York City Department of Health and Mental Hygiene'
-			WHEN operator_name = 'New York City Health and Hospital Corporation' THEN 'New York City Health and Hospitals Corporation'
-			WHEN ownership_type = 'State' THEN 'New York State Department of Health'
+			WHEN operator_name = 'City of New York' THEN 'NYC Department of Health and Mental Hygiene'
+			WHEN operator_name = 'NYC Health and Hospital Corporation' THEN 'NYC Health and Hospitals Corporation'
+			WHEN ownership_type = 'State' THEN 'NYS Department of Health'
 			ELSE operator_name
 		END),
 	-- operatorabbrev
 		(CASE
 			WHEN operator_name = 'City of New York' THEN 'NYCDOHMH'
-			WHEN operator_name = 'New York City Health and Hospitals Corporation' THEN 'NYCHHC'
+			WHEN operator_name = 'NYC Health and Hospitals Corporation' THEN 'NYCHHC'
 			WHEN ownership_type = 'State' THEN 'NYSDOH'
 			ELSE 'Non-public'
 		END),
 	-- oversightagency
-	ARRAY['New York State Department of Health'],
+	ARRAY['NYS Department of Health'],
 	-- oversightabbrev
 	ARRAY['NYSDOH'],
 	-- datecreated

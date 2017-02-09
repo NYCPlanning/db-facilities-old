@@ -107,7 +107,7 @@ SELECT
 	-- operatorabbrev
 	'Non-public',
 	-- oversightagency
-	ARRAY['New York City Business Integrity Commission'],
+	ARRAY['NYC Business Integrity Commission'],
 	-- oversightabbrev
 	ARRAY['NYCBIC'],
 	-- datecreated

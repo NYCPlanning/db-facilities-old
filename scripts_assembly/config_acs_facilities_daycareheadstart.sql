@@ -97,7 +97,7 @@ SELECT
 	-- utilization
 	NULL,
 	-- capacitytype
-	ARRAY['Seats'],
+	ARRAY['Seats in Contract'],
 	-- utilizationrate
 	NULL,
 	-- area
@@ -111,7 +111,7 @@ SELECT
 	-- operator abbrev
 	'Non-public',
 	-- oversightagency
-	ARRAY['New York City Administration for Childrens Services'],
+	ARRAY['NYC Administration for Childrens Services'],
 	-- oversightabbrev
 	ARRAY['NYCACS'],
 	-- datecreated
