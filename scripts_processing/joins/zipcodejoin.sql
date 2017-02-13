@@ -9,5 +9,6 @@ UPDATE facilities AS f
     FROM 
         doitt_zipcodes AS p
     WHERE
-        f.geom IS NOT NULL
-        AND ST_Intersects(p.geom,f.geom)
+        (f.geom IS NOT NULL
+        AND ST_Intersects(p.geom,f.geom))
+        OR f.zipcode = p.zipcode::integer

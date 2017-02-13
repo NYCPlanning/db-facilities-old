@@ -171,7 +171,7 @@ psql $DATABASE_URL -f ./scripts_processing/duplicates/duplicates_removeFAKE.sql
 echo 'Deduped!'
 
 echo 'Cleaning up duplicates in BIN and BBl arrays...'
-psql $DATABASE_URL -f ./scripts_processing/cleanup/removeduplicateBIN.sql
+psql $DATABASE_URL -f ./scripts_processing/cleanup/removeArrayDuplicates.sql
 echo 'Setting propertytype for street plazas...'
 psql $DATABASE_URL -f ./scripts_processing/cleanup/plazas.sql
 
