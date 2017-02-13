@@ -76,7 +76,7 @@ SELECT
 	-- facilitygroup
 	'Transportation',
 	-- facilitysubgroup
-	'Public Parking Lots and Garages',
+	'Parking Lots and Garages',
 	-- agencyclass1
 	'NA',
 	-- agencyclass2

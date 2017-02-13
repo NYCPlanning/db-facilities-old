@@ -404,7 +404,7 @@ SELECT
 				THEN 'Training and Testing'
 
 			-- Trans and Infra
-			WHEN usedec LIKE '%MUNICIPAL PARKING%' THEN 'Public Parking Lots and Garages'
+			WHEN usedec LIKE '%MUNICIPAL PARKING%' THEN 'Parking Lots and Garages'
 			WHEN usedec LIKE '%MARKET%' THEN 'Wholesale Markets'
 			WHEN usedec LIKE '%MATERIAL PROCESSING%' THEN 'Material Supplies'
 			WHEN usedec LIKE '%ASPHALT%' THEN 'Material Supplies'

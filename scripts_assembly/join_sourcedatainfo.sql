@@ -34,13 +34,13 @@ UPDATE facilities AS f
 
 UPDATE facilities AS f
     SET 
-        sourcedatasetname = ARRAY[CONCAT(f.agencysource, ': ', j.sourcedatasetname)],
-        linkdata = ARRAY[CONCAT(f.agencysource, ': ', j.linkdata)],
-        linkdownload = ARRAY[CONCAT(f.agencysource, ': ', j.linkdownload)],
-        datatype = ARRAY[CONCAT(f.agencysource, ': ', j.datatype)],
-        refreshmeans = ARRAY[CONCAT(f.agencysource, ': ', j.refreshmeans)],
-        refreshfrequency = ARRAY[CONCAT(f.agencysource, ': ', j.refreshfrequency)],
-        datesourceupdated = ARRAY[CONCAT(f.agencysource, ': ', j.datesourceupdated)]
+        sourcedatasetname = ARRAY[CONCAT(array_to_string(f.agencysource,','), ': ', j.sourcedatasetname)],
+        linkdata = ARRAY[CONCAT(array_to_string(f.agencysource,','), ': ', j.linkdata)],
+        linkdownload = ARRAY[CONCAT(array_to_string(f.agencysource,','), ': ', j.linkdownload)],
+        datatype = ARRAY[CONCAT(array_to_string(f.agencysource,','), ': ', j.datatype)],
+        refreshmeans = ARRAY[CONCAT(array_to_string(f.agencysource,','), ': ', j.refreshmeans)],
+        refreshfrequency = ARRAY[CONCAT(array_to_string(f.agencysource,','), ': ', j.refreshfrequency)],
+        datesourceupdated = ARRAY[CONCAT(array_to_string(f.agencysource,','), ': ', j.datesourceupdated)]
     FROM
         (SELECT DISTINCT ON (pgtable)
             f.pgtable,

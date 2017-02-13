@@ -44,7 +44,7 @@ COPY (
 		array_to_string(facilities.sourcedatasetname,',') AS sourcedatasetname,
 		array_to_string(facilities.linkdata,',') AS linkdata,
 		array_to_string(facilities.datesourceupdated,',') AS datesourceupdated,
-		-- facilities.processingflag,
+		facilities.processingflag,
 		-- facilities.agencyclass1,
 		-- facilities.agencyclass2,
 		-- facilities.colpusetype,

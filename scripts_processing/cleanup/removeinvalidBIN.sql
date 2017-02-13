@@ -13,7 +13,7 @@ UPDATE facilities
     SET 
         BBL = 
         	(CASE 
-        		WHEN BBL = ARRAY[''] OR BBL = ARRAY['0'] THEN NULL 
+        		WHEN BBL = ARRAY[''] OR BBL = ARRAY['0'] OR BBL = ARRAY['0000000000'] THEN NULL 
         		ELSE BBL
         	END),
         BIN = 

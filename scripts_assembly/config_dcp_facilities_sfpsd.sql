@@ -110,7 +110,7 @@ SELECT
 			WHEN ft_decode = 'City-State Park' THEN 'Parks'
 			WHEN ft_decode = 'PANYNJ Bus Terminal' THEN 'Bus Depots and Terminals'
 			WHEN ft_decode = 'Wastewater Treatment Plant' THEN 'Wastewater and Pollution Control'
-			WHEN ft_decode = 'Public Park and Ride Lot' THEN 'Public Parking Lots and Garages'
+			WHEN ft_decode = 'Public Park and Ride Lot' THEN 'Parking Lots and Garages'
 			WHEN ft_decode = 'MTA Paratransit Vehicle Depot' THEN 'Bus Depots and Terminals'
 			WHEN ft_decode = 'MTA Bus Depot' THEN 'Bus Depots and Terminals'
 			WHEN ft_decode = 'NYCT Maintenance and Other Facility' THEN 'Rail Yards and Maintenance'

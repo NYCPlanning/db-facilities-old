@@ -3,7 +3,7 @@ UPDATE facilities AS f
         borough = p.boroname,
         boroughcode = p.borocode
     FROM 
-        dcp_boroboundaries AS p
+        dcp_boroboundaries_wi AS p
     WHERE
         f.geom IS NOT NULL
         AND ST_Intersects(p.geom,f.geom)

@@ -95,7 +95,7 @@ SELECT
 	-- areatype
 	NULL,
 	-- operatortype
-	'Non-public',
+	'Public',
 	-- operatorname
 	'NYS Office of Parks, Recreation and Historic Preservation',
 	-- operatorabbrev

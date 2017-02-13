@@ -5,45 +5,48 @@
 ## NOTE: This script requires that your setup the DATABASE_URL environment variable. 
 ## Directions are in the README.md.
 
-## CREATING GEOMETRIES WITH GEOCLIENT
+# ## CREATING GEOMETRIES WITH GEOCLIENT
 
-## Run the geocoding script using address and borough - get BBL, BIN, lat/long
-echo 'Running geocoding script using address and borough...'
-time node ./scripts_processing/geoclient/address2geom_borough.js
-echo 'Done geocoding using address and borough'
+# ## Run the geocoding script using address and borough - get BBL, BIN, lat/long
+# echo 'Running geocoding script using address and borough...'
+# time node ./scripts_processing/geoclient/address2geom_borough.js
+# echo 'Done geocoding using address and borough'
 
-## Run the geocoding script using address and zipcode - get BBL, BIN, lat/long
-echo 'Running geocoding script using address and zip code...'
-time node ./scripts_processing/geoclient/address2geom_zipcode.js
-echo 'Done geocoding using address and zip code'
+# ## Run the geocoding script using address and zipcode - get BBL, BIN, lat/long
+# echo 'Running geocoding script using address and zip code...'
+# time node ./scripts_processing/geoclient/address2geom_zipcode.js
+# echo 'Done geocoding using address and zip code'
 
-## FILLING IN STANDARDIZED ADDRESS AND LOCATION DETAILS WITH GEOCLIENT
+# ## FILLING IN STANDARDIZED ADDRESS AND LOCATION DETAILS WITH GEOCLIENT
 
-# Do spatial join with borough for remaining records with geoms that have blanks
-echo 'Forcing 2D...'
-psql $DATABASE_URL -f ./scripts_processing/cleanup_spatial/force2D.sql
-echo 'Forced 2D complete'
-time psql $DATABASE_URL -f ./scripts_processing/joins/boroughjoin.sql
-## ^ added this step because a lot of zipcode Geoclient searches weren't finding results
+# # Do spatial join with borough for remaining records with geoms that have blanks
+# echo 'Forcing 2D...'
+# psql $DATABASE_URL -f ./scripts_processing/cleanup_spatial/force2D.sql
+# echo 'Forced 2D complete'
+# psql $DATABASE_URL -f ./scripts_processing/joins/boroughjoin.sql
+# ## ^ added this step because a lot of zipcode Geoclient searches weren't finding results
 
-# Run the geocoding script using address get BBL and BIN and standardize address
-echo 'Running geocoding script getting BBL using address and borough...'
-time node ./scripts_processing/geoclient/address2bbl_borough.js
-echo 'Done getting BBL using address and borough'
+# # Run the geocoding script using address get BBL and BIN and standardize address
+# echo 'Running geocoding script getting BBL using address and borough...'
+# time node ./scripts_processing/geoclient/address2bbl_borough.js
+# echo 'Done getting BBL using address and borough'
 
-echo 'Running geocoding script getting BBL using address and zipcode...'
-time node ./scripts_processing/geoclient/address2bbl_zipcode.js
-echo 'Done getting BBL using address and zipcode'
-# ^^ Hasn't been catching anything
+# echo 'Running geocoding script getting BBL using address and zipcode...'
+# time node ./scripts_processing/geoclient/address2bbl_zipcode.js
+# echo 'Done getting BBL using address and zipcode'
+# # ^^ Hasn't been catching anything
 
-## Standardizing borough and assigning borough code again because
-## Geoclient sometimes fills in Staten Is instead of Staten Island
-psql $DATABASE_URL -f ./scripts_assembly/standardize_borough.sql
+# ## Standardizing borough and assigning borough code again because
+# ## Geoclient sometimes fills in Staten Is instead of Staten Island
+psql $DATABASE_URL -f ./scripts_processing/joins/boroughjoin.sql
 psql $DATABASE_URL -f ./scripts_processing/cleanup/removeinvalidBIN.sql
 
 psql $DATABASE_URL -f ./scripts_processing/backup/copy_backup1.sql
 
 ## CREATING GEOMS USING BIN AND BBL CENTROID FOR REMAINING MISSING GEOMS
+
+echo 'Filling in missing BINS where there is a 1-1 relationship between BBL and BIN...'
+time psql $DATABASE_URL -f ./scripts_processing/bbl2bin.sql
 
 echo 'Joining on geometry using BIN...'
 time psql $DATABASE_URL -f ./scripts_processing/bin2geom.sql
@@ -76,8 +79,7 @@ echo 'Spatially joining with dcp_mappluto...'
 time psql $DATABASE_URL -f ./scripts_processing/bbljoin.sql
 echo 'Done spatially joining with dcp_mappluto'
 psql $DATABASE_URL -f ./scripts_processing/cleanup_spatial/vacuum.sql
-
-psql $DATABASE_URL -f ./scripts_processing/cleanup/standardize_address.sql
+psql $DATABASE_URL -f ./scripts_assembly/standardize_address.sql
 # ^ need to clean up addresses again after filling in with PLUTO address
 
 echo 'Filling in missing BINS where there is a 1-1 relationship between BBL and BIN...'
@@ -112,6 +114,7 @@ time psql $DATABASE_URL -f ./scripts_processing/joins/zipcodejoin.sql
 psql $DATABASE_URL -f ./scripts_processing/cleanup/removeinvalidZIP.sql
 time psql $DATABASE_URL -f ./scripts_processing/joins/counciljoin.sql
 time psql $DATABASE_URL -f ./scripts_processing/joins/tractjoin.sql
+time psql $DATABASE_URL -f ./scripts_processing/joins/boroughjoin.sql
 psql $DATABASE_URL -f ./scripts_processing/cleanup_spatial/vacuum.sql
 
 # Create backup table before merging and dropping duplicates
@@ -166,6 +169,12 @@ echo 'Cleaning up remaining dummy values used for array_agg'
 psql $DATABASE_URL -f ./scripts_processing/duplicates/duplicates_removeFAKE.sql
 
 echo 'Deduped!'
+
+echo 'Cleaning up duplicates in BIN and BBl arrays...'
+psql $DATABASE_URL -f ./scripts_processing/cleanup/removeduplicateBIN.sql
+echo 'Setting propertytype for street plazas...'
+psql $DATABASE_URL -f ./scripts_processing/cleanup/plazas.sql
+
 
 ## Final export to csv that excludes null geoms and geoms outside NYC
 

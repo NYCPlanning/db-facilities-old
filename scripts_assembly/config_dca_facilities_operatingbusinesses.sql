@@ -107,10 +107,10 @@ SELECT
 	-- facilitysubgroup
 		(CASE
 			WHEN License_Category = 'Scrap Metal Processor' THEN 'Solid Waste Processing'
-			WHEN License_Category = 'Parking Lot' THEN 'Commercial Parking Lots and Garages'
-			WHEN License_Category = 'Garage' THEN 'Commercial Parking Lots and Garages'
-	 		WHEN License_Category = 'Garage and Parking Lot' THEN 'Commercial Parking Lots and Garages'
-			WHEN License_Category = 'Tow Truck Company' THEN 'Commercial Parking Lots and Garages'
+			WHEN License_Category = 'Parking Lot' THEN 'Parking Lots and Garages'
+			WHEN License_Category = 'Garage' THEN 'Parking Lots and Garages'
+	 		WHEN License_Category = 'Garage and Parking Lot' THEN 'Parking Lots and Garages'
+			WHEN License_Category = 'Tow Truck Company' THEN 'Parking Lots and Garages'
 		END),
 	-- agencyclass1
 	License_Category,
