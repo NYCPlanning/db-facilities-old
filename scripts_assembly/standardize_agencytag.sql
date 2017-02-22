@@ -5,7 +5,10 @@ UPDATE facilities AS f
 				WHEN idagency IS NOT NULL THEN ARRAY[CONCAT(array_to_string(agencysource,','),': ', array_to_string(idagency,','))]
 			END),
 		oversightlevel = 
-			ARRAY[CONCAT(array_to_string(oversightabbrev,','),': ', array_to_string(oversightlevel,','))],
+			(CASE
+				WHEN oversightlevel @> ARRAY['Non-public Oversight'] THEN oversightlevel
+				ELSE ARRAY[CONCAT(array_to_string(oversightabbrev,','),': ', array_to_string(oversightlevel,','))]
+			END),
 		capacity = 
 			(CASE
 				WHEN capacity IS NOT NULL THEN ARRAY[CONCAT(array_to_string(agencysource,','),': ', array_to_string(capacity,','))]

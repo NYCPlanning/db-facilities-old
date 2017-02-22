@@ -35,6 +35,8 @@ WITH primaryhashs AS (
 		OR facilityname = 'MTA Bus Depot'
 		OR facilityname = 'Mta Bus Depot'
 		OR facilityname = 'Mall'
+		OR facilityname = 'Vest Pocket Park'
+		OR facilityname = 'Pier 6'
 		OR oversightabbrev = ARRAY['NYCDOE'])
 	GROUP BY
 		facilitytype,
@@ -115,6 +117,8 @@ WITH primaryhashs AS (
 		OR facilityname = 'MTA Bus Depot'
 		OR facilityname = 'Mta Bus Depot'
 		OR facilityname = 'Mall'
+		OR facilityname = 'Vest Pocket Park'
+		OR facilityname = 'Pier 6'
 		OR oversightabbrev = ARRAY['NYCDOE'])
 	GROUP BY
 		facilitytype,

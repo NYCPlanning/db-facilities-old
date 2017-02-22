@@ -28,3 +28,7 @@ UPDATE facilities AS f
 				THEN ARRAY['City-State']
 				ELSE ARRAY['Non-public Oversight']
 			END);
+
+UPDATE facilities AS f
+	SET oversightlevel = ARRAY['NYCDOE: City','NYSED: State']
+	WHERE oversightlevel = ARRAY['NYCDOE,NYSED: State'];

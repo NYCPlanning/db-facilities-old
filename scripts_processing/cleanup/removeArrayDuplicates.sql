@@ -322,3 +322,30 @@ SET
 FROM
     temp2 AS j
 WHERE f.hash = j.hash;
+
+-- Update pgtable arrays with distinct
+WITH temp AS (
+SELECT 
+    hash, 
+    unnest(pgtable) AS pgtables
+FROM
+    facilities as j
+WHERE
+    pgtable IS NOT NULL
+    AND pgtable <> ARRAY['']),
+
+temp2 AS (
+SELECT
+    hash,
+    array_agg(distinct pgtables) as pgtable
+FROM
+    temp
+GROUP BY 
+    hash)
+
+UPDATE facilities AS f
+SET
+    pgtable = j.pgtable
+FROM
+    temp2 AS j
+WHERE f.hash = j.hash;

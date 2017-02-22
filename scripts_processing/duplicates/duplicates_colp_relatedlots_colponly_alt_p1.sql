@@ -32,6 +32,8 @@ WITH primaryhashs AS (
 		AND facilityname <> 'MTA Bus Depot'
 		AND facilityname <> 'Mta Bus Depot'
 		AND facilityname <> 'Mall'
+		AND facilityname <> 'Vest Pocket Park'
+		AND facilityname <> 'Pier 6'
 		AND oversightabbrev <> ARRAY['NYCDOE']
 	GROUP BY
 		facilitytype,
@@ -107,6 +109,8 @@ WITH primaryhashs AS (
 		AND facilityname <> 'MTA Bus Depot'
 		AND facilityname <> 'Mta Bus Depot'
 		AND facilityname <> 'Mall'
+		AND facilityname <> 'Vest Pocket Park'
+		AND facilityname <> 'Pier 6'
 		AND oversightabbrev <> ARRAY['NYCDOE']
 	GROUP BY
 		facilitytype,
