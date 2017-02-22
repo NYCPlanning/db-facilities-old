@@ -54,7 +54,7 @@ SELECT
 	-- idagency
 	ARRAY[program_number],
 	-- facilityname
-	provider_name,
+	program_name,
 	-- address number
 	split_part(trim(both ' ' from street), ' ', 1),
 	-- street name
