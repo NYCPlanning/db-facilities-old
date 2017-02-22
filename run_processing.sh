@@ -115,6 +115,8 @@ psql $DATABASE_URL -f ./scripts_processing/cleanup/removeinvalidZIP.sql
 time psql $DATABASE_URL -f ./scripts_processing/joins/counciljoin.sql
 time psql $DATABASE_URL -f ./scripts_processing/joins/tractjoin.sql
 time psql $DATABASE_URL -f ./scripts_processing/joins/boroughjoin.sql
+psql $DATABASE_URL -f ./scripts_processing/cleanup/cleanup_cityboro.sql
+psql $DATABASE_URL -f ./scripts_assembly/standardize_borough.sql
 psql $DATABASE_URL -f ./scripts_processing/cleanup_spatial/vacuum.sql
 
 # Create backup table before merging and dropping duplicates

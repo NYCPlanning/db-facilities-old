@@ -87,7 +87,6 @@ pgtable text ARRAY,
 -- details on duplicate records merged into the primary record
 uid_merged text ARRAY,
 hash_merged text ARRAY,
-idagency_merged text ARRAY,
 -- administrative location information
 -- admin_addressnumber text,
 -- admin_streetname text,

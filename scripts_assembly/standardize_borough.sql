@@ -47,4 +47,4 @@ UPDATE facilities
                 WHEN trim(borough, ' ') = 'STATEN ISLAND' THEN 5
                 WHEN trim(borough, ' ') = 'Staten Island' THEN 5
                 WHEN trim(borough, ' ') = 'Staten Is' THEN 5
-            END)
+            END);

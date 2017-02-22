@@ -65,7 +65,6 @@ COPY (
 		array_to_string(facilities.pgtable,',') AS pgtable,
 		array_to_string(facilities.uid_merged,',') AS uid_merged,
 		array_to_string(facilities.hash_merged,',') AS hash_merged,
-		array_to_string(facilities.idagency_merged,',') AS idagency_merged,
 		-- facilities.buildingid,
 		-- facilities.buildingname,
 		-- facilities.schoolorganizationlevel,
