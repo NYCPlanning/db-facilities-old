@@ -54,9 +54,9 @@ SELECT
 			WHEN X <> '#N/A' THEN ST_Transform(ST_SetSRID(ST_MakePoint(X::double precision, Y::double precision),2263),4326)
 		END),
 	-- idagency
-	ARRAY[Bldg_ID],
+	ARRAY[Org_ID],
 	-- facilityname
-	initcap(Bldg_Name),
+	initcap(Organization_Name),
 	-- addressnumber
 		(CASE
 			WHEN Address <> '#N/A' THEN split_part(Address,' ',1)
