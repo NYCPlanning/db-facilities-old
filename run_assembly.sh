@@ -114,6 +114,7 @@ psql $DATABASE_URL -f ./scripts_assembly/standardize_fixallcaps.sql
 psql $DATABASE_URL -f ./scripts_assembly/standardize_capacity.sql
 psql $DATABASE_URL -f ./scripts_assembly/standardize_oversightlevel.sql
 psql $DATABASE_URL -f ./scripts_assembly/standardize_agencytag.sql
+psql $DATABASE_URL -f ./scripts_assembly/standardize_trim.sql
 psql $DATABASE_URL -f ./scripts_assembly/standardize_factypes.sql
 ## Standardizing borough and assigning borough code
 psql $DATABASE_URL -f ./scripts_assembly/standardize_borough.sql

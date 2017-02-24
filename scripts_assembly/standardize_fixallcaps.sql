@@ -1,5 +1,26 @@
 -- REMEMBER NOT TO COPY AND PASTE FACILITYNAME IN THE OTHER FIELDS
 
+UPDATE facilities
+	SET facilitytype = initcap(facilitytype)
+	WHERE
+		upper(facilitytype) = facilitytype
+		AND facilitytype <> 'IMPACT'
+		AND facilitytype <> 'COMPASS'
+		AND facilitytype <> 'WIOA CUNY MOU'
+	;
+
+UPDATE facilities
+	SET facilityname = initcap(facilityname)
+	WHERE
+		upper(facilityname) = facilityname
+	;
+
+UPDATE facilities
+	SET operatorname = initcap(operatorname)
+	WHERE
+		upper(operatorname) = operatorname
+	;
+
 UPDATE facilities AS f
     SET 
 		facilityname =
@@ -194,12 +215,3 @@ UPDATE facilities AS f
 			'Dcc', 'DCC'),
 			'Ura', 'URA'),
 			'Ta ', 'TA ');
-
-UPDATE facilities
-	SET facilitytype = initcap(facilitytype)
-	WHERE
-		upper(facilitytype) = facilitytype
-		AND facilitytype <> 'IMPACT'
-		AND facilitytype <> 'COMPASS'
-		AND facilitytype <> 'WIOA CUNY MOU'
-	;
