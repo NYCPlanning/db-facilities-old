@@ -357,6 +357,7 @@ WHERE
 	-- flag <> 'contracts'
 	-- AND 
 	Program_name NOT LIKE '%Summer Youth%'
+	AND contract_end_date::date > CURRENT_TIMESTAMP
 GROUP BY
 	the_geom,
 	agency,
