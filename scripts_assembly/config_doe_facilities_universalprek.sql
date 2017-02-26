@@ -79,7 +79,7 @@ SELECT
 		(CASE
 			WHEN PreK_Type = 'DOE' THEN 'DOE Universal Pre-K'
 			WHEN PreK_Type = 'CHARTER' OR PreK_Type = 'Charter' THEN 'DOE Universal Pre-K - Charter '
-			WHEN PreK_Type = 'NYCEEC' THEN 'NYC Early Education Center'
+			WHEN PreK_Type = 'NYCEEC' THEN 'Early Education Program'
 		END),
 	-- domain
 	'Education, Child Welfare, and Youth',
@@ -96,7 +96,7 @@ SELECT
 	-- utilization
 	NULL,
 	-- capacitytype
-	ARRAY['Seats in Contract'],
+	ARRAY['Seats Overseen by DOE'],
 	-- utilizationrate
 	NULL,
 	-- area
