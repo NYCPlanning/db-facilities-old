@@ -354,9 +354,13 @@ SELECT
 FROM
 	hhs_facilities_acceleratorall
 WHERE
-	-- flag <> 'contracts'
-	-- AND 
 	Program_name NOT LIKE '%Summer Youth%'
+	AND Program_name NOT LIKE '%Specialized FFC%'
+	AND Program_name NOT LIKE '%Specialized NSP%'
+	AND Program_name NOT LIKE '%Specialized PC%'
+	AND Program_name NOT LIKE '%HIV%'
+	AND Program_name NOT LIKE '%AIDS%'
+	AND Program_name NOT LIKE '%HASA%'
 	AND contract_end_date::date > CURRENT_TIMESTAMP
 GROUP BY
 	the_geom,
