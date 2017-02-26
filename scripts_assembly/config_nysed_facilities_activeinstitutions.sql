@@ -91,8 +91,8 @@ SELECT
 	NULL,
 	-- facilitytype
 		(CASE
-			WHEN Institution_Sub_Type_Desc LIKE '%PUBLIC SCHOOL%'
-				THEN 'Public School'
+			WHEN Institution_Sub_Type_Desc LIKE '%CHARTER SCHOOL%'
+				THEN 'Charter School'
 			WHEN Institution_Type_Desc = 'CUNY'
 				THEN CONCAT('CUNY - ', initcap(right(Institution_Sub_Type_Desc,-5)))
 			WHEN Institution_Type_Desc = 'SUNY' 
@@ -113,8 +113,6 @@ SELECT
 			WHEN Institution_Sub_Type_Desc LIKE '%AHSEP%'
 				THEN initcap(split_part(Institution_Sub_Type_Desc,'(',1))
 			ELSE initcap(Institution_Sub_Type_Desc)
-			-- WHEN (Institution_Type_Desc <> 'CUNY') AND (Institution_Type_Desc <> 'CUNY') AND (Institution_Type_Desc <> 'NON-PUBLIC SCHOOLS')
-			-- 	THEN CONCAT(initcap(Institution_Type_Desc),' - ',initcap(Institution_Sub_Type_Desc))
 		END),
 	-- domain
 		(CASE
@@ -142,10 +140,11 @@ SELECT
 			WHEN Institution_Sub_Type_Desc LIKE '%HISTORICAL%' THEN 'Historical Societies'
 			WHEN Institution_Type_Desc LIKE '%LIBRARIES%' THEN 'Academic and Special Libraries'
 			WHEN Institution_Type_Desc LIKE '%CHILD NUTRITION%' THEN 'Child Nutrition'
+			WHEN Institution_Sub_Type_Desc LIKE '%PRE-SCHOOL%' AND Institution_Type_Desc LIKE '%DISABILITIES%' 
+				THEN 'Preschools for Students with Disabilities'
 			WHEN (Institution_Type_Desc LIKE '%DISABILITIES%')
 				THEN 'Other Schools Serving Students with Disabilities'
 			WHEN Institution_Sub_Type_Desc LIKE '%PRE-K%' THEN 'Offices'
-			WHEN Institution_Sub_Type_Desc LIKE '%PRE-SCHOOL%' THEN 'Preschools for Students with Disabilities'
 			WHEN (Institution_Type_Desc LIKE 'PUBLIC%') OR (Institution_Sub_Type_Desc LIKE 'PUBLIC%') THEN 'Public Schools'
 			WHEN (Institution_Type_Desc LIKE '%COLLEGE%') OR (Institution_Type_Desc LIKE '%CUNY%') OR 
 				(Institution_Type_Desc LIKE '%SUNY%') OR (Institution_Type_Desc LIKE '%SUNY%')
@@ -256,6 +255,7 @@ FROM
 		) AS nysed_facilities_activeinstitutions
 WHERE
 	(Institution_Type_Desc = 'PUBLIC SCHOOLS' AND Institution_Sub_Type_Desc LIKE '%GED%')
+	OR Institution_Sub_Type_Desc LIKE '%CHARTER SCHOOL%'
 	OR (Institution_Type_Desc <> 'PUBLIC SCHOOLS'
 	AND Institution_Type_Desc <> 'NON-IMF SCHOOLS'
 	AND Institution_Type_Desc <> 'GOVERNMENT AGENCIES' -- MAY ACTUALLY WANT TO USE THESE
