@@ -52,7 +52,7 @@ SELECT
 	-- geom
 	geom,
 	-- idagency
-	NULL,
+	mapid,
 	-- facilityname
 	name,
 	-- addressnumber
@@ -60,7 +60,7 @@ SELECT
 	-- streetname
 	NULL,
 	-- address
-	NULL,
+	Street,
 	-- borough
 		(CASE
 			WHEN boro_code = 1 THEN 'Manhattan'
@@ -84,9 +84,9 @@ SELECT
 	-- facilitysubgroup
 	'Streetscapes, Plazas, and Malls',
 	-- agencyclass1
-	'NA',
+	NULL,
 	-- agencyclass2
-	'NA',
+	NULL,
 	-- capacity
 	NULL,
 	-- utilization

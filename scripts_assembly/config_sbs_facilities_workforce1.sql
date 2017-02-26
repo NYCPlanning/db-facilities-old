@@ -50,27 +50,27 @@ SELECT
 	-- hash,
 	md5(CAST((sbs_facilities_workforce1.*) AS text)),
 	-- geom
-	NULL,
+	ST_SetSRID(ST_MakePoint(Longitude, Latitude),4326),
 	-- idagency
 	NULL,
 	-- facilityname
-	name_of_center,
+	Name,
 	-- addressnumber
-	split_part(trim(both ' ' from address_line_1), ' ', 1),
+	Address_Number,
 	-- streetname
-	trim(both ' ' from substr(trim(both ' ' from split_part(address_line_1,',',1)), strpos(trim(both ' ' from split_part(address_line_1,',',1)), ' ')+1, (length(trim(both ' ' from split_part(address_line_1,',',1)))-strpos(trim(both ' ' from split_part(address_line_1,',',1)), ' ')))),
+	Street,
 	-- address
- 	split_part(address_line_1,',',1),
+ 	Street_Address_1,
 	-- borough
-	NULL,
+	Borough,
 	-- zipcode
-	ROUND(zip_code::numeric,0),
+	ZIP,
 	-- bbl
 	NULL,
 	-- bin
 	NULL,
 	-- facilitytype
-	'Workforce1 Career Centers',
+	Location_Type,
 	-- domain
 	'Health and Human Services',
 	-- facilitygroup
