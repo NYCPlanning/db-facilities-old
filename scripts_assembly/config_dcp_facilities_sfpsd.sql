@@ -50,7 +50,27 @@ groupquarters
 )
 SELECT
 	-- pgtable
-	ARRAY['dcp_facilities_sfpsd'],
+	ARRAY[(CASE 
+		WHEN ft_decode = 'PANYNJ Bus Terminal' THEN 'panynj_facilities_sfpsd'
+		WHEN ft_decode = 'Wastewater Treatment Plant' THEN 'nycdep_facilities_sfpsd'
+		WHEN ft_decode = 'MTA Paratransit Vehicle Depot' THEN 'mta_facilities_sfpsd'
+		WHEN ft_decode = 'MTA Bus Depot' THEN 'mta_facilities_sfpsd'
+		WHEN ft_decode = 'NYCT Maintenance and Other Facility' THEN 'mta_facilities_sfpsd'
+		WHEN ft_decode = 'NYCT Subway Yard' THEN 'mta_facilities_sfpsd'
+		WHEN ft_decode = 'Metro-North Maintenance and Other Facility' THEN 'mta_facilities_sfpsd'
+		WHEN ft_decode = 'Metro-North Yard' THEN 'mta_facilities_sfpsd'
+		WHEN ft_decode = 'LIRR Maintenance and Other Facility' THEN 'mta_facilities_sfpsd'
+		WHEN ft_decode = 'LIRR Yard' THEN 'mta_facilities_sfpsd'
+		WHEN ft_decode = 'Amtrak Maintenance and Other Facility' THEN 'amtrak_facilities_sfpsd'
+		WHEN ft_decode = 'Amtrak Yard' THEN 'amtrak_facilities_sfpsd'
+		WHEN agencyoper = '24.0000000000' THEN 'nysdot_facilities_sfpsd'
+		WHEN agencyoper = '63.0000000000' THEN 'nysdot_facilities_sfpsd'
+		WHEN agencyoper = '80.0000000000' THEN 'hrpt_facilities_sfpsd'
+		WHEN agencyoper = '81.0000000000' THEN 'bbpc_facilities_sfpsd'
+		WHEN agencyoper = '83.0000000000' THEN 'rioc_facilities_sfpsd'
+		WHEN agencyoper = '84.0000000000' THEN 'tgi_facilities_sfpsd'
+		ELSE 'mta_facilities_sfpsd'
+	END)],
 	-- hash,
 	md5(CAST((dcp_facilities_sfpsd.*) AS text)),
 	-- geom
@@ -205,7 +225,7 @@ SELECT
 			WHEN ft_decode = 'LIRR Yard' THEN 'Metropolitan Transportation Authority'
 			WHEN ft_decode = 'Amtrak Maintenance and Other Facility' THEN 'Amtrak'
 			WHEN ft_decode = 'Amtrak Yard' THEN 'Amtrak'
-			WHEN agencyoper = '24.0000000000' THEN 'NYC Department of Transportation'
+			WHEN agencyoper = '24.0000000000' THEN 'NYS Department of Transportation'
 			WHEN agencyoper = '63.0000000000' THEN 'NYS Department of Transportation'
 			WHEN agencyoper = '80.0000000000' THEN 'Hudson River Park Trust'
 			WHEN agencyoper = '81.0000000000' THEN 'Brooklyn Bridge Park Corporation'
@@ -227,7 +247,7 @@ SELECT
 			WHEN ft_decode = 'LIRR Yard' THEN 'MTA'
 			WHEN ft_decode = 'Amtrak Maintenance and Other Facility' THEN 'Amtrak'
 			WHEN ft_decode = 'Amtrak Yard' THEN 'Amtrak'
-			WHEN agencyoper = '24.0000000000' THEN 'NYCDOT'
+			WHEN agencyoper = '24.0000000000' THEN 'NYSDOT'
 			WHEN agencyoper = '63.0000000000' THEN 'NYSDOT'
 			WHEN agencyoper = '80.0000000000' THEN 'HRPT'
 			WHEN agencyoper = '81.0000000000' THEN 'BBPC'
@@ -241,7 +261,7 @@ SELECT
 		ARRAY[(CASE 
 			WHEN ft_decode = 'PANYNJ Bus Terminal' THEN 'PANYNJ'
 			WHEN ft_decode = 'Wastewater Treatment Plant' THEN 'NYCDEP'
-			WHEN ft_decode = 'MTA Paratransit Vehicle Depot' THEN 'Non-public'
+			WHEN ft_decode = 'MTA Paratransit Vehicle Depot' THEN 'MTA'
 			WHEN ft_decode = 'MTA Bus Depot' THEN 'MTA'
 			WHEN ft_decode = 'NYCT Maintenance and Other Facility' THEN 'MTA'
 			WHEN ft_decode = 'NYCT Subway Yard' THEN 'MTA'
@@ -251,7 +271,7 @@ SELECT
 			WHEN ft_decode = 'LIRR Yard' THEN 'MTA'
 			WHEN ft_decode = 'Amtrak Maintenance and Other Facility' THEN 'Amtrak'
 			WHEN ft_decode = 'Amtrak Yard' THEN 'Amtrak'
-			WHEN agencyoper = '24.0000000000' THEN 'NYCDOT'
+			WHEN agencyoper = '24.0000000000' THEN 'NYSDOT'
 			WHEN agencyoper = '63.0000000000' THEN 'NYSDOT'
 			WHEN agencyoper = '80.0000000000' THEN 'HRPT'
 			WHEN agencyoper = '81.0000000000' THEN 'BBPC'

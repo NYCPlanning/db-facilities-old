@@ -51,7 +51,13 @@ facilities (
 )
 SELECT
 	-- pgtable
-	ARRAY['togeocode'],
+	ARRAY[(CASE 
+		WHEN oversightabbrev = 'NYSOCFS' THEN 'nysocfs_facilities_facilities'
+		WHEN oversightabbrev = 'USCOURTS' THEN 'uscourts_facilities_courts'
+		WHEN oversightabbrev = 'NYCDOC' THEN 'nycdoc_facilities_corrections'
+		WHEN oversightabbrev = 'NYCOURTS' THEN 'nycourts_facilities_courts'
+		WHEN oversightabbrev = 'NYSDOCCS' THEN 'nysdoccs_facilities_corrections'
+	END)],
 	-- hash,
 	md5(CAST((togeocode.*) AS text)),
 	-- geom

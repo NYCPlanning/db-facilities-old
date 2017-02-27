@@ -61,6 +61,7 @@ UPDATE facilities AS f
         ) AS j
     WHERE
         f.pgtable = j.pgtable
+        AND f.oversightagency = j.oversightagency
         AND (f.pgtable = ARRAY['togeocode']
         OR f.pgtable = ARRAY['dcp_facilities_sfpsd'])
     ;

@@ -79,7 +79,11 @@ psql $DATABASE_URL -f ./scripts_assembly/config_doe_facilities_universalprek.sql
 psql $DATABASE_URL -f ./scripts_assembly/config_doe_facilities_schoolsbluebook.sql ##OK
 psql $DATABASE_URL -f ./scripts_assembly/config_dohmh_facilities_daycare.sql ##Needs to be geocoded
 psql $DATABASE_URL -f ./scripts_assembly/config_dot_facilities_pedplazas.sql ##OK
-psql $DATABASE_URL -f ./scripts_assembly/config_dot_facilities_publicparking.sql ##OK
+psql $DATABASE_URL -f ./scripts_assembly/config_dot_facilities_bridgehouses.sql ##OK
+psql $DATABASE_URL -f ./scripts_assembly/config_dot_facilities_ferryterminalslandings.sql ##OK
+psql $DATABASE_URL -f ./scripts_assembly/config_dot_facilities_mannedfacilities.sql ##OK
+psql $DATABASE_URL -f ./scripts_assembly/config_dot_facilities_parkingfacilities.sql ##OK
+# psql $DATABASE_URL -f ./scripts_assembly/config_dot_facilities_publicparking.sql ##Superceded by new data from DOT but may be used for supplmental capacity #s
 psql $DATABASE_URL -f ./scripts_assembly/config_dpr_facilities_parksproperties.sql ##OK
 psql $DATABASE_URL -f ./scripts_assembly/config_dsny_facilities_mtsgaragemaintenance.sql ##OK
 psql $DATABASE_URL -f ./scripts_assembly/config_dycd_facilities_compass.sql ##Needs to be geocoded
@@ -87,6 +91,7 @@ psql $DATABASE_URL -f ./scripts_assembly/config_dycd_facilities_otherprograms.sq
 psql $DATABASE_URL -f ./scripts_assembly/config_foodbankny_facilities_foodbanks.sql ##OK
 # psql $DATABASE_URL -f ./scripts_assembly/config_hhc_facilities_hospitals.sql ##OK
 psql $DATABASE_URL -f ./scripts_assembly/config_hhs_facilities_acceleratorall.sql ##OK need to review facility categories
+psql $DATABASE_URL -f ./scripts_assembly/config_hra_facilities_centers.sql
 # psql $DATABASE_URL -f ./scripts_assembly/config_nycha_facilities_communitycenters.sql ##Not using yet - Needs to be geocoded
 psql $DATABASE_URL -f ./scripts_assembly/config_nycha_facilities_policeservice.sql ##OK
 psql $DATABASE_URL -f ./scripts_assembly/config_nysoasas_facilities_programs.sql ##Needs to be geocoded
