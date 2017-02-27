@@ -142,6 +142,10 @@ echo 'Merging and dropping remaining duplicates, pre-COLP...'
 psql $DATABASE_URL -f ./scripts_processing/duplicates/duplicates_remaining.sql
 psql $DATABASE_URL -f ./scripts_processing/duplicates/duplicates_removeFAKE.sql
 
+echo 'Merging and dropping remaining duplicates, pre-COLP...'
+psql $DATABASE_URL -f ./scripts_processing/duplicates/duplicates_sfpsd_relatedlots.sql
+psql $DATABASE_URL -f ./scripts_processing/duplicates/duplicates_removeFAKE.sql
+
 echo 'Creating backup before merging and dropping COLP duplicates...'
 psql $DATABASE_URL -f ./scripts_processing/backup/copy_backup4.sql
 

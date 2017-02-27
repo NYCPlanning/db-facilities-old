@@ -46,37 +46,40 @@ facilities (
 )
 SELECT
 	-- pgtable
-	ARRAY['dycd_facilities_compass'],
+	ARRAY['hra_facilities_centers'],
 	-- hash,
-	md5(CAST((Address_Number,Street_Name,Borough,BBLs,BIN,X_Coordinate,Y_Coordinate,Provider_Name,Date_Source_Data_Updated) AS text)),
+	md5(CAST((hra_facilities_centers.*) AS text)),
 	-- geom
-	NULL,
+	NULL,	
 	-- idagency
 	NULL,
 	-- facilityname
-	provider_name,
+	name,
 	-- addressnumber
-	address_number,
+	split_part(trim(both ' ' from Address), ' ', 1),
 	-- streetname
-	initcap(street_name),
+	initcap(split_part(trim(both ' ' from Address), ' ', 2)),
 	-- address
-	CONCAT(address_number,' ',initcap(street_name)),
+	initcap(Address),
 	-- borough
 	initcap(Borough),
 	-- zipcode
-	NULL,
+	zip::integer,
 	-- bbl
 	NULL,
 	-- bin
 	NULL,
 	-- facilitytype
-	'COMPASS Program',
+	REPLACE(Type,'HASA','HIV/AIDS Services'),
 	-- domain
-	'Education, Child Welfare, and Youth',
+	'Health and Human Services',
 	-- facilitygroup
-	'Youth Services',
+	'Human Services',
 	-- facilitysubgroup
-	'Comprehensive After School System (COMPASS) Sites',
+	(CASE
+		WHEN type = 'Job Centers' THEN 'Workforce Development'
+		ELSE 'Financial Assistance and Social Services'
+	END),
 	-- agencyclass1
 	NULL,
 	-- agencyclass2
@@ -94,15 +97,15 @@ SELECT
 	-- areatype
 	NULL,
 	-- operatortype
-	'Non-public',
+	'Public',
 	-- operatorname
-	provider_name,
+	'NYC Human Resources Administration/Department of Social Services'
 	-- operatorabbrev
-	'Non-public',
+	'NYCHRA/DSS',
 	-- oversightagency
-	ARRAY['NYC Department of Youth and Community Development'],
+	ARRAY['NYC Human Resources Administration/Department of Social Services'],
 	-- oversightabbrev
-	ARRAY['NYCDYCD'],
+	ARRAY['NYCHRA/DSS'],
 	-- datecreated
 	CURRENT_TIMESTAMP,
 	-- buildingid
@@ -114,7 +117,7 @@ SELECT
 	-- children
 	FALSE,
 	-- youth
-	TRUE,
+	FALSE,
 	-- senior
 	FALSE,
 	-- family
@@ -132,14 +135,4 @@ SELECT
 	-- groupquarters
 	FALSE
 FROM 
-	dycd_facilities_compass
-GROUP BY
-	Address_Number,
-	Street_Name,
-	Borough,
-	BBLs,
-	BIN,
-	X_Coordinate,
-	Y_Coordinate,
-	Provider_Name,
-	Date_Source_Data_Updated
+	hra_facilities_centers

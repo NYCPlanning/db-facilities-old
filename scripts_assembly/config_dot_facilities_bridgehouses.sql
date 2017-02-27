@@ -46,23 +46,23 @@ facilities (
 )
 SELECT
 	-- pgtable
-	ARRAY['dycd_facilities_compass'],
+	ARRAY['dot_facilities_bridgehouses'],
 	-- hash,
-	md5(CAST((Address_Number,Street_Name,Borough,BBLs,BIN,X_Coordinate,Y_Coordinate,Provider_Name,Date_Source_Data_Updated) AS text)),
+	md5(CAST((dot_facilities_bridgehouses.*) AS text)),
 	-- geom
-	NULL,
+	geom,
 	-- idagency
 	NULL,
 	-- facilityname
-	provider_name,
+	site,
 	-- addressnumber
-	address_number,
+	NULL,
 	-- streetname
-	initcap(street_name),
+	NULL,
 	-- address
-	CONCAT(address_number,' ',initcap(street_name)),
+	NULL,
 	-- borough
-	initcap(Borough),
+	borough,
 	-- zipcode
 	NULL,
 	-- bbl
@@ -70,13 +70,13 @@ SELECT
 	-- bin
 	NULL,
 	-- facilitytype
-	'COMPASS Program',
+	'Bridge House',
 	-- domain
-	'Education, Child Welfare, and Youth',
+	'Core Infrastructure and Transportation',
 	-- facilitygroup
-	'Youth Services',
+	'Transportation',
 	-- facilitysubgroup
-	'Comprehensive After School System (COMPASS) Sites',
+	'Other Transportation',
 	-- agencyclass1
 	NULL,
 	-- agencyclass2
@@ -94,15 +94,15 @@ SELECT
 	-- areatype
 	NULL,
 	-- operatortype
-	'Non-public',
+	'Public',
 	-- operatorname
-	provider_name,
+	'NYC Department of Transportation',
 	-- operatorabbrev
-	'Non-public',
+	'NYCDOT',
 	-- oversightagency
-	ARRAY['NYC Department of Youth and Community Development'],
+	ARRAY['NYC Department of Transportation'],
 	-- oversightabbrev
-	ARRAY['NYCDYCD'],
+	ARRAY['NYCDOT'],
 	-- datecreated
 	CURRENT_TIMESTAMP,
 	-- buildingid
@@ -114,7 +114,7 @@ SELECT
 	-- children
 	FALSE,
 	-- youth
-	TRUE,
+	FALSE,
 	-- senior
 	FALSE,
 	-- family
@@ -131,15 +131,5 @@ SELECT
 	FALSE,
 	-- groupquarters
 	FALSE
-FROM 
-	dycd_facilities_compass
-GROUP BY
-	Address_Number,
-	Street_Name,
-	Borough,
-	BBLs,
-	BIN,
-	X_Coordinate,
-	Y_Coordinate,
-	Provider_Name,
-	Date_Source_Data_Updated
+FROM
+	dot_facilities_bridgehouses

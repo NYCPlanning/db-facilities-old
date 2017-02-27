@@ -46,23 +46,32 @@ facilities (
 )
 SELECT
 	-- pgtable
-	ARRAY['dycd_facilities_compass'],
+	ARRAY['dot_facilities_mannedfacilities'],
 	-- hash,
-	md5(CAST((Address_Number,Street_Name,Borough,BBLs,BIN,X_Coordinate,Y_Coordinate,Provider_Name,Date_Source_Data_Updated) AS text)),
+	md5(CAST((dot_facilities_mannedfacilities.*) AS text)),
 	-- geom
-	NULL,
+	geom,
 	-- idagency
 	NULL,
 	-- facilityname
-	provider_name,
+	oper_label,
 	-- addressnumber
-	address_number,
+	(CASE 
+		WHEN arc_street IS NOT NULL THEN split_part(trim(both ' ' from REPLACE(arc_street,' - ','-')), ' ', 1)
+		ELSE NULL
+	END),
 	-- streetname
-	initcap(street_name),
+	(CASE 
+		WHEN arc_street IS NOT NULL THEN trim(both ' ' from substr(trim(both ' ' from REPLACE(arc_street,' - ','-')), strpos(trim(both ' ' from REPLACE(arc_street,' - ','-')), ' ')+1, (length(trim(both ' ' from REPLACE(arc_street,' - ','-')))-strpos(trim(both ' ' from REPLACE(arc_street,' - ','-')), ' '))))
+		ELSE NULL
+	END),
 	-- address
-	CONCAT(address_number,' ',initcap(street_name)),
+	(CASE 
+		WHEN arc_street IS NOT NULL THEN arc_street
+		ELSE NULL
+	END),
 	-- borough
-	initcap(Borough),
+	NULL,
 	-- zipcode
 	NULL,
 	-- bbl
@@ -70,13 +79,13 @@ SELECT
 	-- bin
 	NULL,
 	-- facilitytype
-	'COMPASS Program',
+	'Manned Transportation Facility',
 	-- domain
-	'Education, Child Welfare, and Youth',
+	'Core Infrastructure and Transportation',
 	-- facilitygroup
-	'Youth Services',
+	'Transportation',
 	-- facilitysubgroup
-	'Comprehensive After School System (COMPASS) Sites',
+	'Other Transportation',
 	-- agencyclass1
 	NULL,
 	-- agencyclass2
@@ -94,15 +103,15 @@ SELECT
 	-- areatype
 	NULL,
 	-- operatortype
-	'Non-public',
+	'Public',
 	-- operatorname
-	provider_name,
+	'NYC Department of Transportation',
 	-- operatorabbrev
-	'Non-public',
+	'NYCDOT',
 	-- oversightagency
-	ARRAY['NYC Department of Youth and Community Development'],
+	ARRAY['NYC Department of Transportation'],
 	-- oversightabbrev
-	ARRAY['NYCDYCD'],
+	ARRAY['NYCDOT'],
 	-- datecreated
 	CURRENT_TIMESTAMP,
 	-- buildingid
@@ -114,7 +123,7 @@ SELECT
 	-- children
 	FALSE,
 	-- youth
-	TRUE,
+	FALSE,
 	-- senior
 	FALSE,
 	-- family
@@ -131,15 +140,5 @@ SELECT
 	FALSE,
 	-- groupquarters
 	FALSE
-FROM 
-	dycd_facilities_compass
-GROUP BY
-	Address_Number,
-	Street_Name,
-	Borough,
-	BBLs,
-	BIN,
-	X_Coordinate,
-	Y_Coordinate,
-	Provider_Name,
-	Date_Source_Data_Updated
+FROM
+	dot_facilities_mannedfacilities

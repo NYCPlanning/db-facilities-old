@@ -458,7 +458,8 @@ SELECT
 				OR agency LIKE '%HPD%')
 				AND usedec LIKE '%RESIDENTIAL%'
 				THEN 'Public or Affordable Housing'
-			WHEN usedec LIKE '%COMMUNITY CENTER%' THEN 'Community Centers and Community School Programs'
+			WHEN usedec LIKE '%COMMUNITY CENTER%' OR (agency LIKE '%HRA%' AND name LIKE '%CENTER%') 
+				THEN 'Community Centers and Community School Programs'
 
 			-- Parks, Cultural
 			WHEN usedec LIKE '%LIBRARY%' THEN 'Public Libraries'

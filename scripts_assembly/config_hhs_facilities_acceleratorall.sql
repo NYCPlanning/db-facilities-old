@@ -157,6 +157,8 @@ SELECT
 			WHEN agency LIKE '%Homeless%'
 				THEN 'Shelters and Transitional Housing'
 
+			WHEN agency LIKE '%Health%' AND Program_name LIKE '%Clinic%'
+				THEN 'Hospitals and Clinics'
 			WHEN agency LIKE '%Health%' AND Program_name LIKE '%HPDP%'
 				THEN 'Health Promotion and Disease Prevention'
 			WHEN agency LIKE '%Health%' AND Program_name LIKE '%Housing%'

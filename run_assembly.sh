@@ -72,7 +72,7 @@ psql $DATABASE_URL -f ./scripts_assembly/config_dca_facilities_operatingbusiness
 psql $DATABASE_URL -f ./scripts_assembly/config_dcas_facilities_colp.sql ##Needs to be joined to geom
 psql $DATABASE_URL -f ./scripts_assembly/config_dcla_facilities_culturalinstitutions.sql ##Needs to be geocoded
 psql $DATABASE_URL -f ./scripts_assembly/config_dcp_facilities_sfpsd.sql ##OK
-psql $DATABASE_URL -f ./scripts_assembly/config_dhs_facilities_shelters.sql
+# psql $DATABASE_URL -f ./scripts_assembly/config_dhs_facilities_shelters.sql
 psql $DATABASE_URL -f ./scripts_assembly/config_dfta_facilities_contracts.sql ##Needs to be geocoded
 psql $DATABASE_URL -f ./scripts_assembly/config_doe_facilities_busroutesgarages.sql ##OK
 psql $DATABASE_URL -f ./scripts_assembly/config_doe_facilities_universalprek.sql ##OK
