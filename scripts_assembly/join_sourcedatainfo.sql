@@ -22,7 +22,7 @@ UPDATE facilities AS f
             FROM
             facilities AS f
             LEFT JOIN
-            facilities_data_sources AS d
+            facilities_datasources AS d
             ON
             f.pgtable = ARRAY[d.pgtable]
         ) AS j

@@ -60,7 +60,8 @@ SELECT
 	-- facilityname
 		(CASE
 			WHEN name <> ' ' THEN initcap(name)
-			ELSE 'Unnamed'
+			WHEN name = ' ' AND usedec LIKE '%NO USE%' THEN 'City Owned Property'
+			ELSE initcap(REPLACE(usedec, 'OTHER ', ''))
 		END),
 	-- addressnumber
 	split_part(trim(both ' ' from initcap(Address)), ' ', 1),
@@ -83,9 +84,7 @@ SELECT
 	-- bin
 	NULL,
 	-- facilitytype
-	initcap(
-		REPLACE(usedec, 'OTHER ', '')
-		),
+	initcap(REPLACE(usedec, 'OTHER ', '')),
 	-- domain
 		(CASE
 			-- Admin of Gov
@@ -868,4 +867,4 @@ WHERE
 	AND agency <> 'DHS')
 	OR (agency = 'DHS' AND usedec NOT LIKE '%RESIDENTIAL%' AND usedec NOT LIKE '%HOUSING%')
 	OR (agency = 'HRA' AND usedec NOT LIKE '%RESIDENTIAL%' AND usedec NOT LIKE '%HOUSING%')
-	OR (agency = 'ACS' AND usedec NOT LIKE '%RESIDENTIAL%' AND usedec NOT LIKE '%HOUSING%')
+	OR (agency = 'ACS' AND usedec NOT LIKE '%RESIDENTIAL%' AND usedec NOT LIKE '%HOUSING%');
