@@ -5,7 +5,9 @@
 DROP TABLE IF EXISTS duplicates_sfpsd_relatedlots;
 CREATE TABLE duplicates_sfpsd_relatedlots AS (
 
-FROM facilities
+WITH primaryhashs AS (
+	SELECT (array_agg(distinct hash))[1] AS hash
+	FROM facilities
 	WHERE
 		array_to_string(pgtable,',') LIKE '%sfpsd%'
 	GROUP BY
@@ -21,7 +23,9 @@ primaries AS (
 matches AS (
 	SELECT
 		a.hash,
-		b.hash AS hash_b
+		b.hash AS hash_b,
+		a.capacity,
+		
 	FROM primaries AS a
 	LEFT JOIN facilities AS b
 	ON a.idold = b.idold
@@ -46,7 +50,22 @@ ORDER BY hash
 -- 2. UPDATING FACDB BY MERGING ATTRIBUTES FROM DUPLICATE RECORDS INTO PREFERRED RECORD
 --------------------------------------------------------------------------------------------------
 
-WITH matches AS (
+WITH primaryhashs AS (
+	SELECT (array_agg(distinct hash))[1] AS hash
+	FROM facilities
+	WHERE
+		array_to_string(pgtable,',') LIKE '%sfpsd%'
+	GROUP BY
+		idold
+),
+
+primaries AS (
+	SELECT *
+	FROM facilities
+	WHERE hash IN (SELECT hash from primaryhashs)
+),
+
+matches AS (
 	SELECT
 		CONCAT(a.pgtable,'-',b.pgtable) as sourcecombo,
 		a.idagency,
