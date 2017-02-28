@@ -33,6 +33,7 @@ UPDATE facilities AS f
 			(CASE
 				WHEN areatype IS NOT NULL THEN ARRAY[CONCAT(array_to_string(agencysource,','),': ', array_to_string(areatype,','))]
 			END)
+	WHERE array_to_string(oversightlevel,',') NOT LIKE CONCAT(array_to_string(oversightabbrev,','),': %') AND oversightlevel <> ARRAY['Non-public Oversight']
 		;
 
 UPDATE facilities
