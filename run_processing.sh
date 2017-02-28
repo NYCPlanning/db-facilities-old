@@ -7,37 +7,37 @@
 
 # ## CREATING GEOMETRIES WITH GEOCLIENT
 
-# ## Run the geocoding script using address and borough - get BBL, BIN, lat/long
-# echo 'Running geocoding script using address and borough...'
-# time node ./scripts_processing/geoclient/address2geom_borough.js
-# echo 'Done geocoding using address and borough'
+## Run the geocoding script using address and borough - get BBL, BIN, lat/long
+echo 'Running geocoding script using address and borough...'
+time node ./scripts_processing/geoclient/address2geom_borough.js
+echo 'Done geocoding using address and borough'
 
-# ## Run the geocoding script using address and zipcode - get BBL, BIN, lat/long
-# echo 'Running geocoding script using address and zip code...'
-# time node ./scripts_processing/geoclient/address2geom_zipcode.js
-# echo 'Done geocoding using address and zip code'
+## Run the geocoding script using address and zipcode - get BBL, BIN, lat/long
+echo 'Running geocoding script using address and zip code...'
+time node ./scripts_processing/geoclient/address2geom_zipcode.js
+echo 'Done geocoding using address and zip code'
 
-# ## FILLING IN STANDARDIZED ADDRESS AND LOCATION DETAILS WITH GEOCLIENT
+## FILLING IN STANDARDIZED ADDRESS AND LOCATION DETAILS WITH GEOCLIENT
 
-# # Do spatial join with borough for remaining records with geoms that have blanks
-# echo 'Forcing 2D...'
-# psql $DATABASE_URL -f ./scripts_processing/cleanup_spatial/force2D.sql
-# echo 'Forced 2D complete'
-# psql $DATABASE_URL -f ./scripts_processing/joins/boroughjoin.sql
-# ## ^ added this step because a lot of zipcode Geoclient searches weren't finding results
+# Do spatial join with borough for remaining records with geoms that have blanks
+echo 'Forcing 2D...'
+psql $DATABASE_URL -f ./scripts_processing/cleanup_spatial/force2D.sql
+echo 'Forced 2D complete'
+psql $DATABASE_URL -f ./scripts_processing/joins/boroughjoin.sql
+## ^ added this step because a lot of zipcode Geoclient searches weren't finding results
 
-# # Run the geocoding script using address get BBL and BIN and standardize address
-# echo 'Running geocoding script getting BBL using address and borough...'
-# time node ./scripts_processing/geoclient/address2bbl_borough.js
-# echo 'Done getting BBL using address and borough'
+# Run the geocoding script using address get BBL and BIN and standardize address
+echo 'Running geocoding script getting BBL using address and borough...'
+time node ./scripts_processing/geoclient/address2bbl_borough.js
+echo 'Done getting BBL using address and borough'
 
-# echo 'Running geocoding script getting BBL using address and zipcode...'
-# time node ./scripts_processing/geoclient/address2bbl_zipcode.js
-# echo 'Done getting BBL using address and zipcode'
-# # ^^ Hasn't been catching anything
+echo 'Running geocoding script getting BBL using address and zipcode...'
+time node ./scripts_processing/geoclient/address2bbl_zipcode.js
+echo 'Done getting BBL using address and zipcode'
+# ^^ Hasn't been catching anything
 
-# ## Standardizing borough and assigning borough code again because
-# ## Geoclient sometimes fills in Staten Is instead of Staten Island
+## Standardizing borough and assigning borough code again because
+## Geoclient sometimes fills in Staten Is instead of Staten Island
 psql $DATABASE_URL -f ./scripts_processing/joins/boroughjoin.sql
 psql $DATABASE_URL -f ./scripts_processing/cleanup/removeinvalidBIN.sql
 
@@ -117,73 +117,74 @@ time psql $DATABASE_URL -f ./scripts_processing/joins/tractjoin.sql
 time psql $DATABASE_URL -f ./scripts_processing/joins/boroughjoin.sql
 psql $DATABASE_URL -f ./scripts_processing/cleanup/cleanup_cityboro.sql
 psql $DATABASE_URL -f ./scripts_assembly/standardize_borough.sql
+time psql $DATABASE_URL -f ./scripts_processing/joins/propertytypejoin.sql
 psql $DATABASE_URL -f ./scripts_processing/cleanup_spatial/vacuum.sql
 
 # Create backup table before merging and dropping duplicates
 echo 'Creating backup before merging and dropping duplicates...'
 psql $DATABASE_URL -f ./scripts_processing/backup/copy_backup3.sql
 
-## DEDUPING
+# ## DEDUPING
 
-## Merge Child Care and Pre-K Duplicate records
-echo 'Merging and dropping Child Care and Pre-K duplicates...'
-psql $DATABASE_URL -f ./scripts_processing/duplicates/duplicates_ccprek_acs_hhs.sql
-psql $DATABASE_URL -f ./scripts_processing/duplicates/duplicates_removeFAKE.sql
-psql $DATABASE_URL -f ./scripts_processing/duplicates/duplicates_ccprek_doe_acs.sql
-psql $DATABASE_URL -f ./scripts_processing/duplicates/duplicates_removeFAKE.sql
-psql $DATABASE_URL -f ./scripts_processing/duplicates/duplicates_ccprek_doe_dohmh.sql
-psql $DATABASE_URL -f ./scripts_processing/duplicates/duplicates_removeFAKE.sql
-psql $DATABASE_URL -f ./scripts_processing/duplicates/duplicates_ccprek_acs_dohmh.sql
-psql $DATABASE_URL -f ./scripts_processing/duplicates/duplicates_removeFAKE.sql
-psql $DATABASE_URL -f ./scripts_processing/duplicates/duplicates_ccprek_dohmh.sql
-psql $DATABASE_URL -f ./scripts_processing/duplicates/duplicates_removeFAKE.sql
+# ## Merge Child Care and Pre-K Duplicate records
+# echo 'Merging and dropping Child Care and Pre-K duplicates...'
+# psql $DATABASE_URL -f ./scripts_processing/duplicates/duplicates_ccprek_acs_hhs.sql
+# psql $DATABASE_URL -f ./scripts_processing/duplicates/duplicates_removeFAKE.sql
+# psql $DATABASE_URL -f ./scripts_processing/duplicates/duplicates_ccprek_doe_acs.sql
+# psql $DATABASE_URL -f ./scripts_processing/duplicates/duplicates_removeFAKE.sql
+# psql $DATABASE_URL -f ./scripts_processing/duplicates/duplicates_ccprek_doe_dohmh.sql
+# psql $DATABASE_URL -f ./scripts_processing/duplicates/duplicates_removeFAKE.sql
+# psql $DATABASE_URL -f ./scripts_processing/duplicates/duplicates_ccprek_acs_dohmh.sql
+# psql $DATABASE_URL -f ./scripts_processing/duplicates/duplicates_removeFAKE.sql
+# psql $DATABASE_URL -f ./scripts_processing/duplicates/duplicates_ccprek_dohmh.sql
+# psql $DATABASE_URL -f ./scripts_processing/duplicates/duplicates_removeFAKE.sql
 
-echo 'Merging and dropping remaining duplicates, pre-COLP...'
-psql $DATABASE_URL -f ./scripts_processing/duplicates/duplicates_remaining.sql
-psql $DATABASE_URL -f ./scripts_processing/duplicates/duplicates_removeFAKE.sql
+# echo 'Merging and dropping remaining duplicates, pre-COLP...'
+# psql $DATABASE_URL -f ./scripts_processing/duplicates/duplicates_remaining.sql
+# psql $DATABASE_URL -f ./scripts_processing/duplicates/duplicates_removeFAKE.sql
 
-echo 'Merging and dropping remaining duplicates, pre-COLP...'
-psql $DATABASE_URL -f ./scripts_processing/duplicates/duplicates_sfpsd_relatedlots.sql
-psql $DATABASE_URL -f ./scripts_processing/duplicates/duplicates_removeFAKE.sql
+# echo 'Merging and dropping remaining duplicates, pre-COLP...'
+# psql $DATABASE_URL -f ./scripts_processing/duplicates/duplicates_sfpsd_relatedlots.sql
+# psql $DATABASE_URL -f ./scripts_processing/duplicates/duplicates_removeFAKE.sql
 
-echo 'Creating backup before merging and dropping COLP duplicates...'
-psql $DATABASE_URL -f ./scripts_processing/backup/copy_backup4.sql
+# echo 'Creating backup before merging and dropping COLP duplicates...'
+# psql $DATABASE_URL -f ./scripts_processing/backup/copy_backup4.sql
 
-echo 'Merging and dropping COLP duplicates by BIN...'
-psql $DATABASE_URL -f ./scripts_processing/duplicates/duplicates_colp_bin_alt.sql
-echo 'Cleaning up remaining dummy values used for array_agg'
-psql $DATABASE_URL -f ./scripts_processing/duplicates/duplicates_removeFAKE.sql
+# echo 'Merging and dropping COLP duplicates by BIN...'
+# psql $DATABASE_URL -f ./scripts_processing/duplicates/duplicates_colp_bin_alt.sql
+# echo 'Cleaning up remaining dummy values used for array_agg'
+# psql $DATABASE_URL -f ./scripts_processing/duplicates/duplicates_removeFAKE.sql
 
-echo 'Merging and dropping COLP duplicates by BBL...'
-psql $DATABASE_URL -f ./scripts_processing/duplicates/duplicates_colp_bbl_alt.sql
-echo 'Cleaning up remaining dummy values used for array_agg'
-psql $DATABASE_URL -f ./scripts_processing/duplicates/duplicates_removeFAKE.sql
+# echo 'Merging and dropping COLP duplicates by BBL...'
+# psql $DATABASE_URL -f ./scripts_processing/duplicates/duplicates_colp_bbl_alt.sql
+# echo 'Cleaning up remaining dummy values used for array_agg'
+# psql $DATABASE_URL -f ./scripts_processing/duplicates/duplicates_removeFAKE.sql
 
-echo 'Merging related COLP duplicates on surrounding BBLs...'
-psql $DATABASE_URL -f ./scripts_processing/duplicates/duplicates_colp_relatedlots_merged_alt.sql
-echo 'Cleaning up remaining dummy values used for array_agg'
-psql $DATABASE_URL -f ./scripts_processing/duplicates/duplicates_removeFAKE.sql
+# echo 'Merging related COLP duplicates on surrounding BBLs...'
+# psql $DATABASE_URL -f ./scripts_processing/duplicates/duplicates_colp_relatedlots_merged_alt.sql
+# echo 'Cleaning up remaining dummy values used for array_agg'
+# psql $DATABASE_URL -f ./scripts_processing/duplicates/duplicates_removeFAKE.sql
 
-echo 'Merging remaining COLP duplicates on surrounding BBLs Part 1...'
-psql $DATABASE_URL -f ./scripts_processing/duplicates/duplicates_colp_relatedlots_colponly_alt_p1.sql
-echo 'Cleaning up remaining dummy values used for array_agg'
-psql $DATABASE_URL -f ./scripts_processing/duplicates/duplicates_removeFAKE.sql
+# echo 'Merging remaining COLP duplicates on surrounding BBLs Part 1...'
+# psql $DATABASE_URL -f ./scripts_processing/duplicates/duplicates_colp_relatedlots_colponly_alt_p1.sql
+# echo 'Cleaning up remaining dummy values used for array_agg'
+# psql $DATABASE_URL -f ./scripts_processing/duplicates/duplicates_removeFAKE.sql
 
-echo 'Merging remaining COLP duplicates on surrounding BBLs Part 2...'
-psql $DATABASE_URL -f ./scripts_processing/duplicates/duplicates_colp_relatedlots_colponly_alt_p2.sql
-echo 'Cleaning up remaining dummy values used for array_agg'
-psql $DATABASE_URL -f ./scripts_processing/duplicates/duplicates_removeFAKE.sql
+# echo 'Merging remaining COLP duplicates on surrounding BBLs Part 2...'
+# psql $DATABASE_URL -f ./scripts_processing/duplicates/duplicates_colp_relatedlots_colponly_alt_p2.sql
+# echo 'Cleaning up remaining dummy values used for array_agg'
+# psql $DATABASE_URL -f ./scripts_processing/duplicates/duplicates_removeFAKE.sql
 
-echo 'Deduped!'
+# echo 'Deduped!'
 
-echo 'Cleaning up duplicates in BIN and BBl arrays...'
-psql $DATABASE_URL -f ./scripts_processing/cleanup/removeArrayDuplicates.sql
-echo 'Setting propertytype for street plazas...'
-psql $DATABASE_URL -f ./scripts_processing/cleanup/plazas.sql
+# echo 'Cleaning up duplicates in BIN and BBl arrays...'
+# psql $DATABASE_URL -f ./scripts_processing/cleanup/removeArrayDuplicates.sql
+# echo 'Setting propertytype for street plazas...'
+# psql $DATABASE_URL -f ./scripts_processing/cleanup/plazas.sql
 
 
-## Final export to csv that excludes null geoms and geoms outside NYC
+# ## Final export to csv that excludes null geoms and geoms outside NYC
 
-echo 'Exporting...'
-time psql $DATABASE_URL -f ./scripts_processing/export.sql
-echo 'All done!'
+# echo 'Exporting...'
+# time psql $DATABASE_URL -f ./scripts_processing/export.sql
+# echo 'All done!'

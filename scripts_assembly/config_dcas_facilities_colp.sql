@@ -858,10 +858,14 @@ SELECT
 FROM 
 	dcas_facilities_colp
 WHERE
-	agency <> 'NYCHA'
+	(agency <> 'NYCHA'
 	AND agency <> 'HPD'
 	AND usedec <> 'ROAD/HIGHWAY'
 	AND usedec <> 'TRANSIT WAY'
 	AND usedec NOT LIKE '%WATER SUPPLY%'
 	AND usedec NOT LIKE '%RESERVOIR%'
 	AND usedec NOT LIKE '%AQUEDUCT%'
+	AND agency <> 'DHS')
+	OR (agency = 'DHS' AND usedec NOT LIKE '%RESIDENTIAL%' AND usedec NOT LIKE '%HOUSING%')
+	OR (agency = 'HRA' AND usedec NOT LIKE '%RESIDENTIAL%' AND usedec NOT LIKE '%HOUSING%')
+	OR (agency = 'ACS' AND usedec NOT LIKE '%RESIDENTIAL%' AND usedec NOT LIKE '%HOUSING%')

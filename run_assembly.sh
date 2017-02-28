@@ -126,5 +126,8 @@ psql $DATABASE_URL -f ./scripts_assembly/standardize_borough.sql
 ## Switching One to 1 for geocoding and removing invalid (string) address numbers
 psql $DATABASE_URL -f ./scripts_assembly/standardize_address.sql
 
+## STEP 5
+## Fill in the uid for all new records in the database
+psql $DATABASE_URL -f ./scripts_assembly/create_uid.sql
 
 

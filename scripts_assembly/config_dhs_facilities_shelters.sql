@@ -50,9 +50,13 @@ SELECT
 	-- hash,
 	md5(CAST((dhs_facilities_shelters.*) AS text)),
 	-- geom
-	ST_Transform(ST_SetSRID(ST_MakePoint(x_coordinate, y_coordinate), 2236),4326),
+	(CASE
+		WHEN x_coordinate IS NOT NULL THEN ST_Transform(ST_SetSRID(ST_MakePoint(x_coordinate, y_coordinate), 2236),4326)
+	END),
 	-- idagency
-	ARRAY[Unique_ID],
+	(CASE
+		WHEN Unique_ID IS NOT NULL THEN ARRAY[Unique_ID]
+	END),
 	-- facilityname
 	initcap(Facility_Name),
 	-- addressnumber
@@ -66,7 +70,7 @@ SELECT
 	-- zipcode
 	NULL,
 	-- bbl
-	ARRAY[BBLs],
+	NULL,
 	-- bin
 	NULL,
 	-- facilitytype
@@ -82,11 +86,15 @@ SELECT
 	-- agencyclass2
 	NULL,
 	-- capacity
-	ARRAY[capacity::text],
+	(CASE
+		WHEN capacity <> '--' THEN ARRAY[capacity::text]
+	END),
 	-- utilization
 	NULL,
 	-- capacitytype
-	ARRAY[capacity_type],
+	(CASE
+		WHEN capacity <> '--' AND capacity IS NOT NULL THEN ARRAY[capacity_type]
+	END),
 	-- utilizationrate
 	NULL,
 	-- area

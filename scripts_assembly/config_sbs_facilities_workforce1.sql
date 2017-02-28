@@ -50,7 +50,7 @@ SELECT
 	-- hash,
 	md5(CAST((sbs_facilities_workforce1.*) AS text)),
 	-- geom
-	ST_SetSRID(ST_MakePoint(Longitude, Latitude),4326),
+	ST_SetSRID(ST_MakePoint(Longitude::numeric, Latitude::numeric),4326),
 	-- idagency
 	NULL,
 	-- facilityname
@@ -64,7 +64,7 @@ SELECT
 	-- borough
 	Borough,
 	-- zipcode
-	ZIP,
+	ZIP::integer,
 	-- bbl
 	NULL,
 	-- bin

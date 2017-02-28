@@ -57,6 +57,7 @@ SELECT
 		WHEN oversightabbrev = 'NYCDOC' THEN 'nycdoc_facilities_corrections'
 		WHEN oversightabbrev = 'NYCOURTS' THEN 'nycourts_facilities_courts'
 		WHEN oversightabbrev = 'NYSDOCCS' THEN 'nysdoccs_facilities_corrections'
+		WHEN oversightabbrev = 'FBOP' THEN 'fbop_facilities_corrections'
 	END)],
 	-- hash,
 	md5(CAST((togeocode.*) AS text)),

@@ -64,7 +64,7 @@ SELECT
 	-- borough
 	initcap(Borough),
 	-- zipcode
-	zip::integer,
+	zipcode::integer,
 	-- bbl
 	NULL,
 	-- bin
@@ -99,7 +99,7 @@ SELECT
 	-- operatortype
 	'Public',
 	-- operatorname
-	'NYC Human Resources Administration/Department of Social Services'
+	'NYC Human Resources Administration/Department of Social Services',
 	-- operatorabbrev
 	'NYCHRA/DSS',
 	-- oversightagency

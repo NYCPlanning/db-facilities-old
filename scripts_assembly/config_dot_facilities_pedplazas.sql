@@ -52,7 +52,7 @@ SELECT
 	-- geom
 	geom,
 	-- idagency
-	mapid,
+	ARRAY[mapid],
 	-- facilityname
 	name,
 	-- addressnumber

@@ -5,33 +5,27 @@
 DROP TABLE IF EXISTS duplicates_sfpsd_relatedlots;
 CREATE TABLE duplicates_sfpsd_relatedlots AS (
 
-WITH matches AS (
-	SELECT
-		CONCAT(a.pgtable,'-',b.pgtable) as sourcecombo,
-		a.hash,
-		b.hash as hash_b,
-		a.facilityname,
-		b.facilityname as facilityname_b
-	FROM facilities a
-	LEFT JOIN facilities b
-	ON a.bbl = b.bbl
+FROM facilities
 	WHERE
-		a.facilitysubgroup = b.facilitysubgroup
-		AND b.pgtable = ARRAY['dcp_facilities_sfpsd']
-		AND a.pgtable <> ARRAY['dcp_facilities_sfpsd']
-		AND a.oversightabbrev @> b.oversightabbrev
-		AND a.geom IS NOT NULL
-		AND b.geom IS NOT NULL
-		AND a.bbl IS NOT NULL
-		AND b.bbl IS NOT NULL
-		AND a.bbl <> ARRAY['']
-		AND b.bbl <> ARRAY['']
-		AND a.bbl <> ARRAY['0.00000000000']
-		AND b.bbl <> ARRAY['0.00000000000']
-		AND a.pgtable <> b.pgtable
-		AND a.hash <> b.hash
-		ORDER BY CONCAT(a.pgtable,'-',b.pgtable), a.facilityname, a.facilitysubgroup
-	),  
+		array_to_string(pgtable,',') LIKE '%sfpsd%'
+	GROUP BY
+		idold
+),
+
+primaries AS (
+	SELECT *
+	FROM facilities
+	WHERE hash IN (SELECT hash from primaryhashs)
+),
+
+matches AS (
+	SELECT
+		a.hash,
+		b.hash AS hash_b
+	FROM primaries AS a
+	LEFT JOIN facilities AS b
+	ON a.idold = b.idold
+),
 
 duplicates AS (
 	SELECT
