@@ -74,25 +74,15 @@ duplicates AS (
 		array_agg(hash_b) AS hash_merged
 	FROM matches
 	WHERE
-		(sourcecombo LIKE '{nysoasas_facilities_programs}-{hhs_facilities_%' AND facilitysubgroup = 'Chemical Dependency')
-		OR (sourcecombo LIKE '{dycd_facilities_otherprograms}-{hhs_facilities_%')
-		OR (sourcecombo LIKE '{hhs_facilities_financials}-{hhs_facilities_proposals}')
-		OR (sourcecombo LIKE '{dpr_parksproperties}-{nysparks_facilities_historicplaces}' AND facilitysubgroup = 'Historical Sites')
-		OR (sourcecombo LIKE '{nysparks_facilities_historicplaces}-{usnps_facilities_parks}' AND facilitysubgroup = 'Historical Sites')
-		OR (sourcecombo LIKE '{nysomh_facilities_mentalhealth}-{hhs_facilities_%' AND facilitysubgroup = 'Mental Health')
-		OR (sourcecombo LIKE '{dcla_facilities_culturalinstitutions}-{nysed_facilities_activeinstitutions}' AND facilitysubgroup = 'Museums')
-		OR (sourcecombo LIKE '{dpr_parksproperties}-{dcp_facilities_sfpsd}' AND facilitysubgroup = 'Parks')
-		OR (sourcecombo LIKE '{dpr_parksproperties}-{nysparks_facilities_parks}' AND facilitysubgroup = 'Parks')
-		OR (sourcecombo LIKE '{dpr_parksproperties}-{nysdec_facilities_lands}')
-		OR (sourcecombo LIKE '{dpr_parksproperties}-{nysdec_facilities_solidwaste}' AND facilitysubgroup = 'Preserves and Conservation Areas')
-		OR (sourcecombo LIKE '{nysopwdd_facilities_providers}-{hhs_facilities_%' AND facilitysubgroup = 'Programs for People with Disabilities')
-		OR (sourcecombo LIKE '{nysdoh_facilities_healthfacilities}-{hhc_facilities_hospitals}' AND facilitysubgroup = 'Residential Health Care')
-		OR (sourcecombo LIKE '{nysdoh_facilities_healthfacilities}-{hhc_facilities_hospitals}' AND facilitysubgroup = 'Hospitals and Clinics')
-		OR (sourcecombo LIKE '{dfta_facilities_contracts}-{hhs_facilities_%' AND facilitysubgroup = 'Senior Services')
-		OR (sourcecombo LIKE '{dpr_parksproperties}-{dot_facilities_pedplazas}' AND facilitysubgroup = 'Streetscapes, Plazas, and Malls')
-		OR (sourcecombo LIKE '{dhs_facilities_shelters}-{hhs_facilities_%' AND facilitysubgroup = 'Shelters and Transitional Housing')
-		OR (sourcecombo LIKE '{dca_facilities_operatingbusinesses}-{nysdec_facilities_solidwaste}' AND facilitysubgroup = 'Solid Waste Processing')
-		OR (sourcecombo LIKE '{nysdec_facilities_solidwaste}-{bic_facilities_tradewaste}')
+		sourcecombo LIKE '{bic_facilities_tradewaste}-{nysdec_facilities_solidwaste}' AND facilitysubgroup = 'Solid Waste Transfer and Carting'
+		OR sourcecombo LIKE '{dca_facilities_operatingbusinesses}-{nysdec_facilities_solidwaste}' AND facilitysubgroup = 'Solid Waste Processing'
+		OR sourcecombo LIKE '{dcla_facilities_culturalinstitutions}-{nysed_facilities_activeinstitutions}' AND facilitysubgroup = 'Museums'
+		OR sourcecombo LIKE '{dfta_facilities_contracts}-{hhs_facilities_contracts}' AND facilitysubgroup = 'Senior Services'
+		OR sourcecombo LIKE '{doe_facilities_schoolsbluebook}-{hhs_facilities_financials}' AND facilitysubgroup = 'Community Centers and Community School Programs'
+		OR sourcecombo LIKE '{doe_facilities_schoolsbluebook}-{nysed_facilities_activeinstitutions}' AND facilitysubgroup = 'Public Schools'
+		OR sourcecombo LIKE '{dycd_facilities_compass}-{hhs_facilities_contracts}' AND facilitysubgroup = 'Comprehensive After School System (COMPASS) Sites'
+		OR sourcecombo LIKE '{dycd_facilities_otherprograms}-{hhs_facilities_contracts}' AND facilitysubgroup = 'Youth Centers, Literacy Programs, Job Training, and Immigrant Services'
+		OR sourcecombo LIKE '{nysomh_facilities_mentalhealth}-{hhs_facilities_contracts}' AND facilitysubgroup = 'Mental Health'
 	GROUP BY
 	hash, sourcecombo, facilitysubgroup
 	ORDER BY facilitysubgroup)
@@ -211,6 +201,7 @@ duplicates AS (
 		hash,
 		array_agg(uid_b) AS uid_merged,
 		array_agg(distinct idagency_b) AS idagency_merged,
+		array_agg(distinct idold_b) AS idold_merged,
 		array_agg(distinct hash_b) AS hash_merged,
 		array_agg(distinct agencysource_b) AS agencysource,
 		array_agg(distinct sourcedatasetname_b) AS sourcedatasetname,
@@ -228,25 +219,15 @@ duplicates AS (
 		sourcecombo
 	FROM matches
 	WHERE
-		(sourcecombo LIKE '{nysoasas_facilities_programs}-{hhs_facilities_%' AND facilitysubgroup = 'Chemical Dependency')
-		OR (sourcecombo LIKE '{dycd_facilities_otherprograms}-{hhs_facilities_%')
-		OR (sourcecombo LIKE '{hhs_facilities_financials}-{hhs_facilities_proposals}')
-		OR (sourcecombo LIKE '{dpr_parksproperties}-{nysparks_facilities_historicplaces}' AND facilitysubgroup = 'Historical Sites')
-		OR (sourcecombo LIKE '{nysparks_facilities_historicplaces}-{usnps_facilities_parks}' AND facilitysubgroup = 'Historical Sites')
-		OR (sourcecombo LIKE '{nysomh_facilities_mentalhealth}-{hhs_facilities_%' AND facilitysubgroup = 'Mental Health')
-		OR (sourcecombo LIKE '{dcla_facilities_culturalinstitutions}-{nysed_facilities_activeinstitutions}' AND facilitysubgroup = 'Museums')
-		OR (sourcecombo LIKE '{dpr_parksproperties}-{dcp_facilities_sfpsd}' AND facilitysubgroup = 'Parks')
-		OR (sourcecombo LIKE '{dpr_parksproperties}-{nysparks_facilities_parks}' AND facilitysubgroup = 'Parks')
-		OR (sourcecombo LIKE '{dpr_parksproperties}-{nysdec_facilities_lands}')
-		OR (sourcecombo LIKE '{dpr_parksproperties}-{nysdec_facilities_solidwaste}' AND facilitysubgroup = 'Preserves and Conservation Areas')
-		OR (sourcecombo LIKE '{nysopwdd_facilities_providers}-{hhs_facilities_%' AND facilitysubgroup = 'Programs for People with Disabilities')
-		OR (sourcecombo LIKE '{nysdoh_facilities_healthfacilities}-{hhc_facilities_hospitals}' AND facilitysubgroup = 'Residential Health Care')
-		OR (sourcecombo LIKE '{nysdoh_facilities_healthfacilities}-{hhc_facilities_hospitals}' AND facilitysubgroup = 'Hospitals and Clinics')
-		OR (sourcecombo LIKE '{dfta_facilities_contracts}-{hhs_facilities_%' AND facilitysubgroup = 'Senior Services')
-		OR (sourcecombo LIKE '{dpr_parksproperties}-{dot_facilities_pedplazas}' AND facilitysubgroup = 'Streetscapes, Plazas, and Malls')
-		OR (sourcecombo LIKE '{dhs_facilities_shelters}-{hhs_facilities_%' AND facilitysubgroup = 'Shelters and Transitional Housing')
-		OR (sourcecombo LIKE '{dca_facilities_operatingbusinesses}-{nysdec_facilities_solidwaste}' AND facilitysubgroup = 'Solid Waste Processing')
-		OR (sourcecombo LIKE '{nysdec_facilities_solidwaste}-{bic_facilities_tradewaste}')
+		sourcecombo LIKE '{bic_facilities_tradewaste}-{nysdec_facilities_solidwaste}' AND facilitysubgroup = 'Solid Waste Transfer and Carting'
+		OR sourcecombo LIKE '{dca_facilities_operatingbusinesses}-{nysdec_facilities_solidwaste}' AND facilitysubgroup = 'Solid Waste Processing'
+		OR sourcecombo LIKE '{dcla_facilities_culturalinstitutions}-{nysed_facilities_activeinstitutions}' AND facilitysubgroup = 'Museums'
+		OR sourcecombo LIKE '{dfta_facilities_contracts}-{hhs_facilities_contracts}' AND facilitysubgroup = 'Senior Services'
+		OR sourcecombo LIKE '{doe_facilities_schoolsbluebook}-{hhs_facilities_financials}' AND facilitysubgroup = 'Community Centers and Community School Programs'
+		OR sourcecombo LIKE '{doe_facilities_schoolsbluebook}-{nysed_facilities_activeinstitutions}' AND facilitysubgroup = 'Public Schools'
+		OR sourcecombo LIKE '{dycd_facilities_compass}-{hhs_facilities_contracts}' AND facilitysubgroup = 'Comprehensive After School System (COMPASS) Sites'
+		OR sourcecombo LIKE '{dycd_facilities_otherprograms}-{hhs_facilities_contracts}' AND facilitysubgroup = 'Youth Centers, Literacy Programs, Job Training, and Immigrant Services'
+		OR sourcecombo LIKE '{nysomh_facilities_mentalhealth}-{hhs_facilities_contracts}' AND facilitysubgroup = 'Mental Health'
 	GROUP BY
 	hash, sourcecombo, facilitysubgroup
 	ORDER BY countofdups DESC )
@@ -257,6 +238,11 @@ SET
 		(CASE
 			WHEN d.idagency_merged <> ARRAY['FAKE!'] THEN array_cat(idagency, d.idagency_merged)
 			ELSE idagency
+		END),
+	idold = 
+		(CASE
+			WHEN d.idold_merged <> ARRAY['FAKE!'] THEN array_cat(idold, d.idold_merged)
+			ELSE idold
 		END),
 	uid_merged = d.uid_merged,
 	hash_merged = d.hash_merged,

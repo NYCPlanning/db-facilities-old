@@ -130,4 +130,7 @@ psql $DATABASE_URL -f ./scripts_assembly/standardize_address.sql
 ## Fill in the uid for all new records in the database
 psql $DATABASE_URL -f ./scripts_assembly/create_uid.sql
 
+## STEP 6
+## Exclude sensitive records
+# psql $DATABASE_URL -f ./scripts_assembly/censor.sql
 

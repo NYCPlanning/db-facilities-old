@@ -29,6 +29,7 @@ matches AS (
 	FROM primaries AS a
 	LEFT JOIN facilities AS b
 	ON a.idold = b.idold
+	WHERE a.hash <> b.hash
 ),
 
 duplicates AS (
@@ -67,64 +68,44 @@ primaries AS (
 
 matches AS (
 	SELECT
+		a.idold,
 		a.hash,
 		b.hash AS hash_b,
-		a.capacity,
-		b.capacity AS capacity_b
+		b.uid AS uid_b,
+		(CASE WHEN b.bin IS NULL THEN ARRAY['FAKE!'] ELSE b.bin END) AS bin_b,
+		(CASE WHEN b.bbl IS NULL THEN ARRAY['FAKE!'] ELSE b.bbl END) AS bbl_b
 	FROM primaries AS a
 	LEFT JOIN facilities AS b
 	ON a.idold = b.idold
+	WHERE a.hash <> b.hash
 ),
 
 duplicates AS (
 	SELECT
 		hash,
-		array_agg(hash_b) AS hash_merged
-	FROM matches
-	GROUP BY
-	hash)
-
-duplicates AS (
-	SELECT
-		count(*) AS countofdups,
-		facilityname,
-		facilitytype,
-		array_agg(distinct facilitytype_b) AS facilitytype_merged,
-		hash,
-		array_agg(uid_b) AS uid_merged,
+		idold,
 		array_agg(hash_b) AS hash_merged,
-		array_agg(bin_b) AS bin,
-		array_agg(distinct agencysource_b) AS agencysource,
-		array_agg(distinct sourcedatasetname_b) AS sourcedatasetname,
-		array_agg(distinct datesourceupdated_b) AS datesourceupdated,
-		array_agg(distinct linkdata_b) AS linkdata,
-		array_agg(distinct oversightlevel_b) AS oversightlevel,
-		array_agg(distinct oversightagency_b) AS oversightagency,
-		array_agg(distinct oversightabbrev_b) AS oversightabbrev,
-		array_agg(distinct pgtable_b) AS pgtable,
-		array_agg(distinct colpusetype) AS colpusetype,
-		unnest(array_agg(distinct propertytype_b)) AS propertytype
+		array_agg(uid_b) AS uid_merged,
+		array_agg(bbl_b) AS bbl,
+		array_agg(bin_b) AS bin
 	FROM matches
 	GROUP BY
-	hash, facilityname, facilitytype
-	ORDER BY facilitytype, countofdups DESC )
+	hash, idold)
 
 UPDATE facilities AS f
 SET
-	uid_merged = d.uid_merged,
-	hash_merged = d.hash_merged,
+	uid_merged = array_cat(f.uid_merged,d.uid_merged),
+	hash_merged = array_cat(f.hash_merged,d.hash_merged),
 	bin = 
 		(CASE
 			WHEN d.bin <> ARRAY['FAKE!'] THEN array_cat(f.bin,d.bin)
 			ELSE f.bin
 		END),
-	pgtable = array_cat(f.pgtable,d.pgtable),
-	agencysource = array_cat(f.agencysource,d.agencysource),
-	sourcedatasetname = array_cat(f.sourcedatasetname,d.sourcedatasetname),
-	datesourceupdated = array_cat(f.datesourceupdated,d.datesourceupdated),
-	linkdata = array_cat(f.linkdata,d.linkdata),
-	colpusetype = d.colpusetype,
-	propertytype = d.propertytype
+	bbl = 
+		(CASE
+			WHEN d.bbl <> ARRAY['FAKE!'] THEN array_cat(f.bbl,d.bbl)
+			ELSE f.bbl
+		END)
 FROM duplicates AS d
 WHERE f.hash = d.hash
 ;
