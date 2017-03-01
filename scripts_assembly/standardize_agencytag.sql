@@ -70,3 +70,13 @@ UPDATE facilities
 	SET areatype = NULL
 	WHERE areatype IS NOT NULL 
 	AND split_part(array_to_string(areatype,','),': ',2) = '';
+
+UPDATE facilities
+	SET linkdata = NULL
+	WHERE linkdata IS NOT NULL 
+	AND split_part(array_to_string(linkdata,','),': ',2) = '';
+
+UPDATE facilities
+	SET linkdownload = NULL
+	WHERE linkdownload IS NOT NULL 
+	AND split_part(array_to_string(linkdownload,','),': ',2) = '';

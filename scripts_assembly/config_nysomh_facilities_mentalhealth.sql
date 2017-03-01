@@ -64,11 +64,11 @@ SELECT
 	-- facilityname
 	Program_Name,
 	-- addressnumber
-	NULL,
+	split_part(trim(both ' ' from initcap(Program_Address_1)), ' ', 1),
 	-- streetname
-	NULL,
+	trim(both ' ' from substr(trim(both ' ' from initcap(Program_Address_1)), strpos(trim(both ' ' from initcap(Program_Address_1)), ' ')+1, (length(trim(both ' ' from initcap(Program_Address_1)))-strpos(trim(both ' ' from initcap(Program_Address_1)), ' ')))),
 	-- address
-	NULL,
+	initcap(Program_Address_1),
 	-- borough
 		(CASE
 			WHEN Program_County = 'New York' THEN 'Manhattan'

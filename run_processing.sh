@@ -90,9 +90,6 @@ psql $DATABASE_URL -f ./scripts_processing/backup/copy_backup2.sql
 
 ## TABULAR JOINS WITH BUILDINGFOOTPRINTS AND PLUTO TO OVERWRITE GEOMS
 
-## Creating uid integer value for blanks
-psql $DATABASE_URL -f ./scripts_processing/addID.sql
-
 ## Convert back to 4326, calculating lat,long and x,y for all blank records
 psql $DATABASE_URL -f ./scripts_processing/cleanup_spatial/setSRID_4326.sql
 echo 'Calculating x,y for all blank records...'
@@ -117,6 +114,7 @@ time psql $DATABASE_URL -f ./scripts_processing/joins/tractjoin.sql
 time psql $DATABASE_URL -f ./scripts_processing/joins/boroughjoin.sql
 psql $DATABASE_URL -f ./scripts_processing/cleanup/cleanup_cityboro.sql
 psql $DATABASE_URL -f ./scripts_assembly/standardize_borough.sql
+echo 'Spatially joining with COLP bbls to get propertytype...'
 time psql $DATABASE_URL -f ./scripts_processing/joins/propertytypejoin.sql
 psql $DATABASE_URL -f ./scripts_processing/cleanup_spatial/vacuum.sql
 
