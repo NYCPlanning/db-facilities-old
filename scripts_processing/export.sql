@@ -88,4 +88,4 @@ COPY (
 	ORDER BY
 		-- domain, facilitygroup, facilitysubgroup, facilitytype
 		RANDOM()
-) TO '/Users/hannahbkates/Desktop/facilities.csv' WITH CSV DELIMITER ',' HEADER;
+) TO '/Users/hannahbkates/Desktop/facilities.csv' WITH CSV DELIMITER ';' HEADER;

@@ -136,11 +136,13 @@ SELECT
 		END),
 	-- facilitysubgroup
 		(CASE
+			WHEN Institution_Sub_Type_Desc LIKE '%CHARTER SCHOOL%'
+				THEN 'Public Schools'
 			WHEN Institution_Sub_Type_Desc LIKE '%MUSEUM%' THEN 'Museums'
 			WHEN Institution_Sub_Type_Desc LIKE '%HISTORICAL%' THEN 'Historical Societies'
 			WHEN Institution_Type_Desc LIKE '%LIBRARIES%' THEN 'Academic and Special Libraries'
 			WHEN Institution_Type_Desc LIKE '%CHILD NUTRITION%' THEN 'Child Nutrition'
-			WHEN Institution_Sub_Type_Desc LIKE '%PRE-SCHOOL%' AND Institution_Type_Desc LIKE '%DISABILITIES%' 
+			WHEN Institution_Sub_Type_Desc LIKE '%PRE-SCHOOL%' AND (Institution_Sub_Type_Desc LIKE '%DISABILITIES%' OR Institution_Sub_Type_Desc LIKE '%SWD%')
 				THEN 'Preschools for Students with Disabilities'
 			WHEN (Institution_Type_Desc LIKE '%DISABILITIES%')
 				THEN 'Other Schools Serving Students with Disabilities'

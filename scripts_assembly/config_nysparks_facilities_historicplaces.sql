@@ -95,11 +95,11 @@ SELECT
 	-- areatype
 	NULL,
 	-- operatortype
-	'Public',
+	'Non-public',
 	-- operatorname
-	'NYS Office of Parks, Recreation and Historic Preservation',
+	'Not Available',
 	-- operatorabbrev
-	'NYSOPRHP',
+	'Non-public',
 	-- oversightagency
 	ARRAY['NYS Office of Parks, Recreation and Historic Preservation'],
 	-- oversightabbrev

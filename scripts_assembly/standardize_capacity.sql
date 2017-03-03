@@ -36,4 +36,5 @@ UPDATE facilities AS f
 			END)
 	WHERE
 		area IS NOT NULL
+		AND array_to_string(area,',') NOT LIKE CONCAT('%',array_to_string(agencysource,','),'%')
 		;

@@ -16,10 +16,10 @@ WITH matches AS (
 	LEFT JOIN facilities b
 	ON a.bin = b.bin
 	WHERE
-		a.pgtable = ARRAY['acs_facilities_daycareheadstart']::text[]
-		AND (b.pgtable = ARRAY['hhs_facilities_contracts']::text[]
-			OR b.pgtable = ARRAY['hhs_facilities_financials']::text[]
-			OR b.pgtable = ARRAY['hhs_facilities_proposals']::text[])
+		a.pgtable = ARRAY['acs_facilities_daycareheadstart']
+		AND (b.pgtable = ARRAY['hhs_facilities_fmscontracts']
+			OR b.pgtable = ARRAY['hhs_facilities_financialscontracts']
+			OR b.pgtable = ARRAY['hhs_facilities_proposals'])
 		AND b.facilitygroup LIKE '%Child Care%'
 		AND a.geom IS NOT NULL
 		AND b.geom IS NOT NULL
@@ -118,7 +118,7 @@ WITH matches AS (
 		a.sourcedatasetname,
 		b.sourcedatasetname as sourcedatasetname_b,
 		b.datesourceupdated as datesourceupdated_b,
-		b.linkdata as linkdata_b,
+		(CASE WHEN b.linkdata IS NULL THEN ARRAY['FAKE!'] ELSE b.linkdata END) as linkdata_b,
 		a.oversightagency,
 		b.oversightlevel as oversightlevel_b,
 		b.oversightagency as oversightagency_b,

@@ -69,7 +69,7 @@ var geoclientTemplate1 = 'https://api.cityofnewyork.us/geoclient/v1/address.json
 
 
 function addressLookup1(row) {
-  console.log('Looking up address', row.borough.trim(), row.addressnumber.trim(), row.streetname.split(',')[0].split('#')[0].split(' - ')[0].trim())
+  // console.log('Looking up address', row.borough.trim(), row.addressnumber.trim(), row.streetname.split(',')[0].split('#')[0].split(' - ')[0].trim())
 
       var apiCall1 = Mustache.render(geoclientTemplate1, {
         
@@ -132,7 +132,7 @@ function updateFacilities(data, row) {
   var insertTemplate = 'UPDATE facilities SET geom=ST_SetSRID(ST_GeomFromText(\'POINT({{longitude}} {{latitude}})\'),4326), latitude=\'{{latitude}}\', longitude=\'{{longitude}}\', addressnumber=\'{{newaddressnumber}}\', streetname=initcap(\'{{newstreetname}}\'), address=initcap(CONCAT(\'{{newaddressnumber}}\',\' \',\'{{newstreetname}}\')), bbl=ARRAY[\'{{bbl}}\'], bin=ARRAY[\'{{bin}}\'], borough=initcap(\'{{borough}}\'), boroughcode=(CASE WHEN \'{{borough}}\'=\'MANHATTAN\' THEN 1 WHEN \'{{borough}}\'=\'BRONX\' THEN 2 WHEN \'{{borough}}\'=\'BROOKLYN\' THEN 3 WHEN \'{{borough}}\'=\'QUEENS\' THEN 4 WHEN \'{{borough}}\'=\'STATEN ISLAND\' THEN 5 END), zipcode=\'{{zipcode}}\', city=initcap(\'{{city}}\'), processingflag=\'address2geom_borough\' WHERE (addressnumber=\'{{oldaddressnumber}}\' AND streetname=\'{{oldstreetname}}\')'
 
   if(data.latitude && data.longitude) {
-    console.log('Updating facilities');
+    // console.log('Updating facilities');
 
     var insert = Mustache.render(insertTemplate, {
       
@@ -173,7 +173,7 @@ function updateFacilities(data, row) {
     })
 
   } else {
-    console.log('Response did not include a lat/lon, skipping...');
+    // console.log('Response did not include a lat/lon, skipping...');
     i++;
         console.log(i,nullGeomResults.length)
         if (i<nullGeomResults.length) {

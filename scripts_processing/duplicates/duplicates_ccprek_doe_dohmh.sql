@@ -121,7 +121,7 @@ WITH matches AS (
 		a.sourcedatasetname,
 		b.sourcedatasetname as sourcedatasetname_b,
 		b.datesourceupdated as datesourceupdated_b,
-		b.linkdata as linkdata_b,
+		(CASE WHEN b.linkdata IS NULL THEN ARRAY['FAKE!'] ELSE b.linkdata END) as linkdata_b,
 		a.oversightagency,
 		b.oversightlevel as oversightlevel_b,
 		b.oversightagency as oversightagency_b,

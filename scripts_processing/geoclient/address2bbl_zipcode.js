@@ -68,7 +68,7 @@ var geoclientTemplate1 = 'https://api.cityofnewyork.us/geoclient/v1/address.json
 
 
 function addressLookup1(row) {
-  console.log('Looking up address', row.zipcode, row.addressnumber.trim(), row.streetname.split(',')[0].split('#')[0].split(' - ')[0].trim())
+  // console.log('Looking up address', row.zipcode, row.addressnumber.trim(), row.streetname.split(',')[0].split('#')[0].split(' - ')[0].trim())
 
       var apiCall1 = Mustache.render(geoclientTemplate1, {
         
@@ -131,7 +131,7 @@ function updateFacilities(data, row) {
   var insertTemplate = 'UPDATE facilities SET addressnumber=\'{{newaddressnumber}}\', streetname=initcap(\'{{newstreetname}}\'), address=initcap(CONCAT(\'{{newaddressnumber}}\',\' \',\'{{newstreetname}}\')), bbl=ARRAY[\'{{bbl}}\'], bin=ARRAY[\'{{bin}}\'], borough=\'{{borough}}\', city=initcap(\'{{city}}\'), processingflag=\'address2bbl_zipcode\' WHERE (addressnumber=\'{{oldaddressnumber}}\' AND streetname=\'{{oldstreetname}}\') AND processingflag IS NULL'
 
   if(data.latitude && data.longitude) {
-    console.log('Updating facilities');
+    // console.log('Updating facilities');
 
     var insert = Mustache.render(insertTemplate, {
       
@@ -171,7 +171,7 @@ function updateFacilities(data, row) {
     })
 
   } else {
-    console.log('Response did not include a lat/lon, skipping...');
+    // console.log('Response did not include a lat/lon, skipping...');
     i++;
         console.log(i,nullGeomResults.length)
         if (i<nullGeomResults.length) {

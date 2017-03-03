@@ -77,12 +77,12 @@ duplicates AS (
 		sourcecombo LIKE '{bic_facilities_tradewaste}-{nysdec_facilities_solidwaste}' AND facilitysubgroup = 'Solid Waste Transfer and Carting'
 		OR sourcecombo LIKE '{dca_facilities_operatingbusinesses}-{nysdec_facilities_solidwaste}' AND facilitysubgroup = 'Solid Waste Processing'
 		OR sourcecombo LIKE '{dcla_facilities_culturalinstitutions}-{nysed_facilities_activeinstitutions}' AND facilitysubgroup = 'Museums'
-		OR sourcecombo LIKE '{dfta_facilities_contracts}-{hhs_facilities_contracts}' AND facilitysubgroup = 'Senior Services'
-		OR sourcecombo LIKE '{doe_facilities_schoolsbluebook}-{hhs_facilities_financials}' AND facilitysubgroup = 'Community Centers and Community School Programs'
+		OR sourcecombo LIKE '{dfta_facilities_contracts}-{hhs_facilities_%contracts}' AND facilitysubgroup = 'Senior Services'
+		OR sourcecombo LIKE '{doe_facilities_schoolsbluebook}-{hhs_facilities_%financials}' AND facilitysubgroup = 'Community Centers and Community School Programs'
 		OR sourcecombo LIKE '{doe_facilities_schoolsbluebook}-{nysed_facilities_activeinstitutions}' AND facilitysubgroup = 'Public Schools'
-		OR sourcecombo LIKE '{dycd_facilities_compass}-{hhs_facilities_contracts}' AND facilitysubgroup = 'Comprehensive After School System (COMPASS) Sites'
-		OR sourcecombo LIKE '{dycd_facilities_otherprograms}-{hhs_facilities_contracts}' AND facilitysubgroup = 'Youth Centers, Literacy Programs, Job Training, and Immigrant Services'
-		OR sourcecombo LIKE '{nysomh_facilities_mentalhealth}-{hhs_facilities_contracts}' AND facilitysubgroup = 'Mental Health'
+		OR sourcecombo LIKE '{dycd_facilities_compass}-{hhs_facilities_%contracts}' AND facilitysubgroup = 'Comprehensive After School System (COMPASS) Sites'
+		OR sourcecombo LIKE '{dycd_facilities_otherprograms}-{hhs_facilities_%contracts}' AND facilitysubgroup = 'Youth Centers, Literacy Programs, Job Training, and Immigrant Services'
+		OR sourcecombo LIKE '{nysomh_facilities_mentalhealth}-{hhs_facilities_%contracts}' AND facilitysubgroup = 'Mental Health'
 	GROUP BY
 	hash, sourcecombo, facilitysubgroup
 	ORDER BY facilitysubgroup)
@@ -107,6 +107,7 @@ WITH matches AS (
 		(CASE WHEN b.idagency IS NULL THEN ARRAY['FAKE!'] ELSE b.idagency END) as idagency_b,
 		a.uid,
 		b.uid as uid_b,
+		(CASE WHEN b.idold IS NULL THEN 'FAKE!' ELSE b.idold END) as idold_b,
 		a.hash,
 		b.hash as hash_b,
 		a.facilityname,
@@ -127,7 +128,7 @@ WITH matches AS (
 		a.sourcedatasetname,
 		b.sourcedatasetname as sourcedatasetname_b,
 		b.datesourceupdated as datesourceupdated_b,
-		b.linkdata as linkdata_b,
+		(CASE WHEN b.linkdata IS NULL THEN ARRAY['FAKE!'] ELSE b.linkdata END) as linkdata_b,
 		a.oversightagency,
 		b.oversightlevel as oversightlevel_b,
 		b.oversightagency as oversightagency_b,
@@ -199,9 +200,10 @@ duplicates AS (
 	SELECT
 		count(*) AS countofdups,
 		hash,
+		facilitysubgroup,
 		array_agg(uid_b) AS uid_merged,
 		array_agg(distinct idagency_b) AS idagency_merged,
-		array_agg(distinct idold_b) AS idold_merged,
+		array_to_string(array_agg(distinct idold_b),',') AS idold_merged,
 		array_agg(distinct hash_b) AS hash_merged,
 		array_agg(distinct agencysource_b) AS agencysource,
 		array_agg(distinct sourcedatasetname_b) AS sourcedatasetname,
@@ -222,12 +224,12 @@ duplicates AS (
 		sourcecombo LIKE '{bic_facilities_tradewaste}-{nysdec_facilities_solidwaste}' AND facilitysubgroup = 'Solid Waste Transfer and Carting'
 		OR sourcecombo LIKE '{dca_facilities_operatingbusinesses}-{nysdec_facilities_solidwaste}' AND facilitysubgroup = 'Solid Waste Processing'
 		OR sourcecombo LIKE '{dcla_facilities_culturalinstitutions}-{nysed_facilities_activeinstitutions}' AND facilitysubgroup = 'Museums'
-		OR sourcecombo LIKE '{dfta_facilities_contracts}-{hhs_facilities_contracts}' AND facilitysubgroup = 'Senior Services'
-		OR sourcecombo LIKE '{doe_facilities_schoolsbluebook}-{hhs_facilities_financials}' AND facilitysubgroup = 'Community Centers and Community School Programs'
+		OR sourcecombo LIKE '{dfta_facilities_contracts}-{hhs_facilities_%' AND facilitysubgroup = 'Senior Services'
+		OR sourcecombo LIKE '{doe_facilities_schoolsbluebook}-{hhs_facilities_%' AND facilitysubgroup = 'Community Centers and Community School Programs'
 		OR sourcecombo LIKE '{doe_facilities_schoolsbluebook}-{nysed_facilities_activeinstitutions}' AND facilitysubgroup = 'Public Schools'
-		OR sourcecombo LIKE '{dycd_facilities_compass}-{hhs_facilities_contracts}' AND facilitysubgroup = 'Comprehensive After School System (COMPASS) Sites'
-		OR sourcecombo LIKE '{dycd_facilities_otherprograms}-{hhs_facilities_contracts}' AND facilitysubgroup = 'Youth Centers, Literacy Programs, Job Training, and Immigrant Services'
-		OR sourcecombo LIKE '{nysomh_facilities_mentalhealth}-{hhs_facilities_contracts}' AND facilitysubgroup = 'Mental Health'
+		OR sourcecombo LIKE '{dycd_facilities_compass}-{hhs_facilities_%' AND facilitysubgroup = 'Comprehensive After School System (COMPASS) Sites'
+		OR sourcecombo LIKE '{dycd_facilities_otherprograms}-{hhs_facilities_%' AND facilitysubgroup = 'Youth Centers, Literacy Programs, Job Training, and Immigrant Services'
+		OR sourcecombo LIKE '{nysomh_facilities_mentalhealth}-{hhs_facilities_%' AND facilitysubgroup = 'Mental Health'
 	GROUP BY
 	hash, sourcecombo, facilitysubgroup
 	ORDER BY countofdups DESC )
@@ -241,7 +243,7 @@ SET
 		END),
 	idold = 
 		(CASE
-			WHEN d.idold_merged <> ARRAY['FAKE!'] THEN array_cat(idold, d.idold_merged)
+			WHEN d.idold_merged <> 'FAKE!' THEN CONCAT(idold, ';', d.idold_merged)
 			ELSE idold
 		END),
 	uid_merged = d.uid_merged,
@@ -250,7 +252,7 @@ SET
 	agencysource = array_cat(f.agencysource,d.agencysource),
 	sourcedatasetname = array_cat(f.sourcedatasetname, d.sourcedatasetname),
 	datesourceupdated = array_cat(f.datesourceupdated, d.datesourceupdated),
-	linkdata = array_cat(f.linkdata, d.linkdata),
+	linkdata = (CASE WHEN d.linkdata <> ARRAY['FAKE!'] THEN array_cat(f.linkdata, d.linkdata) END),
 	capacity = (CASE WHEN d.capacity <> ARRAY['FAKE!'] THEN array_cat(f.capacity, d.capacity) END),
 	capacitytype = (CASE WHEN d.capacitytype <> ARRAY['FAKE!'] THEN array_cat(f.capacitytype, d.capacitytype) END),
 	utilization = (CASE WHEN d.utilization <> ARRAY['FAKE!'] THEN array_cat(f.utilization, d.utilization) END),
@@ -258,17 +260,17 @@ SET
 	areatype = (CASE WHEN d.areatype <> ARRAY['FAKE!'] THEN array_cat(f.areatype, d.areatype) END),	
 	oversightagency = 
 		(CASE
-			WHEN sourcecombo NOT LIKE '{dcla_facilities_culturalinstitutions}-{nysed_facilities_activeinstitutions}' THEN array_cat(f.oversightagency, d.oversightagency)
+			WHEN sourcecombo NOT LIKE '{dcla_facilities_culturalinstitutions}-{nysed_facilities_activeinstitutions}' THEN array_cat(ARRAY[array_to_string(f.oversightagency,';')], ARRAY[array_to_string(d.oversightagency,';')])
 			ELSE f.oversightagency
 		END),
 	oversightabbrev =
 		(CASE
-			WHEN sourcecombo NOT LIKE '{dcla_facilities_culturalinstitutions}-{nysed_facilities_activeinstitutions}' THEN array_cat(f.oversightabbrev, d.oversightabbrev)
+			WHEN sourcecombo NOT LIKE '{dcla_facilities_culturalinstitutions}-{nysed_facilities_activeinstitutions}' THEN array_cat(ARRAY[array_to_string(f.oversightabbrev,';')], ARRAY[array_to_string(d.oversightabbrev,';')])
 			ELSE f.oversightabbrev
 		END),
 	oversightlevel =
 		(CASE
-			WHEN sourcecombo NOT LIKE '{dcla_facilities_culturalinstitutions}-{nysed_facilities_activeinstitutions}' THEN array_cat(f.oversightlevel, d.oversightlevel)
+			WHEN sourcecombo NOT LIKE '{dcla_facilities_culturalinstitutions}-{nysed_facilities_activeinstitutions}' THEN array_cat(ARRAY[array_to_string(f.oversightlevel,';')], ARRAY[array_to_string(d.oversightlevel,';')])
 			ELSE f.oversightlevel
 		END)
 FROM duplicates AS d
