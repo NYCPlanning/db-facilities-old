@@ -98,8 +98,8 @@ SELECT
 	-- facilitysubgroup
 		(CASE
 			-- admin of gov
-			WHEN typecatego = 'Undeveloped' THEN 'Undeveloped or No Use'
-			WHEN typecatego = 'Lot' THEN 'Parking'
+			WHEN typecatego = 'Undeveloped' THEN 'Miscellaneous Use'
+			WHEN typecatego = 'Lot' THEN 'City Agency Parking'
 			-- parks
 			WHEN typecatego = 'Cemetery' THEN 'Cemeteries'
 			WHEN typecatego = 'Historic House Park' THEN 'Historical Sites'
