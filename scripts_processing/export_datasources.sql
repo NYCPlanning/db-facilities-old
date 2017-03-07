@@ -12,6 +12,6 @@ SELECT
 		WHEN refreshmeans = 'NA' THEN CONCAT('| Refresh Method: | Confirm with agency |')
 	END) AS refreshmethod
 FROM
-	facilities_data_sources
+	facilities_datasources
 ORDER BY
 	agencysourcename
