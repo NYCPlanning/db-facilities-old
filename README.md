@@ -29,6 +29,6 @@ After the required source data is loaded, the build process is broken into two s
 
 3. Run the assembly scripts using `sh run_assembly.sh` This script runs all the scripts inside the scripts_assembly folder. It is also annotated, describing what each one does.
 
-![Assembly Diagram](./img/FacDB_Assembly.png)
+  *![Assembly Process Diagram](./img/FacDB_Assembly.png)
 
 4. Run the processing scripts using `sh run_processing.sh` This script runs all the scripts inside the scripts_processing. It is also annotated, describing what each one does.
