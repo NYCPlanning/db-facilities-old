@@ -129,23 +129,23 @@ psql $DATABASE_URL -f ./scripts_processing/backup/copy_backup3.sql
 
 # ## DEDUPING
 
-# ## Merge Child Care and Pre-K Duplicate records
-# echo 'Merging and dropping Child Care and Pre-K duplicates...'
-# psql $DATABASE_URL -f ./scripts_processing/duplicates/duplicates_ccprek_acs_hhs.sql
-# psql $DATABASE_URL -f ./scripts_processing/duplicates/duplicates_removeFAKE.sql
-# psql $DATABASE_URL -f ./scripts_processing/duplicates/duplicates_ccprek_doe_acs.sql
-# psql $DATABASE_URL -f ./scripts_processing/duplicates/duplicates_removeFAKE.sql
-# psql $DATABASE_URL -f ./scripts_processing/duplicates/duplicates_ccprek_doe_dohmh.sql
-# psql $DATABASE_URL -f ./scripts_processing/duplicates/duplicates_removeFAKE.sql
-# psql $DATABASE_URL -f ./scripts_processing/duplicates/duplicates_ccprek_acs_dohmh.sql
-# psql $DATABASE_URL -f ./scripts_processing/duplicates/duplicates_removeFAKE.sql
-# psql $DATABASE_URL -f ./scripts_processing/duplicates/duplicates_ccprek_dohmh.sql
-# psql $DATABASE_URL -f ./scripts_processing/duplicates/duplicates_removeFAKE.sql
-# psql $DATABASE_URL -f ./scripts_processing/backup/copy_backup4.sql
+## Merge Child Care and Pre-K Duplicate records
+echo 'Merging and dropping Child Care and Pre-K duplicates...'
+psql $DATABASE_URL -f ./scripts_processing/duplicates/duplicates_ccprek_acs_hhs.sql
+psql $DATABASE_URL -f ./scripts_processing/duplicates/duplicates_removeFAKE.sql
+psql $DATABASE_URL -f ./scripts_processing/duplicates/duplicates_ccprek_doe_acs.sql
+psql $DATABASE_URL -f ./scripts_processing/duplicates/duplicates_removeFAKE.sql
+psql $DATABASE_URL -f ./scripts_processing/duplicates/duplicates_ccprek_doe_dohmh.sql
+psql $DATABASE_URL -f ./scripts_processing/duplicates/duplicates_removeFAKE.sql
+psql $DATABASE_URL -f ./scripts_processing/duplicates/duplicates_ccprek_acs_dohmh.sql
+psql $DATABASE_URL -f ./scripts_processing/duplicates/duplicates_removeFAKE.sql
+psql $DATABASE_URL -f ./scripts_processing/duplicates/duplicates_ccprek_dohmh.sql
+psql $DATABASE_URL -f ./scripts_processing/duplicates/duplicates_removeFAKE.sql
+psql $DATABASE_URL -f ./scripts_processing/backup/copy_backup4.sql
 
-# echo 'Merging and dropping remaining duplicates, pre-COLP...'
-# psql $DATABASE_URL -f ./scripts_processing/duplicates/duplicates_remaining.sql
-# psql $DATABASE_URL -f ./scripts_processing/duplicates/duplicates_removeFAKE.sql
+echo 'Merging and dropping remaining duplicates, pre-COLP...'
+psql $DATABASE_URL -f ./scripts_processing/duplicates/duplicates_remaining.sql
+psql $DATABASE_URL -f ./scripts_processing/duplicates/duplicates_removeFAKE.sql
 
 echo 'Merging and dropping remaining duplicates, pre-COLP...'
 psql $DATABASE_URL -f ./scripts_processing/duplicates/duplicates_sfpsd_relatedlots.sql
