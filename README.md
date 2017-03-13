@@ -33,8 +33,8 @@ After the required source data is loaded, the build process is broken into two s
 
 5. Run the deduping and export scripts using `sh run_deduping.sh` This script runs all the scripts inside the scripts_processing. It is also annotated, describing what each one does. A diagram of the process is provided below.
 
-[Assembly Diagram](./img/FacDB_Assembly.png)
+![Assembly Diagram](./img/FacDB_Assembly.png)
 
-[Geoprocessing Diagram](./img/FacDB_Assembly.png)
+![Geoprocessing Diagram](./img/FacDB_Assembly.png)
 
-[Deduping Diagram](./img/FacDB_Assembly.png)
+![Deduping Diagram](./img/FacDB_Assembly.png)
