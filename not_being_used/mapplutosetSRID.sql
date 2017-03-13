@@ -1,1 +1,0 @@
-SELECT UpdateGeometrySRID('dcp_mappluto','geom',4326)
