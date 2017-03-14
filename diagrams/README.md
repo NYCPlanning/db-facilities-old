@@ -1,0 +1,1 @@
+Note: The xml versions of the diagrams can be uploaded in [draw.io](draw.io) for editing.
