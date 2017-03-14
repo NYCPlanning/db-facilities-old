@@ -8,7 +8,7 @@
 
 The build follows an Extract -> Load -> Transform sequence rather than an ETL (Extract-Transform-Load) sequence.
 
-[High Level](./diagrams/High Level Process.png)
+![High Level](./diagrams/High_Level_Process.png)
 
 All the source datasets are first loaded using the [Civic Data Loader](https://github.com/NYCPlanning/civic-data-loader) scripts. The datasets which must be loaded are listed out in the `run_assembly.sh` script.
 
