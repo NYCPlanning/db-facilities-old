@@ -1,13 +1,14 @@
 ### Database and Documentation:
 
-  * [Webmap Explorer](http://cpp.capitalplanning.nyc/facilities)
-  * [Shapefile download]()
-  * [Documentation](https://nycplanning.github.io/cpdocs/facdb/)
-  * [Feedback Form](https://docs.google.com/forms/d/e/1FAIpQLSffdzVSCRmMQhGn32Z6bDnBEKPXJw20m6CkDMeco-z4B1FcNQ/viewform)
+  * [NYC Facilities Explorer](http://capitalplanning.nyc.gov/facilities)
+  * [Data download](https://www1.nyc.gov/site/planning/data-maps/open-data/dwn-selfac.page)
+  * [Documentation / User Guide](https://docs.capitalplanning.nyc/facdb/)
 
 ### Summary of Build Process and Stages:
 
 The build follows an Extract -> Load -> Transform sequence rather than an ETL (Extract-Transform-Load) sequence.
+
+[High Level](./diagrams/High Level Process.png)
 
 All the source datasets are first loaded using the [Civic Data Loader](https://github.com/NYCPlanning/civic-data-loader) scripts. The datasets which must be loaded are listed out in the `run_assembly.sh` script.
 
