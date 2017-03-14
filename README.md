@@ -1,10 +1,10 @@
-### Database and Documentation:
+## Database and Documentation:
 
   * [NYC Facilities Explorer](http://capitalplanning.nyc.gov/facilities)
   * [Data download](https://www1.nyc.gov/site/planning/data-maps/open-data/dwn-selfac.page)
   * [Documentation / User Guide](https://docs.capitalplanning.nyc/facdb/)
 
-### Summary of Build Process and Stages:
+## Summary of Build Process and Stages:
 
 The build follows an Extract -> Load -> Transform sequence rather than an ETL (Extract-Transform-Load) sequence.
 
@@ -18,7 +18,7 @@ After the required source data is loaded, the build process is broken into two s
 
 **Processing**: Fills in all the missing values that weren't provided in the source data before doing a final round of formatting and cleanup. Records without geometries get geocoded, x & y coordinates (SRID 2263) are calculated and filled in, and spatial joins with MapPLUTO are performed to get additional location details like BBL and addresses when missing. Finally, a script performs final formatting by querying for acronyms that need to be changed back to all caps.
 
-### How to Build:
+## How to Build:
 
 1. Create an environment variable in your bash profile that provides your DATABASE_URL. This gets used in both the run_assembly.sh and run_processing.sh scripts.
   * `cd ~/.bash_profile`
@@ -34,8 +34,11 @@ After the required source data is loaded, the build process is broken into two s
 
 5. Run the deduping and export scripts using `sh run_deduping.sh` This script runs all the scripts inside the scripts_processing. It is also annotated, describing what each one does. A diagram of the process is provided below.
 
+### Assembly
 ![Assembly Diagram](./diagrams/FacDB_Assembly.png)
 
+### Geoprocessing
 ![Geoprocessing Diagram](./diagrams/FacDB_Geoprocessing.png)
 
+### Deduping (identification and merging of duplicate records)
 ![Deduping Diagram](./diagrams/FacDB_Deduping.png)
