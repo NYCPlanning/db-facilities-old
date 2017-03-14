@@ -1,1 +1,1 @@
-Note: The xml versions of the diagrams can be uploaded in [draw.io](draw.io) for editing.
+Note: The xml versions of the diagrams can be uploaded in [draw.io](https://www.draw.io/) for editing.
