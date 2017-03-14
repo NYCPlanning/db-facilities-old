@@ -7,6 +7,7 @@
 ## Summary of Build Process and Stages
 
 ![High Level](./diagrams/FacDB_HighLevel.png)
+
 Diagram of process sequence for first build
 
 ### 1 . Obtaining Data
