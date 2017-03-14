@@ -1,12 +1,13 @@
-## Database and Documentation:
+## Database and Documentation
 
   * [NYC Facilities Explorer](http://capitalplanning.nyc.gov/facilities)
   * [Data Download](https://www1.nyc.gov/site/planning/data-maps/open-data/dwn-selfac.page)
   * [Data User Guide / Documentation](http://docs.capitalplanning.nyc/facdb/)
 
-## Summary of Build Process and Stages:
+## Summary of Build Process and Stages
 
 ![High Level](./diagrams/FacDB_HighLevel.png)
+Diagram of process sequence for first build
 
 ### 1 . Obtaining Data
 
@@ -37,17 +38,27 @@ Fills in all the missing values that weren't provided in the source data before 
 [`5_export.sh`](https://github.com/NYCPlanning/facilities-db/blob/master/run_export.sh) script runs each of the scripts that export each of the data views that get published and are used for the NYC Facilities Explorer and other documentation.
 
 
-## Prerequisites:
+## Prerequisites
 
-1. Create an environment variable in your bash profile that provides your DATABASE_URL. This gets used in both the run_assembly.sh and run_processing.sh scripts.
-  * `cd ~/.bash_profile`
-  * Open .bash_profile in Sublime and add the following code:
-  * `export DATABASE_URL=postgres://{User}:{Password}@{Host}:{Post}/{Database}`
-  * Check that it was created successfully with `printenv`
+1. Install PostGreSQL
+2. Install Node.js
+3. Create a database in your PostGreSQL instance to use for this project
+4. Create an environment variable in your bash profile that provides your DATABASE_URL. This gets used in both the run_assembly.sh and run_processing.sh scripts.
+    * `cd ~/.bash_profile`
+    * Open .bash_profile in Sublime and add the following code:
+    * `export DATABASE_URL=postgres://{User}:{Password}@{Host}:{Post}/{Database}`
+    * Check that it was created successfully with `printenv`
 
-## Scheduled Maintenance and Data Quality Checks:
+
+## Updating and Maintaining the Database
 
 Coming soon!
+
+
+## Quick Facts on Facilities Database
+
+Coming soon!
+
 
 ## Process Diagrams
 
