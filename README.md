@@ -14,6 +14,8 @@ Diagram of process sequence for first build
 
 The build follows an Extract -> Load -> Transform sequence rather than an ETL (Extract-Transform-Load) sequence. All the source datasets are first loaded into PostGreSQL using the [Civic Data Loader](https://github.com/NYCPlanning/civic-data-loader) scripts. After the required source data is loaded in the PostGIS database, the build or update process begins, consisting of four phases: Assembly, Geoprocessing, Deduping, and Exporting.
 
+Over 50% of the data sources used for FacDB are available in a machine readable format via the NYC Open Data Portal, NYS Open Data Portal, or an agency's website. Other sources that are not published in this format are generally shared with DCP over email and DCP then puts these files on an FTP for DCP's internal use.
+
 [`1_download.sh`](https://github.com/NYCPlanning/facilities-db/blob/master/run_download.sh) script downloads and loads all the neccesary source datasets for the Facilities Database (FacDB).
 
 ### 2. Assembly
@@ -49,6 +51,7 @@ Fills in all the missing values that weren't provided in the source data before 
     * Open .bash_profile in Sublime and add the following code:
     * `export DATABASE_URL=postgres://{User}:{Password}@{Host}:{Post}/{Database}`
     * Check that it was created successfully with `printenv`
+5. Generate an API ID and Key for Geoclient. [Directions here](https://developer.cityofnewyork.us/api/geoclient-api).
 
 
 ## Updating and Maintaining the Database

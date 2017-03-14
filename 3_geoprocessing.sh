@@ -82,7 +82,7 @@ echo 'Spatially joining with dcp_mappluto...'
 time psql $DATABASE_URL -f ./scripts_processing/bbljoin.sql
 echo 'Done spatially joining with dcp_mappluto'
 psql $DATABASE_URL -f ./scripts_processing/cleanup_spatial/vacuum.sql
-psql $DATABASE_URL -f ./scripts_assembly/standardize_address.sql
+psql $DATABASE_URL -f ./2_assembly/standardize_address.sql
 # ^ need to clean up addresses again after filling in with PLUTO address
 
 echo 'Filling in missing BINS where there is a 1-1 relationship between BBL and BIN...'
@@ -116,7 +116,7 @@ time psql $DATABASE_URL -f ./scripts_processing/joins/counciljoin.sql
 time psql $DATABASE_URL -f ./scripts_processing/joins/tractjoin.sql
 time psql $DATABASE_URL -f ./scripts_processing/joins/boroughjoin.sql
 psql $DATABASE_URL -f ./scripts_processing/cleanup/cleanup_cityboro.sql
-psql $DATABASE_URL -f ./scripts_assembly/standardize_borough.sql
+psql $DATABASE_URL -f ./2_assembly/standardize_borough.sql
 # echo 'Spatially joining with COLP bbls to get propertytype...'
 time psql $DATABASE_URL -f ./scripts_processing/joins/propertytypejoin.sql
 echo 'Setting propertytype for street plazas...'
