@@ -6,7 +6,7 @@
 ## Directions are in the README.md.
 
 echo 'Exporting...'
-time psql $DATABASE_URL -f ./scripts_processing/export.sql
-time psql $DATABASE_URL -f ./scripts_processing/export_allbeforemerging.sql
-time psql $DATABASE_URL -f ./scripts_processing/export_unmapped.sql
+time psql $DATABASE_URL -f ./5_export/export.sql
+time psql $DATABASE_URL -f ./5_export/export_allbeforemerging.sql
+time psql $DATABASE_URL -f ./5_export/export_unmapped.sql
 echo 'All done!'
