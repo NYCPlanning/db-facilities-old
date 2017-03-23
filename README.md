@@ -38,7 +38,7 @@ The build follows an Extract -> Load -> Transform sequence rather than an ETL (E
 
 Over 50% of the data sources used for FacDB are available in a machine readable format via the NYC Open Data Portal, NYS Open Data Portal, or an agency's website. Other sources that are not published in this format are generally shared with DCP over email and DCP then puts these files on an FTP for DCP's internal use.
 
-[`1_download.sh`](https://github.com/NYCPlanning/facilities-db/blob/master/run_download.sh) script downloads and loads all the neccesary source datasets for the Facilities Database (FacDB).
+[`1_download.sh`](https://github.com/NYCPlanning/facilities-db/blob/master/1_download.sh) script downloads and loads all the neccesary source datasets for the Facilities Database (FacDB).
 
 ### 2. Assembly
 
@@ -50,7 +50,7 @@ The end product of this Assembly stage is all the records and available attribut
 
 [Diagram of the Assembly process](https://github.com/NYCPlanning/facilities-db#assembly) is provided below.
 
-[`2_assembly.sh`](https://github.com/NYCPlanning/facilities-db/blob/master/run_download.sh) script runs all the steps in the Assembly process and is annotated to decribe each of the scripts used.
+[`2_assembly.sh`](https://github.com/NYCPlanning/facilities-db/blob/master/2_assembly.sh) script runs all the steps in the Assembly process and is annotated to decribe each of the scripts used.
 
 ### 3. Geoprocessing
 
@@ -64,7 +64,7 @@ Each record in the database is flagged with a code for the geoprocessing techniq
 
 [Diagram of the Geoprocessing steps](https://github.com/NYCPlanning/facilities-db#geoprocessing) is provided below.
 
-[`3_geoprocessing.sh`](https://github.com/NYCPlanning/facilities-db/blob/master/run_geoprocessing.sh) script runs all Geoprocessing steps and is annotated to decribe each of the scripts used.
+[`3_geoprocessing.sh`](https://github.com/NYCPlanning/facilities-db/blob/master/3_geoprocessing.sh) script runs all Geoprocessing steps and is annotated to decribe each of the scripts used.
 
 ### 4. Deduping
 
@@ -72,11 +72,11 @@ Several of the source datasets have content which overlaps with other datasets. 
 
 [Diagram of the Deduping process](https://github.com/NYCPlanning/facilities-db#deduping) is provided below.
 
-[`4_deduping.sh`](https://github.com/NYCPlanning/facilities-db/blob/master/run_deduping.sh)  script runs all the steps in the Deduping process and is annotated to decribe each of the scripts used.
+[`4_deduping.sh`](https://github.com/NYCPlanning/facilities-db/blob/master/4_deduping.sh)  script runs all the steps in the Deduping process and is annotated to decribe each of the scripts used.
 
 ### 5. Exporting
 
-[`5_export.sh`](https://github.com/NYCPlanning/facilities-db/blob/master/run_export.sh) script runs each of the scripts that export each of the data views that get published and are used for the NYC Facilities Explorer and other documentation.
+[`5_export.sh`](https://github.com/NYCPlanning/facilities-db/blob/master/5_export.sh) script runs each of the scripts that export each of the data views that get published and are used for the NYC Facilities Explorer and other documentation.
 
 
 ## Updating and Maintaining the Database
