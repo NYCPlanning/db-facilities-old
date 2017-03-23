@@ -2,8 +2,8 @@
 // PROCESS OVERVIEW
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// Select all records with null geoms and a borough value
-// Geocode using borough and address -- prints errors and and skips to keep going
+// Select all records with null geoms and a boro value
+// Geocode using boro and address -- prints errors and and skips to keep going
 // Reject records do not get updated in the database.
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -31,7 +31,7 @@ var db = pgp(config);
 
 
 // querying for records without geoms
-var nullGeomQuery = 'SELECT DISTINCT borough, addressnumber, streetname FROM facilities WHERE geom IS NULL AND addressnumber IS NOT NULL AND streetname IS NOT NULL AND borough IS NOT NULL';
+var nullGeomQuery = 'SELECT DISTINCT boro, addressnum, streetname FROM facilities WHERE geom IS NULL AND addressnum IS NOT NULL AND streetname IS NOT NULL AND boro IS NOT NULL';
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -55,12 +55,12 @@ db.any(nullGeomQuery)
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
-// STEP 4 --- SETTING TEMPLATES FOR REQUEST TO API -- REQUIRES ADDRESS#, STREET NAME, AND BOROUGH OR ZIP
+// STEP 4 --- SETTING TEMPLATES FOR REQUEST TO API -- REQUIRES ADDRESS#, STREET NAME, AND BORO OR ZIP
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 // records without geoms and with boro
-var geoclientTemplate1 = 'https://api.cityofnewyork.us/geoclient/v1/address.json?houseNumber={{housenumber}}&street={{{streetname}}}&borough={{borough}}&app_id={{app_id}}&app_key={{app_key}}';
+var geoclientTemplate1 = 'https://api.cityofnewyork.us/geoclient/v1/address.json?houseNumber={{housenumber}}&street={{{streetname}}}&borough={{boro}}&app_id={{app_id}}&app_key={{app_key}}';
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -69,14 +69,14 @@ var geoclientTemplate1 = 'https://api.cityofnewyork.us/geoclient/v1/address.json
 
 
 function addressLookup1(row) {
-  // console.log('Looking up address', row.borough.trim(), row.addressnumber.trim(), row.streetname.split(',')[0].split('#')[0].split(' - ')[0].trim())
+  // console.log('Looking up address', row.boro.trim(), row.addressnum.trim(), row.streetname.split(',')[0].split('#')[0].split(' - ')[0].trim())
 
       var apiCall1 = Mustache.render(geoclientTemplate1, {
         
         // MAKE SURE THESE MATCH THE FIELD NAMES
-        housenumber: row.addressnumber.replace("/", "").replace("\"", "").replace("!", "").trim(),
+        housenumber: row.addressnum.replace("/", "").replace("\"", "").replace("!", "").trim(),
         streetname: row.streetname.split(',')[0].split('#')[0].split(' - ')[0].split('(')[0].split(';')[0].split('Suite')[0].split('Ste')[0].split('Apt')[0].split('apt')[0].split('Room')[0].split('Rm')[0].split('Box')[0].split('Unit')[0].trim(),
-        borough: row.borough.trim(),
+        boro: row.boro.trim(),
         app_id: apiCredentials.app_id,
         app_key: apiCredentials.app_key
       })
@@ -129,7 +129,7 @@ function addressLookup1(row) {
 
 function updateFacilities(data, row) {
 
-  var insertTemplate = 'UPDATE facilities SET geom=ST_SetSRID(ST_GeomFromText(\'POINT({{longitude}} {{latitude}})\'),4326), latitude=\'{{latitude}}\', longitude=\'{{longitude}}\', addressnumber=\'{{newaddressnumber}}\', streetname=initcap(\'{{newstreetname}}\'), address=initcap(CONCAT(\'{{newaddressnumber}}\',\' \',\'{{newstreetname}}\')), bbl=ARRAY[\'{{bbl}}\'], bin=ARRAY[\'{{bin}}\'], borough=initcap(\'{{borough}}\'), boroughcode=(CASE WHEN \'{{borough}}\'=\'MANHATTAN\' THEN 1 WHEN \'{{borough}}\'=\'BRONX\' THEN 2 WHEN \'{{borough}}\'=\'BROOKLYN\' THEN 3 WHEN \'{{borough}}\'=\'QUEENS\' THEN 4 WHEN \'{{borough}}\'=\'STATEN ISLAND\' THEN 5 END), zipcode=\'{{zipcode}}\', city=initcap(\'{{city}}\'), processingflag=\'address2geom_borough\' WHERE (addressnumber=\'{{oldaddressnumber}}\' AND streetname=\'{{oldstreetname}}\')'
+  var insertTemplate = 'UPDATE facilities SET geom=ST_SetSRID(ST_GeomFromText(\'POINT({{longitude}} {{latitude}})\'),4326), latitude=\'{{latitude}}\', longitude=\'{{longitude}}\', addressnum=\'{{newaddressnum}}\', streetname=initcap(\'{{newstreetname}}\'), address=initcap(CONCAT(\'{{newaddressnum}}\',\' \',\'{{newstreetname}}\')), bbl=ARRAY[\'{{bbl}}\'], bin=ARRAY[\'{{bin}}\'], boro=initcap(\'{{boro}}\'), borocode=(CASE WHEN \'{{boro}}\'=\'MANHATTAN\' THEN 1 WHEN \'{{boro}}\'=\'BRONX\' THEN 2 WHEN \'{{boro}}\'=\'BROOKLYN\' THEN 3 WHEN \'{{boro}}\'=\'QUEENS\' THEN 4 WHEN \'{{boro}}\'=\'STATEN ISLAND\' THEN 5 END), zipcode=\'{{zipcode}}\', city=initcap(\'{{city}}\'), processingflag=\'address2geom_boro\' WHERE (addressnum=\'{{oldaddressnum}}\' AND streetname=\'{{oldstreetname}}\')'
 
   if(data.latitude && data.longitude) {
     // console.log('Updating facilities');
@@ -143,15 +143,15 @@ function updateFacilities(data, row) {
       ycoord: data.yCoordinate,
       bbl: data.bbl,
       bin: data.buildingIdentificationNumber,
-      boroughcode: data.bblBoroughCode,
-      borough: data.firstBoroughName,
+      borocode: data.bblBoroCode,
+      boro: data.firstBoroName,
       zipcode: data.zipCode,
       city: data.uspsPreferredCityName,
-      newaddressnumber: data.houseNumber,
+      newaddressnum: data.houseNumber,
       newstreetname: data.boePreferredStreetName,
 
       // row. comes from original table row from psql query
-      oldaddressnumber: row.addressnumber,
+      oldaddressnum: row.addressnum,
       oldstreetname: row.streetname
     })
 

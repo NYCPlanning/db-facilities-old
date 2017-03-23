@@ -30,7 +30,7 @@ var db = pgp(config);
 
 
 // querying for records without geoms
-var nullGeomQuery = 'SELECT DISTINCT zipcode, addressnumber, streetname FROM facilities WHERE geom IS NULL AND addressnumber IS NOT NULL AND streetname IS NOT NULL AND zipcode IS NOT NULL';
+var nullGeomQuery = 'SELECT DISTINCT zipcode, addressnum, streetname FROM facilities WHERE geom IS NULL AND addressnum IS NOT NULL AND streetname IS NOT NULL AND zipcode IS NOT NULL';
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -68,12 +68,12 @@ var geoclientTemplate1 = 'https://api.cityofnewyork.us/geoclient/v1/address.json
 
 
 function addressLookup1(row) {
-  // console.log('Looking up address', row.zipcode, row.addressnumber.trim(), row.streetname.split(',')[0].split('#')[0].split(' - ')[0].trim())
+  // console.log('Looking up address', row.zipcode, row.addressnum.trim(), row.streetname.split(',')[0].split('#')[0].split(' - ')[0].trim())
 
       var apiCall1 = Mustache.render(geoclientTemplate1, {
         
         // MAKE SURE THESE MATCH THE FIELD NAMES
-        housenumber: row.addressnumber.replace("/", "").replace("\"", "").replace("!", "").trim(),
+        housenumber: row.addressnum.replace("/", "").replace("\"", "").replace("!", "").trim(),
         streetname: row.streetname.split(',')[0].split('#')[0].split(' - ')[0].trim(),
         zipcode: row.zipcode,
         app_id: apiCredentials.app_id,
@@ -128,8 +128,7 @@ function addressLookup1(row) {
 
 function updateFacilities(data, row) {
 
-  var insertTemplate = 'UPDATE facilities SET geom=ST_SetSRID(ST_GeomFromText(\'POINT({{longitude}} {{latitude}})\'),4326), latitude=\'{{latitude}}\', longitude=\'{{longitude}}\', addressnumber=\'{{newaddressnumber}}\', streetname=initcap(\'{{newstreetname}}\'), address=CONCAT(\'{{newaddressnumber}}\',\' \',initcap(\'{{newstreetname}}\')), bbl=ARRAY[\'{{bbl}}\'], bin=ARRAY[\'{{bin}}\'], borough=initcap(\'{{borough}}\'), boroughcode=(CASE WHEN \'{{borough}}\'=\'MANHATTAN\' THEN 1 WHEN \'{{borough}}\'=\'BRONX\' THEN 2 WHEN \'{{borough}}\'=\'BROOKLYN\' THEN 3 WHEN \'{{borough}}\'=\'QUEENS\' THEN 4 WHEN \'{{borough}}\'=\'STATEN ISLAND\' THEN 5 END), zipcode=\'{{zipcode}}\', city=initcap(\'{{city}}\'), processingflag=\'address2geom_zipcode\' WHERE (addressnumber=\'{{oldaddressnumber}}\' AND streetname=\'{{oldstreetname}}\')'
-  // var insertTemplate = 'UPDATE facilities SET geom=ST_SetSRID(ST_GeomFromText(\'POINT({{longitude}} {{latitude}})\'),4326), latitude=\'{{latitude}}\', longitude=\'{{longitude}}\', bbl=ARRAY[\'{{bbl}}\'], bin=ARRAY[\'{{bin}}\'], borough=\'{{borough}}\', boroughcode=\'{{boroughcode}}\' WHERE (addressnumber=\'{{oldaddressnumber}}\' AND streetname=\'{{oldstreetname}}\')'
+  var insertTemplate = 'UPDATE facilities SET geom=ST_SetSRID(ST_GeomFromText(\'POINT({{longitude}} {{latitude}})\'),4326), latitude=\'{{latitude}}\', longitude=\'{{longitude}}\', addressnum=\'{{newaddressnum}}\', streetname=initcap(\'{{newstreetname}}\'), address=CONCAT(\'{{newaddressnum}}\',\' \',initcap(\'{{newstreetname}}\')), bbl=ARRAY[\'{{bbl}}\'], bin=ARRAY[\'{{bin}}\'], boro=initcap(\'{{boro}}\'), borocode=(CASE WHEN \'{{boro}}\'=\'MANHATTAN\' THEN 1 WHEN \'{{boro}}\'=\'BRONX\' THEN 2 WHEN \'{{boro}}\'=\'BROOKLYN\' THEN 3 WHEN \'{{boro}}\'=\'QUEENS\' THEN 4 WHEN \'{{boro}}\'=\'STATEN ISLAND\' THEN 5 END), zipcode=\'{{zipcode}}\', city=initcap(\'{{city}}\'), processingflag=\'address2geom_zipcode\' WHERE (addressnum=\'{{oldaddressnum}}\' AND streetname=\'{{oldstreetname}}\')'
 
   if(data.latitude && data.longitude) {
     // console.log('Updating facilities');
@@ -143,15 +142,15 @@ function updateFacilities(data, row) {
       ycoord: data.yCoordinate,
       bbl: data.bbl,
       bin: data.buildingIdentificationNumber,
-      boroughcode: data.bblBoroughCode,
-      borough: data.firstBoroughName,
+      borocode: data.bblBoroughCode,
+      boro: data.firstBoroughName,
       zipcode: data.zipCode,
       city: data.uspsPreferredCityName,
-      newaddressnumber: data.houseNumber,
+      newaddressnum: data.houseNumber,
       newstreetname: data.boePreferredStreetName,
 
       // row. comes from original table row from psql query
-      oldaddressnumber: row.addressnumber,
+      oldaddressnum: row.addressnum,
       oldstreetname: row.streetname
     })
 

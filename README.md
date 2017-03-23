@@ -19,7 +19,7 @@
 1. Install PostgreSQL
 2. Install Node.js
 3. Create a database in your PostgreSQL instance to use for this project
-4. Create an environment variable in your bash profile that provides your DATABASE_URL. This gets used in both the run_assembly.sh and run_processing.sh scripts.
+4. Create an environment variable in your bash profile that provides your DATABASE_URL. This gets used in all the .sh scripts.
     * `cd ~/.bash_profile`
     * Open .bash_profile in Sublime and add the following code:
     * `export DATABASE_URL=postgres://{User}:{Password}@{Host}:{Post}/{Database}`
