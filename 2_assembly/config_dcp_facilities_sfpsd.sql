@@ -76,7 +76,7 @@ SELECT
 	-- geom
 	geom,
 	-- idold
-	id::text,
+	ARRAY[id::text],
 	-- idagency
 	NULL,
 	-- facilityname

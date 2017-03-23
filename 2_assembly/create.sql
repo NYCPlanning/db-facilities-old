@@ -7,7 +7,7 @@ CREATE TABLE facilities (
 -- guid UUID PRIMARY KEY DEFAULT gen_random_uuid(),
 hash text,
 uid text,
-idold text,
+idold text ARRAY,
 idagency text ARRAY,
 -- name
 facname text,
