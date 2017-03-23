@@ -6,14 +6,12 @@
 
 # STEP 1
 # create empty master table with facilities db schema
-
 echo 'Creating empty facilities table...'
 psql $DATABASE_URL -f ./2_assembly/create.sql
 echo 'Done creating empty facilities table'
 
 # STEP 2
 # configure (transform) each dataset and insert into master table
-
 echo 'Transforming and inserting records from source data'
 psql $DATABASE_URL -f ./2_assembly/config_acs_facilities_daycareheadstart.sql ##OK
 psql $DATABASE_URL -f ./2_assembly/config_bic_facilities_tradewaste.sql ##OK

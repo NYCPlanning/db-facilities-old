@@ -4,7 +4,7 @@
 ## NOTE: This script requires that your setup the DATABASE_URL environment variable. 
 ## Directions are in the README.md.
 
-# ## DEDUPING
+## DEDUPING
 
 ## Merge Child Care and Pre-K Duplicate records
 echo 'Merging and dropping Child Care and Pre-K duplicates...'
