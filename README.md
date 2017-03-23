@@ -7,11 +7,26 @@
 # Documentation for Building and Maintaining FacDB
 
 ### Contents
-- [Summary of Build Process and Stages](https://github.com/NYCPlanning/facilities-db#summary-of-build-process-and-stages)
 - [Prerequisites Before Running Build](https://github.com/NYCPlanning/facilities-db#prerequisites)
+- [Summary of Build Process and Stages](https://github.com/NYCPlanning/facilities-db#summary-of-build-process-and-stages)
 - [Updating and Maintaining the Database](https://github.com/NYCPlanning/facilities-db#updating-and-maintaining-the-database)
 - [Process Diagrams](https://github.com/NYCPlanning/facilities-db#process-diagrams)
 - [Notes on Specific Source Datasets](https://github.com/NYCPlanning/facilities-db#notes-on-specific-data-sources)
+
+
+## Prerequisites
+
+1. Install PostgreSQL
+2. Install Node.js
+3. Create a database in your PostgreSQL instance to use for this project
+4. Create an environment variable in your bash profile that provides your DATABASE_URL. This gets used in both the run_assembly.sh and run_processing.sh scripts.
+    * `cd ~/.bash_profile`
+    * Open .bash_profile in Sublime and add the following code:
+    * `export DATABASE_URL=postgres://{User}:{Password}@{Host}:{Post}/{Database}`
+    * Check that it was created successfully with `printenv`
+5. Plug in your database information in [dbconfig.js](https://github.com/NYCPlanning/facilities-db/blob/master/3_geoprocessing/geoclient/dbconfig.js)
+5. Generate an API ID and Key for Geoclient. [Directions here](https://developer.cityofnewyork.us/api/geoclient-api). Plug these values into the [apiCredentials.js](https://github.com/NYCPlanning/facilities-db/blob/master/3_geoprocessing/geoclient/apiCredentials.js)
+
 
 ## Summary of Build Process and Stages
 
@@ -64,28 +79,12 @@ Several of the source datasets have content which overlaps with other datasets. 
 [`5_export.sh`](https://github.com/NYCPlanning/facilities-db/blob/master/run_export.sh) script runs each of the scripts that export each of the data views that get published and are used for the NYC Facilities Explorer and other documentation.
 
 
-## Prerequisites
-
-1. Install PostgreSQL
-2. Install Node.js
-3. Create a database in your PostgreSQL instance to use for this project
-4. Create an environment variable in your bash profile that provides your DATABASE_URL. This gets used in both the run_assembly.sh and run_processing.sh scripts.
-    * `cd ~/.bash_profile`
-    * Open .bash_profile in Sublime and add the following code:
-    * `export DATABASE_URL=postgres://{User}:{Password}@{Host}:{Post}/{Database}`
-    * Check that it was created successfully with `printenv`
-5. Plug in your database information in [dbconfig.js](https://github.com/NYCPlanning/facilities-db/blob/master/3_geoprocessing/geoclient/dbconfig.js)
-5. Generate an API ID and Key for Geoclient. [Directions here](https://developer.cityofnewyork.us/api/geoclient-api). Plug these values into the [apiCredentials.js](https://github.com/NYCPlanning/facilities-db/blob/master/3_geoprocessing/geoclient/apiCredentials.js)
-
-
 ## Updating and Maintaining the Database
 
-See [diagram of Maintenance work flow](https://github.com/NYCPlanning/facilities-db#maintenance) provided below.
+This process is still in development.
 
+See [diagram of proposed Maintenance work flow](https://github.com/NYCPlanning/facilities-db#maintenance) provided below.
 
-## Notes on Specific Data Sources
-
-Coming soon!
 
 
 ## Process Diagrams
@@ -101,3 +100,8 @@ Coming soon!
 
 ### Maintenance
 ![Maintenance Diagram](./diagrams/FacDB_Maintenance.png)
+
+
+## Notes on Specific Data Sources
+
+Coming soon!
