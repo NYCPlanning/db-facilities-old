@@ -57,27 +57,27 @@ psql $DATABASE_URL -f ./2_assembly/config_usnps_facilities_parks.sql ##OK
 psql $DATABASE_URL -f ./2_assembly/config_facilities_togeocode.sql ##Needs to be geocoded
 echo 'Done transforming and inserting records from source data'
 
-# ## STEP 3 
-# ## Joining on source data info and standardizing capitalization
-# psql $DATABASE_URL -f ./2_assembly/join_sourcedatainfo.sql
-# echo 'Cleaning up capitalization, standardizing values, and adding agency tags in arrays...'
-# psql $DATABASE_URL -f ./2_assembly/standardize_fixallcaps.sql
-# psql $DATABASE_URL -f ./2_assembly/standardize_capacity.sql
-# psql $DATABASE_URL -f ./2_assembly/standardize_oversightlevel.sql
-# psql $DATABASE_URL -f ./2_assembly/undo_agencytags.sql
-# psql $DATABASE_URL -f ./2_assembly/standardize_agencytag.sql
-# psql $DATABASE_URL -f ./2_assembly/standardize_trim.sql
-# psql $DATABASE_URL -f ./2_assembly/standardize_factypes.sql
-# ## Standardizing borough and assigning borough code
-# psql $DATABASE_URL -f ./2_assembly/standardize_borough.sql
-# ## Switching One to 1 for geocoding and removing invalid (string) address numbers
-# psql $DATABASE_URL -f ./2_assembly/standardize_address.sql
+## STEP 3 
+## Joining on source data info and standardizing capitalization
+psql $DATABASE_URL -f ./2_assembly/join_sourcedatainfo.sql
+echo 'Cleaning up capitalization, standardizing values, and adding agency tags in arrays...'
+psql $DATABASE_URL -f ./2_assembly/standardize_fixallcaps.sql
+psql $DATABASE_URL -f ./2_assembly/standardize_capacity.sql
+psql $DATABASE_URL -f ./2_assembly/standardize_oversightlevel.sql
+psql $DATABASE_URL -f ./2_assembly/undo_agencytags.sql
+psql $DATABASE_URL -f ./2_assembly/standardize_agencytag.sql
+psql $DATABASE_URL -f ./2_assembly/standardize_trim.sql
+psql $DATABASE_URL -f ./2_assembly/standardize_factypes.sql
+## Standardizing borough and assigning borough code
+psql $DATABASE_URL -f ./2_assembly/standardize_borough.sql
+## Switching One to 1 for geocoding and removing invalid (string) address numbers
+psql $DATABASE_URL -f ./2_assembly/standardize_address.sql
 
-# ## STEP 4
-# ## Fill in the uid for all new records in the database
-# psql $DATABASE_URL -f ./2_assembly/create_uid.sql
+## STEP 4
+## Fill in the uid for all new records in the database
+psql $DATABASE_URL -f ./2_assembly/create_uid.sql
 
-# ## STEP 5
-# ## Exclude sensitive records
+## STEP 5
+## Exclude sensitive records
 # psql $DATABASE_URL -f ./2_assembly/censor.sql
 

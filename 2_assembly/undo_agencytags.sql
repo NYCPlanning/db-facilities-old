@@ -1,23 +1,27 @@
 update facilities
 set
-idagency = ARRAY[REPLACE(array_to_string(idagency,','),CONCAT(array_to_string(agencysource,','),': '),'')],
-oversightlevel = ARRAY[REPLACE(array_to_string(oversightlevel,','),CONCAT(array_to_string(agencysource,','),': '),'')],
-capacity = ARRAY[REPLACE(array_to_string(capacity,','),CONCAT(array_to_string(agencysource,','),': '),'')],
-capacitytype = ARRAY[REPLACE(array_to_string(capacitytype,','),CONCAT(array_to_string(agencysource,','),': '),'')],
-utilization = ARRAY[REPLACE(array_to_string(utilization,','),CONCAT(array_to_string(agencysource,','),': '),'')],
-utilizationrate = ARRAY[REPLACE(array_to_string(utilizationrate,','),CONCAT(array_to_string(agencysource,','),': '),'')],
-area = ARRAY[REPLACE(array_to_string(area,','),CONCAT(array_to_string(agencysource,','),': '),'')],
-areatype = ARRAY[REPLACE(array_to_string(areatype,','),CONCAT(array_to_string(agencysource,','),': '),'')]
+idagency = ARRAY[REPLACE(array_to_string(idagency,','),CONCAT(array_to_string(datasource,','),': '),'')],
+overlevel = ARRAY[REPLACE(array_to_string(overlevel,','),CONCAT(array_to_string(datasource,','),': '),'')],
+capacity = ARRAY[REPLACE(array_to_string(capacity,','),CONCAT(array_to_string(datasource,','),': '),'')],
+captype = ARRAY[REPLACE(array_to_string(captype,','),CONCAT(array_to_string(datasource,','),': '),'')],
+util = ARRAY[REPLACE(array_to_string(util,','),CONCAT(array_to_string(datasource,','),': '),'')],
+utilrate = ARRAY[REPLACE(array_to_string(utilrate,','),CONCAT(array_to_string(datasource,','),': '),'')],
+area = ARRAY[REPLACE(array_to_string(area,','),CONCAT(array_to_string(datasource,','),': '),'')],
+areatype = ARRAY[REPLACE(array_to_string(areatype,','),CONCAT(array_to_string(datasource,','),': '),'')],
+datalink = ARRAY[REPLACE(array_to_string(datalink,','),CONCAT(array_to_string(datasource,','),': '),'')],
+linkdownload = ARRAY[REPLACE(array_to_string(linkdownload,','),CONCAT(array_to_string(datasource,','),': '),'')]
 ;
 
 update facilities
 set
-idagency = ARRAY[REPLACE(array_to_string(idagency,','),CONCAT(array_to_string(oversightabbrev,','),': '),'')],
-oversightlevel = ARRAY[REPLACE(array_to_string(oversightlevel,','),CONCAT(array_to_string(oversightabbrev,','),': '),'')],
-capacity = ARRAY[REPLACE(array_to_string(capacity,','),CONCAT(array_to_string(oversightabbrev,','),': '),'')],
-capacitytype = ARRAY[REPLACE(array_to_string(capacitytype,','),CONCAT(array_to_string(oversightabbrev,','),': '),'')],
-utilization = ARRAY[REPLACE(array_to_string(utilization,','),CONCAT(array_to_string(oversightabbrev,','),': '),'')],
-utilizationrate = ARRAY[REPLACE(array_to_string(utilizationrate,','),CONCAT(array_to_string(oversightabbrev,','),': '),'')],
-area = ARRAY[REPLACE(array_to_string(area,','),CONCAT(array_to_string(oversightabbrev,','),': '),'')],
-areatype = ARRAY[REPLACE(array_to_string(areatype,','),CONCAT(array_to_string(oversightabbrev,','),': '),'')]
+idagency = ARRAY[REPLACE(array_to_string(idagency,','),CONCAT(array_to_string(overabbrev,','),': '),'')],
+overlevel = ARRAY[REPLACE(array_to_string(overlevel,','),CONCAT(array_to_string(overabbrev,','),': '),'')],
+capacity = ARRAY[REPLACE(array_to_string(capacity,','),CONCAT(array_to_string(overabbrev,','),': '),'')],
+captype = ARRAY[REPLACE(array_to_string(captype,','),CONCAT(array_to_string(overabbrev,','),': '),'')],
+util = ARRAY[REPLACE(array_to_string(util,','),CONCAT(array_to_string(overabbrev,','),': '),'')],
+utilrate = ARRAY[REPLACE(array_to_string(utilrate,','),CONCAT(array_to_string(overabbrev,','),': '),'')],
+area = ARRAY[REPLACE(array_to_string(area,','),CONCAT(array_to_string(overabbrev,','),': '),'')],
+areatype = ARRAY[REPLACE(array_to_string(areatype,','),CONCAT(array_to_string(overabbrev,','),': '),'')],
+datalink = ARRAY[REPLACE(array_to_string(datalink,','),CONCAT(array_to_string(overabbrev,','),': '),'')],
+linkdownload = ARRAY[REPLACE(array_to_string(linkdownload,','),CONCAT(array_to_string(overabbrev,','),': '),'')]
 ;

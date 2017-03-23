@@ -1,6 +1,6 @@
 UPDATE facilities
     SET
-        addressnumber = REPLACE(addressnumber,'One','1'),
+        addressnum = REPLACE(addressnum,'One','1'),
         address = split_part(trim(split_part(address, 'New York, N', 1),' '),',',1),
         streetname = split_part(trim(split_part(streetname, 'New York, N', 1),' '),',',1)
         ;
@@ -26,12 +26,12 @@ LANGUAGE plpgsql IMMUTABLE;
 
 UPDATE facilities
     SET
-    addressnumber = 
-    	(CASE WHEN isnumeric(REPLACE(addressnumber,'-','')) AND addressnumber <> '0' THEN addressnumber
+    addressnum = 
+    	(CASE WHEN isnumeric(REPLACE(addressnum,'-','')) AND addressnum <> '0' THEN addressnum
     		ELSE NULL
     	END),
     streetname =
-        (CASE WHEN isnumeric(REPLACE(addressnumber,'-','')) AND addressnumber <> '0' THEN streetname
+        (CASE WHEN isnumeric(REPLACE(addressnum,'-','')) AND addressnum <> '0' THEN streetname
     		ELSE NULL
     	END)
     ;

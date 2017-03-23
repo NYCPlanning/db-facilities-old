@@ -1,24 +1,24 @@
 UPDATE facilities AS f
     SET 
-        agencysource = ARRAY[j.agencysource],
-        sourcedatasetname = ARRAY[CONCAT(j.agencysource, ': ', j.sourcedatasetname)],
-        linkdata = ARRAY[CONCAT(j.agencysource, ': ', j.linkdata)],
-        linkdownload = ARRAY[CONCAT(j.agencysource, ': ', j.linkdownload)],
-        datatype = ARRAY[CONCAT(j.agencysource, ': ', j.datatype)],
-        refreshmeans = ARRAY[CONCAT(j.agencysource, ': ', j.refreshmeans)],
-        refreshfrequency = ARRAY[CONCAT(j.agencysource, ': ', j.refreshfrequency)],
-        datesourceupdated = ARRAY[CONCAT(j.agencysource, ': ', j.datesourceupdated)]
+        datasource = ARRAY[j.datasource],
+        dataname = ARRAY[CONCAT(j.datasource, ': ', j.dataname)],
+        datalink = ARRAY[CONCAT(j.datasource, ': ', j.datalink)],
+        linkdownload = ARRAY[CONCAT(j.datasource, ': ', j.linkdownload)],
+        datatype = ARRAY[CONCAT(j.datasource, ': ', j.datatype)],
+        refreshmeans = ARRAY[CONCAT(j.datasource, ': ', j.refreshmeans)],
+        refreshfrequency = ARRAY[CONCAT(j.datasource, ': ', j.refreshfrequency)],
+        datadate = ARRAY[CONCAT(j.datasource, ': ', j.datadate)]
     FROM
         (SELECT DISTINCT ON (pgtable)
             f.pgtable,
-            d.agencysource,
-            d.sourcedatasetname,
-            d.linkdata,
+            d.datasource,
+            d.dataname,
+            d.datalink,
             d.linkdownload,
             d.datatype,
             d.refreshmeans,
             d.refreshfrequency,
-            d.datesourceupdated::date
+            d.datadate::date
             FROM
             facilities AS f
             LEFT JOIN

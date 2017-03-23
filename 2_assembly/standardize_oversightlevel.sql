@@ -1,34 +1,34 @@
 UPDATE facilities AS f
     SET 
-		oversightlevel = 
+		overlevel = 
 			(CASE
 				WHEN 
-					array_to_string(oversightabbrev, ',') LIKE '%NYS%'
-					OR array_to_string(oversightabbrev, ',') LIKE '%MTA%'
-					OR array_to_string(oversightabbrev, ',') LIKE '%NYCHA%'
-					OR array_to_string(oversightabbrev, ',') LIKE '%PANYNJ%'
-					OR array_to_string(oversightabbrev, ',') LIKE '%RIOC%'
+					array_to_string(overabbrev, ',') LIKE '%NYS%'
+					OR array_to_string(overabbrev, ',') LIKE '%MTA%'
+					OR array_to_string(overabbrev, ',') LIKE '%NYCHA%'
+					OR array_to_string(overabbrev, ',') LIKE '%PANYNJ%'
+					OR array_to_string(overabbrev, ',') LIKE '%RIOC%'
 				THEN ARRAY['State']
 				WHEN
-					array_to_string(oversightabbrev, ',') LIKE '%NYC%'
-					OR array_to_string(oversightabbrev, ',') LIKE '%FDNY%'
-					OR array_to_string(oversightabbrev, ',') LIKE '%NYPD%'
-					OR array_to_string(oversightabbrev, ',') LIKE '%CUNY%'
+					array_to_string(overabbrev, ',') LIKE '%NYC%'
+					OR array_to_string(overabbrev, ',') LIKE '%FDNY%'
+					OR array_to_string(overabbrev, ',') LIKE '%NYPD%'
+					OR array_to_string(overabbrev, ',') LIKE '%CUNY%'
 				THEN ARRAY['City']
 				WHEN
-					array_to_string(oversightabbrev, ',') LIKE '%US%'
-					OR array_to_string(oversightabbrev, ',') LIKE '%FBOP%'
-					OR array_to_string(oversightabbrev, ',') LIKE '%Amtrak%'
+					array_to_string(overabbrev, ',') LIKE '%US%'
+					OR array_to_string(overabbrev, ',') LIKE '%FBOP%'
+					OR array_to_string(overabbrev, ',') LIKE '%Amtrak%'
 				THEN ARRAY['Federal']
 				WHEN
-					array_to_string(oversightabbrev, ',') LIKE '%HYDC%'
-					OR array_to_string(oversightabbrev, ',') LIKE '%HRPT%'
-					OR array_to_string(oversightabbrev, ',') LIKE '%BBPC%'
-					OR array_to_string(oversightabbrev, ',') LIKE '%TGI%'
+					array_to_string(overabbrev, ',') LIKE '%HYDC%'
+					OR array_to_string(overabbrev, ',') LIKE '%HRPT%'
+					OR array_to_string(overabbrev, ',') LIKE '%BBPC%'
+					OR array_to_string(overabbrev, ',') LIKE '%TGI%'
 				THEN ARRAY['City-State']
 				ELSE ARRAY['Non-public Oversight']
 			END);
 
 UPDATE facilities AS f
-	SET oversightlevel = ARRAY['NYCDOE: City','NYSED: State']
-	WHERE oversightlevel = ARRAY['NYCDOE,NYSED: State'];
+	SET overlevel = ARRAY['NYCDOE: City','NYSED: State']
+	WHERE overlevel = ARRAY['NYCDOE,NYSED: State'];

@@ -2,38 +2,38 @@ UPDATE facilities AS f
     SET 
 		idagency = 
 			(CASE
-				WHEN idagency IS NOT NULL THEN ARRAY[CONCAT(array_to_string(agencysource,','),': ', array_to_string(idagency,','))]
+				WHEN idagency IS NOT NULL THEN ARRAY[CONCAT(array_to_string(datasource,','),': ', array_to_string(idagency,','))]
 			END),
-		oversightlevel = 
+		overlevel = 
 			(CASE
-				WHEN oversightlevel @> ARRAY['Non-public Oversight'] THEN oversightlevel
-				ELSE ARRAY[CONCAT(array_to_string(oversightabbrev,','),': ', array_to_string(oversightlevel,','))]
+				WHEN overlevel @> ARRAY['Non-public Oversight'] THEN overlevel
+				ELSE ARRAY[CONCAT(array_to_string(overabbrev,','),': ', array_to_string(overlevel,','))]
 			END),
 		capacity = 
 			(CASE
-				WHEN capacity IS NOT NULL THEN ARRAY[CONCAT(array_to_string(agencysource,','),': ', array_to_string(capacity,','))]
+				WHEN capacity IS NOT NULL THEN ARRAY[CONCAT(array_to_string(datasource,','),': ', array_to_string(capacity,','))]
 			END),
-		capacitytype = 
+		captype = 
 			(CASE
-				WHEN capacitytype IS NOT NULL THEN ARRAY[CONCAT(array_to_string(agencysource,','),': ', array_to_string(capacitytype,','))]
+				WHEN captype IS NOT NULL THEN ARRAY[CONCAT(array_to_string(datasource,','),': ', array_to_string(captype,','))]
 			END),
-		utilization = 
+		util = 
 			(CASE
-				WHEN utilization IS NOT NULL THEN ARRAY[CONCAT(array_to_string(agencysource,','),': ', array_to_string(utilization,','))]
+				WHEN util IS NOT NULL THEN ARRAY[CONCAT(array_to_string(datasource,','),': ', array_to_string(util,','))]
 			END),
-		utilizationrate = 
+		utilrate = 
 			(CASE
-				WHEN utilizationrate IS NOT NULL THEN ARRAY[CONCAT(array_to_string(agencysource,','),': ', array_to_string(utilizationrate,','))]
+				WHEN utilrate IS NOT NULL THEN ARRAY[CONCAT(array_to_string(datasource,','),': ', array_to_string(utilrate,','))]
 			END),
 		area = 
 			(CASE
-				WHEN area IS NOT NULL THEN ARRAY[CONCAT(array_to_string(agencysource,','),': ', array_to_string(area,','))]
+				WHEN area IS NOT NULL THEN ARRAY[CONCAT(array_to_string(datasource,','),': ', array_to_string(area,','))]
 			END),
 		areatype = 
 			(CASE
-				WHEN areatype IS NOT NULL THEN ARRAY[CONCAT(array_to_string(agencysource,','),': ', array_to_string(areatype,','))]
+				WHEN areatype IS NOT NULL THEN ARRAY[CONCAT(array_to_string(datasource,','),': ', array_to_string(areatype,','))]
 			END)
-	WHERE array_to_string(oversightlevel,',') NOT LIKE CONCAT(array_to_string(oversightabbrev,','),': %') AND oversightlevel <> ARRAY['Non-public Oversight']
+	WHERE array_to_string(overlevel,',') NOT LIKE CONCAT(array_to_string(overabbrev,','),': %') AND overlevel <> ARRAY['Non-public Oversight']
 		;
 
 UPDATE facilities
@@ -47,19 +47,19 @@ UPDATE facilities
 	AND split_part(array_to_string(capacity,','),': ',2) = '';
 
 UPDATE facilities
-	SET capacitytype = NULL
-	WHERE capacitytype IS NOT NULL 
-	AND split_part(array_to_string(capacitytype,','),': ',2) = '';
+	SET captype = NULL
+	WHERE captype IS NOT NULL 
+	AND split_part(array_to_string(captype,','),': ',2) = '';
 
 UPDATE facilities
-	SET utilization = NULL
-	WHERE utilization IS NOT NULL 
-	AND split_part(array_to_string(utilization,','),': ',2) = '';
+	SET util = NULL
+	WHERE util IS NOT NULL 
+	AND split_part(array_to_string(util,','),': ',2) = '';
 
 UPDATE facilities
-	SET utilizationrate = NULL
-	WHERE utilizationrate IS NOT NULL 
-	AND split_part(array_to_string(utilizationrate,','),': ',2) = '';
+	SET utilrate = NULL
+	WHERE utilrate IS NOT NULL 
+	AND split_part(array_to_string(utilrate,','),': ',2) = '';
 
 UPDATE facilities
 	SET area = NULL
@@ -72,9 +72,9 @@ UPDATE facilities
 	AND split_part(array_to_string(areatype,','),': ',2) = '';
 
 UPDATE facilities
-	SET linkdata = NULL
-	WHERE linkdata IS NOT NULL 
-	AND split_part(array_to_string(linkdata,','),': ',2) = '';
+	SET datalink = NULL
+	WHERE datalink IS NOT NULL 
+	AND split_part(array_to_string(datalink,','),': ',2) = '';
 
 UPDATE facilities
 	SET linkdownload = NULL

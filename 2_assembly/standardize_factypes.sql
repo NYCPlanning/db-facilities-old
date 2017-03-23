@@ -1,26 +1,26 @@
 UPDATE facilities AS f
     SET 
-		facilitytype = REPLACE(facilitytype, 'Other ', '')
+		factype = REPLACE(factype, 'Other ', '')
 	WHERE
-		facilitytype LIKE '%Other %'
-		AND facilitytype NOT LIKE '% Other%';
+		factype LIKE '%Other %'
+		AND factype NOT LIKE '% Other%';
 
 UPDATE facilities AS f
     SET 
-		facilitytype = CONCAT(facilitytype, ' Mental Health')
+		factype = CONCAT(factype, ' Mental Health')
 	WHERE
-		facilitysubgroup = 'Mental Health'
-		AND facilitytype NOT LIKE '%Mental Health%';
+		facsubgrp = 'Mental Health'
+		AND factype NOT LIKE '%Mental Health%';
 
 UPDATE facilities AS f
     SET 
-		facilitytype = CONCAT(facilitytype, ' Chemical Dependency')
+		factype = CONCAT(factype, ' Chemical Dependency')
 	WHERE
-		facilitysubgroup = 'Chemical Dependency'
-		AND facilitytype NOT LIKE '%Chemical Dependency%';
+		facsubgrp = 'Chemical Dependency'
+		AND factype NOT LIKE '%Chemical Dependency%';
 
 UPDATE facilities AS f
     SET 
-		facilitytype = REPLACE(facilitytype, 'Structurese', 'Structure')
+		factype = REPLACE(factype, 'Structurese', 'Structure')
 	WHERE
-		facilitytype LIKE '%Structurese%';
+		factype LIKE '%Structurese%';

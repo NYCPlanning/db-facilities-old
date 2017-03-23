@@ -1,29 +1,29 @@
--- REMEMBER NOT TO COPY AND PASTE FACILITYNAME IN THE OTHER FIELDS
+-- REMEMBER NOT TO COPY AND PASTE FACNAME IN THE OTHER FIELDS
 
 UPDATE facilities
-	SET facilitytype = initcap(facilitytype)
+	SET factype = initcap(factype)
 	WHERE
-		upper(facilitytype) = facilitytype
-		AND facilitytype <> 'IMPACT'
-		AND facilitytype <> 'COMPASS'
-		AND facilitytype <> 'WIOA CUNY MOU'
+		upper(factype) = factype
+		AND factype <> 'IMPACT'
+		AND factype <> 'COMPASS'
+		AND factype <> 'WIOA CUNY MOU'
 	;
 
 UPDATE facilities
-	SET facilityname = initcap(facilityname)
+	SET facname = initcap(facname)
 	WHERE
-		upper(facilityname) = facilityname
+		upper(facname) = facname
 	;
 
 UPDATE facilities
-	SET operatorname = initcap(operatorname)
+	SET opname = initcap(opname)
 	WHERE
-		upper(operatorname) = operatorname
+		upper(opname) = opname
 	;
 
 UPDATE facilities AS f
     SET 
-		facilityname =
+		facname =
 			replace(
 			replace(
 			replace(
@@ -55,7 +55,9 @@ UPDATE facilities AS f
 			replace(
 			replace(
 			replace(
-			replace(facilityname, 'Nycha', 'NYCHA'),
+			replace(
+			replace(facname, 'Nycha', 'NYCHA'),
+			'Nyu', 'NYU'),
 			'Nycta', 'NYCTA'),
 			'Nyct', 'NYCT'),
 			'Nyc', 'NYC'),
@@ -87,7 +89,7 @@ UPDATE facilities AS f
 			'Dcc', 'DCC'),
 			'Ura', 'URA'),
 			'Ta ', 'TA '),
-		facilitytype =
+		factype =
 			replace(
 			replace(
 			replace(
@@ -119,7 +121,9 @@ UPDATE facilities AS f
 			replace(
 			replace(
 			replace(
-			replace(facilitytype, 'Nycha', 'NYCHA'),
+			replace(
+			replace(factype, 'Nycha', 'NYCHA'),
+			'Nyu', 'NYU'),
 			'Nycta', 'NYCTA'),
 			'Nyct', 'NYCT'),
 			'Nyc', 'NYC'),
@@ -151,7 +155,7 @@ UPDATE facilities AS f
 			'Dcc', 'DCC'),
 			'Ura', 'URA'),
 			'Ta ', 'TA '),
-		operatorname =
+		opname =
 			replace(
 			replace(
 			replace(
@@ -183,7 +187,9 @@ UPDATE facilities AS f
 			replace(
 			replace(
 			replace(
-			replace(operatorname, 'Nycha', 'NYCHA'),
+			replace(
+			replace(opname, 'Nycha', 'NYCHA'),
+			'Nyu', 'NYU'),
 			'Nycta', 'NYCTA'),
 			'Nyct', 'NYCT'),
 			'Nyc', 'NYC'),

@@ -7,19 +7,19 @@ UPDATE facilities AS f
 
 UPDATE facilities AS f
     SET 
-		utilization = NULL
+		util = NULL
 	WHERE
-		array_to_string(utilization,',') LIKE '% 0%'
+		array_to_string(util,',') LIKE '% 0%'
 		AND capacity IS NULL
 		;
 
 UPDATE facilities AS f
     SET 
-		capacitytype = NULL,
-		utilizationrate = NULL
+		captype = NULL,
+		utilrate = NULL
 	WHERE
 		capacity IS NULL
-		AND utilization IS NULL
+		AND util IS NULL
 		;
 
 UPDATE facilities AS f
@@ -36,5 +36,5 @@ UPDATE facilities AS f
 			END)
 	WHERE
 		area IS NOT NULL
-		AND array_to_string(area,',') NOT LIKE CONCAT('%',array_to_string(agencysource,','),'%')
+		AND array_to_string(area,',') NOT LIKE CONCAT('%',array_to_string(datasource,','),'%')
 		;
