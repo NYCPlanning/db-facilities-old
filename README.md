@@ -6,7 +6,7 @@
 
 # Documentation for Building and Maintaining FacDB
 
-### Contents
+## Contents
 - [Prerequisites Before Running Build](https://github.com/NYCPlanning/facilities-db#prerequisites)
 - [Summary of Build Process and Stages](https://github.com/NYCPlanning/facilities-db#summary-of-build-process-and-stages)
 - [Updating and Maintaining the Database](https://github.com/NYCPlanning/facilities-db#updating-and-maintaining-the-database)
