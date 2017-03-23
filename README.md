@@ -80,7 +80,7 @@ Several of the source datasets have content which overlaps with other datasets. 
 
 ## Updating and Maintaining the Database
 
-Coming soon!
+See [diagram of Maintenance work flow](https://github.com/NYCPlanning/facilities-db#maintenance) provided below.
 
 
 ## Notes on Specific Data Sources
@@ -98,3 +98,6 @@ Coming soon!
 
 ### Deduping
 ![Deduping Diagram](./diagrams/FacDB_Deduping.png)
+
+### Maintenance
+![Maintenance Diagram](./diagrams/FacDB_Maintenance.png)
