@@ -12,7 +12,7 @@ Diagram of process sequence for first build
 
 ### 1 . Obtaining Data
 
-The build follows an Extract -> Load -> Transform sequence rather than an ETL (Extract-Transform-Load) sequence. All the source datasets are first loaded into PostGreSQL using the [Civic Data Loader](https://github.com/NYCPlanning/civic-data-loader) scripts. After the required source data is loaded in the PostGIS database, the build or update process begins, consisting of four phases: Assembly, Geoprocessing, Deduping, and Exporting.
+The build follows an Extract -> Load -> Transform sequence rather than an ETL (Extract-Transform-Load) sequence. All the source datasets are first loaded into PostgreSQL using the [Civic Data Loader](https://github.com/NYCPlanning/civic-data-loader) scripts. After the required source data is loaded in the PostGIS database, the build or update process begins.
 
 Over 50% of the data sources used for FacDB are available in a machine readable format via the NYC Open Data Portal, NYS Open Data Portal, or an agency's website. Other sources that are not published in this format are generally shared with DCP over email and DCP then puts these files on an FTP for DCP's internal use.
 
@@ -20,19 +20,35 @@ Over 50% of the data sources used for FacDB are available in a machine readable 
 
 ### 2. Assembly
 
-Creates the empty FacDB table, matches and inserts desired columns from the source data into the FacDB schema, recodes variables, classifies the facilities, and concatenates the DCP ID. The end product is all the records and available attributes from the source datasets formatted, recoded (if necessary), and inserted into the FacDB table. There are many missing geometries and other missing attributes related to location like addresses, zipcodes, BBLs, and BINs. A diagram of the [assembly process](https://github.com/NYCPlanning/facilities-db#assembly) is provided below.
+When building the database from scratch, this stage begins with creating the empty FacDB table. Then, for each source data table, a 'config' script is used to insert the records. The desired columns in the source data get mapped to the columns in FacDB schema. Many values also need to be recoded and the facility records then need to be classified. The facilities are classified using categories or descriptions provided by the agency. In general, the final Facility Type categories in FacDB are formatted versions of the original, most granular classification provided by the agency, but there are also cases where the source description was too specific and records were grouped together into broader type categories using keywords in the description.
+
+Critically, during the insert process, an encrypted hash of the full row in the source data table is created and stored in each record in FacDB in the 'hash' field. This hash is the unique identifier that allows records in FacDB to be modified and improved while still being able to link that modified record back to the original format in the source data table. This is essential for the FacDB update process of reconciling refreshed source data against the existing contents in FacDB. The hash is then converted to an integer 'uid' which is used as the true unique identifier for each facility and is used in the Facilities Explorer.
+
+The end product of this Assembly stage is all the records and available attributes from the source datasets formatted, recoded (if necessary), and inserted into the FacDB table. There are many missing geometries and other missing attributes related to location like addresses, zipcodes, BBLs, and BINs.
+
+[Diagram of the Assembly process](https://github.com/NYCPlanning/facilities-db#assembly) is provided below.
 
 [`2_assembly.sh`](https://github.com/NYCPlanning/facilities-db/blob/master/run_download.sh) script runs all the steps in the Assembly process and is annotated to decribe each of the scripts used.
 
 ### 3. Geoprocessing
 
-Fills in all the missing values that weren't provided in the source data before doing a final round of formatting and cleanup. Records without geometries get geocoded, x & y coordinates (SRID 2263) are calculated and filled in, and spatial joins with MapPLUTO are performed to get additional location details like BBL and addresses when missing. Finally, a script performs final formatting by querying for acronyms that need to be changed back to all caps. A diagram of the [geoprocessing steps](https://github.com/NYCPlanning/facilities-db#geoprocessing) is provided below.
+Many of the source datasets only provide addresses without coordinates. Records without coordinates are geocoded with the [GeoClient API](https://developer.cityofnewyork.us/api/geoclient-api) using the Address and either the Borough or ZIP Code to get the BIN, BBL, and other standardized location details. Records that come with both a geometry and an address are also run through GeoClient in a separate batch, to standardize the addresses and fill in other missing information like BIN and BBL. 
+
+Records that are provided in the source data with only coordinates and no addresses are processed by doing a spatial join with MapPLUTO to get the BBL and other location related details like Address, Borough, ZIP Code, and BIN when there is a 1-1 BIN-BBL relationship. 
+
+The coordinates provided by GeoClient are generally not inside tax lots. There are also many cases where an agency provides coordinates, but the coordinates they provided fall in the road bed, rather than inside a BBL boundary, due to the geocoding technique used by the source agency. For these reasons, the BIN centroid was used to overwrite geometries. If a record does not have a BIN but has been assigned a BBL, the BBL centroid is used to overwrite the geometry instead. 
+
+Each record in the database is flagged with a code for the geoprocessing technique that was used to complete all of its information in the `processingflag` field.
+
+[Diagram of the Geoprocessing steps](https://github.com/NYCPlanning/facilities-db#geoprocessing) is provided below.
 
 [`3_geoprocessing.sh`](https://github.com/NYCPlanning/facilities-db/blob/master/run_geoprocessing.sh) script runs all Geoprocessing steps and is annotated to decribe each of the scripts used.
 
 ### 4. Deduping
 
-Fills in all the missing values that weren't provided in the source data before doing a final round of formatting and cleanup. Records without geometries get geocoded, x & y coordinates (SRID 2263) are calculated and filled in, and spatial joins with MapPLUTO are performed to get additional location details like BBL and addresses when missing. Finally, a script performs final formatting by querying for acronyms that need to be changed back to all caps. A diagram of the [deduping process](https://github.com/NYCPlanning/facilities-db#deduping) is provided below.
+Several of the source datasets have content which overlaps with other datasets. Duplicate records were identified by querying for all the records which fall on the same BIN or BBL as a record with the same Facility Subgroup or Type, same Facility Name, or same Oversight Agency. The values from the duplicate records were merged before dropping the duplicate records from the database. 
+
+[Diagram of the Deduping process](https://github.com/NYCPlanning/facilities-db#deduping) is provided below.
 
 [`4_deduping.sh`](https://github.com/NYCPlanning/facilities-db/blob/master/run_deduping.sh)  script runs all the steps in the Deduping process and is annotated to decribe each of the scripts used.
 
@@ -43,15 +59,16 @@ Fills in all the missing values that weren't provided in the source data before 
 
 ## Prerequisites
 
-1. Install PostGreSQL
+1. Install PostgreSQL
 2. Install Node.js
-3. Create a database in your PostGreSQL instance to use for this project
+3. Create a database in your PostgreSQL instance to use for this project
 4. Create an environment variable in your bash profile that provides your DATABASE_URL. This gets used in both the run_assembly.sh and run_processing.sh scripts.
     * `cd ~/.bash_profile`
     * Open .bash_profile in Sublime and add the following code:
     * `export DATABASE_URL=postgres://{User}:{Password}@{Host}:{Post}/{Database}`
     * Check that it was created successfully with `printenv`
-5. Generate an API ID and Key for Geoclient. [Directions here](https://developer.cityofnewyork.us/api/geoclient-api).
+5. Plug in your database information in [dbconfig.js](https://github.com/NYCPlanning/facilities-db/blob/master/3_geoprocessing/geoclient/dbconfig.js)
+5. Generate an API ID and Key for Geoclient. [Directions here](https://developer.cityofnewyork.us/api/geoclient-api). Plug these values into the [apiCredentials.js](https://github.com/NYCPlanning/facilities-db/blob/master/3_geoprocessing/geoclient/apiCredentials.js)
 
 
 ## Updating and Maintaining the Database
@@ -59,7 +76,7 @@ Fills in all the missing values that weren't provided in the source data before 
 Coming soon!
 
 
-## Quick Facts on Facilities Database
+## Notes on Specific Data Sources
 
 Coming soon!
 
