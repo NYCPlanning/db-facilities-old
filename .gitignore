@@ -6,5 +6,7 @@
 
 # misc
 .DS_Store
+/3_geoprocessing/.DS_Store
+/3_geoprocessing/.Rhistory
 .env
 npm-debug.log
