@@ -1,14 +1,21 @@
-## Database and Documentation
+# City Planning Facilities Database (FacDB)
 
   * [NYC Facilities Explorer](http://capitalplanning.nyc.gov/facilities)
   * [Data Download](https://www1.nyc.gov/site/planning/data-maps/open-data/dwn-selfac.page)
   * [User Guide: Classification Hierarchy, Data Dictionary, Data Sources](http://docs.capitalplanning.nyc/facdb/)
 
+# Technical Documentation for Building and Maintaining the City Planning Facilities Database
+
+## Contents
+- [Summary of Build Process and Stages](https://github.com/NYCPlanning/facilities-db#summary-of-build-process-and-stages)
+- [Prerequisites Before Running Build](https://github.com/NYCPlanning/facilities-db#prerequisites)
+- [Updating and Maintaining the Database](https://github.com/NYCPlanning/facilities-db#updating-and-maintaining-the-database)
+- [Process Diagrams](https://github.com/NYCPlanning/facilities-db#process-diagrams)
+- [Notes on Specific Source Datasets](https://github.com/NYCPlanning/facilities-db#notes-on-specific-data-sources)
+
 ## Summary of Build Process and Stages
 
 ![High Level](./diagrams/FacDB_HighLevel.png)
-
-Diagram of process sequence for first build
 
 ### 1 . Obtaining Data
 
