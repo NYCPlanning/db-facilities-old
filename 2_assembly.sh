@@ -1,8 +1,7 @@
 ################################################################################################
 ## ASSEMBLY
 ################################################################################################
-## This script runs all the scripts which match up the desired fields to the FacDB schema and
-## recodes variables. NOTE: This script requires that you setup the DATABASE_URL environment variable. 
+## NOTE: This script requires that you setup the DATABASE_URL environment variable. 
 ## Directions are in the README.md.
 
 # STEP 1

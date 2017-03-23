@@ -2,7 +2,7 @@
 
   * [NYC Facilities Explorer](http://capitalplanning.nyc.gov/facilities)
   * [Data Download](https://www1.nyc.gov/site/planning/data-maps/open-data/dwn-selfac.page)
-  * [Data User Guide / Documentation](http://docs.capitalplanning.nyc/facdb/)
+  * [User Guide: Classification Hierarchy, Data Dictionary, Data Sources](http://docs.capitalplanning.nyc/facdb/)
 
 ## Summary of Build Process and Stages
 

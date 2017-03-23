@@ -1,7 +1,6 @@
 ################################################################################################
 ## EXPORTING
 ################################################################################################
-## This file runs all the scripts which geocode and process all the assembled data
 ## NOTE: This script requires that your setup the DATABASE_URL environment variable. 
 ## Directions are in the README.md.
 
