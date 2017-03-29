@@ -11,8 +11,8 @@ UPDATE facilities AS f
     WHERE
         f.bbl = ARRAY[ROUND(p.bbl,0)::text]
         AND f.bbl IS NOT NULL
+        AND f.processingflag NOT LIKE '%bin2overwritegeom%'
         AND f.processingflag NOT LIKE '%bbl2overwritegeom%'
-        -- AND f.processingflag NOT LIKE '%bin2geom%'
         AND f.hash NOT IN (
             SELECT facilities.hash
             FROM facilities

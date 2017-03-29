@@ -30,7 +30,17 @@ var db = pgp(config);
 
 
 // querying for records without geoms
-var nullGeomQuery = 'SELECT DISTINCT zipcode, addressnum, streetname FROM facilities WHERE geom IS NULL AND addressnum IS NOT NULL AND streetname IS NOT NULL AND zipcode IS NOT NULL';
+var nullGeomQuery = `SELECT DISTINCT 
+                      zipcode,
+                      addressnum,
+                      streetname
+                    FROM
+                      facilities
+                    WHERE
+                      geom IS NULL
+                      AND addressnum IS NOT NULL
+                      AND streetname IS NOT NULL
+                      AND zipcode IS NOT NULL`;
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -128,7 +138,28 @@ function addressLookup1(row) {
 
 function updateFacilities(data, row) {
 
-  var insertTemplate = 'UPDATE facilities SET geom=ST_SetSRID(ST_GeomFromText(\'POINT({{longitude}} {{latitude}})\'),4326), latitude=\'{{latitude}}\', longitude=\'{{longitude}}\', addressnum=\'{{newaddressnum}}\', streetname=initcap(\'{{newstreetname}}\'), address=CONCAT(\'{{newaddressnum}}\',\' \',initcap(\'{{newstreetname}}\')), bbl=ARRAY[\'{{bbl}}\'], bin=ARRAY[\'{{bin}}\'], boro=initcap(\'{{boro}}\'), borocode=(CASE WHEN \'{{boro}}\'=\'MANHATTAN\' THEN 1 WHEN \'{{boro}}\'=\'BRONX\' THEN 2 WHEN \'{{boro}}\'=\'BROOKLYN\' THEN 3 WHEN \'{{boro}}\'=\'QUEENS\' THEN 4 WHEN \'{{boro}}\'=\'STATEN ISLAND\' THEN 5 END), zipcode=\'{{zipcode}}\', city=initcap(\'{{city}}\'), processingflag=\'address2geom_zipcode\' WHERE (addressnum=\'{{oldaddressnum}}\' AND streetname=\'{{oldstreetname}}\')'
+  var insertTemplate = `UPDATE
+                          facilities
+                        SET
+                          geom=ST_SetSRID(ST_GeomFromText(\'POINT({{longitude}} {{latitude}})\'),4326),
+                          latitude=\'{{latitude}}\',
+                          longitude=\'{{longitude}}\',
+                          addressnum=\'{{newaddressnum}}\',
+                          streetname=initcap(\'{{newstreetname}}\'),
+                          address=CONCAT(\'{{newaddressnum}}\',\' \',initcap(\'{{newstreetname}}\')),
+                          bbl=ARRAY[\'{{bbl}}\'],
+                          bin=ARRAY[\'{{bin}}\'],
+                          boro=initcap(\'{{boro}}\'),
+                          borocode=(CASE
+                            WHEN \'{{boro}}\'=\'MANHATTAN\' THEN 1
+                            WHEN \'{{boro}}\'=\'BRONX\' THEN 2
+                            WHEN \'{{boro}}\'=\'BROOKLYN\' THEN 3
+                            WHEN \'{{boro}}\'=\'QUEENS\' THEN 4
+                            WHEN \'{{boro}}\'=\'STATEN ISLAND\' THEN 5
+                          END),
+                          city=initcap(\'{{city}}\'),
+                          processingflag=\'address2geom_zipcode\'
+                        WHERE (addressnum=\'{{oldaddressnum}}\' AND streetname=\'{{oldstreetname}}\')`
 
   if(data.latitude && data.longitude) {
     // console.log('Updating facilities');
@@ -144,7 +175,6 @@ function updateFacilities(data, row) {
       bin: data.buildingIdentificationNumber,
       borocode: data.bblBoroughCode,
       boro: data.firstBoroughName,
-      zipcode: data.zipCode,
       city: data.uspsPreferredCityName,
       newaddressnum: data.houseNumber,
       newstreetname: data.boePreferredStreetName,

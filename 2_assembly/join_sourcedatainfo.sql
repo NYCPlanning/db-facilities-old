@@ -2,8 +2,16 @@ UPDATE facilities AS f
     SET 
         datasource = ARRAY[j.datasource],
         dataname = ARRAY[CONCAT(j.datasource, ': ', j.dataname)],
-        datalink = ARRAY[CONCAT(j.datasource, ': ', j.datalink)],
-        linkdownload = ARRAY[CONCAT(j.datasource, ': ', j.linkdownload)],
+        dataurl = 
+            (CASE
+                WHEN j.dataurl IS NOT NULL THEN ARRAY[CONCAT(j.datasource, ': ', j.dataurl)]
+                ELSE NULL
+            END),
+        linkdownload = 
+            (CASE
+                WHEN j.linkdownload IS NOT NULL THEN ARRAY[CONCAT(j.datasource, ': ', j.linkdownload)]
+                ELSE NULL
+            END),
         datatype = ARRAY[CONCAT(j.datasource, ': ', j.datatype)],
         refreshmeans = ARRAY[CONCAT(j.datasource, ': ', j.refreshmeans)],
         refreshfrequency = ARRAY[CONCAT(j.datasource, ': ', j.refreshfrequency)],
@@ -13,7 +21,7 @@ UPDATE facilities AS f
             f.pgtable,
             d.datasource,
             d.dataname,
-            d.datalink,
+            d.dataurl,
             d.linkdownload,
             d.datatype,
             d.refreshmeans,

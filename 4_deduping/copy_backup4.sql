@@ -5,5 +5,5 @@ CREATE TABLE copy_backup4 AS (
 	FROM
 		facilities
 	ORDER BY
-		domain, facilitygroup, facilitysubgroup, facilitytype
+		facdomain, facgroup, facsubgrp, factype
 );

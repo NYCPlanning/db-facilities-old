@@ -57,7 +57,7 @@ overabbrev text ARRAY,
 -- published data source details
 datasource text ARRAY,
 dataname text ARRAY,
-datalink text ARRAY,
+dataurl text ARRAY,
 datadate text ARRAY,
 processingflag text,
 

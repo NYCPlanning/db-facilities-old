@@ -6,10 +6,10 @@ DROP TABLE IF EXISTS duplicates_ccprek_dohmh;
 CREATE TABLE duplicates_ccprek_dohmh AS (
 
 -- starting with all records in table, 
-WITH primaryhashs AS (
+WITH primaryuids AS (
 	SELECT
-		(array_agg(distinct hash))[1] AS hash
-		-- ^ grabs first hash to keep for the primary record
+		(array_agg(distinct uid))[1] AS uid
+		-- ^ grabs first uid to keep for the primary record
 	FROM facilities
 	WHERE
 		pgtable = ARRAY['dohmh_facilities_daycare']::text[]
@@ -18,7 +18,7 @@ WITH primaryhashs AS (
 		AND bin <> ARRAY['']
 		AND bin <> ARRAY['0.00000000000']
 	GROUP BY
-		facilitysubgroup,
+		facsubgrp,
 		bin,
 		(LEFT(
 			TRIM(
@@ -28,7 +28,7 @@ WITH primaryhashs AS (
 			REPLACE(
 		REPLACE(
 			REPLACE(
-		UPPER(facilityname)
+		UPPER(facname)
 			,'THE ','')
 		,'-','')
 			,' ','')
@@ -42,20 +42,20 @@ WITH primaryhashs AS (
 primaries AS (
 	SELECT *
 	FROM facilities
-	WHERE hash IN (SELECT hash from primaryhashs)
+	WHERE uid IN (SELECT uid from primaryuids)
 ),
 
 matches AS (
 	SELECT
-		a.hash,
-		b.hash AS hash_b
+		a.uid,
+		b.uid AS uid_b
 	FROM primaries AS a
 	LEFT JOIN facilities AS b
 	ON a.bin = b.bin
 	WHERE
 		b.pgtable = ARRAY['dohmh_facilities_daycare']::text[]
-		AND a.facilitysubgroup = b.facilitysubgroup
-		AND a.hash <> b.hash
+		AND a.facsubgrp = b.facsubgrp
+		AND a.uid <> b.uid
 		AND b.geom IS NOT NULL
 		AND
 			LEFT(
@@ -66,7 +66,7 @@ matches AS (
 				REPLACE(
 					REPLACE(
 				REPLACE(
-					UPPER(a.facilityname)
+					UPPER(a.facname)
 				,'THE ','')
 					,'-','')
 				,' ','')
@@ -84,7 +84,7 @@ matches AS (
 				REPLACE(
 					REPLACE(
 				REPLACE(
-					UPPER(b.facilityname)
+					UPPER(b.facname)
 				,'THE ','')
 					,'-','')
 				,' ','')
@@ -97,17 +97,17 @@ matches AS (
 
 duplicates AS (
 	SELECT
-		hash,
-		array_agg(hash_b) AS hash_merged
+		uid,
+		array_agg(uid_b) AS uid_merged
 	FROM matches
 	GROUP BY
-	hash
+	uid
 )
 
 SELECT facilities.*
 FROM facilities
-WHERE facilities.hash IN (SELECT unnest(duplicates.hash_merged) FROM duplicates)
-ORDER BY hash
+WHERE facilities.uid IN (SELECT unnest(duplicates.uid_merged) FROM duplicates)
+ORDER BY uid
 
 );
 
@@ -115,9 +115,9 @@ ORDER BY hash
 -- 2. UPDATING FACDB BY MERGING ATTRIBUTES FROM DUPLICATE RECORDS INTO PREFERRED RECORD
 --------------------------------------------------------------------------------------------------
 
-WITH primaryhashs AS (
+WITH primaryuids AS (
 	SELECT
-		(array_agg(distinct hash))[1] AS hash
+		(array_agg(distinct uid))[1] AS uid
 	FROM facilities
 	WHERE
 		pgtable = ARRAY['dohmh_facilities_daycare']::text[]
@@ -126,7 +126,7 @@ WITH primaryhashs AS (
 		AND bin <> ARRAY['']
 		AND bin <> ARRAY['0.00000000000']
 	GROUP BY
-		facilitysubgroup,
+		facsubgrp,
 		bin,
 		(LEFT(
 			TRIM(
@@ -136,7 +136,7 @@ WITH primaryhashs AS (
 			REPLACE(
 		REPLACE(
 			REPLACE(
-		UPPER(facilityname)
+		UPPER(facname)
 			,'THE ','')
 		,'-','')
 			,' ','')
@@ -150,14 +150,14 @@ WITH primaryhashs AS (
 primaries AS (
 	SELECT *
 	FROM facilities
-	WHERE hash IN (SELECT hash from primaryhashs)
+	WHERE uid IN (SELECT uid from primaryuids)
 ),
 
 matches AS (
 	SELECT
-		a.hash,
-		a.facilityname,
-		a.facilitytype,
+		a.uid,
+		a.facname,
+		a.factype,
 		a.capacity,
 		(CASE WHEN b.capacity IS NULL THEN ARRAY['FAKE!'] ELSE b.capacity END) AS capacity_b,
 		b.uid AS uid_b,
@@ -170,8 +170,8 @@ matches AS (
 	a.bin = b.bin
 	WHERE
 		b.pgtable = ARRAY['dohmh_facilities_daycare']::text[]
-		AND a.facilitysubgroup = b.facilitysubgroup
-		AND a.hash <> b.hash
+		AND a.facsubgrp = b.facsubgrp
+		AND a.uid <> b.uid
 		AND b.geom IS NOT NULL
 		AND
 			LEFT(
@@ -182,7 +182,7 @@ matches AS (
 				REPLACE(
 					REPLACE(
 				REPLACE(
-					UPPER(a.facilityname)
+					UPPER(a.facname)
 				,'THE ','')
 					,'-','')
 				,' ','')
@@ -200,7 +200,7 @@ matches AS (
 				REPLACE(
 					REPLACE(
 				REPLACE(
-					UPPER(b.facilityname)
+					UPPER(b.facname)
 				,'THE ','')
 					,'-','')
 				,' ','')
@@ -213,19 +213,19 @@ matches AS (
 
 duplicates AS (
 	SELECT
-		hash,
+		uid,
 		count(*) AS countofdups,
-		facilityname,
-		facilitytype,
+		facname,
+		factype,
 		array_agg(bin_b) AS bin_merged,
-		array_agg(uid_b) AS uid_merged,
+		array_agg(distinct uid_b) AS uid_merged,
 		array_agg(distinct idagency_b) AS idagency_merged,
 		array_agg(distinct hash_b) AS hash_merged,
 		array_agg(capacity_b) AS capacity_merged
 	FROM matches
 	GROUP BY
-		hash, facilityname, facilitytype, capacity
-	ORDER BY facilitytype, countofdups DESC )
+		uid, facname, factype, capacity
+	ORDER BY factype, countofdups DESC )
 
 UPDATE facilities AS f
 SET
@@ -247,7 +247,7 @@ SET
 			ELSE f.capacity
 		END)
 FROM duplicates AS d
-WHERE f.hash = d.hash
+WHERE f.uid = d.uid
 ;
 
 --------------------------------------------------------------------------------------------------
@@ -255,6 +255,6 @@ WHERE f.hash = d.hash
 --------------------------------------------------------------------------------------------------
 
 DELETE FROM facilities
-WHERE facilities.hash IN (SELECT duplicates_ccprek_dohmh.hash FROM duplicates_ccprek_dohmh)
+WHERE facilities.uid IN (SELECT duplicates_ccprek_dohmh.uid FROM duplicates_ccprek_dohmh)
 ;
 

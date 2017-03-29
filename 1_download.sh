@@ -7,6 +7,8 @@
 ## Load all datasets from sources using civic data loader
 ## https://github.com/NYCPlanning/civic-data-loader
 
+cd '/Users/hannahbkates/Sites/repos/data-loading-scripts'
+
 ## Open_datasets - PULLING FROM OPEN DATA
 echo 'Loading open source datasets...'
 ## Data you probably already have loaded
@@ -53,3 +55,5 @@ node loader.js install nysed_facilities_activeinstitutions ## Actually is open b
 node loader.js install nysed_nonpublicenrollment ## Actually is open but in xlsx that needs to be formatted
 node loader.js install omb_facilities_libraryvisits
 echo 'Done loading other source datasets'
+
+cd '/Users/hannahbkates/facilities-db'

@@ -57,17 +57,17 @@ WHERE f.hash = j.hash;
 WITH temp AS (
 SELECT 
     hash, 
-    unnest(capacitytype) AS capacitytypes
+    unnest(captype) AS captypes
 FROM
     facilities as j
 WHERE
-    capacitytype IS NOT NULL
-    AND capacitytype <> ARRAY['']),
+    captype IS NOT NULL
+    AND captype <> ARRAY['']),
 
 temp2 AS (
 SELECT
     hash,
-    array_agg(distinct capacitytypes) as capacitytype
+    array_agg(distinct captypes) as captype
 FROM
     temp
 GROUP BY 
@@ -75,7 +75,7 @@ GROUP BY
 
 UPDATE facilities AS f
 SET
-    capacitytype = j.capacitytype
+    captype = j.captype
 FROM
     temp2 AS j
 WHERE f.hash = j.hash;
@@ -107,21 +107,21 @@ FROM
     temp2 AS j
 WHERE f.hash = j.hash;
 
--- Update oversighttype arrays with distinct
+-- Update overtype arrays with distinct
 WITH temp AS (
 SELECT 
     hash, 
-    unnest(oversighttype) AS oversighttypes
+    unnest(overtype) AS overtypes
 FROM
     facilities as j
 WHERE
-    oversighttype IS NOT NULL
-    AND oversighttype <> ARRAY['']),
+    overtype IS NOT NULL
+    AND overtype <> ARRAY['']),
 
 temp2 AS (
 SELECT
     hash,
-    array_agg(distinct oversighttypes) as oversighttype
+    array_agg(distinct overtypes) as overtype
 FROM
     temp
 GROUP BY 
@@ -129,26 +129,26 @@ GROUP BY
 
 UPDATE facilities AS f
 SET
-    oversighttype = j.oversighttype
+    overtype = j.overtype
 FROM
     temp2 AS j
 WHERE f.hash = j.hash;
 
--- Update oversightlevel arrays with distinct
+-- Update overlevel arrays with distinct
 WITH temp AS (
 SELECT 
     hash, 
-    unnest(oversightlevel) AS oversightlevels
+    unnest(overlevel) AS overlevels
 FROM
     facilities as j
 WHERE
-    oversightlevel IS NOT NULL
-    AND oversightlevel <> ARRAY['']),
+    overlevel IS NOT NULL
+    AND overlevel <> ARRAY['']),
 
 temp2 AS (
 SELECT
     hash,
-    array_agg(distinct oversightlevels) as oversightlevel
+    array_agg(distinct overlevels) as overlevel
 FROM
     temp
 GROUP BY 
@@ -156,26 +156,26 @@ GROUP BY
 
 UPDATE facilities AS f
 SET
-    oversightlevel = j.oversightlevel
+    overlevel = j.overlevel
 FROM
     temp2 AS j
 WHERE f.hash = j.hash;
 
--- Update oversightabbrev arrays with distinct
+-- Update overabbrev arrays with distinct
 WITH temp AS (
 SELECT 
     hash, 
-    unnest(oversightabbrev) AS oversightabbrevs
+    unnest(overabbrev) AS overabbrevs
 FROM
     facilities as j
 WHERE
-    oversightabbrev IS NOT NULL
-    AND oversightabbrev <> ARRAY['']),
+    overabbrev IS NOT NULL
+    AND overabbrev <> ARRAY['']),
 
 temp2 AS (
 SELECT
     hash,
-    array_agg(distinct oversightabbrevs) as oversightabbrev
+    array_agg(distinct overabbrevs) as overabbrev
 FROM
     temp
 GROUP BY 
@@ -183,26 +183,26 @@ GROUP BY
 
 UPDATE facilities AS f
 SET
-    oversightabbrev = j.oversightabbrev
+    overabbrev = j.overabbrev
 FROM
     temp2 AS j
 WHERE f.hash = j.hash;
 
--- Update oversightagency arrays with distinct
+-- Update overagency arrays with distinct
 WITH temp AS (
 SELECT 
     hash, 
-    unnest(oversightagency) AS oversightagencys
+    unnest(overagency) AS overagencys
 FROM
     facilities as j
 WHERE
-    oversightagency IS NOT NULL
-    AND oversightagency <> ARRAY['']),
+    overagency IS NOT NULL
+    AND overagency <> ARRAY['']),
 
 temp2 AS (
 SELECT
     hash,
-    array_agg(distinct oversightagencys) as oversightagency
+    array_agg(distinct overagencys) as overagency
 FROM
     temp
 GROUP BY 
@@ -210,26 +210,26 @@ GROUP BY
 
 UPDATE facilities AS f
 SET
-    oversightagency = j.oversightagency
+    overagency = j.overagency
 FROM
     temp2 AS j
 WHERE f.hash = j.hash;
 
--- Update agencysource arrays with distinct
+-- Update datasource arrays with distinct
 WITH temp AS (
 SELECT 
     hash, 
-    unnest(agencysource) AS agencysources
+    unnest(datasource) AS datasources
 FROM
     facilities as j
 WHERE
-    agencysource IS NOT NULL
-    AND agencysource <> ARRAY['']),
+    datasource IS NOT NULL
+    AND datasource <> ARRAY['']),
 
 temp2 AS (
 SELECT
     hash,
-    array_agg(distinct agencysources) as agencysource
+    array_agg(distinct datasources) as datasource
 FROM
     temp
 GROUP BY 
@@ -237,26 +237,26 @@ GROUP BY
 
 UPDATE facilities AS f
 SET
-    agencysource = j.agencysource
+    datasource = j.datasource
 FROM
     temp2 AS j
 WHERE f.hash = j.hash;
 
--- Update sourcedatasetname arrays with distinct
+-- Update dataname arrays with distinct
 WITH temp AS (
 SELECT 
     hash, 
-    unnest(sourcedatasetname) AS sourcedatasetnames
+    unnest(dataname) AS datanames
 FROM
     facilities as j
 WHERE
-    sourcedatasetname IS NOT NULL
-    AND sourcedatasetname <> ARRAY['']),
+    dataname IS NOT NULL
+    AND dataname <> ARRAY['']),
 
 temp2 AS (
 SELECT
     hash,
-    array_agg(distinct sourcedatasetnames) as sourcedatasetname
+    array_agg(distinct datanames) as dataname
 FROM
     temp
 GROUP BY 
@@ -264,26 +264,26 @@ GROUP BY
 
 UPDATE facilities AS f
 SET
-    sourcedatasetname = j.sourcedatasetname
+    dataname = j.dataname
 FROM
     temp2 AS j
 WHERE f.hash = j.hash;
 
--- Update linkdata arrays with distinct
+-- Update dataurl arrays with distinct
 WITH temp AS (
 SELECT 
     hash, 
-    unnest(linkdata) AS linkdatas
+    unnest(dataurl) AS dataurls
 FROM
     facilities as j
 WHERE
-    linkdata IS NOT NULL
-    AND linkdata <> ARRAY['']),
+    dataurl IS NOT NULL
+    AND dataurl <> ARRAY['']),
 
 temp2 AS (
 SELECT
     hash,
-    array_agg(distinct linkdatas) as linkdata
+    array_agg(distinct dataurls) as dataurl
 FROM
     temp
 GROUP BY 
@@ -291,26 +291,26 @@ GROUP BY
 
 UPDATE facilities AS f
 SET
-    linkdata = j.linkdata
+    dataurl = j.dataurl
 FROM
     temp2 AS j
 WHERE f.hash = j.hash;
 
--- Update datesourceupdated arrays with distinct
+-- Update datadate arrays with distinct
 WITH temp AS (
 SELECT 
     hash, 
-    unnest(datesourceupdated) AS datesourceupdateds
+    unnest(datadate) AS datadates
 FROM
     facilities as j
 WHERE
-    datesourceupdated IS NOT NULL
-    AND datesourceupdated <> ARRAY['']),
+    datadate IS NOT NULL
+    AND datadate <> ARRAY['']),
 
 temp2 AS (
 SELECT
     hash,
-    array_agg(distinct datesourceupdateds) as datesourceupdated
+    array_agg(distinct datadates) as datadate
 FROM
     temp
 GROUP BY 
@@ -318,7 +318,7 @@ GROUP BY
 
 UPDATE facilities AS f
 SET
-    datesourceupdated = j.datesourceupdated
+    datadate = j.datadate
 FROM
     temp2 AS j
 WHERE f.hash = j.hash;

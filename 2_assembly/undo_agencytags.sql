@@ -8,7 +8,7 @@ util = ARRAY[REPLACE(array_to_string(util,','),CONCAT(array_to_string(datasource
 utilrate = ARRAY[REPLACE(array_to_string(utilrate,','),CONCAT(array_to_string(datasource,','),': '),'')],
 area = ARRAY[REPLACE(array_to_string(area,','),CONCAT(array_to_string(datasource,','),': '),'')],
 areatype = ARRAY[REPLACE(array_to_string(areatype,','),CONCAT(array_to_string(datasource,','),': '),'')],
-datalink = ARRAY[REPLACE(array_to_string(datalink,','),CONCAT(array_to_string(datasource,','),': '),'')],
+dataurl = ARRAY[REPLACE(array_to_string(dataurl,','),CONCAT(array_to_string(datasource,','),': '),'')],
 linkdownload = ARRAY[REPLACE(array_to_string(linkdownload,','),CONCAT(array_to_string(datasource,','),': '),'')]
 ;
 
@@ -22,6 +22,6 @@ util = ARRAY[REPLACE(array_to_string(util,','),CONCAT(array_to_string(overabbrev
 utilrate = ARRAY[REPLACE(array_to_string(utilrate,','),CONCAT(array_to_string(overabbrev,','),': '),'')],
 area = ARRAY[REPLACE(array_to_string(area,','),CONCAT(array_to_string(overabbrev,','),': '),'')],
 areatype = ARRAY[REPLACE(array_to_string(areatype,','),CONCAT(array_to_string(overabbrev,','),': '),'')],
-datalink = ARRAY[REPLACE(array_to_string(datalink,','),CONCAT(array_to_string(overabbrev,','),': '),'')],
+dataurl = ARRAY[REPLACE(array_to_string(dataurl,','),CONCAT(array_to_string(overabbrev,','),': '),'')],
 linkdownload = ARRAY[REPLACE(array_to_string(linkdownload,','),CONCAT(array_to_string(overabbrev,','),': '),'')]
 ;

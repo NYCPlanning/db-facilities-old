@@ -8,24 +8,24 @@ CREATE TABLE duplicates_colp_relatedlots_merged AS (
 -- starting with all COLP records that found non-COLP matches in FacDB and were merged/dropped 
 WITH primaries AS (
 	SELECT
-		hash,
+		uid,
 		geom,
-		facilityname,
-		facilitytype,
-		oversightabbrev
+		facname,
+		factype,
+		overabbrev
 	FROM (SELECT * FROM duplicates_colp_bin UNION SELECT * FROM duplicates_colp_bbl) AS unioned
 ),
 
 -- find other related COLP records, matching on agency, name, subgroup, and proximity (within 100m)
 matches AS (
 	SELECT
-		a.hash,
-		b.hash AS hash_b,
+		a.uid,
+		b.uid AS uid_b,
 		a.geom,
-		a.facilityname,
-		b.facilityname as facilityname_b,
-		a.facilitytype,
-		a.oversightabbrev
+		a.facname,
+		b.facname as facname_b,
+		a.factype,
+		a.overabbrev
 	FROM primaries AS a
 	LEFT JOIN facilities AS b
 	ON
@@ -37,7 +37,7 @@ matches AS (
 			REPLACE(
 		REPLACE(
 			REPLACE(
-		UPPER(a.facilityname)
+		UPPER(a.facname)
 			,'THE ','')
 		,'-','')
 			,' ','')
@@ -55,7 +55,7 @@ matches AS (
 			REPLACE(
 		REPLACE(
 			REPLACE(
-		UPPER(b.facilityname)
+		UPPER(b.facname)
 			,'THE ','')
 		,'-','')
 			,' ','')
@@ -66,26 +66,26 @@ matches AS (
 		,4))
 	WHERE
 		b.pgtable = ARRAY['dcas_facilities_colp']::text[]
-		AND a.facilitytype = b.facilitytype
-		AND a.oversightabbrev = b.oversightabbrev
-		AND a.hash <> b.hash
+		AND a.factype = b.factype
+		AND a.overabbrev = b.overabbrev
+		AND a.uid <> b.uid
 		AND b.geom IS NOT NULL
 		AND ST_DWithin(a.geom::geography, b.geom::geography, 500)
 ),
 
 duplicates AS (
 	SELECT
-		hash,
-		array_agg(hash_b::text) AS hash_merged_b
+		uid,
+		array_agg(uid_b::text) AS uid_merged_b
 	FROM matches
 	GROUP BY
-	hash
+	uid
 )
 
 SELECT facilities.*
 FROM facilities
-WHERE facilities.hash::text IN (SELECT unnest(duplicates.hash_merged_b) FROM duplicates)
-ORDER BY hash
+WHERE facilities.uid::text IN (SELECT unnest(duplicates.uid_merged_b) FROM duplicates)
+ORDER BY uid
 
 );
 
@@ -96,22 +96,22 @@ ORDER BY hash
 -- starting with all COLP records that found non-COLP matches in FacDB and were merged/dropped 
 WITH primaries AS (
 	SELECT
-		hash,
+		uid,
 		geom,
-		facilityname,
+		facname,
 		BBL,
-		facilitytype,
-		oversightabbrev
+		factype,
+		overabbrev
 	FROM (SELECT * FROM duplicates_colp_bin UNION SELECT * FROM duplicates_colp_bbl) AS unioned
 ),
 
 -- find other related COLP records, matching on agency, name, subgroup, and proximity (within 100m)
 matches AS (
 	SELECT
-		a.hash,
+		a.uid,
 		a.geom,
-		a.facilityname,
-		a.facilitytype,
+		a.facname,
+		a.factype,
 		b.uid AS uid_b,
 		b.hash AS hash_b,
 		(CASE WHEN b.bin IS NULL THEN ARRAY['FAKE!'] ELSE b.bin END) AS bin_b,
@@ -127,7 +127,7 @@ matches AS (
 			REPLACE(
 		REPLACE(
 			REPLACE(
-		UPPER(a.facilityname)
+		UPPER(a.facname)
 			,'THE ','')
 		,'-','')
 			,' ','')
@@ -145,7 +145,7 @@ matches AS (
 			REPLACE(
 		REPLACE(
 			REPLACE(
-		UPPER(b.facilityname)
+		UPPER(b.facname)
 			,'THE ','')
 		,'-','')
 			,' ','')
@@ -156,27 +156,27 @@ matches AS (
 		,4))
 	WHERE
 		b.pgtable = ARRAY['dcas_facilities_colp']::text[]
-		AND a.facilitytype = b.facilitytype
-		AND a.oversightabbrev = b.oversightabbrev
-		AND a.hash <> b.hash
+		AND a.factype = b.factype
+		AND a.overabbrev = b.overabbrev
+		AND a.uid <> b.uid
 		AND b.geom IS NOT NULL
 		AND ST_DWithin(a.geom::geography, b.geom::geography, 500)
 ),
 
 duplicates AS (
 	SELECT
-		hash,
+		uid,
 		count(*) AS countofdups,
-		facilityname,
-		facilitytype,
-		array_agg(uid_b) AS uid_merged_b,
+		facname,
+		factype,
+		array_agg(distinct uid_b) AS uid_merged_b,
 		array_agg(distinct bin_b) AS bin_merged,
 		array_agg(distinct bbl_b) AS bbl_merged,
 		array_agg(distinct hash_b) AS hash_merged_b
 	FROM matches
 	GROUP BY
-		hash, facilityname, facilitytype
-	ORDER BY facilitytype, countofdups DESC )
+		uid, facname, factype
+	ORDER BY factype, countofdups DESC )
 
 UPDATE facilities AS f
 SET
@@ -193,7 +193,7 @@ SET
 	uid_merged = array_cat(uid_merged, d.uid_merged_b),
 	hash_merged = array_cat(hash_merged, d.hash_merged_b)
 FROM duplicates AS d
-WHERE f.hash_merged @> ARRAY[d.hash::text]
+WHERE f.uid_merged @> ARRAY[d.uid::text]
 ;
 
 --------------------------------------------------------------------------------------------------
@@ -201,6 +201,5 @@ WHERE f.hash_merged @> ARRAY[d.hash::text]
 --------------------------------------------------------------------------------------------------
 
 DELETE FROM facilities
-WHERE facilities.hash IN (SELECT duplicates_colp_relatedlots_merged.hash FROM duplicates_colp_relatedlots_merged)
+WHERE facilities.uid IN (SELECT duplicates_colp_relatedlots_merged.uid FROM duplicates_colp_relatedlots_merged)
 ;
-

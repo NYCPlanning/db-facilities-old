@@ -6,9 +6,9 @@
 
 # STEP 1
 # create empty master table with facilities db schema
-echo 'Creating empty facilities table...'
-psql $DATABASE_URL -f ./2_assembly/create.sql
-echo 'Done creating empty facilities table'
+# echo 'Creating empty facilities table...'
+# psql $DATABASE_URL -f ./2_assembly/create.sql
+# echo 'Done creating empty facilities table'
 
 # STEP 2
 # configure (transform) each dataset and insert into master table
@@ -75,9 +75,9 @@ psql $DATABASE_URL -f ./2_assembly/standardize_address.sql
 
 ## STEP 4
 ## Fill in the uid for all new records in the database
+echo 'Filling in / creating uid...'
 psql $DATABASE_URL -f ./2_assembly/create_uid.sql
 
 ## STEP 5
 ## Exclude sensitive records
 # psql $DATABASE_URL -f ./2_assembly/censor.sql
-

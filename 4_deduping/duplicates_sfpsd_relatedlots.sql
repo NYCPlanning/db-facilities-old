@@ -5,8 +5,8 @@
 DROP TABLE IF EXISTS duplicates_sfpsd_relatedlots;
 CREATE TABLE duplicates_sfpsd_relatedlots AS (
 
-WITH primaryhashs AS (
-	SELECT (array_agg(distinct hash))[1] AS hash
+WITH primaryuids AS (
+	SELECT (array_agg(distinct uid))[1] AS uid
 	FROM facilities
 	WHERE
 		array_to_string(pgtable,',') LIKE '%sfpsd%'
@@ -17,33 +17,33 @@ WITH primaryhashs AS (
 primaries AS (
 	SELECT *
 	FROM facilities
-	WHERE hash IN (SELECT hash from primaryhashs)
+	WHERE uid IN (SELECT uid from primaryuids)
 ),
 
 matches AS (
 	SELECT
-		a.hash,
-		b.hash AS hash_b,
+		a.uid,
+		b.uid AS uid_b,
 		a.capacity,
 		b.capacity AS capacity_b
 	FROM primaries AS a
 	LEFT JOIN facilities AS b
 	ON a.idold = b.idold
-	WHERE a.hash <> b.hash
+	WHERE a.uid <> b.uid
 ),
 
 duplicates AS (
 	SELECT
-		hash,
-		array_agg(hash_b) AS hash_merged
+		uid,
+		array_agg(uid_b) AS uid_merged
 	FROM matches
 	GROUP BY
-	hash)
+	uid)
 
 SELECT facilities.*
 FROM facilities
-WHERE facilities.hash IN (SELECT unnest(duplicates.hash_merged) FROM duplicates)
-ORDER BY hash
+WHERE facilities.uid IN (SELECT unnest(duplicates.uid_merged) FROM duplicates)
+ORDER BY uid
 
 );
 
@@ -51,8 +51,8 @@ ORDER BY hash
 -- 2. UPDATING FACDB BY MERGING ATTRIBUTES FROM DUPLICATE RECORDS INTO PREFERRED RECORD
 --------------------------------------------------------------------------------------------------
 
-WITH primaryhashs AS (
-	SELECT (array_agg(distinct hash))[1] AS hash
+WITH primaryuids AS (
+	SELECT (array_agg(distinct uid))[1] AS uid
 	FROM facilities
 	WHERE
 		array_to_string(pgtable,',') LIKE '%sfpsd%'
@@ -63,13 +63,13 @@ WITH primaryhashs AS (
 primaries AS (
 	SELECT *
 	FROM facilities
-	WHERE hash IN (SELECT hash from primaryhashs)
+	WHERE uid IN (SELECT uid from primaryuids)
 ),
 
 matches AS (
 	SELECT
 		a.idold,
-		a.hash,
+		a.uid,
 		b.hash AS hash_b,
 		b.uid AS uid_b,
 		(CASE WHEN b.bin IS NULL THEN ARRAY['FAKE!'] ELSE b.bin END) AS bin_b,
@@ -77,12 +77,12 @@ matches AS (
 	FROM primaries AS a
 	LEFT JOIN facilities AS b
 	ON a.idold = b.idold
-	WHERE a.hash <> b.hash
+	WHERE a.uid <> b.uid
 ),
 
 duplicates AS (
 	SELECT
-		hash,
+		uid,
 		idold,
 		array_agg(hash_b) AS hash_merged,
 		array_agg(uid_b) AS uid_merged,
@@ -90,7 +90,7 @@ duplicates AS (
 		array_agg(bin_b) AS bin
 	FROM matches
 	GROUP BY
-	hash, idold)
+	uid, idold)
 
 UPDATE facilities AS f
 SET
@@ -107,7 +107,7 @@ SET
 			ELSE f.bbl
 		END)
 FROM duplicates AS d
-WHERE f.hash = d.hash
+WHERE f.uid = d.uid
 ;
 
 --------------------------------------------------------------------------------------------------
@@ -115,6 +115,5 @@ WHERE f.hash = d.hash
 --------------------------------------------------------------------------------------------------
 
 DELETE FROM facilities
-WHERE facilities.hash IN (SELECT duplicates_sfpsd_relatedlots.hash FROM duplicates_sfpsd_relatedlots)
+WHERE facilities.uid IN (SELECT duplicates_sfpsd_relatedlots.uid FROM duplicates_sfpsd_relatedlots)
 ;
-

@@ -72,9 +72,9 @@ UPDATE facilities
 	AND split_part(array_to_string(areatype,','),': ',2) = '';
 
 UPDATE facilities
-	SET datalink = NULL
-	WHERE datalink IS NOT NULL 
-	AND split_part(array_to_string(datalink,','),': ',2) = '';
+	SET dataurl = NULL
+	WHERE dataurl IS NOT NULL 
+	AND split_part(array_to_string(dataurl,','),': ',2) = '';
 
 UPDATE facilities
 	SET linkdownload = NULL

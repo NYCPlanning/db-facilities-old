@@ -40,23 +40,23 @@ UPDATE facilities
 
 UPDATE facilities
 	SET
-		capacitytype = NULL
-	WHERE array_to_string(capacitytype,',') = 'FAKE!';
+		captype = NULL
+	WHERE array_to_string(captype,',') = 'FAKE!';
 
 UPDATE facilities
 	SET
-		capacitytype = string_to_array(REPLACE(REPLACE(array_to_string(capacitytype,';'),';FAKE!',''),'FAKE!;',''),';')
-	WHERE array_to_string(capacitytype,',') LIKE '%FAKE!%';
+		captype = string_to_array(REPLACE(REPLACE(array_to_string(captype,';'),';FAKE!',''),'FAKE!;',''),';')
+	WHERE array_to_string(captype,',') LIKE '%FAKE!%';
 
 UPDATE facilities
 	SET
-		utilization = NULL
-	WHERE array_to_string(utilization,',') = 'FAKE!';
+		util = NULL
+	WHERE array_to_string(util,',') = 'FAKE!';
 
 UPDATE facilities
 	SET
-		utilization = string_to_array(REPLACE(REPLACE(array_to_string(utilization,';'),';FAKE!',''),'FAKE!;',''),';')
-	WHERE array_to_string(utilization,',') LIKE '%FAKE!%';
+		util = string_to_array(REPLACE(REPLACE(array_to_string(util,';'),';FAKE!',''),'FAKE!;',''),';')
+	WHERE array_to_string(util,',') LIKE '%FAKE!%';
 
 UPDATE facilities
 	SET
@@ -80,10 +80,10 @@ UPDATE facilities
 
 UPDATE facilities
 	SET
-		sourcedatasetname = string_to_array(REPLACE(REPLACE(array_to_string(sourcedatasetname,';'),';FAKE!',''),'FAKE!;',''),';')
-	WHERE array_to_string(sourcedatasetname,',') LIKE '%FAKE!%';
+		dataname = string_to_array(REPLACE(REPLACE(array_to_string(dataname,';'),';FAKE!',''),'FAKE!;',''),';')
+	WHERE array_to_string(dataname,',') LIKE '%FAKE!%';
 
 UPDATE facilities
 	SET
-		linkdata = string_to_array(REPLACE(REPLACE(array_to_string(linkdata,';'),';FAKE!',''),'FAKE!;',''),';')
-	WHERE array_to_string(linkdata,',') LIKE '%FAKE!%';
+		dataurl = string_to_array(REPLACE(REPLACE(array_to_string(dataurl,';'),';FAKE!',''),'FAKE!;',''),';')
+	WHERE array_to_string(dataurl,',') LIKE '%FAKE!%';

@@ -11,5 +11,4 @@ UPDATE facilities AS f
     WHERE
         CONCAT(f.bin,f.bbl) = CONCAT(ARRAY[p.bin::text],ARRAY[p.bbl::text])
         AND f.bin IS NOT NULL
-        AND f.processingflag NOT LIKE '%bin2geom%'
         AND f.processingflag NOT LIKE '%bin2overwritegeom%'

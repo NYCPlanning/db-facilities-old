@@ -34,7 +34,7 @@ facilities (
 	datecreated,
 	datasource,
 	dataname,
-	datalink,
+	dataurl,
 	buildingid,
 	buildingname,
 	schoolorganizationlevel,
@@ -126,7 +126,7 @@ SELECT
 	-- sourcedatasetname
 	ARRAY[dataset],
 	-- linkdata
-	ARRAY[datalink],
+	ARRAY[dataurl],
 	-- buildingid
 	NULL,
 	-- buildingname

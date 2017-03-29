@@ -6,76 +6,77 @@ DROP TABLE IF EXISTS duplicates_colp_relatedlots_colponly_p1;
 CREATE TABLE duplicates_colp_relatedlots_colponly_p1 AS (
 
 -- starting with all records in table, 
-WITH primaryhashs AS (
+WITH primaryuids AS (
 	SELECT
-		(array_agg(distinct hash))[1] AS hash
+		(array_agg(distinct uid))[1] AS uid
 	FROM facilities
 	WHERE
 		pgtable = ARRAY['dcas_facilities_colp']::text[]
 		AND geom IS NOT NULL
-		AND facilityname <> 'Unnamed'
-		AND facilityname <> 'Park'
-		AND facilityname <> 'Office Bldg'
-		AND facilityname <> 'Park Strip'
-		AND facilityname <> 'Playground'
-		AND facilityname <> 'NYPD Parking'
-		AND facilityname <> 'Multi-Service Center'
-		AND facilityname <> 'Animal Shelter'
-		AND facilityname <> 'Garden'
-		AND facilityname <> 'L.U.W'
-		AND facilityname <> 'Long Term Tenant: NYCHA'
-		AND facilityname <> 'Help Social Service Corporation'
-		AND facilityname <> 'Day Care Center'
-		AND facilityname <> 'Safety City Site'
-		AND facilityname <> 'Public Place'
-		AND facilityname <> 'Sanitation Garage'
-		AND facilityname <> 'MTA Bus Depot'
-		AND facilityname <> 'Mta Bus Depot'
-		AND facilityname <> 'Mall'
-		AND facilityname <> 'Vest Pocket Park'
-		AND facilityname <> 'Pier 6'
-		AND oversightabbrev <> ARRAY['NYCDOE']
+		AND facname <> 'City Owned Property'
+		AND facname <> 'Unnamed'
+		AND facname <> 'Park'
+		AND facname <> 'Office Bldg'
+		AND facname <> 'Park Strip'
+		AND facname <> 'Playground'
+		AND facname <> 'NYPD Parking'
+		AND facname <> 'Multi-Service Center'
+		AND facname <> 'Animal Shelter'
+		AND facname <> 'Garden'
+		AND facname <> 'L.U.W'
+		AND facname <> 'Long Term Tenant: NYCHA'
+		AND facname <> 'Help Social Service Corporation'
+		AND facname <> 'Day Care Center'
+		AND facname <> 'Safety City Site'
+		AND facname <> 'Public Place'
+		AND facname <> 'Sanitation Garage'
+		AND facname <> 'MTA Bus Depot'
+		AND facname <> 'Mta Bus Depot'
+		AND facname <> 'Mall'
+		AND facname <> 'Vest Pocket Park'
+		AND facname <> 'Pier 6'
+		AND overabbrev <> ARRAY['NYCDOE']
 	GROUP BY
-		facilitytype,
-		oversightagency,
-		facilityname
+		factype,
+		overagency,
+		facname
 ),
 
 primaries AS (
 	SELECT *
 	FROM facilities
-	WHERE hash IN (SELECT hash from primaryhashs)
+	WHERE uid IN (SELECT uid from primaryuids)
 ),
 
 matches AS (
 	SELECT
-		a.hash,
-		b.hash AS hash_b
+		a.uid,
+		b.uid AS uid_b
 	FROM primaries AS a
 	INNER JOIN facilities AS b
 	ON
-		a.facilityname = b.facilityname
+		a.facname = b.facname
 	WHERE
 		b.pgtable = ARRAY['dcas_facilities_colp']::text[]
-		AND a.facilitytype = b.facilitytype
-		AND a.oversightagency = b.oversightagency
-		AND a.hash <> b.hash
+		AND a.factype = b.factype
+		AND a.overagency = b.overagency
+		AND a.uid <> b.uid
 		AND b.geom IS NOT NULL
 ),
 
 duplicates AS (
 	SELECT
-		hash,
-		array_agg(hash_b) AS hash_merged
+		uid,
+		array_agg(uid_b) AS uid_merged
 	FROM matches
 	GROUP BY
-	hash
+	uid
 )
 
 SELECT facilities.*
 FROM facilities
-WHERE facilities.hash IN (SELECT unnest(duplicates.hash_merged) FROM duplicates)
-ORDER BY hash
+WHERE facilities.uid IN (SELECT unnest(duplicates.uid_merged) FROM duplicates)
+ORDER BY uid
 
 );
 
@@ -83,52 +84,52 @@ ORDER BY hash
 -- 2. UPDATING FACDB BY MERGING ATTRIBUTES FROM DUPLICATE RECORDS INTO PREFERRED RECORD
 --------------------------------------------------------------------------------------------------
 
-WITH primaryhashs AS (
+WITH primaryuids AS (
 	SELECT
-		(array_agg(distinct hash))[1] AS hash
+		(array_agg(distinct uid))[1] AS uid
 	FROM facilities
 	WHERE
 		pgtable = ARRAY['dcas_facilities_colp']::text[]
 		AND geom IS NOT NULL
-		AND facilityname <> 'Unnamed'
-		AND facilityname <> 'Park'
-		AND facilityname <> 'Office Bldg'
-		AND facilityname <> 'Park Strip'
-		AND facilityname <> 'Playground'
-		AND facilityname <> 'NYPD Parking'
-		AND facilityname <> 'Multi-Service Center'
-		AND facilityname <> 'Animal Shelter'
-		AND facilityname <> 'Garden'
-		AND facilityname <> 'L.U.W'
-		AND facilityname <> 'Long Term Tenant: NYCHA'
-		AND facilityname <> 'Help Social Service Corporation'
-		AND facilityname <> 'Day Care Center'
-		AND facilityname <> 'Safety City Site'
-		AND facilityname <> 'Public Place'
-		AND facilityname <> 'Sanitation Garage'
-		AND facilityname <> 'MTA Bus Depot'
-		AND facilityname <> 'Mta Bus Depot'
-		AND facilityname <> 'Mall'
-		AND facilityname <> 'Vest Pocket Park'
-		AND facilityname <> 'Pier 6'
-		AND oversightabbrev <> ARRAY['NYCDOE']
+		AND facname <> 'Unnamed'
+		AND facname <> 'Park'
+		AND facname <> 'Office Bldg'
+		AND facname <> 'Park Strip'
+		AND facname <> 'Playground'
+		AND facname <> 'NYPD Parking'
+		AND facname <> 'Multi-Service Center'
+		AND facname <> 'Animal Shelter'
+		AND facname <> 'Garden'
+		AND facname <> 'L.U.W'
+		AND facname <> 'Long Term Tenant: NYCHA'
+		AND facname <> 'Help Social Service Corporation'
+		AND facname <> 'Day Care Center'
+		AND facname <> 'Safety City Site'
+		AND facname <> 'Public Place'
+		AND facname <> 'Sanitation Garage'
+		AND facname <> 'MTA Bus Depot'
+		AND facname <> 'Mta Bus Depot'
+		AND facname <> 'Mall'
+		AND facname <> 'Vest Pocket Park'
+		AND facname <> 'Pier 6'
+		AND overabbrev <> ARRAY['NYCDOE']
 	GROUP BY
-		facilitytype,
-		oversightagency,
-		facilityname
+		factype,
+		overagency,
+		facname
 ),
 
 primaries AS (
 	SELECT *
 	FROM facilities
-	WHERE hash IN (SELECT hash from primaryhashs)
+	WHERE uid IN (SELECT uid from primaryuids)
 ),
 
 matches AS (
 	SELECT
-		a.hash,
-		a.facilityname,
-		a.facilitytype,
+		a.uid,
+		a.facname,
+		a.factype,
 		b.uid AS uid_b,
 		b.hash AS hash_b,
 		(CASE WHEN b.bin IS NULL THEN ARRAY['FAKE!'] ELSE b.bin END) AS bin_b,
@@ -136,29 +137,29 @@ matches AS (
 	FROM primaries AS a
 	INNER JOIN facilities AS b
 	ON
-		a.facilityname = b.facilityname
+		a.facname = b.facname
 	WHERE
 		b.pgtable = ARRAY['dcas_facilities_colp']::text[]
-		AND a.facilitytype = b.facilitytype
-		AND a.oversightagency = b.oversightagency
-		AND a.hash <> b.hash
+		AND a.factype = b.factype
+		AND a.overagency = b.overagency
+		AND a.uid <> b.uid
 		AND b.geom IS NOT NULL
 ),
 
 duplicates AS (
 	SELECT
-		hash,
+		uid,
 		count(*) AS countofdups,
-		facilityname,
-		facilitytype,
+		facname,
+		factype,
 		array_agg(distinct BIN_b) AS bin_merged,
 		array_agg(distinct BBL_b) AS bbl_merged,
-		array_agg(uid_b) AS uid_merged,
+		array_agg(distinct uid_b) AS uid_merged,
 		array_agg(distinct hash_b) AS hash_merged
 	FROM matches
 	GROUP BY
-		hash, facilityname, facilitytype
-	ORDER BY facilitytype, countofdups DESC )
+		uid, facname, factype
+	ORDER BY factype, countofdups DESC )
 
 UPDATE facilities AS f
 SET
@@ -175,7 +176,7 @@ SET
 	uid_merged = d.uid_merged,
 	hash_merged = d.hash_merged
 FROM duplicates AS d
-WHERE f.hash = d.hash
+WHERE f.uid = d.uid
 ;
 
 --------------------------------------------------------------------------------------------------
@@ -183,6 +184,6 @@ WHERE f.hash = d.hash
 --------------------------------------------------------------------------------------------------
 
 DELETE FROM facilities
-WHERE facilities.hash IN (SELECT duplicates_colp_relatedlots_colponly_p1.hash FROM duplicates_colp_relatedlots_colponly_p1)
+WHERE facilities.uid IN (SELECT duplicates_colp_relatedlots_colponly_p1.uid FROM duplicates_colp_relatedlots_colponly_p1)
 ;
 

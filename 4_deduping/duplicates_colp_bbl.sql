@@ -8,18 +8,18 @@ CREATE TABLE duplicates_colp_bbl AS (
 WITH matches AS (
 	SELECT
 		CONCAT(a.pgtable,'-',b.pgtable) as sourcecombo,
-		a.hash,
-		b.hash as hash_b,
-		a.facilityname,
-		b.facilityname as facilityname_b
+		a.uid,
+		b.uid as uid_b,
+		a.facname,
+		b.facname as facname_b
 	FROM facilities a
 	LEFT JOIN facilities b
 	ON a.bbl = b.bbl
 	WHERE
-		a.facilitysubgroup = b.facilitysubgroup
+		a.facsubgrp = b.facsubgrp
 		AND b.pgtable = ARRAY['dcas_facilities_colp']
 		AND a.pgtable <> ARRAY['dcas_facilities_colp']
-		AND a.oversightabbrev @> b.oversightabbrev
+		AND a.overabbrev @> b.overabbrev
 		AND a.geom IS NOT NULL
 		AND b.geom IS NOT NULL
 		AND a.bbl IS NOT NULL
@@ -29,22 +29,22 @@ WITH matches AS (
 		AND a.bbl <> ARRAY['0.00000000000']
 		AND b.bbl <> ARRAY['0.00000000000']
 		AND a.pgtable <> b.pgtable
-		AND a.hash <> b.hash
-		ORDER BY CONCAT(a.pgtable,'-',b.pgtable), a.facilityname, a.facilitysubgroup
+		AND a.uid <> b.uid
+		ORDER BY CONCAT(a.pgtable,'-',b.pgtable), a.facname, a.facsubgrp
 	),  
 
 duplicates AS (
 	SELECT
-		hash,
-		array_agg(hash_b) AS hash_merged
+		uid,
+		array_agg(uid_b) AS uid_merged
 	FROM matches
 	GROUP BY
-	hash)
+	uid)
 
 SELECT facilities.*
 FROM facilities
-WHERE facilities.hash IN (SELECT unnest(duplicates.hash_merged) FROM duplicates)
-ORDER BY hash
+WHERE facilities.uid IN (SELECT unnest(duplicates.uid_merged) FROM duplicates)
+ORDER BY uid
 
 );
 
@@ -61,12 +61,12 @@ WITH matches AS (
 		b.uid as uid_b,
 		a.hash,
 		b.hash as hash_b,
-		a.facilityname,
-		b.facilityname as facilityname_b,
-		a.facilitysubgroup,
-		b.facilitysubgroup as facilitysubgroup_b,
-		a.facilitytype,
-		b.facilitytype as facilitytype_b,
+		a.facname,
+		b.facname as facname_b,
+		a.facsubgrp,
+		b.facsubgrp as facsubgrp_b,
+		a.factype,
+		b.factype as factype_b,
 		a.processingflag,
 		b.processingflag as processingflag_b,
 		a.bbl,
@@ -76,28 +76,28 @@ WITH matches AS (
 		a.geom,
 		a.pgtable,
 		b.pgtable as pgtable_b,
-		a.agencysource,
-		b.agencysource as agencysource_b,
-		a.sourcedatasetname,
-		b.sourcedatasetname as sourcedatasetname_b,
-		b.datesourceupdated as datesourceupdated_b,
-		b.linkdata as linkdata_b,
-		a.oversightagency,
-		b.oversightlevel as oversightlevel_b,
-		b.oversightagency as oversightagency_b,
-		a.oversightabbrev,
-		b.oversightabbrev as oversightabbrev_b,
+		a.datasource,
+		b.datasource as datasource_b,
+		a.dataname,
+		b.dataname as dataname_b,
+		b.datadate as datadate_b,
+		b.dataurl as dataurl_b,
+		a.overagency,
+		b.overlevel as overlevel_b,
+		b.overagency as overagency_b,
+		a.overabbrev,
+		b.overabbrev as overabbrev_b,
 		b.agencyclass2,
-		b.propertytype as propertytype_b,
+		b.proptype as proptype_b,
 		b.colpusetype
 	FROM facilities a
 	LEFT JOIN facilities b
 	ON a.bbl = b.bbl
 	WHERE
-		a.facilitysubgroup = b.facilitysubgroup
+		a.facsubgrp = b.facsubgrp
 		AND b.pgtable = ARRAY['dcas_facilities_colp']
 		AND a.pgtable <> ARRAY['dcas_facilities_colp']
-		AND a.oversightabbrev @> b.oversightabbrev
+		AND a.overabbrev @> b.overabbrev
 		AND a.geom IS NOT NULL
 		AND b.geom IS NOT NULL
 		AND a.bbl IS NOT NULL
@@ -107,34 +107,34 @@ WITH matches AS (
 		AND a.bbl <> ARRAY['0.00000000000']
 		AND b.bbl <> ARRAY['0.00000000000']
 		AND a.pgtable <> b.pgtable
-		AND a.hash <> b.hash
-		ORDER BY CONCAT(a.pgtable,'-',b.pgtable), a.facilityname, a.facilitysubgroup
+		AND a.uid <> b.uid
+		ORDER BY CONCAT(a.pgtable,'-',b.pgtable), a.facname, a.facsubgrp
 	), 
 
 duplicates AS (
 	SELECT
 		count(*) AS countofdups,
-		facilityname,
-		facilitytype,
-		array_agg(distinct facilitytype_b) AS facilitytype_merged,
-		hash,
-		array_agg(uid_b) AS uid_merged,
-		array_agg(hash_b) AS hash_merged,
-		array_agg(bin_b) AS bin,
-		array_agg(distinct agencysource_b) AS agencysource,
-		array_agg(distinct sourcedatasetname_b) AS sourcedatasetname,
-		array_agg(distinct datesourceupdated_b) AS datesourceupdated,
-		array_agg(distinct linkdata_b) AS linkdata,
-		array_agg(distinct oversightlevel_b) AS oversightlevel,
-		array_agg(distinct oversightagency_b) AS oversightagency,
-		array_agg(distinct oversightabbrev_b) AS oversightabbrev,
+		facname,
+		factype,
+		array_agg(distinct factype_b) AS factype_merged,
+		uid,
+		array_agg(distinct uid_b) AS uid_merged,
+		array_agg(distinct hash_b) AS hash_merged,
+		array_agg(distinct bin_b) AS bin,
+		array_agg(distinct datasource_b) AS datasource,
+		array_agg(distinct dataname_b) AS dataname,
+		array_agg(distinct datadate_b) AS datadate,
+		array_agg(distinct dataurl_b) AS dataurl,
+		array_agg(distinct overlevel_b) AS overlevel,
+		array_agg(distinct overagency_b) AS overagency,
+		array_agg(distinct overabbrev_b) AS overabbrev,
 		array_agg(distinct pgtable_b) AS pgtable,
 		array_agg(distinct colpusetype) AS colpusetype,
-		unnest(array_agg(distinct propertytype_b)) AS propertytype
+		unnest(array_agg(distinct proptype_b)) AS proptype
 	FROM matches
 	GROUP BY
-	hash, facilityname, facilitytype
-	ORDER BY facilitytype, countofdups DESC )
+	uid, facname, factype
+	ORDER BY factype, countofdups DESC )
 
 UPDATE facilities AS f
 SET
@@ -146,14 +146,14 @@ SET
 			ELSE f.bin
 		END),
 	pgtable = array_cat(f.pgtable,d.pgtable),
-	agencysource = array_cat(f.agencysource,d.agencysource),
-	sourcedatasetname = array_cat(f.sourcedatasetname,d.sourcedatasetname),
-	datesourceupdated = array_cat(f.datesourceupdated,d.datesourceupdated),
-	linkdata = array_cat(f.linkdata,d.linkdata),
+	datasource = array_cat(f.datasource,d.datasource),
+	dataname = array_cat(f.dataname,d.dataname),
+	datadate = array_cat(f.datadate,d.datadate),
+	dataurl = array_cat(f.dataurl,d.dataurl),
 	colpusetype = d.colpusetype,
-	propertytype = d.propertytype
+	proptype = d.proptype
 FROM duplicates AS d
-WHERE f.hash = d.hash
+WHERE f.uid = d.uid
 ;
 
 --------------------------------------------------------------------------------------------------
@@ -161,6 +161,6 @@ WHERE f.hash = d.hash
 --------------------------------------------------------------------------------------------------
 
 DELETE FROM facilities
-WHERE facilities.hash IN (SELECT duplicates_colp_bbl.hash FROM duplicates_colp_bbl)
+WHERE facilities.uid IN (SELECT duplicates_colp_bbl.uid FROM duplicates_colp_bbl)
 ;
 
