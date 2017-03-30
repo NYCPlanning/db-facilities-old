@@ -64,7 +64,7 @@ echo 'Cleaning up capitalization, standardizing values, and adding agency tags i
 psql $DATABASE_URL -f ./2_assembly/standardize_fixallcaps.sql
 psql $DATABASE_URL -f ./2_assembly/standardize_capacity.sql
 psql $DATABASE_URL -f ./2_assembly/standardize_oversightlevel.sql
-psql $DATABASE_URL -f ./2_assembly/undo_agencytags.sql
+# psql $DATABASE_URL -f ./2_assembly/undo_agencytags.sql
 psql $DATABASE_URL -f ./2_assembly/standardize_agencytag.sql
 psql $DATABASE_URL -f ./2_assembly/standardize_trim.sql
 psql $DATABASE_URL -f ./2_assembly/standardize_factypes.sql
