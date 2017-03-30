@@ -1,4 +1,4 @@
-Field Alias","Field Name","Description
+Field Alias,Field Name,Description
 "Unique Identifier","uid","Universal Unique Identifier. When a row is added to the table the uid is automatically generated"," enabling database replication."
 "Hash","id","An encrypted version of the row from the source data table.
 "Geom","geom","How the feature is spatially represented.
