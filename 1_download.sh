@@ -5,7 +5,7 @@
 ### Directions are in the README.md.
 
 ## Load all datasets from sources using civic data loader
-## https://github.com/NYCPlanning/civic-data-loader
+## https://github.com/NYCPlanning/data-loading-scripts
 
 cd '/Users/hannahbkates/Sites/repos/data-loading-scripts'
 
