@@ -54,7 +54,7 @@ SELECT
 	-- idagency
 	NULL,
 	-- facilityname
-	initcap(developmen),
+	initcap(psa),
 	-- addressnumber
 	split_part(trim(both ' ' from address), ' ', 1),
 	-- streetname
