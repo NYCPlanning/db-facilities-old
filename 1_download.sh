@@ -13,7 +13,7 @@ cd '/Users/hannahbkates/Sites/repos/data-loading-scripts'
 echo 'Loading open source datasets...'
 ## Data you probably already have loaded
 node loader.js install dcp_mappluto
-# node loader.js install doitt_buildingfootprints
+node loader.js install doitt_buildingfootprints
 node loader.js install dpr_parksproperties
 ## Data you probably don't have loaded
 node loader.js install bic_facilities_tradewaste
@@ -49,7 +49,9 @@ node loader.js install dot_facilities_publicparking ## Kind of open, need to see
 node loader.js install dsny_facilities_mtsgaragemaintenance
 node loader.js install facilities_togeocode ## Addresses copied and pasted from websites
 node loader.js install foodbankny_facilities_foodbanks
-node loader.js install hhs_facilities_acceleratorall ## Will be open but isn't yet
+node loader.js install hhs_facilities_fmscontracts
+node loader.js install hhs_facilities_financialscontracts
+node loader.js install hhs_facilities_proposals
 node loader.js install nysoasas_facilities_programs ## Being shared with us monthly by email in xlsx
 node loader.js install nysed_facilities_activeinstitutions ## Actually is open but need to figue out url
 node loader.js install nysed_nonpublicenrollment ## Actually is open but in xlsx that needs to be formatted
