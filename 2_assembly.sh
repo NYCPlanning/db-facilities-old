@@ -4,20 +4,21 @@
 ## NOTE: This script requires that you setup the DATABASE_URL environment variable. 
 ## Directions are in the README.md.
 
-# STEP 1
-# create empty master table with facilities db schema
-# echo 'Creating empty facilities table...'
-# psql $DATABASE_URL -f ./2_assembly/create.sql
-# echo 'Done creating empty facilities table'
+## STEP 1
+## create empty master table with facilities db schema
+echo 'Creating empty facilities table...'
+psql $DATABASE_URL -f ./2_assembly/create.sql
+echo 'Done creating empty facilities table'
 
-# STEP 2
-# configure (transform) each dataset and insert into master table
+## STEP 2
+## configure (transform) each dataset and insert into master table
 echo 'Transforming and inserting records from source data'
 psql $DATABASE_URL -f ./2_assembly/config_acs_facilities_daycareheadstart.sql ##OK
 psql $DATABASE_URL -f ./2_assembly/config_bic_facilities_tradewaste.sql ##OK
 psql $DATABASE_URL -f ./2_assembly/config_dca_facilities_operatingbusinesses.sql ##Needs to be geocoded
 psql $DATABASE_URL -f ./2_assembly/config_dcas_facilities_colp.sql ##Needs to be joined to geom
 psql $DATABASE_URL -f ./2_assembly/config_dcla_facilities_culturalinstitutions.sql ##Needs to be geocoded
+psql $DATABASE_URL -f ./2_assembly/config_dcp_facilities_pops.sql
 psql $DATABASE_URL -f ./2_assembly/config_dcp_facilities_sfpsd.sql ##OK
 psql $DATABASE_URL -f ./2_assembly/config_dhs_facilities_shelters.sql
 psql $DATABASE_URL -f ./2_assembly/config_dfta_facilities_contracts.sql ##Needs to be geocoded
@@ -77,7 +78,3 @@ psql $DATABASE_URL -f ./2_assembly/standardize_address.sql
 ## Fill in the uid for all new records in the database
 echo 'Filling in / creating uid...'
 psql $DATABASE_URL -f ./2_assembly/create_uid.sql
-
-## STEP 5
-## Exclude sensitive records
-# psql $DATABASE_URL -f ./2_assembly/censor.sql
