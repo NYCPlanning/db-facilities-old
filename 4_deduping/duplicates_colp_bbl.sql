@@ -1,57 +1,3 @@
---------------------------------------------------------------------------------------------------
--- 1. CREATING A TABLE TO BACKUP THE DUPLICATE RECORDS BEFORE DROPPING THEM FROM THE DATABASE
---------------------------------------------------------------------------------------------------
-
-DROP TABLE IF EXISTS duplicates_colp_bbl;
-CREATE TABLE duplicates_colp_bbl AS (
-
-WITH matches AS (
-	SELECT
-		CONCAT(a.pgtable,'-',b.pgtable) as sourcecombo,
-		a.uid,
-		b.uid as uid_b,
-		a.facname,
-		b.facname as facname_b
-	FROM facilities a
-	LEFT JOIN facilities b
-	ON a.bbl = b.bbl
-	WHERE
-		a.facsubgrp = b.facsubgrp
-		AND b.pgtable = ARRAY['dcas_facilities_colp']
-		AND a.pgtable <> ARRAY['dcas_facilities_colp']
-		AND a.overabbrev @> b.overabbrev
-		AND a.geom IS NOT NULL
-		AND b.geom IS NOT NULL
-		AND a.bbl IS NOT NULL
-		AND b.bbl IS NOT NULL
-		AND a.bbl <> ARRAY['']
-		AND b.bbl <> ARRAY['']
-		AND a.bbl <> ARRAY['0.00000000000']
-		AND b.bbl <> ARRAY['0.00000000000']
-		AND a.pgtable <> b.pgtable
-		AND a.uid <> b.uid
-		ORDER BY CONCAT(a.pgtable,'-',b.pgtable), a.facname, a.facsubgrp
-	),  
-
-duplicates AS (
-	SELECT
-		uid,
-		array_agg(uid_b) AS uid_merged
-	FROM matches
-	GROUP BY
-	uid)
-
-SELECT facilities.*
-FROM facilities
-WHERE facilities.uid IN (SELECT unnest(duplicates.uid_merged) FROM duplicates)
-ORDER BY uid
-
-);
-
---------------------------------------------------------------------------------------------------
--- 2. UPDATING FACDB BY MERGING ATTRIBUTES FROM DUPLICATE RECORDS INTO PREFERRED RECORD
---------------------------------------------------------------------------------------------------
-
 WITH matches AS (
 	SELECT
 		CONCAT(a.pgtable,'-',b.pgtable) as sourcecombo,
@@ -81,7 +27,7 @@ WITH matches AS (
 		a.dataname,
 		b.dataname as dataname_b,
 		b.datadate as datadate_b,
-		b.dataurl as dataurl_b,
+		(CASE WHEN b.dataurl IS NULL THEN ARRAY['FAKE!'] ELSE b.dataurl END) as dataurl_b,
 		a.overagency,
 		b.overlevel as overlevel_b,
 		b.overagency as overagency_b,
@@ -102,10 +48,6 @@ WITH matches AS (
 		AND b.geom IS NOT NULL
 		AND a.bbl IS NOT NULL
 		AND b.bbl IS NOT NULL
-		AND a.bbl <> ARRAY['']
-		AND b.bbl <> ARRAY['']
-		AND a.bbl <> ARRAY['0.00000000000']
-		AND b.bbl <> ARRAY['0.00000000000']
 		AND a.pgtable <> b.pgtable
 		AND a.uid <> b.uid
 		ORDER BY CONCAT(a.pgtable,'-',b.pgtable), a.facname, a.facsubgrp
@@ -130,7 +72,7 @@ duplicates AS (
 		array_agg(distinct overabbrev_b) AS overabbrev,
 		array_agg(distinct pgtable_b) AS pgtable,
 		array_agg(distinct colpusetype) AS colpusetype,
-		unnest(array_agg(distinct proptype_b)) AS proptype
+		array_to_string(array_agg(distinct proptype_b),';') AS proptype
 	FROM matches
 	GROUP BY
 	uid, facname, factype
@@ -149,18 +91,17 @@ SET
 	datasource = array_cat(f.datasource,d.datasource),
 	dataname = array_cat(f.dataname,d.dataname),
 	datadate = array_cat(f.datadate,d.datadate),
-	dataurl = array_cat(f.dataurl,d.dataurl),
+	dataurl = 
+		(CASE
+			WHEN d.dataurl <> ARRAY['FAKE!'] THEN array_cat(f.dataurl,d.dataurl)
+			ELSE f.dataurl
+		END),
 	colpusetype = d.colpusetype,
 	proptype = d.proptype
 FROM duplicates AS d
 WHERE f.uid = d.uid
 ;
 
---------------------------------------------------------------------------------------------------
--- 3. DROPPING DUPLICATE RECORDS AFTER ATTRIBUTES HAVE BEEN MERGED INTO PREFERRED RECORD
---------------------------------------------------------------------------------------------------
 
 DELETE FROM facilities
-WHERE facilities.uid IN (SELECT duplicates_colp_bbl.uid FROM duplicates_colp_bbl)
-;
-
+WHERE facilities.uid IN (SELECT unnest(facilities.uid_merged) FROM facilities);

@@ -2,50 +2,50 @@
 -- 1. CREATING A TABLE TO BACKUP THE DUPLICATE RECORDS BEFORE DROPPING THEM FROM THE DATABASE
 --------------------------------------------------------------------------------------------------
 
-DROP TABLE IF EXISTS duplicates_sfpsd_relatedlots;
-CREATE TABLE duplicates_sfpsd_relatedlots AS (
+-- DROP TABLE IF EXISTS duplicates_sfpsd_relatedlots;
+-- CREATE TABLE duplicates_sfpsd_relatedlots AS (
 
-WITH primaryuids AS (
-	SELECT (array_agg(distinct uid))[1] AS uid
-	FROM facilities
-	WHERE
-		array_to_string(pgtable,',') LIKE '%sfpsd%'
-	GROUP BY
-		idold
-),
+-- WITH primaryuids AS (
+-- 	SELECT (array_agg(distinct uid))[1] AS uid
+-- 	FROM facilities
+-- 	WHERE
+-- 		array_to_string(pgtable,',') LIKE '%sfpsd%'
+-- 	GROUP BY
+-- 		idold
+-- ),
 
-primaries AS (
-	SELECT *
-	FROM facilities
-	WHERE uid IN (SELECT uid from primaryuids)
-),
+-- primaries AS (
+-- 	SELECT *
+-- 	FROM facilities
+-- 	WHERE uid IN (SELECT uid from primaryuids)
+-- ),
 
-matches AS (
-	SELECT
-		a.uid,
-		b.uid AS uid_b,
-		a.capacity,
-		b.capacity AS capacity_b
-	FROM primaries AS a
-	LEFT JOIN facilities AS b
-	ON a.idold = b.idold
-	WHERE a.uid <> b.uid
-),
+-- matches AS (
+-- 	SELECT
+-- 		a.uid,
+-- 		b.uid AS uid_b,
+-- 		a.capacity,
+-- 		b.capacity AS capacity_b
+-- 	FROM primaries AS a
+-- 	LEFT JOIN facilities AS b
+-- 	ON a.idold = b.idold
+-- 	WHERE a.uid <> b.uid
+-- ),
 
-duplicates AS (
-	SELECT
-		uid,
-		array_agg(uid_b) AS uid_merged
-	FROM matches
-	GROUP BY
-	uid)
+-- duplicates AS (
+-- 	SELECT
+-- 		uid,
+-- 		array_agg(uid_b) AS uid_merged
+-- 	FROM matches
+-- 	GROUP BY
+-- 	uid)
 
-SELECT facilities.*
-FROM facilities
-WHERE facilities.uid IN (SELECT unnest(duplicates.uid_merged) FROM duplicates)
-ORDER BY uid
+-- SELECT facilities.*
+-- FROM facilities
+-- WHERE facilities.uid IN (SELECT unnest(duplicates.uid_merged) FROM duplicates)
+-- ORDER BY uid
 
-);
+-- );
 
 --------------------------------------------------------------------------------------------------
 -- 2. UPDATING FACDB BY MERGING ATTRIBUTES FROM DUPLICATE RECORDS INTO PREFERRED RECORD
@@ -115,5 +115,9 @@ WHERE f.uid = d.uid
 --------------------------------------------------------------------------------------------------
 
 DELETE FROM facilities
-WHERE facilities.uid IN (SELECT duplicates_sfpsd_relatedlots.uid FROM duplicates_sfpsd_relatedlots)
-;
+WHERE facilities.uid IN (SELECT unnest(facilities.uid_merged) FROM facilities);
+
+
+-- DELETE FROM facilities
+-- WHERE facilities.uid IN (SELECT duplicates_sfpsd_relatedlots.uid FROM duplicates_sfpsd_relatedlots)
+-- ;

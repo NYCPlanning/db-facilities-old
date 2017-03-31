@@ -1,92 +1,3 @@
---------------------------------------------------------------------------------------------------
--- 1. CREATING A TABLE TO BACKUP THE DUPLICATE RECORDS BEFORE DROPPING THEM FROM THE DATABASE
---------------------------------------------------------------------------------------------------
-
-DROP TABLE IF EXISTS duplicates_ccprek_acs_dohmh;
-CREATE TABLE duplicates_ccprek_acs_dohmh AS (
-
-WITH matches AS (
-	SELECT
-		CONCAT(a.pgtable,'-',b.pgtable) as sourcecombo,
-		a.uid,
-		b.uid as uid_b,
-		a.facname,
-		b.facname as facname_b
-	FROM facilities a
-	LEFT JOIN facilities b
-	ON a.bin = b.bin
-	WHERE
-		b.factype NOT LIKE '%Camp%'
-		AND a.pgtable = ARRAY['acs_facilities_daycareheadstart']::text[]
-		AND b.pgtable = ARRAY['dohmh_facilities_daycare']::text[]
-		AND a.geom IS NOT NULL
-		AND b.geom IS NOT NULL
-		AND a.bin IS NOT NULL
-		AND b.bin IS NOT NULL
-		AND a.bin <> ARRAY['']
-		AND b.bin <> ARRAY['']
-		AND a.bin <> ARRAY['0.00000000000']
-		AND b.bin <> ARRAY['0.00000000000']
-		AND
-			LEFT(
-				TRIM(
-					split_part(
-				REPLACE(
-					REPLACE(
-				REPLACE(
-					REPLACE(
-				REPLACE(
-					UPPER(a.facname)
-				,'THE ','')
-					,'-','')
-				,' ','')
-					,'.','')
-				,',','')
-					,'(',1)
-				,' ')
-			,4)
-			LIKE
-			LEFT(
-				TRIM(
-					split_part(
-				REPLACE(
-					REPLACE(
-				REPLACE(
-					REPLACE(
-				REPLACE(
-					UPPER(b.facname)
-				,'THE ','')
-					,'-','')
-				,' ','')
-					,'.','')
-				,',','')
-					,'(',1)
-				,' ')
-			,4)
-		AND a.pgtable <> b.pgtable
-		AND a.uid <> b.uid
-		ORDER BY CONCAT(a.pgtable,'-',b.pgtable), a.facname, a.facsubgrp
-	),  
-
-duplicates AS (
-	SELECT
-		uid,
-		array_agg(uid_b) AS uid_merged
-	FROM matches
-	GROUP BY
-	uid)
-
-SELECT facilities.*
-FROM facilities
-WHERE facilities.uid IN (SELECT unnest(duplicates.uid_merged) FROM duplicates)
-ORDER BY uid
-
-);
-
---------------------------------------------------------------------------------------------------
--- 2. UPDATING FACDB BY MERGING ATTRIBUTES FROM DUPLICATE RECORDS INTO PREFERRED RECORD
---------------------------------------------------------------------------------------------------
-
 WITH matches AS (
 	SELECT
 		CONCAT(a.pgtable,'-',b.pgtable) as sourcecombo,
@@ -138,10 +49,6 @@ WITH matches AS (
 		AND b.geom IS NOT NULL
 		AND a.bin IS NOT NULL
 		AND b.bin IS NOT NULL
-		AND a.bin <> ARRAY['']
-		AND b.bin <> ARRAY['']
-		AND a.bin <> ARRAY['0.00000000000']
-		AND b.bin <> ARRAY['0.00000000000']
 		AND
 			LEFT(
 				TRIM(
@@ -233,11 +140,5 @@ FROM duplicates AS d
 WHERE f.uid = d.uid
 ;
 
---------------------------------------------------------------------------------------------------
--- 3. DROPPING DUPLICATE RECORDS AFTER ATTRIBUTES HAVE BEEN MERGED INTO PREFERRED RECORD
---------------------------------------------------------------------------------------------------
-
 DELETE FROM facilities
-WHERE facilities.uid IN (SELECT duplicates_ccprek_acs_dohmh.uid FROM duplicates_ccprek_acs_dohmh)
-;
-
+WHERE facilities.uid IN (SELECT unnest(facilities.uid_merged) FROM facilities);

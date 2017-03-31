@@ -1,105 +1,3 @@
---------------------------------------------------------------------------------------------------
--- 1. CREATING A TABLE TO BACKUP THE DUPLICATE RECORDS BEFORE DROPPING THEM FROM THE DATABASE
---------------------------------------------------------------------------------------------------
-
-DROP TABLE IF EXISTS duplicates_remaining;
-CREATE TABLE duplicates_remaining AS (
-
-WITH matches AS (
-	SELECT
-		CONCAT(a.pgtable,'-',b.pgtable) as sourcecombo,
-		a.uid,
-		b.uid as uid_b,
-		a.facsubgrp
-	FROM facilities a
-	LEFT JOIN facilities b
-	ON a.bin = b.bin
-	WHERE
-		a.facsubgrp = b.facsubgrp
-		AND a.facgroup <> 'Child Care and Pre-Kindergarten'
-	    AND a.pgtable <> ARRAY['dcas_facilities_colp']
-	    AND b.pgtable <> ARRAY['dcas_facilities_colp']
-		AND a.geom IS NOT NULL
-		AND b.geom IS NOT NULL
-		AND a.bin IS NOT NULL
-		AND b.bin IS NOT NULL
-		AND a.bin <> ARRAY['']
-		AND b.bin <> ARRAY['']
-		AND a.bin <> ARRAY['0.00000000000']
-		AND b.bin <> ARRAY['0.00000000000']
-		AND
-			LEFT(
-				TRIM(
-					split_part(
-				REPLACE(
-					REPLACE(
-				REPLACE(
-					REPLACE(
-				REPLACE(
-					UPPER(a.facname)
-				,'THE ','')
-					,'-','')
-				,' ','')
-					,'.','')
-				,',','')
-					,'(',1)
-				,' ')
-			,4)
-			LIKE
-			LEFT(
-				TRIM(
-					split_part(
-				REPLACE(
-					REPLACE(
-				REPLACE(
-					REPLACE(
-				REPLACE(
-					UPPER(b.facname)
-				,'THE ','')
-					,'-','')
-				,' ','')
-					,'.','')
-				,',','')
-					,'(',1)
-				,' ')
-			,4)
-		AND a.pgtable <> b.pgtable
-		AND a.uid <> b.uid
-		ORDER BY CONCAT(a.pgtable,'-',b.pgtable), a.facsubgrp
-	),  
-
-duplicates AS (
-	SELECT
-		uid,
-		array_agg(uid_b) AS uid_merged
-	FROM matches
-	WHERE
-		sourcecombo LIKE '{bic_facilities_tradewaste}-{nysdec_facilities_solidwaste}' AND facsubgrp = 'Solid Waste Transfer and Carting'
-		OR sourcecombo LIKE '{dca_facilities_operatingbusinesses}-{nysdec_facilities_solidwaste}' AND facsubgrp = 'Solid Waste Processing'
-		OR sourcecombo LIKE '{dcla_facilities_culturalinstitutions}-{nysed_facilities_activeinstitutions}' AND facsubgrp = 'Museums'
-		OR sourcecombo LIKE '{dfta_facilities_contracts}-{hhs_facilities_%contracts}' AND facsubgrp = 'Senior Services'
-		OR sourcecombo LIKE '{doe_facilities_schoolsbluebook}-{hhs_facilities_%financials}' AND facsubgrp = 'Community Centers and Community School Programs'
-		OR sourcecombo LIKE '{doe_facilities_schoolsbluebook}-{nysed_facilities_activeinstitutions}' AND facsubgrp = 'Public Schools'
-		OR sourcecombo LIKE '{dycd_facilities_compass}-{hhs_facilities_%contracts}' AND facsubgrp = 'Comprehensive After School System (COMPASS) Sites'
-		OR sourcecombo LIKE '{dycd_facilities_otherprograms}-{hhs_facilities_%contracts}' AND facsubgrp = 'Youth Centers, Literacy Programs, Job Training, and Immigrant Services'
-		OR sourcecombo LIKE '{nysomh_facilities_mentalhealth}-{hhs_facilities_%contracts}' AND facsubgrp = 'Mental Health'
-	GROUP BY
-	uid, sourcecombo, facsubgrp
-	ORDER BY facsubgrp)
-
-SELECT facilities.*
-FROM facilities
-WHERE
-	facilities.uid IN (SELECT unnest(duplicates.uid_merged) FROM duplicates)
-	AND facilities.uid NOT IN (SELECT duplicates.uid FROM duplicates)
-ORDER BY uid
-
-);
-
---------------------------------------------------------------------------------------------------
--- 2. UPDATING FACDB BY MERGING ATTRIBUTES FROM DUPLICATE RECORDS INTO PREFERRED RECORD
---------------------------------------------------------------------------------------------------
-
 WITH matches AS (
 	SELECT
 		CONCAT(a.pgtable,'-',b.pgtable) as sourcecombo,
@@ -151,10 +49,6 @@ WITH matches AS (
 		AND b.geom IS NOT NULL
 		AND a.bin IS NOT NULL
 		AND b.bin IS NOT NULL
-		AND a.bin <> ARRAY['']
-		AND b.bin <> ARRAY['']
-		AND a.bin <> ARRAY['0.00000000000']
-		AND b.bin <> ARRAY['0.00000000000']
 		AND
 			LEFT(
 				TRIM(
@@ -277,11 +171,5 @@ FROM duplicates AS d
 WHERE f.uid = d.uid
 ;
 
---------------------------------------------------------------------------------------------------
--- 3. DROPPING DUPLICATE RECORDS AFTER ATTRIBUTES HAVE BEEN MERGED INTO PREFERRED RECORD
---------------------------------------------------------------------------------------------------
-
 DELETE FROM facilities
-WHERE facilities.uid IN (SELECT duplicates_remaining.uid FROM duplicates_remaining)
-;
-
+WHERE facilities.uid IN (SELECT unnest(facilities.uid_merged) FROM facilities);
