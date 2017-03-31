@@ -126,7 +126,7 @@ SELECT
 	-- sourcedatasetname
 	ARRAY[dataset],
 	-- linkdata
-	ARRAY[dataurl],
+	ARRAY[datalink],
 	-- buildingid
 	NULL,
 	-- buildingname

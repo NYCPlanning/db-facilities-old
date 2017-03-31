@@ -81,10 +81,10 @@ SELECT
 	'Human Services',
 	-- facilitysubgroup
 	(CASE
-		WHEN facility_type LIKE '%DROP%' OR facility_type LIKE '%Drop%' THEN 'Non-residential Housing and Homeless Services'
+		WHEN (facility_type LIKE '%DROP%' OR facility_type LIKE '%Drop%') THEN 'Non-residential Housing and Homeless Services'
 		WHEN facility_type LIKE '%Supportive Housing%' THEN 'Permanent Supportive SRO Housing' 
 		ELSE 'Shelters and Transitional Housing'
-	END,
+	END),
 	-- agencyclass1
 	facility_type,
 	-- agencyclass2
