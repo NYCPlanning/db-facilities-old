@@ -14,7 +14,7 @@ echo 'Loading open source datasets...'
 ## Data you probably already have loaded
 node loader.js install dcp_mappluto
 node loader.js install doitt_buildingfootprints
-node loader.js install dcp_boroboundaries
+node loader.js install dcp_boroboundaries_wi
 node loader.js install dcp_cdboundaries
 node loader.js install dcp_censustracts
 node loader.js install dcp_councildistricts
