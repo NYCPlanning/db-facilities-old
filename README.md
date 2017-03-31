@@ -22,10 +22,11 @@
 4. Create an environment variable in your bash profile that provides your DATABASE_URL. This gets used in all the .sh scripts.
     * `cd ~/.bash_profile`
     * Open .bash_profile in Sublime and add the following code:
-    * `export DATABASE_URL=postgres://{User}:{Password}@{Host}:{Post}/{Database}`
+    * `export DATABASE_URL=postgres://{User}:{Password}@{Host}:{Port}/{Database}`
     * Check that it was created successfully with `printenv`
-5. Plug in your database information in [dbconfig.js](https://github.com/NYCPlanning/facilities-db/blob/master/3_geoprocessing/geoclient/dbconfig.js)
-5. Generate an API ID and Key for Geoclient. [Directions here](https://developer.cityofnewyork.us/api/geoclient-api). Plug these values into the [apiCredentials.js](https://github.com/NYCPlanning/facilities-db/blob/master/3_geoprocessing/geoclient/apiCredentials.js)
+5. Clone data loading scripts repo and run `npm Install inside of it.
+5. Plug in your database information in [dbconfig.sample.js](https://github.com/NYCPlanning/facilities-db/blob/master/3_geoprocessing/geoclient/dbconfig.sample.js)
+5. Generate an API ID and Key for Geoclient. [Directions here](https://developer.cityofnewyork.us/api/geoclient-api). Plug these values into the [apiCredentials.sample.js](https://github.com/NYCPlanning/facilities-db/blob/master/3_geoprocessing/geoclient/apiCredentials.sample.js)
 
 
 ## Summary of Build Process and Stages
@@ -34,7 +35,7 @@
 
 ### 1 . Obtaining Data
 
-The build follows an Extract -> Load -> Transform sequence rather than an ETL (Extract-Transform-Load) sequence. All the source datasets are first loaded into PostgreSQL using the [Civic Data Loader](https://github.com/NYCPlanning/civic-data-loader) scripts. After the required source data is loaded in the PostGIS database, the build or update process begins.
+The build follows an Extract -> Load -> Transform sequence rather than an ETL (Extract-Transform-Load) sequence. All the source datasets are first loaded into PostgreSQL using the [Data Loading Scripts](https://github.com/NYCPlanning/data-loading-scripts) scripts. After the required source data is loaded in the PostGIS database, the build or update process begins.
 
 Over 50% of the data sources used for FacDB are available in a machine readable format via the NYC Open Data Portal, NYS Open Data Portal, or an agency's website. Other sources that are not published in this format are generally shared with DCP over email and DCP then puts these files on an FTP for DCP's internal use.
 
