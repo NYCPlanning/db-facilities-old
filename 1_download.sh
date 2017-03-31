@@ -13,7 +13,7 @@ cd '/Users/hannahbkates/Sites/repos/data-loading-scripts'
 echo 'Loading open source datasets...'
 ## Data you probably already have loaded
 node loader.js install dcp_mappluto
-node loader.js install doitt_buildingfootprints
+# node loader.js install doitt_buildingfootprints
 node loader.js install dpr_parksproperties
 ## Data you probably don't have loaded
 node loader.js install bic_facilities_tradewaste
