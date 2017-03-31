@@ -24,7 +24,7 @@
     * Open .bash_profile in Sublime and add the following code:
     * `export DATABASE_URL=postgres://{User}:{Password}@{Host}:{Port}/{Database}`
     * Check that it was created successfully with `printenv`
-5. Clone [Data Loading Scripts](https://github.com/NYCPlanning/data-loading-scripts) repo and run `npm Install inside of it.
+5. Clone [Data Loading Scripts](https://github.com/NYCPlanning/data-loading-scripts) repo and run `npm install` inside of it.
 5. Plug in your database information in [dbconfig.sample.js](https://github.com/NYCPlanning/facilities-db/blob/master/3_geoprocessing/geoclient/dbconfig.sample.js) and save as dbconfig.js.
 5. Generate an API ID and Key for Geoclient. [Directions here](https://developer.cityofnewyork.us/api/geoclient-api). Plug these values into the [apiCredentials.sample.js](https://github.com/NYCPlanning/facilities-db/blob/master/3_geoprocessing/geoclient/apiCredentials.sample.js) and save as apiCredentials.js.
 
