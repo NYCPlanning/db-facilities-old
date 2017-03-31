@@ -11,5 +11,5 @@ time psql $DATABASE_URL -f ./5_export/export_allbeforemerging.sql
 time psql $DATABASE_URL -f ./5_export/export_unmapped.sql
 time psql $DATABASE_URL -f ./5_export/export_datasources.sql
 time psql $DATABASE_URL -f ./5_export/docs_datasources.sql
-time psql $DATABASE_URL -f ./5_export/export_hash_uid_lookup.sql
+time psql $DATABASE_URL -f ./5_export/export_uid_key.sql
 echo 'All done!'

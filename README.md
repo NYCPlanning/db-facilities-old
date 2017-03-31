@@ -23,20 +23,21 @@
 
 ## Getting Started
 
-1. Create a database in your PostgreSQL instance to use for this project
-2. Create an environment variable in your bash profile that provides your DATABASE_URL. This gets used in all the .sh scripts.
+1. Clone this repo and run `npm install` inside of it.
+2. Clone [Data Loading Scripts](https://github.com/NYCPlanning/data-loading-scripts) repo and run `npm install` inside of it.
+3. Create a database in your PostgreSQL instance to use for this project
+4. Create an environment variable in your bash profile that provides your DATABASE_URL. This gets used in all the .sh scripts.
     * `cd ~/.bash_profile`
     * Open .bash_profile in Sublime and add the following code:
     * `export DATABASE_URL=postgres://{User}:{Password}@{Host}:{Port}/{Database}`
     * Check that it was created successfully with `printenv`
-5. Clone [Data Loading Scripts](https://github.com/NYCPlanning/data-loading-scripts) repo and run `npm install` inside of it.
-6. Plug in your database information in [dbconfig.sample.js](https://github.com/NYCPlanning/facilities-db/blob/master/3_geoprocessing/geoclient/dbconfig.sample.js) and save as dbconfig.js.
-7. Generate an API ID and Key for Geoclient. [Directions here](https://developer.cityofnewyork.us/api/geoclient-api). Plug these values into the [apiCredentials.sample.js](https://github.com/NYCPlanning/facilities-db/blob/master/3_geoprocessing/geoclient/apiCredentials.sample.js) and save as apiCredentials.js.
-8. Run `sh 1_download.sh`
-9. Run `sh 2_assembly.sh`
-10. Run `sh 3_geoprogressing.sh`
-11. Run `sh 4_deduping.sh`
-12. Run `sh 5_export.sh`
+5. Plug in your database information in [dbconfig.sample.js](https://github.com/NYCPlanning/facilities-db/blob/master/3_geoprocessing/geoclient/dbconfig.sample.js) and save as dbconfig.js.
+6. Generate an API ID and Key for Geoclient. [Directions here](https://developer.cityofnewyork.us/api/geoclient-api). Plug these values into the [apiCredentials.sample.js](https://github.com/NYCPlanning/facilities-db/blob/master/3_geoprocessing/geoclient/apiCredentials.sample.js) and save as apiCredentials.js.
+7. Run `sh 1_download.sh`
+8. Run `sh 2_assembly.sh`
+9. Run `sh 3_geoprocessing.sh`
+10. Run `sh 4_deduping.sh`
+11. Run `sh 5_export.sh`
 
 
 ## Summary of Build Process and Stages
