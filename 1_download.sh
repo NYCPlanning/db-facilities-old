@@ -1,13 +1,13 @@
 ################################################################################################
 ### OBTAINING DATA
 ################################################################################################
-### NOTE: This script requires that you setup the DATABASE_URL environment variable. 
+### NOTE: This script requires that you setup the DATABASE_URL environment variable.
 ### Directions are in the README.md.
 
 ## Load all datasets from sources using civic data loader
 ## https://github.com/NYCPlanning/data-loading-scripts
 
-cd '/Users/hannahbkates/Sites/repos/data-loading-scripts'
+cd '../data-loading-scripts'
 
 ## Open_datasets - PULLING FROM OPEN DATA
 echo 'Loading open source datasets...'
@@ -27,6 +27,7 @@ node loader.js install bic_facilities_tradewaste
 node loader.js install dca_facilities_operatingbusinesses
 node loader.js install dcla_facilities_culturalinstitutions
 node loader.js install dcp_facilities_sfpsd
+node loader.js install dcp_facilities_pops
 node loader.js install dhs_facilities_shelters
 node loader.js install dfta_facilities_contracts
 node loader.js install doe_facilities_busroutesgarages
@@ -53,8 +54,13 @@ node loader.js install dcas_facilities_colp
 node loader.js install doe_facilities_schoolsbluebook
 node loader.js install dot_facilities_pedplazas
 node loader.js install dot_facilities_publicparking ## Kind of open, need to see if url can be worked out
+node loader.js install dot_facilities_parkingfacilities
+node loader.js install dot_facilities_bridgehouses
+node loader.js install dot_facilities_ferryterminalslandings
+node loader.js install dot_facilities_mannedfacilities
 node loader.js install dsny_facilities_mtsgaragemaintenance
-node loader.js install facilities_togeocode ## Addresses copied and pasted from websites
+# node loader.js install facilities_togeocode ## Addresses copied and pasted from websites
+node loader.js install facilities_datasources
 node loader.js install foodbankny_facilities_foodbanks
 node loader.js install hhs_facilities_fmscontracts
 node loader.js install hhs_facilities_financialscontracts
@@ -63,6 +69,10 @@ node loader.js install nysoasas_facilities_programs ## Being shared with us mont
 node loader.js install nysed_facilities_activeinstitutions ## Actually is open but need to figue out url
 node loader.js install nysed_nonpublicenrollment ## Actually is open but in xlsx that needs to be formatted
 node loader.js install omb_facilities_libraryvisits
+node loader.js install dycd_facilities_compass
+node loader.js install dycd_facilities_otherprograms
+node loader.js install hra_facilities_centers
+node loader.js install sbs_facilities_workforce1
 echo 'Done loading other source datasets'
 
-cd '/Users/hannahbkates/facilities-db'
+cd '../facilities-db'
