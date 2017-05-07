@@ -30,7 +30,7 @@ UPDATE facilities AS f
             FROM
             facilities AS f
             LEFT JOIN
-            facilities_datasources AS d
+            facdb_datasources AS d
             ON
             f.pgtable = ARRAY[d.pgtable]
         ) AS j

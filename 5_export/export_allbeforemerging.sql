@@ -88,4 +88,4 @@ COPY (
 	ORDER BY
 		-- domain, facgroup, facsubgroup, factype
 		RANDOM()
-) TO '/Users/hannahbkates/Desktop/facdb_facilities_allbeforemerging.csv' WITH CSV DELIMITER ',' HEADER;
+) TO '/Users/hannahbkates/facilities-db/tables/facdb_facilities_allbeforemerging.csv' WITH CSV DELIMITER ',' HEADER;

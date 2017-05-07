@@ -54,7 +54,7 @@ COPY (
 		array_to_string(facilities.overabbrev,';') AS overabbrev,
 		array_to_string(facilities.datasource,';') AS datasource,
 		array_to_string(facilities.dataname,';') AS dataname,
-		array_to_string(facilities.linkdata,';') AS dataurl,
+		array_to_string(facilities.dataurl,';') AS dataurl,
 		array_to_string(facilities.datadate,';') AS datadate,
 		-- facilities.processingflag,
 		-- facilities.agencyclass1,
@@ -98,4 +98,4 @@ COPY (
 	ORDER BY
 		-- domain, facilitygroup, facilitysubgroup, facilitytype
 		RANDOM()
-) TO '/Users/hannahbkates/Desktop/facdb_facilities_unmapped.csv' WITH CSV DELIMITER ',' HEADER;
+) TO '/Users/hannahbkates/facilities-db/tables/facdb_facilities_unmapped.csv' WITH CSV DELIMITER ',' HEADER;

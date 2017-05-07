@@ -60,7 +60,7 @@ node loader.js install dot_facilities_ferryterminalslandings
 node loader.js install dot_facilities_mannedfacilities
 node loader.js install dsny_facilities_mtsgaragemaintenance
 # node loader.js install facilities_togeocode ## Addresses copied and pasted from websites
-node loader.js install facilities_datasources
+node loader.js install facdb_datasources
 node loader.js install foodbankny_facilities_foodbanks
 node loader.js install hhs_facilities_fmscontracts
 node loader.js install hhs_facilities_financialscontracts

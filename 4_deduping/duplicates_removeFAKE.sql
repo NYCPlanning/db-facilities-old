@@ -5,6 +5,11 @@ UPDATE facilities
 				WHEN array_to_string(idagency,',') = 'FAKE!' THEN NULL
 				WHEN array_to_string(idagency,',') LIKE '%FAKE!%' THEN string_to_array(REPLACE(REPLACE(array_to_string(idagency,';'),';FAKE!',''),'FAKE!;',''),';')
 			END),
+		idold = 
+			(CASE
+				WHEN idold @> ARRAY['FAKE!'] THEN NULL
+				WHEN array_to_string(idold,',') LIKE '%FAKE!%' THEN string_to_array(REPLACE(REPLACE(array_to_string(idold,';'),';FAKE!',''),'FAKE!;',''),';')
+			END),
 		bin =
 			(CASE
 				WHEN array_to_string(bin,',') = 'FAKE!' THEN NULL

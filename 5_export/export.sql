@@ -2,7 +2,7 @@ COPY (
 	SELECT
 		facilities.uid,
 		-- facilities.hash,
-		facilities.idold,
+		array_to_string(facilities.idold,';') AS idold,
 		array_to_string(facilities.idagency,';') AS idagency,
 		facilities.facname,
 		facilities.addressnum,
@@ -88,4 +88,4 @@ COPY (
 	ORDER BY
 		-- domain, facgroup, facsubgroup, factype
 		RANDOM()
-) TO '/Users/hannahbkates/Desktop/facdb_facilities.csv' WITH CSV DELIMITER ',' HEADER;
+) TO '/Users/hannahbkates/facilities-db/tables/facdb_facilities.csv' WITH CSV DELIMITER ',' HEADER;

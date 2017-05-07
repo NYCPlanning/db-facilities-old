@@ -2,7 +2,7 @@ COPY (
 	SELECT
 		*
 	FROM
-		facilities_datasources
+		facdb_datasources
 	ORDER BY
 		datasourcefull
-) TO '/Users/hannahbkates/facilities-db/facdb_datasources.csv' WITH CSV DELIMITER ',' HEADER;
+) TO '/Users/hannahbkates/facilities-db/tables/facdb_datasources.csv' WITH CSV DELIMITER ',' HEADER;

@@ -21,9 +21,9 @@ time psql $DATABASE_URL -f ./3_geoprocessing/join_boro.sql
 
 ## Run all records with addresses through GeoClient to get BBL, BIN, and lat/long if missing
 echo 'Running through GeoClient using address and borough...'
-time node ./3_geoprocessing/geoclient/geoclient_boro.js
+time node ./3_geoprocessing/geoclient_boro.js
 echo 'Running through GeoClient using address and zip code...'
-time node ./3_geoprocessing/geoclient/geoclient_zipcode.js
+time node ./3_geoprocessing/geoclient_zipcode.js
 ## Standardizing borough and assigning borough code again because
 ## Geoclient sometimes fills in Staten Is instead of Staten Island
 time psql $DATABASE_URL -f ./3_geoprocessing/join_boro.sql

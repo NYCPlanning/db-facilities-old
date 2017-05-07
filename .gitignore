@@ -1,8 +1,8 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
 # personal db and api credentials
-/3_geoprocessing/geoclient/dbconfig.js
-/3_geoprocessing/geoclient/apiCredentials.js
+dbconfig.js
+apiCredentials.js
 
 # misc
 .DS_Store
@@ -10,4 +10,6 @@
 /3_geoprocessing/.Rhistory
 .env
 /node_modules/*
+/5_export/censor.sql
+/6_refresh/*
 npm-debug.log
