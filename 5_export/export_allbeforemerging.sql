@@ -86,6 +86,6 @@ COPY (
 		facilities.geom IS NOT NULL
 		AND ST_Intersects (facilities.geom, dcp_boroboundaries_wi.geom)
 	ORDER BY
-		-- domain, facgroup, facsubgroup, factype
-		RANDOM()
+		domain, facgroup, facsubgroup, factype
+		-- RANDOM()
 ) TO '/Users/hannahbkates/facilities-db/tables/facdb_facilities_allbeforemerging.csv' WITH CSV DELIMITER ',' HEADER;
