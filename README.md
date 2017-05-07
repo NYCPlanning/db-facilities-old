@@ -1,4 +1,4 @@
-* Please note this database and its build and maintenance processes are still in active development. *
+Please note this database and its build and maintenance processes are still in active development.
 
 # City Planning Facilities Database (FacDB)
 
