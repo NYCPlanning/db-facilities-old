@@ -24,3 +24,9 @@ UPDATE facilities AS f
 		factype = REPLACE(factype, 'Structurese', 'Structure')
 	WHERE
 		factype LIKE '%Structurese%';
+
+UPDATE facilities AS f
+    SET 
+		factype = REPLACE(factype, 'Prekindergarten', 'DOE Universal Pre-Kindergarten')
+	WHERE
+		factype LIKE '%Prekindergarten%';

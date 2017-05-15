@@ -95,6 +95,8 @@ SELECT
 				THEN 'Public Safety, Emergency Services, and Administration of Justice'
 			WHEN agency LIKE '%Children%' OR (agency LIKE '%Youth%' AND Program_name NOT LIKE '%Homeless%')
 				THEN 'Education, Child Welfare, and Youth'
+			WHEN agency LIKE '%Education%' AND Program_name LIKE '%Prek%'
+				THEN 'Education, Child Welfare, and Youth'
 			ELSE 'Health and Human Services'
 		END),
 	-- facilitygroup
@@ -103,6 +105,8 @@ SELECT
 			WHEN agency LIKE '%Children%' AND (Program_name LIKE '%secure Placement%' OR Program_name LIKE '%Secure Placement%' OR Program_name LIKE '%Detention%')
 				THEN 'Justice and Corrections'
 			WHEN agency LIKE '%Children%' AND Program_name LIKE '%Early Learn%'
+				THEN 'Child Care and Pre-Kindergarten'
+			WHEN agency LIKE '%Education%' AND Program_name LIKE '%Prek%'
 				THEN 'Child Care and Pre-Kindergarten'
 			WHEN agency LIKE '%Children%'
 				THEN 'Childrens Services'
@@ -127,6 +131,8 @@ SELECT
 				THEN 'Detention and Correctional'
 			WHEN agency LIKE '%Children%' AND Program_name LIKE '%Early Learn%'
 				THEN 'Child Care'
+			WHEN agency LIKE '%Education%' AND Program_name LIKE '%Prek%'
+				THEN 'DOE Universal Pre-Kindergarten'
 			WHEN agency LIKE '%Children%' AND (Program_name LIKE '%FFC%' OR Program_name LIKE '%Foster%' OR Program_name LIKE '%Residential%')
 				THEN 'Foster Care Services and Residential Care'
 			WHEN agency LIKE '%Children%'
