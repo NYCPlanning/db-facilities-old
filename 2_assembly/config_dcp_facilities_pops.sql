@@ -54,7 +54,10 @@ SELECT
 	-- idagency
 	ARRAY[DCP_RECORD],
 	-- facilityname
-	Public_Space_1,
+	(CASE
+		WHEN Building_Name IS NOT NULL AND Building_Name <> '' THEN Building_Name
+		ELSE Building_Address
+	END),
 	-- addressnumber
 	split_part(trim(both ' ' from initcap(Building_Address)), ' ', 1),
 	-- streetname
@@ -63,9 +66,9 @@ SELECT
 	initcap(Building_Address),
 	-- borough
 		(CASE
-			WHEN City_State LIKE '%New York%' THEN 'Manhattan'
-			WHEN City_State LIKE '%Brooklyn%' THEN 'Bronx'
-			WHEN City_State LIKE '%Queens%' THEN 'Queens'
+			WHEN LEFT(DCP_RECORD,1) = 'B' THEN 'Brooklyn'
+			WHEN LEFT(DCP_RECORD,1) = 'Q' THEN 'Queens'
+			ELSE 'Manhattan'
 		END),
 	-- zipcode
 	NULL,
@@ -74,7 +77,7 @@ SELECT
 	-- bin
 	NULL,
 	-- facilitytype
-	Public_Space_1,
+	'Privately Owned Public Space',
 	-- domain
 	'Parks, Gardens, and Historical Sites',
 	-- facilitygroup
@@ -104,9 +107,9 @@ SELECT
 	-- operator abbrev
 	'Non-public',
 	-- oversightagency
-	ARRAY['NYC Department of City Planning'],
+	ARRAY['NYC Department of City Planning', 'NYC Department of Buildings'],
 	-- oversightabbrev
-	ARRAY['NYCDCP'],
+	ARRAY['NYCDCP', 'NYCDOB'],
 	-- datecreated
 	CURRENT_TIMESTAMP,
 	-- buildingid
