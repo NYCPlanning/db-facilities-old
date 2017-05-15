@@ -50,7 +50,7 @@ SELECT
 	-- pgtable
 	ARRAY['hhs_facilities_financialscontracts'],
 	-- hash,
-	md5(CAST((hhs_facilities_financialscontracts.*) AS text)),
+	array_to_string(ARRAY_AGG(md5(CAST((hhs_facilities_financialscontracts.*) AS text))),';'),
 	-- geom
 	NULL,
 	-- idagency
@@ -326,22 +326,13 @@ WHERE
 	AND Agency_name NOT LIKE '%Housing%'
 	AND contract_end_date::date > CURRENT_TIMESTAMP
 GROUP BY
-	the_geom,
-	agency,
-	ein,
-	provider_name,
-	corporate_structure,
-	epin,
-	program_name,
-	contract_title,
-	services,
-	populations,
-	service_settings,
-	self_reported_languages,
-	contract_start_date,
-	contract_end_date,
+	External_Contract_Number,
+	Agency_Name,
+	Provider_Name,
+	Program_Name,
+	Site_Name,
 	Address_1,
-	agency_address,
-	agency_zip,
-	administrative_address,
-	flag
+	Address_2,
+	City,
+	State,
+	Zip_Code
