@@ -113,7 +113,7 @@ SELECT
 			WHEN agency LIKE '%Children%' AND Program_name LIKE '%Early Learn%'
 				THEN 'Child Care and Pre-Kindergarten'
 			WHEN agency LIKE '%Children%'
-				THEN 'Childrens Services'
+				THEN 'Child Services and Welfare'
 
 			WHEN agency LIKE '%Education%'
 				THEN 'Human Services'

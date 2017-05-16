@@ -111,7 +111,7 @@ SELECT
 			WHEN Charter IS NOT NULL AND Org_Level = 'OTHER' THEN 'Other School - Charter'
 			WHEN Organization_Name LIKE '%PRE-K%' THEN 'DOE Universal Pre-Kindergarten'
 			WHEN Organization_Name LIKE '%LYFE%' THEN 'DOE Lyfe Program Child Care'
-			ELSE 'Other School - Unspecified'
+			ELSE 'Other K-12 School - Unspecified'
 		END),
 	-- domain
 		(CASE
@@ -131,7 +131,7 @@ SELECT
 			WHEN RIGHT(Org_ID,3) = 'CBO' THEN 'Human Services'
 			WHEN RIGHT(Org_ID,3) = 'DRG' THEN 'Human Services'
 			WHEN RIGHT(Org_ID,3) = 'SBH' THEN 'Health'
-			WHEN RIGHT(Org_ID,3) = 'SFS' THEN 'Child Welfare'
+			WHEN RIGHT(Org_ID,3) = 'SFS' THEN 'Child Services and Welfare'
 			WHEN RIGHT(Org_ID,3) = 'OTH' THEN 'Human Services'
 			WHEN RIGHT(Org_ID,3) = 'SST' THEN 'Public Safety'
 			WHEN RIGHT(Org_ID,3) = 'CEP' THEN 'Human Services'
@@ -140,17 +140,18 @@ SELECT
 		END),
 	-- facilitysubgroup
 		(CASE
+			WHEN Org_Level = 'SPED' THEN 'Special Ed and Schools for Students with Disabilities'
 			WHEN RIGHT(Org_ID,3) = 'ADM' THEN 'Offices'
 			WHEN RIGHT(Org_ID,3) = 'CBO' THEN 'Community Centers and Community School Programs'
 			WHEN RIGHT(Org_ID,3) = 'DRG' THEN 'Community Centers and Community School Programs'
-			WHEN RIGHT(Org_ID,3) = 'SFS' THEN 'School-Based Food Services'
+			WHEN RIGHT(Org_ID,3) = 'SFS' THEN 'Child Nutrition'
 			WHEN RIGHT(Org_ID,3) = 'OTH' THEN 'Community Centers and Community School Programs'
 			WHEN RIGHT(Org_ID,3) = 'SST' THEN 'School-Based Safety Program'
 			WHEN RIGHT(Org_ID,3) = 'CEP' THEN 'Workforce Development'
 			WHEN RIGHT(Org_ID,3) = 'SBH' THEN 'Health Promotion and Disease Prevention'
 			WHEN Organization_Name LIKE '%PRE-K%' THEN 'DOE Universal Pre-Kindergarten'
 			WHEN Organization_Name LIKE '%LYFE%' THEN 'Child Care'
-			ELSE 'Public Schools'
+			ELSE 'Public K-12 Schools'
 		END),
 	-- agencyclass1
 	Charter,

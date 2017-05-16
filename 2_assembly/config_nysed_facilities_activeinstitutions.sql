@@ -127,7 +127,7 @@ SELECT
 			WHEN Institution_Sub_Type_Desc LIKE '%PRE-SCHOOL%' THEN 'Child Care and Pre-Kindergarten'
 			WHEN Institution_Type_Desc LIKE '%MUSEUM%' THEN 'Cultural Institutions'
 			WHEN Institution_Type_Desc LIKE '%LIBRARIES%' THEN 'Libraries'
-			WHEN Institution_Type_Desc LIKE '%CHILD NUTRITION%' THEN 'Child Welfare'
+			WHEN Institution_Type_Desc LIKE '%CHILD NUTRITION%' THEN 'Child Services and Welfare'
 			WHEN (Institution_Type_Desc LIKE '%COLLEGE%') OR (Institution_Type_Desc LIKE '%CUNY%') OR 
 				(Institution_Type_Desc LIKE '%SUNY%') OR (Institution_Type_Desc LIKE '%SUNY%')
 				THEN 'Higher Education'
@@ -136,8 +136,9 @@ SELECT
 		END),
 	-- facilitysubgroup
 		(CASE
+			WHEN Institution_Sub_Type_Desc LIKE '%GED-ALTERNATIVE%' THEN 'GED and Alternative High School Equivalency'
 			WHEN Institution_Sub_Type_Desc LIKE '%CHARTER SCHOOL%'
-				THEN 'Public Schools'
+				THEN 'Public K-12 Schools'
 			WHEN Institution_Sub_Type_Desc LIKE '%MUSEUM%' THEN 'Museums'
 			WHEN Institution_Sub_Type_Desc LIKE '%HISTORICAL%' THEN 'Historical Societies'
 			WHEN Institution_Type_Desc LIKE '%LIBRARIES%' THEN 'Academic and Special Libraries'
@@ -145,17 +146,17 @@ SELECT
 			WHEN Institution_Sub_Type_Desc LIKE '%PRE-SCHOOL%' AND (Institution_Sub_Type_Desc LIKE '%DISABILITIES%' OR Institution_Sub_Type_Desc LIKE '%SWD%')
 				THEN 'Preschools for Students with Disabilities'
 			WHEN (Institution_Type_Desc LIKE '%DISABILITIES%')
-				THEN 'Other Schools Serving Students with Disabilities'
+				THEN 'Special Ed and Schools for Students with Disabilities'
 			WHEN Institution_Sub_Type_Desc LIKE '%PRE-K%' THEN 'Offices'
-			WHEN (Institution_Type_Desc LIKE 'PUBLIC%') OR (Institution_Sub_Type_Desc LIKE 'PUBLIC%') THEN 'Public Schools'
+			WHEN (Institution_Type_Desc LIKE 'PUBLIC%') OR (Institution_Sub_Type_Desc LIKE 'PUBLIC%') THEN 'Public K-12 Schools'
 			WHEN (Institution_Type_Desc LIKE '%COLLEGE%') OR (Institution_Type_Desc LIKE '%CUNY%') OR 
 				(Institution_Type_Desc LIKE '%SUNY%') OR (Institution_Type_Desc LIKE '%SUNY%')
 				THEN 'Colleges or Universities'
 			WHEN Institution_Type_Desc LIKE '%PROPRIETARY%'
 				THEN 'Proprietary Schools'
 			WHEN Institution_Type_Desc LIKE '%NON-IMF%'
-				THEN 'Public Schools'
-			ELSE 'Non-public Schools'
+				THEN 'Public K-12 Schools'
+			ELSE 'Non-Public K-12 Schools'
 		END),
 	-- agencyclass1
 	Institution_Sub_Type_Desc,
@@ -178,7 +179,7 @@ SELECT
 	NULL,
 	-- operatortype
 		(CASE
-			WHEN Institution_Type_Desc = 'PUBLIC SCHOOLS' THEN 'Public'
+			WHEN Institution_Type_Desc = 'Public K-12 Schools' THEN 'Public'
 			WHEN Institution_Type_Desc LIKE '%NON-IMF%' THEN 'Public'
 			WHEN Institution_Type_Desc = 'CUNY' THEN 'Public'
 			WHEN Institution_Type_Desc = 'SUNY' THEN 'Public'
@@ -186,7 +187,7 @@ SELECT
 		END),
 	-- operatorname
 		(CASE
-			WHEN Institution_Type_Desc = 'PUBLIC SCHOOLS' THEN 'NYC Department of Education'
+			WHEN Institution_Type_Desc = 'Public K-12 Schools' THEN 'NYC Department of Education'
 			WHEN Institution_Type_Desc LIKE '%NON-IMF%' THEN 'NYC Department of Education'
 			WHEN Institution_Type_Desc = 'CUNY' THEN 'City University of New York'
 			WHEN Institution_Type_Desc = 'SUNY' THEN 'State University of New York'
@@ -194,21 +195,21 @@ SELECT
 		END),
 	-- operatorabbrev
 		(CASE
-			WHEN Institution_Type_Desc = 'PUBLIC SCHOOLS' THEN 'NYCDOE'
-			WHEN Institution_Type_Desc = 'PUBLIC SCHOOLS' THEN 'NYCDOE'
+			WHEN Institution_Type_Desc = 'Public K-12 Schools' THEN 'NYCDOE'
+			WHEN Institution_Type_Desc = 'Public K-12 Schools' THEN 'NYCDOE'
 			WHEN Institution_Type_Desc = 'CUNY' THEN 'CUNY'
 			WHEN Institution_Type_Desc = 'SUNY' THEN 'SUNY'
 			ELSE 'Non-public'
 		END),
 	-- oversightagency
 		(CASE
-			WHEN Institution_Type_Desc = 'PUBLIC SCHOOLS' THEN ARRAY['NYC Department of Education', 'NYS Education Department']
+			WHEN Institution_Type_Desc = 'Public K-12 Schools' THEN ARRAY['NYC Department of Education', 'NYS Education Department']
 			WHEN Institution_Type_Desc LIKE '%NON-IMF%' THEN ARRAY['NYC Department of Education', 'NYS Education Department']
 			ELSE ARRAY['NYS Education Department']
 		END),
 	-- oversightabbrev
 		(CASE
-			WHEN Institution_Type_Desc = 'PUBLIC SCHOOLS' THEN ARRAY['NYCDOE', 'NYSED']
+			WHEN Institution_Type_Desc = 'Public K-12 Schools' THEN ARRAY['NYCDOE', 'NYSED']
 			WHEN Institution_Type_Desc LIKE '%NON-IMF%' THEN ARRAY['NYCDOE', 'NYSED']
 			ELSE ARRAY['NYSED']
 		END),
@@ -256,9 +257,9 @@ FROM
 		ON trim(replace(nysed_nonpublicenrollment.beds_code,',',''),' ')::text = nysed_facilities_activeinstitutions.sed_code::text
 		) AS nysed_facilities_activeinstitutions
 WHERE
-	(Institution_Type_Desc = 'PUBLIC SCHOOLS' AND Institution_Sub_Type_Desc LIKE '%GED%')
+	(Institution_Type_Desc = 'Public K-12 Schools' AND Institution_Sub_Type_Desc LIKE '%GED%')
 	OR Institution_Sub_Type_Desc LIKE '%CHARTER SCHOOL%'
-	OR (Institution_Type_Desc <> 'PUBLIC SCHOOLS'
+	OR (Institution_Type_Desc <> 'Public K-12 Schools'
 	AND Institution_Type_Desc <> 'NON-IMF SCHOOLS'
 	AND Institution_Type_Desc <> 'GOVERNMENT AGENCIES' -- MAY ACTUALLY WANT TO USE THESE
 	AND Institution_Type_Desc <> 'INDEPENDENT ORGANIZATIONS'
