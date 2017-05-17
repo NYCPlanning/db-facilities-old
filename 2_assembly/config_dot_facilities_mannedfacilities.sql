@@ -54,7 +54,10 @@ SELECT
 	-- idagency
 	NULL,
 	-- facilityname
-	oper_label,
+	(CASE
+		WHEN oper_label IS NOT NULL THEN oper_label
+		ELSE label
+	END),
 	-- addressnumber
 	(CASE 
 		WHEN arc_street IS NOT NULL THEN split_part(trim(both ' ' from REPLACE(arc_street,' - ','-')), ' ', 1)
@@ -79,13 +82,38 @@ SELECT
 	-- bin
 	NULL,
 	-- facilitytype
-	'Manned Transportation Facility',
+	(CASE
+		WHEN oper_label LIKE '%Asphalt%' THEN 'Asphalt Plant'
+		WHEN oper_label IS NOT NULL THEN
+			REPLACE(
+			REPLACE(
+			REPLACE(
+			REPLACE(
+			REPLACE(
+			REPLACE(
+			REPLACE(
+			oper_label,
+			'RRM','Roadway Repair and Maintenance'),
+			'SIM','Sidewalk and Inspection Management'),
+			'OCMC','Construction Mitigation and Coordination'),
+			'HIQA','Highway Inspection and Quality Assurance'),
+			'BCO','Borough Commissioner’s Office'),
+			'JETS','Roadway Repair and Maintenance'),
+			'TMC','Traffic Management Center')
+		ELSE 'Manned Transportation Facility'
+	END),
 	-- domain
 	'Core Infrastructure and Transportation',
 	-- facilitygroup
-	'Transportation',
+	(CASE
+		WHEN oper_label LIKE '%Asphalt%' THEN 'Material Supplies and Markets'
+		ELSE 'Transportation'
+	END),
 	-- facilitysubgroup
-	'Other Transportation',
+	(CASE
+		WHEN oper_label LIKE '%Asphalt%' THEN 'Material Supplies'
+		ELSE 'Other Transportation'
+	END),
 	-- agencyclass1
 	NULL,
 	-- agencyclass2

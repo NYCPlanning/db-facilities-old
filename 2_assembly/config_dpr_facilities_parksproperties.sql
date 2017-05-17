@@ -89,7 +89,7 @@ SELECT
 		(CASE
 			-- admin of gov
 			WHEN typecatego = 'Undeveloped' THEN 'Other Property'
-			WHEN typecatego = 'Lot' THEN 'Parking, Maintenance, and Storage'
+			WHEN typecatego = 'Lot' THEN 'City Agency Parking, Maintenance, and Storage'
 			-- parks
 			WHEN typecatego = 'Cemetery' THEN 'Parks and Plazas'
 			WHEN typecatego = 'Historic House Park' THEN 'Historical Sites'

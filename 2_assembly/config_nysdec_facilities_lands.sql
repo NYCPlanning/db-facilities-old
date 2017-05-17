@@ -52,7 +52,7 @@ SELECT
 	-- geom
 	ST_Centroid(geom),
 	-- idagency
-	ARRAY[lands_uid],
+	ARRAY[gid],
 	-- facilityname
 	initcap(facility),
 	-- addressnumber

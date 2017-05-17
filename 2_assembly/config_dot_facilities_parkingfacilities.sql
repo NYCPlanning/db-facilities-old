@@ -54,7 +54,10 @@ SELECT
 	-- idagency
 	NULL,
 	-- facilityname
-	facname,
+	(CASE
+		WHEN facname IS NOT NULL THEN facname
+		ELSE 'Parking Lot'
+	END),
 	-- addressnumber
 	NULL,
 	-- streetname
@@ -70,13 +73,25 @@ SELECT
 	-- bin
 	NULL,
 	-- facilitytype
-	'Public Parking Lot',
+	(CASE
+		WHEN operations = 'Public Parking Garage' THEN 'Public Parking Garage'
+		ELSE 'City Agency Parking'
+	END),
 	-- domain
-	'Core Infrastructure and Transportation',
+	(CASE
+		WHEN operations = 'Public Parking Garage' THEN 'Core Infrastructure and Transportation'
+		ELSE 'Administration of Government'
+	END),
 	-- facilitygroup
-	'Transportation',
+	(CASE
+		WHEN operations = 'Public Parking Garage' THEN 'Transportation'
+		ELSE 'City Agency Parking, Maintenance, and Storage'
+	END),
 	-- facilitysubgroup
-	'Parking Lots and Garages',
+	(CASE
+		WHEN operations = 'Public Parking Garage' THEN 'Parking Lots and Garages'
+		ELSE 'City Agency Parking'
+	END),
 	-- agencyclass1
 	NULL,
 	-- agencyclass2
