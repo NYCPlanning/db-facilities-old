@@ -7,9 +7,9 @@ UPDATE facilities AS f
                 WHEN j.dataurl IS NOT NULL THEN ARRAY[CONCAT(j.datasource, ': ', j.dataurl)]
                 ELSE NULL
             END),
-        linkdownload = 
+        datadownload = 
             (CASE
-                WHEN j.linkdownload IS NOT NULL THEN ARRAY[CONCAT(j.datasource, ': ', j.linkdownload)]
+                WHEN j.datadownload IS NOT NULL THEN ARRAY[CONCAT(j.datasource, ': ', j.datadownload)]
                 ELSE NULL
             END),
         datatype = ARRAY[CONCAT(j.datasource, ': ', j.datatype)],
@@ -22,7 +22,7 @@ UPDATE facilities AS f
             d.datasource,
             d.dataname,
             d.dataurl,
-            d.linkdownload,
+            d.datadownload,
             d.datatype,
             d.refreshmeans,
             d.refreshfrequency,

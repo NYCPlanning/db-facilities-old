@@ -109,7 +109,6 @@ SELECT
 			WHEN Charter IS NOT NULL AND Org_Level = 'HS' THEN 'High School - Charter'
 			WHEN Charter IS NOT NULL AND Org_Level = 'SPED' THEN 'Special Ed School - Charter'
 			WHEN Charter IS NOT NULL AND Org_Level = 'OTHER' THEN 'Other School - Charter'
-			WHEN Organization_Name LIKE '%PRE-K%' THEN 'DOE Universal Pre-Kindergarten'
 			WHEN Organization_Name LIKE '%LYFE%' THEN 'DOE Lyfe Program Child Care'
 			ELSE 'Other K-12 School - Unspecified'
 		END),
@@ -130,7 +129,7 @@ SELECT
 			WHEN RIGHT(Org_ID,3) = 'ADM' THEN 'Offices, Training, and Testing'
 			WHEN RIGHT(Org_ID,3) = 'CBO' THEN 'Human Services'
 			WHEN RIGHT(Org_ID,3) = 'DRG' THEN 'Human Services'
-			WHEN RIGHT(Org_ID,3) = 'SBH' THEN 'Health'
+			WHEN RIGHT(Org_ID,3) = 'SBH' THEN 'Health Care'
 			WHEN RIGHT(Org_ID,3) = 'SFS' THEN 'Child Services and Welfare'
 			WHEN RIGHT(Org_ID,3) = 'OTH' THEN 'Human Services'
 			WHEN RIGHT(Org_ID,3) = 'SST' THEN 'Public Safety'
@@ -140,6 +139,7 @@ SELECT
 		END),
 	-- facilitysubgroup
 		(CASE
+			WHEN Charter IS NOT NULL AND Org_Level <> 'SPED' THEN 'Charter K-12 Schools'
 			WHEN Org_Level = 'SPED' THEN 'Special Ed and Schools for Students with Disabilities'
 			WHEN RIGHT(Org_ID,3) = 'ADM' THEN 'Offices'
 			WHEN RIGHT(Org_ID,3) = 'CBO' THEN 'Community Centers and Community School Programs'

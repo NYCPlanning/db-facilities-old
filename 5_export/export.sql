@@ -58,7 +58,7 @@ COPY (
 		-- facilities.dateedited,
 		-- facilities.creator,
 		-- facilities.editor,
-		-- array_to_string(facilities.linkdownload,';'),
+		-- array_to_string(facilities.datadownload,';'),
 		-- array_to_string(facilities.datatype,';'),
 		-- array_to_string(facilities.refreshmeans,';'),
 		-- array_to_string(facilities.refreshfrequency,';'),

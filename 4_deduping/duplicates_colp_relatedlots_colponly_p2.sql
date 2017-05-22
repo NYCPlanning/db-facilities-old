@@ -7,8 +7,12 @@ WITH primaryuids AS (
 		AND geom IS NOT NULL
 		AND hash_merged IS NULL
 		AND (facname = 'Unnamed'
+		OR facname = 'No Use-Vacant Land'
+		OR facname = 'No Use'
+		OR facname = 'City Owned Property'
 		OR facname = 'Park'
 		OR facname = 'Office Bldg'
+		OR facname = 'Office'
 		OR facname = 'Park Strip'
 		OR facname = 'Playground'
 		OR facname = 'NYPD Parking'

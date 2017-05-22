@@ -12,5 +12,5 @@ time psql $DATABASE_URL -f ./5_export/export_unmapped.sql
 time psql $DATABASE_URL -f ./5_export/export_datasources.sql
 time psql $DATABASE_URL -f ./5_export/export_uid_key.sql
 echo 'Exporting tables for mkdocs...'
-time psql $DATABASE_URL -f ./5_export/tables_mkdocs/mkdocs_datasources.sql
+time psql $DATABASE_URL -f ./5_export/mkdocs_datasources.sql
 echo 'All done!'

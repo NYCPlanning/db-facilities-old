@@ -80,12 +80,12 @@ UPDATE facilities AS f
 SET
 	uid_merged = d.uid_merged,
 	hash_merged = d.hash_merged,
-	pgtable = array_cat(f.pgtable,d.pgtable),
-	datasource = array_cat(f.datasource,d.datasource),
-	dataname = array_cat(f.dataname,d.dataname),
+	pgtable = string_to_array(CONCAT(array_to_string(f.pgtable,';'),';',array_to_string(d.pgtable,';')),';'),
+	datasource = string_to_array(CONCAT(array_to_string(f.datasource,';'),';',array_to_string(d.datasource,';')),';'),
+	dataname = string_to_array(CONCAT(array_to_string(f.dataname,';'),';',array_to_string(d.dataname,';')),';'),
 	dataurl = 
 		(CASE
-			WHEN d.dataurl <> ARRAY['FAKE!'] THEN array_cat(f.dataurl,d.dataurl)
+			WHEN d.dataurl <> ARRAY['FAKE!'] THEN string_to_array(CONCAT(array_to_string(f.dataurl,';'),';',array_to_string(d.dataurl,';')),';')
 			ELSE f.dataurl
 		END),
 	colpusetype = d.colpusetype,

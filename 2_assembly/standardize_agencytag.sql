@@ -87,7 +87,7 @@ UPDATE facilities
 	AND uid is NULL;
 
 UPDATE facilities
-	SET linkdownload = NULL
-	WHERE linkdownload IS NOT NULL 
-	AND split_part(array_to_string(linkdownload,','),': ',2) = ''
+	SET datadownload = NULL
+	WHERE datadownload IS NOT NULL 
+	AND split_part(array_to_string(datadownload,','),': ',2) = ''
 	AND uid is NULL;

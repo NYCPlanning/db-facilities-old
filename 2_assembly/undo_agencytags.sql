@@ -9,7 +9,7 @@ utilrate = ARRAY[REPLACE(array_to_string(utilrate,','),CONCAT(array_to_string(da
 area = ARRAY[REPLACE(array_to_string(area,','),CONCAT(array_to_string(datasource,','),': '),'')],
 areatype = ARRAY[REPLACE(array_to_string(areatype,','),CONCAT(array_to_string(datasource,','),': '),'')],
 dataurl = ARRAY[REPLACE(array_to_string(dataurl,','),CONCAT(array_to_string(datasource,','),': '),'')],
-linkdownload = ARRAY[REPLACE(array_to_string(linkdownload,','),CONCAT(array_to_string(datasource,','),': '),'')]
+datadownload = ARRAY[REPLACE(array_to_string(datadownload,','),CONCAT(array_to_string(datasource,','),': '),'')]
 ;
 
 update facilities
@@ -23,5 +23,5 @@ utilrate = ARRAY[REPLACE(array_to_string(utilrate,','),CONCAT(array_to_string(ov
 area = ARRAY[REPLACE(array_to_string(area,','),CONCAT(array_to_string(overabbrev,','),': '),'')],
 areatype = ARRAY[REPLACE(array_to_string(areatype,','),CONCAT(array_to_string(overabbrev,','),': '),'')],
 dataurl = ARRAY[REPLACE(array_to_string(dataurl,','),CONCAT(array_to_string(overabbrev,','),': '),'')],
-linkdownload = ARRAY[REPLACE(array_to_string(linkdownload,','),CONCAT(array_to_string(overabbrev,','),': '),'')]
+datadownload = ARRAY[REPLACE(array_to_string(datadownload,','),CONCAT(array_to_string(overabbrev,','),': '),'')]
 ;

@@ -59,8 +59,8 @@ SELECT
 	NULL,
 	-- facilityname
 		(CASE
-			WHEN name <> ' ' THEN initcap(name)
 			WHEN name = ' ' AND usedec LIKE '%NO USE%' THEN 'City Owned Property'
+			WHEN name <> ' ' THEN initcap(name)
 			ELSE initcap(REPLACE(usedec, 'OTHER ', ''))
 		END),
 	-- addressnumber

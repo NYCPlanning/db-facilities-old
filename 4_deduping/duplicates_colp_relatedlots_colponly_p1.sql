@@ -6,8 +6,12 @@ WITH primaryuids AS (
 		pgtable = ARRAY['dcas_facilities_colp']::text[]
 		AND geom IS NOT NULL
 		AND facname <> 'Unnamed'
+		AND facname <> 'No Use-Vacant Land'
+		AND facname <> 'No Use'
+		AND facname <> 'City Owned Property'
 		AND facname <> 'Park'
 		AND facname <> 'Office Bldg'
+		AND facname <> 'Office'
 		AND facname <> 'Park Strip'
 		AND facname <> 'Playground'
 		AND facname <> 'NYPD Parking'

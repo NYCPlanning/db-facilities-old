@@ -1,4 +1,11 @@
-WITH primaries AS (
+WITH allmerged AS (
+	SELECT
+		unnest(uid_merged)
+	FROM
+		facilities
+),
+
+primaries AS (
 	SELECT
 		uid,
 		geom,
@@ -6,7 +13,11 @@ WITH primaries AS (
 		BBL,
 		factype,
 		overabbrev
-	FROM (SELECT * FROM duplicates_colp_bin UNION SELECT * FROM duplicates_colp_bbl) AS unioned
+	FROM
+		copy_backup3
+	WHERE
+		uid in (SELECT * from allmerged)
+		AND pgtable = ARRAY['dcas_facilities_colp']
 ),
 
 -- find other related COLP records, matching on agency, name, subgroup, and proximity (within 100m)

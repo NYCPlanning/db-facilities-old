@@ -6,7 +6,7 @@
 
 ## DEDUPING
 
-## Merge Child Care and Pre-K Duplicate records
+# Merge Child Care and Pre-K Duplicate records
 echo 'Merging and dropping Child Care and Pre-K duplicates...'
 time psql $DATABASE_URL -f ./4_deduping/duplicates_ccprek_acs_hhs.sql
 time psql $DATABASE_URL -f ./4_deduping/duplicates_removeFAKE.sql

@@ -115,15 +115,22 @@ duplicates AS (
 		sourcecombo
 	FROM matches
 	WHERE
-		sourcecombo LIKE '{bic_facilities_tradewaste}-{nysdec_facilities_solidwaste}' AND facsubgrp = 'Solid Waste Transfer and Carting'
-		OR sourcecombo LIKE '{dca_facilities_operatingbusinesses}-{nysdec_facilities_solidwaste}' AND facsubgrp = 'Solid Waste Processing'
-		OR sourcecombo LIKE '{dcla_facilities_culturalinstitutions}-{nysed_facilities_activeinstitutions}' AND facsubgrp = 'Museums'
-		OR sourcecombo LIKE '{dfta_facilities_contracts}-{hhs_facilities_%' AND facsubgrp = 'Senior Services'
-		OR sourcecombo LIKE '{doe_facilities_schoolsbluebook}-{hhs_facilities_%' AND facsubgrp = 'Community Centers and Community School Programs'
-		OR sourcecombo LIKE '{doe_facilities_schoolsbluebook}-{nysed_facilities_activeinstitutions}' AND facsubgrp = 'Public Schools'
-		OR sourcecombo LIKE '{dycd_facilities_compass}-{hhs_facilities_%' AND facsubgrp = 'Comprehensive After School System (COMPASS) Sites'
-		OR sourcecombo LIKE '{dycd_facilities_otherprograms}-{hhs_facilities_%' AND facsubgrp = 'Youth Centers, Literacy Programs, Job Training, and Immigrant Services'
-		OR sourcecombo LIKE '{nysomh_facilities_mentalhealth}-{hhs_facilities_%' AND facsubgrp = 'Mental Health'
+		sourcecombo LIKE '{dycd_facilities_compass%' AND sourcecombo LIKE '%{hhs_facilities_%' AND facsubgrp = 'Comprehensive After School System (COMPASS) Sites'
+		OR sourcecombo LIKE '{dycd_facilities_otherprograms%' AND sourcecombo LIKE '%{hhs_facilities_%' AND facsubgrp = 'Youth Centers, Literacy Programs, Job Training, and Immigrant Services'
+		OR sourcecombo LIKE '{doe_facilities_schoolsbluebook%' AND sourcecombo LIKE '%{hhs_facilities_%' AND facsubgrp = 'Community Centers and Community School Programs'
+		OR sourcecombo LIKE '{doe_facilities_schoolsbluebook%' AND sourcecombo LIKE '%{nysed_facilities_activeinstitutions%'
+		OR sourcecombo LIKE '{hhs_facilities_proposals%' AND sourcecombo LIKE '%{hhs_facilities_financialscontracts%'
+		OR sourcecombo LIKE '{dfta_facilities_contracts%' AND sourcecombo LIKE '%{hhs_facilities_%'
+		OR sourcecombo LIKE '{dca_facilities_operatingbusinesses%' AND sourcecombo LIKE '%{nysdec_facilities_solidwaste%'
+		OR sourcecombo LIKE '{dcla_facilities_culturalinstitutions%' AND sourcecombo LIKE '%{nysed_facilities_activeinstitutions%' AND facsubgrp = 'Museums'
+		OR sourcecombo LIKE '{nysdoh_facilities_healthfacilities%' AND sourcecombo LIKE '%{hhs_facilities_proposals%'
+		OR sourcecombo LIKE '{nysparks_facilities_historicplaces%' AND sourcecombo LIKE '%{usnps_facilities_parks%'
+		OR sourcecombo LIKE '{dpr_parksproperties%' AND sourcecombo LIKE '%{bbpc_facilities_sfpsd%'
+		OR sourcecombo LIKE '{dpr_parksproperties%' AND sourcecombo LIKE '%{nysparks_facilities_historicplaces%'
+		OR sourcecombo LIKE '{dpr_parksproperties%' AND sourcecombo LIKE '%{nysdec_facilities_lands%'
+		OR sourcecombo LIKE '{sbs_facilities_workforce1%' AND sourcecombo LIKE '%{hhs_facilities_proposals%'
+		OR sourcecombo LIKE '{bic_facilities_tradewaste%' AND sourcecombo LIKE '%{nysdec_facilities_solidwaste%'
+		OR sourcecombo LIKE '{nysomh_facilities_mentalhealth%' AND sourcecombo LIKE '%{hhs_facilities_%'
 	GROUP BY
 	uid, sourcecombo, facsubgrp
 	ORDER BY countofdups DESC )
@@ -146,7 +153,7 @@ SET
 	datasource = array_cat(f.datasource,d.datasource),
 	dataname = array_cat(f.dataname, d.dataname),
 	datadate = array_cat(f.datadate, d.datadate),
-	dataurl = (CASE WHEN d.dataurl <> ARRAY['FAKE!'] THEN array_cat(f.dataurl, d.dataurl) END),
+	dataurl = (CASE WHEN d.dataurl <> ARRAY['FAKE!'] THEN string_to_array(CONCAT(array_to_string(f.dataurl,';'), ';', array_to_string(d.dataurl,';')),';') END),
 	capacity = (CASE WHEN d.capacity <> ARRAY['FAKE!'] THEN array_cat(f.capacity, d.capacity) END),
 	captype = (CASE WHEN d.captype <> ARRAY['FAKE!'] THEN array_cat(f.captype, d.captype) END),
 	util = (CASE WHEN d.util <> ARRAY['FAKE!'] THEN array_cat(f.util, d.util) END),
@@ -154,17 +161,17 @@ SET
 	areatype = (CASE WHEN d.areatype <> ARRAY['FAKE!'] THEN array_cat(f.areatype, d.areatype) END),	
 	overagency = 
 		(CASE
-			WHEN sourcecombo NOT LIKE '{dcla_facilities_culturalinstitutions}-{nysed_facilities_activeinstitutions}' THEN array_cat(ARRAY[array_to_string(f.overagency,';')], ARRAY[array_to_string(d.overagency,';')])
+			WHEN sourcecombo NOT LIKE '{dcla_facilities_culturalinstitutions%' THEN array_cat(ARRAY[array_to_string(f.overagency,';')], ARRAY[array_to_string(d.overagency,';')])
 			ELSE f.overagency
 		END),
 	overabbrev =
 		(CASE
-			WHEN sourcecombo NOT LIKE '{dcla_facilities_culturalinstitutions}-{nysed_facilities_activeinstitutions}' THEN array_cat(ARRAY[array_to_string(f.overabbrev,';')], ARRAY[array_to_string(d.overabbrev,';')])
+			WHEN sourcecombo NOT LIKE '{dcla_facilities_culturalinstitutions}' THEN array_cat(ARRAY[array_to_string(f.overabbrev,';')], ARRAY[array_to_string(d.overabbrev,';')])
 			ELSE f.overabbrev
 		END),
 	overlevel =
 		(CASE
-			WHEN sourcecombo NOT LIKE '{dcla_facilities_culturalinstitutions}-{nysed_facilities_activeinstitutions}' THEN array_cat(ARRAY[array_to_string(f.overlevel,';')], ARRAY[array_to_string(d.overlevel,';')])
+			WHEN sourcecombo NOT LIKE '{dcla_facilities_culturalinstitutions}' THEN array_cat(ARRAY[array_to_string(f.overlevel,';')], ARRAY[array_to_string(d.overlevel,';')])
 			ELSE f.overlevel
 		END)
 FROM duplicates AS d

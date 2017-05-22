@@ -27,9 +27,9 @@ COPY (
 		facilities.facsubgrp,
 		facilities.factype,
 		array_to_string(facilities.capacity,';') AS capacity,
-		array_to_string(facilities.utili,';') AS utili,
+		array_to_string(facilities.util,';') AS util,
 		array_to_string(facilities.captype,';') AS captype,
-		array_to_string(facilities.utilirate,';') AS utilirate,
+		array_to_string(facilities.utilrate,';') AS utilrate,
 		array_to_string(facilities.area,';') AS area,
 		array_to_string(facilities.areatype,';') AS areatype,
 		facilities.proptype,
@@ -58,7 +58,7 @@ COPY (
 		-- facilities.dateedited,
 		-- facilities.creator,
 		-- facilities.editor,
-		-- array_to_string(facilities.linkdownload,';'),
+		-- array_to_string(facilities.datadownload,';'),
 		-- array_to_string(facilities.datatype,';'),
 		-- array_to_string(facilities.refreshmeans,';'),
 		-- array_to_string(facilities.refreshfrequency,';'),
@@ -86,6 +86,6 @@ COPY (
 		facilities.geom IS NOT NULL
 		AND ST_Intersects (facilities.geom, dcp_boroboundaries_wi.geom)
 	ORDER BY
-		domain, facgroup, facsubgroup, factype
+		facdomain, facgroup, facsubgrp, factype
 		-- RANDOM()
 ) TO '/Users/hannahbkates/facilities-db/tables/facdb_facilities_allbeforemerging.csv' WITH CSV DELIMITER ',' HEADER;

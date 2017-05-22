@@ -138,7 +138,7 @@ SELECT
 		(CASE
 			WHEN Institution_Sub_Type_Desc LIKE '%GED-ALTERNATIVE%' THEN 'GED and Alternative High School Equivalency'
 			WHEN Institution_Sub_Type_Desc LIKE '%CHARTER SCHOOL%'
-				THEN 'Public K-12 Schools'
+				THEN 'Charter K-12 Schools'
 			WHEN Institution_Sub_Type_Desc LIKE '%MUSEUM%' THEN 'Museums'
 			WHEN Institution_Sub_Type_Desc LIKE '%HISTORICAL%' THEN 'Historical Societies'
 			WHEN Institution_Type_Desc LIKE '%LIBRARIES%' THEN 'Academic and Special Libraries'
@@ -257,9 +257,9 @@ FROM
 		ON trim(replace(nysed_nonpublicenrollment.beds_code,',',''),' ')::text = nysed_facilities_activeinstitutions.sed_code::text
 		) AS nysed_facilities_activeinstitutions
 WHERE
-	(Institution_Type_Desc = 'Public K-12 Schools' AND Institution_Sub_Type_Desc LIKE '%GED%')
+	(Institution_Type_Desc = 'PUBLIC SCHOOLS' AND Institution_Sub_Type_Desc LIKE '%GED%')
 	OR Institution_Sub_Type_Desc LIKE '%CHARTER SCHOOL%'
-	OR (Institution_Type_Desc <> 'Public K-12 Schools'
+	OR (Institution_Type_Desc <> 'PUBLIC SCHOOLS'
 	AND Institution_Type_Desc <> 'NON-IMF SCHOOLS'
 	AND Institution_Type_Desc <> 'GOVERNMENT AGENCIES' -- MAY ACTUALLY WANT TO USE THESE
 	AND Institution_Type_Desc <> 'INDEPENDENT ORGANIZATIONS'
