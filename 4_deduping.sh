@@ -56,6 +56,11 @@ time psql $DATABASE_URL -f ./4_deduping/duplicates_colp_relatedlots_colponly_p2.
 echo 'Cleaning up remaining dummy values used for array_agg'
 time psql $DATABASE_URL -f ./4_deduping/duplicates_removeFAKE.sql
 
+# Merge records that are exactly the same from the same data source
+echo 'Merging and dropping records that are exactly the same from the same data source...'
+time psql $DATABASE_URL -f ./4_deduping/duplicates_exactsame.sql
+time psql $DATABASE_URL -f ./4_deduping/duplicates_removeFAKE.sql
+
 echo 'Deduped!'
 
 echo 'Cleaning up duplicates in BIN and BBl arrays...'

@@ -54,7 +54,7 @@ SELECT
 	-- geom
 	NULL,
 	-- idagency
-	ARRAY[External_Contract_Number],
+	array_agg(DISTINCT External_Contract_Number),
 	-- facilityname
 	(CASE
 		WHEN Site_Name IS NOT NULL THEN initcap(Site_Name)
@@ -332,7 +332,6 @@ WHERE
 	AND Agency_name NOT LIKE '%Housing%'
 	AND contract_end_date::date > CURRENT_TIMESTAMP
 GROUP BY
-	External_Contract_Number,
 	Agency_Name,
 	Provider_Name,
 	Program_Name,

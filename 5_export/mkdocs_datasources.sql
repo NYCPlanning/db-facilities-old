@@ -15,7 +15,7 @@ COPY (
 	FROM
 		facdb_datasources
 	WHERE
-		using_01 = 1
+		using_01 = '1'
 	ORDER BY
 		datasourcefull
 ) TO '/Users/hannahbkates/facilities-db/tables/tables_mkdocs/facdb_datasources_docs.csv' WITH CSV DELIMITER '~' HEADER;

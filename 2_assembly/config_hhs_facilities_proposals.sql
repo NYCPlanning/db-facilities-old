@@ -54,7 +54,7 @@ SELECT
 	-- geom
 	NULL,
 	-- idagency
-	ARRAY[Proposal_ID],
+	array_agg(DISTINCT Proposal_ID),
 	-- facilityname
 		(CASE
 			WHEN Site_Name IS NOT NULL THEN initcap(Site_Name)
@@ -333,10 +333,8 @@ WHERE
 	AND contract_end_date::date > CURRENT_TIMESTAMP
 GROUP BY
 	agency_name,
-    Proposal_ID,
     provider_name,
     program_name,
     site_name,
     address_1,
-    zip_code,
-    contract_end_date
+    zip_code

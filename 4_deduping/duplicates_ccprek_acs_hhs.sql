@@ -112,10 +112,10 @@ duplicates AS (
 
 UPDATE facilities AS f
 SET
-	idagency = array_cat(idagency, d.idagency_merged),
-	uid_merged = d.uid_merged,
-	hash_merged = d.hash_merged,
-	pgtable = array_cat(f.pgtable,d.pgtable),
+	idagency = array_cat(f.idagency, d.idagency_merged),
+	uid_merged = array_cat(f.uid_merged, d.uid_merged),
+	hash_merged = array_cat(f.hash_merged, d.hash_merged),
+	pgtable = array_cat(f.pgtable, d.pgtable),
 	datasource = array_cat(f.datasource, d.datasource),
 	dataname = array_cat(f.dataname, d.dataname),
 	datadate = array_cat(f.datadate, d.datadate),

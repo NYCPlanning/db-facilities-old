@@ -54,7 +54,7 @@ SELECT
 	-- geom
 	NULL,
 	-- idagency
-	ARRAY[CT_Num],
+	array_agg(DISTINCT CT_Num),
 	-- facilityname
 	initcap(LGL_NM),
 	-- address number
@@ -331,10 +331,8 @@ WHERE
 	AND Agency NOT LIKE '%Housing%'
 	AND contract_end_date::date > CURRENT_TIMESTAMP
 GROUP BY
-	CT_Num,
 	agency,
 	lgl_nm,
 	program_name,
 	address,
-	zip,
-	contract_end_date
+	zip
