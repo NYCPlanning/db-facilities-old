@@ -166,6 +166,7 @@ function updateFacilities(data, row) {
                         WHERE
                           addressnum=\'{{oldaddressnum}}\'
                           AND streetname=\'{{oldstreetname}}\'
+                          AND boro=initcap\'{{boro}}\'
                           AND processingflag IS NULL`;
 
   if(data.latitude && data.longitude) {

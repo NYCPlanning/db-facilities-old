@@ -174,6 +174,7 @@ function updateFacilities(data, row) {
                         WHERE
                           addressnum=\'{{oldaddressnum}}\'
                           AND streetname=\'{{oldstreetname}}\'
+                          AND zipcode=\'{{zipcode}}\'
                           AND processingflag IS NULL`;
 
   if(data.latitude && data.longitude) {
@@ -190,6 +191,7 @@ function updateFacilities(data, row) {
       bin: data.buildingIdentificationNumber,
       borocode: data.bblBoroughCode,
       boro: data.firstBoroughName,
+      zipcode: data.zipCode,
       city: data.uspsPreferredCityName,
       newaddressnum: data.houseNumber,
       newstreetname: data.boePreferredStreetName,
