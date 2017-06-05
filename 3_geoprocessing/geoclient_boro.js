@@ -69,7 +69,7 @@ db.any(nullGeomQuery)
 
 
 // records without geoms and with boro
-var geoclientTemplate1 = 'https://api.cityofnewyork.us/geoclient/v1/address.json?houseNumber={{housenumber}}&street={{{streetname}}}&borough={{boro}}&app_id={{app_id}}&app_key={{app_key}}';
+var geoclientTemplate1 = 'https://api.cityofnewyork.us/geoclient/v1/address.json?houseNumber={{housenumber}}&street={{streetname}}&borough={{boro}}&app_id={{app_id}}&app_key={{app_key}}';
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -166,7 +166,7 @@ function updateFacilities(data, row) {
                         WHERE
                           addressnum=\'{{oldaddressnum}}\'
                           AND streetname=\'{{oldstreetname}}\'
-                          AND boro=initcap\'{{boro}}\'
+                          AND upper(boro) = \'{{boro}}\'
                           AND processingflag IS NULL`;
 
   if(data.latitude && data.longitude) {

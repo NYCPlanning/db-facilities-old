@@ -56,19 +56,19 @@ SELECT
 	-- facilityname
 	Name,
 	-- addressnumber
-	Address_Number,
+	HouseNumber,
 	-- streetname
 	Street,
 	-- address
- 	Street_Address_1,
+ 	CONCAT(HouseNumber, ' ', Street),
 	-- borough
 	Borough,
 	-- zipcode
-	ZIP::integer,
+	Postcode::integer,
 	-- bbl
-	NULL,
+	ARRAY[bbl],
 	-- bin
-	NULL,
+	ARRAY[bin],
 	-- facilitytype
 	Location_Type,
 	-- domain
