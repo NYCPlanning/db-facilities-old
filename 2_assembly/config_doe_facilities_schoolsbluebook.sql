@@ -140,7 +140,7 @@ SELECT
 	-- facilitysubgroup
 		(CASE
 			WHEN Charter IS NOT NULL AND Org_Level <> 'SPED' THEN 'Charter K-12 Schools'
-			WHEN Org_Level = 'SPED' THEN 'Special Ed and Schools for Students with Disabilities'
+			WHEN Org_Level = 'SPED' THEN 'Public and Private Special Education Schools'
 			WHEN RIGHT(Org_ID,3) = 'ADM' THEN 'Offices'
 			WHEN RIGHT(Org_ID,3) = 'CBO' THEN 'Community Centers and Community School Programs'
 			WHEN RIGHT(Org_ID,3) = 'DRG' THEN 'Community Centers and Community School Programs'
@@ -180,7 +180,7 @@ SELECT
 		END),
 	-- operatorname
 		(CASE
-			WHEN Charter IS NOT NULL THEN 'Organization_Name'
+			WHEN Charter IS NOT NULL THEN Organization_Name
 			ELSE 'NYC Department of Education'
 		END),
 	-- operator abbrev
