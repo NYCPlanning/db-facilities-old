@@ -114,8 +114,3 @@ See [diagram of proposed Maintenance work flow](https://github.com/NYCPlanning/f
 
 ### Maintenance
 ![Maintenance Diagram](./diagrams/FacDB_Maintenance.png)
-
-
-## Notes on Specific Data Sources
-
-Coming soon!
