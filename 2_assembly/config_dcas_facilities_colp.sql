@@ -59,8 +59,9 @@ SELECT
 	NULL,
 	-- facilityname
 		(CASE
-			WHEN name = ' ' AND usedec LIKE '%NO USE%' THEN 'City Owned Property'
-			WHEN name <> ' ' THEN initcap(name)
+			WHEN (name = ' ' OR name IS NULL) AND usedec LIKE '%OFFICE%' THEN 'Office'
+			WHEN (name = ' ' OR name IS NULL) AND usedec LIKE '%NO USE%' THEN 'City Owned Property'
+			WHEN name <> ' ' AND name IS NOT NULL THEN initcap(name)
 			ELSE initcap(REPLACE(usedec, 'OTHER ', ''))
 		END),
 	-- addressnumber
@@ -390,7 +391,7 @@ SELECT
 			WHEN usedec LIKE '%STORAGE%' OR usedec LIKE '%STRG%' THEN 'Storage'
 			WHEN usedec LIKE '%CUSTODIAL%' THEN 'Custodial'
 			WHEN usedec LIKE '%GARAGE%' THEN 'Maintenance and Garages'
-			WHEN usedec LIKE '%OFFICE%' THEN 'Offices'
+			WHEN usedec LIKE '%OFFICE%' THEN 'City Government Offices'
 			WHEN usedec LIKE '%MAINTENANCE%' THEN 'Maintenance and Garages'
 			WHEN usedec LIKE '%NO USE%' THEN 'Miscellaneous Use'
 			WHEN usedec LIKE '%MISCELLANEOUS USE%' THEN 'Miscellaneous Use'
@@ -868,3 +869,7 @@ WHERE
 	OR (agency = 'DHS' AND usedec NOT LIKE '%RESIDENTIAL%' AND usedec NOT LIKE '%HOUSING%')
 	OR (agency = 'HRA' AND usedec NOT LIKE '%RESIDENTIAL%' AND usedec NOT LIKE '%HOUSING%')
 	OR (agency = 'ACS' AND usedec NOT LIKE '%RESIDENTIAL%' AND usedec NOT LIKE '%HOUSING%');
+
+UPDATE facilities
+SET facname = CONCAT(array_to_string(overagency,','), ' ', facname)
+WHERE facname = 'Office';
