@@ -7,7 +7,7 @@
 ## Load all datasets from sources using civic data loader
 ## https://github.com/NYCPlanning/data-loading-scripts
 
-cd 'prod/data-loading-scripts'
+cd '/prod/data-loading-scripts'
 pwd
 
 ## Open_datasets - PULLING FROM OPEN DATA
