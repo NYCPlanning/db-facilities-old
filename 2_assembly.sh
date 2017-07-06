@@ -31,7 +31,7 @@ psql $DATABASE_URL -f ./2_assembly/config_dot_facilities_bridgehouses.sql
 psql $DATABASE_URL -f ./2_assembly/config_dot_facilities_ferryterminalslandings.sql
 psql $DATABASE_URL -f ./2_assembly/config_dot_facilities_mannedfacilities.sql
 psql $DATABASE_URL -f ./2_assembly/config_dot_facilities_parkingfacilities.sql
-psql $DATABASE_URL -f ./2_assembly/config_dpr_facilities_parksproperties.sql
+psql $DATABASE_URL -f ./2_assembly/config_dpr_parksproperties.sql
 psql $DATABASE_URL -f ./2_assembly/config_dsny_facilities_mtsgaragemaintenance.sql
 psql $DATABASE_URL -f ./2_assembly/config_dycd_facilities_compass.sql
 psql $DATABASE_URL -f ./2_assembly/config_dycd_facilities_otherprograms.sql
@@ -44,7 +44,7 @@ psql $DATABASE_URL -f ./2_assembly/config_nycha_facilities_policeservice.sql
 psql $DATABASE_URL -f ./2_assembly/config_nysoasas_facilities_programs.sql
 psql $DATABASE_URL -f ./2_assembly/config_nysdec_facilities_lands.sql
 psql $DATABASE_URL -f ./2_assembly/config_nysdec_facilities_solidwaste.sql
-psql $DATABASE_URL -f ./2_assembly/config_nysdoh_facilities_healthfacilities_joinnursingbeds.sql
+psql $DATABASE_URL -f ./2_assembly/config_nysdoh_facilities_healthfacilities.sql
 psql $DATABASE_URL -f ./2_assembly/config_nysed_facilities_activeinstitutions.sql
 psql $DATABASE_URL -f ./2_assembly/config_nysomh_facilities_mentalhealth.sql
 psql $DATABASE_URL -f ./2_assembly/config_nysopwdd_facilities_providers.sql
