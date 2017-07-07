@@ -48,7 +48,7 @@ SELECT
 	-- pgtable
 	ARRAY['dpr_parksproperties'],
 	-- hash,
-	md5(CAST((dpr_parksproperties.*) AS text)),
+        hash
 	-- geom
 	ST_Centroid(geom),
 	-- idagency

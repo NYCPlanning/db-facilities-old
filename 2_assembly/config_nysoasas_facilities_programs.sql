@@ -48,7 +48,7 @@ SELECT
 	-- pgtable
 	ARRAY['nysoasas_facilities_programs'],
 	-- hash,
-	md5(CAST((nysoasas_facilities_programs.*) AS text)),
+        hash
 	-- geom
 	NULL,
 	-- idagency

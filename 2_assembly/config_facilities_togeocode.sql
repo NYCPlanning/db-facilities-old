@@ -60,7 +60,7 @@ SELECT
 		WHEN oversightabbrev = 'FBOP' THEN 'fbop_facilities_corrections'
 	END)],
 	-- hash,
-	md5(CAST((togeocode.*) AS text)),
+        hash
 	-- geom
 	NULL,
 	-- idagency

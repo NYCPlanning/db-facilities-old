@@ -48,7 +48,7 @@ SELECT
 	-- pgtable
 	ARRAY['dot_facilities_publicparking'],
 	-- hash,
-	md5(CAST((dot_facilities_publicparking.*) AS text)),
+        hash
 	-- geom
 	ST_SetSRID(ST_MakePoint(longitude, latitude),4326),
 	-- idagency

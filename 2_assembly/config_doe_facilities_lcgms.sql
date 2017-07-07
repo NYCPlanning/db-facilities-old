@@ -48,7 +48,7 @@ SELECT
 	-- pgtable
 	ARRAY['doe_facilities_lcgms'],
 	-- hash,
-	md5(CAST((doe_facilities_lcgms.*) AS text)),
+        hash
 	-- geom
 	NULL,
 	-- idagency

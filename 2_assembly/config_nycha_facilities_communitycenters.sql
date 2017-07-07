@@ -50,7 +50,7 @@ SELECT
 	-- pgtable
 	ARRAY['nycha_facilities_communitycenters'],
 	-- hash,
-	md5(CAST((nycha_facilities_communitycenters.*) AS text)),
+        hash
 	-- geom
 	NULL,
 	-- idagency

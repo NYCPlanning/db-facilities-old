@@ -48,7 +48,7 @@ SELECT
 	-- pgtable
 	ARRAY['doe_facilities_busroutesgarages'],
 	-- hash,
-	md5(CAST((Vendor_Name,Garage_Street_Address,Garage_City,Garage_Zip,XCoordinates,YCoordinates) AS text)),
+        hash
 	-- geom
 	ST_Transform(ST_SetSRID(ST_MakePoint(XCoordinates, YCoordinates),2263),4326),
 	-- idagency

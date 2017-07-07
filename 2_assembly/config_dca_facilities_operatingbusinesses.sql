@@ -48,7 +48,7 @@ SELECT
 	-- pgtable
 	ARRAY['dca_facilities_operatingbusinesses'],
 	-- hash,
-	md5(CAST((dca_facilities_operatingbusinesses.*) AS text)),
+        hash
 	-- geom
 	(CASE 
 		WHEN longitude IS NOT NULL THEN ST_SetSRID(ST_MakePoint(longitude, latitude), 4326)

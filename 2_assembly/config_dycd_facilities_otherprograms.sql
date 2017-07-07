@@ -48,7 +48,7 @@ SELECT
 	-- pgtable
 	ARRAY['dycd_facilities_otherprograms'],
 	-- hash,
-	md5(CAST((dycd_facilities_otherprograms.*) AS text)),
+        hash
 	-- geom
 	NULL,
 	-- idagency

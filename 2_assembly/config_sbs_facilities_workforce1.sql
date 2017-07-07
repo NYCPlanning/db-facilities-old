@@ -48,7 +48,7 @@ SELECT
 	-- pgtable
 	ARRAY['sbs_facilities_workforce1'],
 	-- hash,
-	md5(CAST((sbs_facilities_workforce1.*) AS text)),
+        hash
 	-- geom
 	ST_SetSRID(ST_MakePoint(Longitude::numeric, Latitude::numeric),4326),
 	-- idagency

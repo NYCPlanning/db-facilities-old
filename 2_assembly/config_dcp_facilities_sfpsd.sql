@@ -72,7 +72,7 @@ SELECT
 		ELSE 'mta_facilities_sfpsd'
 	END)],
 	-- hash,
-	md5(CAST((dcp_facilities_sfpsd.*) AS text)),
+        hash
 	-- geom
 	geom,
 	-- idold

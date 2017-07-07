@@ -48,7 +48,7 @@ SELECT
 	-- pgtable
 	ARRAY['acs_facilities_daycareheadstart'],
 	-- hash,
-	md5(CAST((acs_facilities_daycareheadstart.*) AS text)),
+        hash
 	-- geom
 	NULL,
 	-- idagency

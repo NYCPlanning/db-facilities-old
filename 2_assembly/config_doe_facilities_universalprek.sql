@@ -48,7 +48,7 @@ SELECT
 	-- pgtable
 	ARRAY['doe_facilities_universalprek'],
 	-- hash,
-	md5(CAST((doe_facilities_universalprek.*) AS text)),
+        hash
 	-- geom
 	ST_Transform(ST_SetSRID(ST_MakePoint(x, y),2263),4326),
 	-- idagency

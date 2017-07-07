@@ -48,7 +48,7 @@ SELECT
 	-- pgtable
 	ARRAY['foodbankny_facilities_foodbanks'],
 	-- hash,
-	md5(CAST((foodbankny_facilities_foodbanks.*) AS text)),
+        hash
 	-- geom
 	ST_SetSRID(ST_MakePoint(longitude_x, latitude_y),4326),	
 	-- idagency

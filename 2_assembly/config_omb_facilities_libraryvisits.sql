@@ -48,7 +48,7 @@ SELECT
 	-- pgtable
 	ARRAY['omb_facilities_libraryvisits'],
 	-- hash,
-	md5(CAST((omb_facilities_libraryvisits.*) AS text)),
+        hash
 	-- geom
 	ST_SetSRID(ST_MakePoint(lon, lat),4326),
 	-- idagency

@@ -48,7 +48,7 @@ SELECT
 	-- pgtable
 	ARRAY['nysopwdd_facilities_providers'],
 	-- hash,
-	md5(CAST((Developmental_Disability_Services_Office,Service_Provider_Agency,Street_Address_,Street_Address_Line_2,City,State,Zip_Code,Phone,County,Website_Url,Intermediate_Care_Facilities_ICFs,Individual_Residential_Alternative_IRA,Family_Care,Consolidated_Supports_And_Services,Individual_Support_Services_ISSs,Day_Training,Day_Treatment,Senior_Geriatric_Services,Day_Habilitation,Work_Shop,Prevocational,Supported_Employment_Enrollments,Community_Habilitation,Family_Support_Services,Care_at_Home_Waiver_Services,Developmental_Centers_And_Special_Population_Services,Location_1) AS text)),
+        hash
 	-- geom
 	(CASE
 		WHEN (Location_1 IS NOT NULL) AND (Location_1 LIKE '%(%') THEN 

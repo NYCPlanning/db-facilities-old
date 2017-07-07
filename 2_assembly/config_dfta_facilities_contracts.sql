@@ -48,7 +48,7 @@ SELECT
 	-- pgtable
 	ARRAY['dfta_facilities_contracts'],
 	-- hash,
-	md5(CAST((dfta_facilities_contracts.*) AS text)),
+        hash
 	-- geom
 	NULL,
 	-- idagency

@@ -48,7 +48,7 @@ SELECT
 	-- pgtable
 	ARRAY['dcp_facilities_pops'],
 	-- hash,
-	md5(CAST((dcp_facilities_pops.*) AS text)),
+        hash
 	-- geom
 	NULL,
 	-- idagency

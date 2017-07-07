@@ -48,7 +48,7 @@ SELECT
 	-- pgtable
 	ARRAY['usdot_facilities_airports'],
 	-- hash,
-	md5(CAST((usdot_facilities_airports.*) AS text)),
+        hash
 	-- geom
 	geom,
 	-- idagency

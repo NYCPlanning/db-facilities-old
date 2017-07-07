@@ -48,7 +48,7 @@ SELECT
 	-- pgtable
 	ARRAY['bic_facilities_tradewaste'],
 	-- hash,
-	md5(CAST((bic_facilities_tradewaste.*) AS text)),
+        hash
 	-- geom
 	(CASE
 		WHEN (Location_1 IS NOT NULL) AND (Location_1 LIKE '%(%') THEN 

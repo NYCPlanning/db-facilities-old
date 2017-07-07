@@ -48,7 +48,7 @@ SELECT
 	-- pgtable
 	ARRAY['hhc_facilities_hospitals'],
 	-- hash,
-	md5(CAST((hhc_facilities_hospitals.*) AS text)),
+        hash
 	-- geom
 	ST_SetSRID(
 		ST_MakePoint(

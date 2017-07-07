@@ -48,7 +48,7 @@ SELECT
 	-- pgtable
 	ARRAY['nysparks_facilities_historicplaces'],
 	-- hash,
-	md5(CAST((Resource_Name,County,National_Register_Date,National_Register_Number,Longitude,Latitude,Location) AS text)),
+        hash
 	-- geom
 	-- ST_SetSRID(ST_MakePoint(long, lat),4326)
 	ST_SetSRID(ST_MakePoint(longitude, latitude),4326),

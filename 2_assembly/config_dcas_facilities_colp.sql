@@ -52,7 +52,7 @@ SELECT
 	-- pgtable
 	ARRAY['dcas_facilities_colp'],
 	-- hash,
-	md5(CAST((dcas_facilities_colp.*) AS text)),
+        hash
 	-- geom
 	geom,
 	-- idagency

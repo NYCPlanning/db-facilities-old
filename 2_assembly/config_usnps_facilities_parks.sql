@@ -48,7 +48,7 @@ SELECT
 	-- pgtable
 	ARRAY['usnps_facilities_parks'],
 	-- hash,
-	md5(CAST((usnps_facilities_parks.*) AS text)),
+        hash
 	-- geom
 	ST_Centroid(geom),
 	-- idagency

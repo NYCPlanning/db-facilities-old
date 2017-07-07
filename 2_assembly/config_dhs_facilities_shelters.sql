@@ -48,7 +48,7 @@ SELECT
 	-- pgtable
 	ARRAY['dhs_facilities_shelters'],
 	-- hash,
-	md5(CAST((dhs_facilities_shelters.*) AS text)),
+        hash
 	-- geom
 	(CASE
 		WHEN x_coordinate IS NOT NULL THEN ST_Transform(ST_SetSRID(ST_MakePoint(x_coordinate, y_coordinate), 2236),4326)

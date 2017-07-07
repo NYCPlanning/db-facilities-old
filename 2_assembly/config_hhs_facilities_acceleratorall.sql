@@ -54,7 +54,7 @@ SELECT
 		WHEN flag = 'proposals' THEN ARRAY['hhs_facilities_proposals']
 	END),
 	-- hash,
-	md5(CAST((the_geom,agency,ein,provider_name,corporate_structure,epin,program_name,contract_title,services,populations,service_settings,self_reported_languages,contract_start_date,contract_end_date,service_location,agency_address,agency_zip,administrative_address,flag) AS text)),
+        hash
 	-- geom
 	the_geom,
 	-- idagency

@@ -48,7 +48,7 @@ SELECT
 	-- pgtable
 	ARRAY['hra_facilities_centers'],
 	-- hash,
-	md5(CAST((hra_facilities_centers.*) AS text)),
+        hash
 	-- geom
 	NULL,	
 	-- idagency

@@ -48,7 +48,7 @@ SELECT
 	-- pgtable
 	ARRAY['dcla_facilities_culturalinstitutions'],
 	-- hash,
-	md5(CAST((dcla_facilities_culturalinstitutions.*) AS text)),
+        hash
 	-- geom
 	NULL,
 	-- idagency

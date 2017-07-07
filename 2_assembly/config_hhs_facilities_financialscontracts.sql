@@ -50,7 +50,7 @@ SELECT
 	-- pgtable
 	ARRAY['hhs_facilities_financialscontracts'],
 	-- hash,
-	array_to_string(ARRAY_AGG(md5(CAST((hhs_facilities_financialscontracts.*) AS text))),';'),
+        hash
 	-- geom
 	NULL,
 	-- idagency

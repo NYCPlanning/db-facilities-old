@@ -12,73 +12,69 @@ pwd
 
 ## Open_datasets - PULLING FROM OPEN DATA
 
-for action in get push after
-do 
-
-	echo 'Loading open source datasets...'
+echo 'Loading open source datasets...'
 	## Data you probably already have loaded
-	node loader.js $action dcp_mappluto
-	node loader.js $action doitt_buildingfootprints
-	node loader.js $action dcp_boroboundaries_wi
-	node loader.js $action dcp_cdboundaries
-	node loader.js $action dcp_censustracts
-	node loader.js $action dcp_councildistricts
-	node loader.js $action dcp_ntaboundaries
-	node loader.js $action doitt_zipcodes
+psql -d facdb -U dbadmin -f datasets/dcp_mappluto/after.sql
+psql -d facdb -U dbadmin -f datasets/doitt_buildingfootprints/after.sql
+psql -d facdb -U dbadmin -f datasets/dcp_boroboundaries_wi/after.sql
+psql -d facdb -U dbadmin -f datasets/dcp_cdboundaries/after.sql
+psql -d facdb -U dbadmin -f datasets/dcp_censustracts/after.sql
+psql -d facdb -U dbadmin -f datasets/dcp_councildistricts/after.sql
+psql -d facdb -U dbadmin -f datasets/dcp_ntaboundaries/after.sql
+psql -d facdb -U dbadmin -f datasets/doitt_zipcodes/after.sql
 
 	## Data you probably don't have loaded
-	node loader.js $action bic_facilities_tradewaste
-	node loader.js $action dca_facilities_operatingbusinesses
-	node loader.js $action dcla_facilities_culturalinstitutions
-	node loader.js $action dcp_facilities_sfpsd
-	node loader.js $action dcp_facilities_pops
-	node loader.js $action dfta_facilities_contracts
-	node loader.js $action doe_facilities_busroutesgarages
-	node loader.js $action doe_facilities_universalprek
-	node loader.js $action dohmh_facilities_daycare
-	node loader.js $action dpr_parksproperties
-	node loader.js $action hhc_facilities_hospitals
-	node loader.js $action nycha_facilities_policeservice
-	node loader.js $action nysdec_facilities_lands
-	node loader.js $action nysdec_facilities_solidwaste
-	node loader.js $action nysdoh_facilities_healthfacilities
-	node loader.js $action nysdoh_nursinghomebedcensus
-	node loader.js $action nysomh_facilities_mentalhealth
-	node loader.js $action nysopwdd_facilities_providers
-	node loader.js $action nysparks_facilities_historicplaces
-	node loader.js $action nysparks_facilities_parks
-	node loader.js $action usdot_facilities_airports
-	node loader.js $action usdot_facilities_ports
-	node loader.js $action usnps_facilities_parks
+psql -d facdb -U dbadmin -f datasets/bic_facilities_tradewaste/after.sql
+psql -d facdb -U dbadmin -f datasets/dca_facilities_operatingbusinesses/after.sql
+psql -d facdb -U dbadmin -f datasets/dcla_facilities_culturalinstitutions/after.sql
+psql -d facdb -U dbadmin -f datasets/dcp_facilities_sfpsd/after.sql
+psql -d facdb -U dbadmin -f datasets/dcp_facilities_pops/after.sql
+psql -d facdb -U dbadmin -f datasets/dfta_facilities_contracts/after.sql
+psql -d facdb -U dbadmin -f datasets/doe_facilities_busroutesgarages/after.sql
+psql -d facdb -U dbadmin -f datasets/doe_facilities_universalprek/after.sql
+psql -d facdb -U dbadmin -f datasets/dohmh_facilities_daycare/after.sql
+psql -d facdb -U dbadmin -f datasets/dpr_parksproperties/after.sql
+psql -d facdb -U dbadmin -f datasets/hhc_facilities_hospitals/after.sql
+psql -d facdb -U dbadmin -f datasets/nycha_facilities_policeservice/after.sql
+psql -d facdb -U dbadmin -f datasets/nysdec_facilities_lands/after.sql
+psql -d facdb -U dbadmin -f datasets/nysdec_facilities_solidwaste/after.sql
+psql -d facdb -U dbadmin -f datasets/nysdoh_facilities_healthfacilities/after.sql
+psql -d facdb -U dbadmin -f datasets/nysdoh_nursinghomebedcensus/after.sql
+psql -d facdb -U dbadmin -f datasets/nysomh_facilities_mentalhealth/after.sql
+psql -d facdb -U dbadmin -f datasets/nysopwdd_facilities_providers/after.sql
+psql -d facdb -U dbadmin -f datasets/nysparks_facilities_historicplaces/after.sql
+psql -d facdb -U dbadmin -f datasets/nysparks_facilities_parks/after.sql
+psql -d facdb -U dbadmin -f datasets/usdot_facilities_airports/after.sql
+psql -d facdb -U dbadmin -f datasets/usdot_facilities_ports/after.sql
+psql -d facdb -U dbadmin -f datasets/usnps_facilities_parks/after.sql
 
-	echo 'Done loading open source datasets. Moving on to "other" datasets...'
+echo 'Done loading open source datasets. Moving on to "other" datasets...'
 	## Other_datasets - PULLING FROM FTP SITE
-	node loader.js $action acs_facilities_daycareheadstart
-	node loader.js $action dcas_facilities_colp
-	node loader.js $action dhs_facilities_shelters
-	node loader.js $action doe_facilities_schoolsbluebook
-	node loader.js $action dot_facilities_pedplazas
-	node loader.js $action dot_facilities_publicparking ## Kind of open, need to see if url can be worked out
-	node loader.js $action dot_facilities_parkingfacilities
-	node loader.js $action dot_facilities_bridgehouses
-	node loader.js $action dot_facilities_ferryterminalslandings
-	node loader.js $action dot_facilities_mannedfacilities
-	node loader.js $action dsny_facilities_mtsgaragemaintenance
+psql -d facdb -U dbadmin -f datasets/acs_facilities_daycareheadstart/after.sql
+psql -d facdb -U dbadmin -f datasets/dcas_facilities_colp/after.sql
+psql -d facdb -U dbadmin -f datasets/dhs_facilities_shelters/after.sql
+psql -d facdb -U dbadmin -f datasets/doe_facilities_schoolsbluebook/after.sql
+psql -d facdb -U dbadmin -f datasets/dot_facilities_pedplazas/after.sql
+psql -d facdb -U dbadmin -f datasets/dot_facilities_publicparking ## Kind of open, need to see if url can be worked out/after.sql
+psql -d facdb -U dbadmin -f datasets/dot_facilities_parkingfacilities/after.sql
+psql -d facdb -U dbadmin -f datasets/dot_facilities_bridgehouses/after.sql
+psql -d facdb -U dbadmin -f datasets/dot_facilities_ferryterminalslandings/after.sql
+psql -d facdb -U dbadmin -f datasets/dot_facilities_mannedfacilities/after.sql
+psql -d facdb -U dbadmin -f datasets/dsny_facilities_mtsgaragemaintenance/after.sql
 	# node loader.js $action facilities_togeocode ## Addresses copied and pasted from websites
-	node loader.js $action facdb_datasources
-	node loader.js $action foodbankny_facilities_foodbanks
-	node loader.js $action hhs_facilities_fmscontracts
-	node loader.js $action hhs_facilities_financialscontracts
-	node loader.js $action hhs_facilities_proposals
-	node loader.js $action nysoasas_facilities_programs ## Being shared with us monthly by email in xlsx
-	node loader.js $action nysed_facilities_activeinstitutions ## Actually is open but need to figue out url
-	node loader.js $action nysed_nonpublicenrollment ## Actually is open but in xlsx that needs to be formatted
-	node loader.js $action omb_facilities_libraryvisits
-	node loader.js $action dycd_facilities_compass
-	node loader.js $action dycd_facilities_otherprograms
-	node loader.js $action hra_facilities_centers
-	node loader.js $action sbs_facilities_workforce1
+psql -d facdb -U dbadmin -f datasets/facdb_datasources/after.sql
+psql -d facdb -U dbadmin -f datasets/foodbankny_facilities_foodbanks/after.sql
+psql -d facdb -U dbadmin -f datasets/hhs_facilities_fmscontracts/after.sql
+psql -d facdb -U dbadmin -f datasets/hhs_facilities_financialscontracts/after.sql
+psql -d facdb -U dbadmin -f datasets/hhs_facilities_proposals/after.sql
+psql -d facdb -U dbadmin -f datasets/nysoasas_facilities_programs ## Being shared with us monthly by email in xlsx/after.sql
+psql -d facdb -U dbadmin -f datasets/nysed_facilities_activeinstitutions ## Actually is open but need to figue out url/after.sql
+psql -d facdb -U dbadmin -f datasets/nysed_nonpublicenrollment ## Actually is open but in xlsx that needs to be formatted/after.sql
+psql -d facdb -U dbadmin -f datasets/omb_facilities_libraryvisits/after.sql
+psql -d facdb -U dbadmin -f datasets/dycd_facilities_compass/after.sql
+psql -d facdb -U dbadmin -f datasets/dycd_facilities_otherprograms/after.sql
+psql -d facdb -U dbadmin -f datasets/hra_facilities_centers/after.sql
+psql -d facdb -U dbadmin -f datasets/sbs_facilities_workforce1/after.sql
 
-done
 echo 'Done loading other source datasets'
 cd '../facilities-db'

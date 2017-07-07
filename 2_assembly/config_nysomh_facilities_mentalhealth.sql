@@ -48,7 +48,7 @@ SELECT
 	-- pgtable
 	ARRAY['nysomh_facilities_mentalhealth'],
 	-- hash,
-	md5(CAST((nysomh_facilities_mentalhealth.*) AS text)),
+        hash
 	-- geom
 	(CASE
 		WHEN (Location IS NOT NULL) AND (Location LIKE '%(%') THEN

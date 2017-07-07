@@ -48,7 +48,7 @@ SELECT
 	-- pgtable
 	ARRAY['nysdec_facilities_lands'],
 	-- hash,
-	md5(CAST((nysdec_facilities_lands.*) AS text)),
+        hash
 	-- geom
 	ST_Centroid(geom),
 	-- idagency

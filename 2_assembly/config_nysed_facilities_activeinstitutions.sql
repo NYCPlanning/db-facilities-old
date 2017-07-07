@@ -48,7 +48,7 @@ SELECT
 	-- pgtable
 	ARRAY['nysed_facilities_activeinstitutions'],
 	-- hash,
-	md5(CAST((nysed_facilities_activeinstitutions.*) AS text)),
+        hash
 	-- geom
 	-- ST_SetSRID(ST_MakePoint(long, lat),4326)
 		(CASE

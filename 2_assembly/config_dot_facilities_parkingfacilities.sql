@@ -48,7 +48,7 @@ SELECT
 	-- pgtable
 	ARRAY['dot_facilities_parkingfacilities'],
 	-- hash,
-	md5(CAST((dot_facilities_parkingfacilities.*) AS text)),
+        hash
 	-- geom
 	geom,
 	-- idagency

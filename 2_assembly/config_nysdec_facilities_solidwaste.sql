@@ -48,7 +48,7 @@ SELECT
 	-- pgtable
 	ARRAY['nysdec_facilities_solidwaste'],
 	-- hash,
-	md5(CAST((nysdec_facilities_solidwaste.*) AS text)),
+        hash
 	-- geom
 	-- ST_SetSRID(ST_MakePoint(long, lat),4326)
 		(CASE

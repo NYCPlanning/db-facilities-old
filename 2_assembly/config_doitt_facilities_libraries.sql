@@ -48,7 +48,7 @@ SELECT
 	-- pgtable
 	ARRAY['doitt_facilities_libraries'],
 	-- hash,
-	md5(CAST((doitt_facilities_libraries.*) AS text)),
+        hash
 	-- geom
 	geom,
 	-- idagency

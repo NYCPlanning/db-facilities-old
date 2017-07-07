@@ -48,7 +48,7 @@ SELECT
 	-- pgtable
 	ARRAY['dohmh_facilities_daycare'],
 	-- hash,
-	md5(CAST((Day_Care_ID,Center_Name,Legal_Name,Building,Street,ZipCode,Borough,facility_type,child_care_type,program_type,Maximum_Capacity) AS text)),
+        hash
 	-- geom
 	NULL,
 	-- idagency
