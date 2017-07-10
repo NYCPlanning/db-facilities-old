@@ -197,6 +197,7 @@ WHERE
 	OR County = 'QUEENS'
 	OR County = 'RICHMOND'
 GROUP BY
+	hash,
 	Developmental_Disability_Services_Office,
 	Service_Provider_Agency,
 	Street_Address_,

@@ -142,6 +142,7 @@ WHERE
 	OR County = 'Queens'
 	OR County = 'Richmond')
 GROUP BY
+	hash,
 	Resource_Name,
 	County,
 	National_Register_Date,

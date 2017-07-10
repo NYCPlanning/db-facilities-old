@@ -136,6 +136,7 @@ FROM
 WHERE
 	School_Year = '2015-2016'
 GROUP BY
+	hash,
 	Vendor_Name,
 	Garage_Street_Address,
 	Garage_City,

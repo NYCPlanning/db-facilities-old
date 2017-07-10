@@ -134,6 +134,7 @@ SELECT
 FROM 
 	dycd_facilities_compass
 GROUP BY
+	hash,
 	Address_Number,
 	Street_Name,
 	Borough,

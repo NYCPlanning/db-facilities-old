@@ -168,6 +168,7 @@ SELECT
 FROM 
 	dohmh_facilities_daycare
 GROUP BY
+	hash,
 	Day_Care_ID,
 	Center_Name,
 	Legal_Name,
