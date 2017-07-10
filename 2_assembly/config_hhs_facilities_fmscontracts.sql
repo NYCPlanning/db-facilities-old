@@ -50,7 +50,7 @@ SELECT
 	-- pgtable
 	ARRAY['hhs_facilities_fmscontracts'],
 	-- hash,
-        hash
+    hash,
 	-- geom
 	NULL,
 	-- idagency

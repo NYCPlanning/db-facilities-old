@@ -48,7 +48,7 @@ SELECT
 	-- pgtable
 	ARRAY['dsny_facilities_mtsgaragemaintenance'],
 	-- hash,
-        hash
+    hash,
 	-- geom
 	geom,
 	-- idagency

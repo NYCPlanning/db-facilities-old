@@ -48,7 +48,7 @@ SELECT
 	-- pgtable
 	ARRAY['nysdec_facilities_lands'],
 	-- hash,
-        hash
+    hash,
 	-- geom
 	ST_Centroid(geom),
 	-- idagency

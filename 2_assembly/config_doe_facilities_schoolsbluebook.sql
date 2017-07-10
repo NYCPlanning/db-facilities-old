@@ -48,7 +48,7 @@ SELECT
 	-- pgtable
 	ARRAY['doe_facilities_schoolsbluebook'],
 	-- hash,
-        hash
+    hash,
 	-- geom
 		(CASE
 			WHEN X <> '#N/A' THEN ST_Transform(ST_SetSRID(ST_MakePoint(X::double precision, Y::double precision),2263),4326)

@@ -48,7 +48,7 @@ SELECT
 	-- pgtable
 	ARRAY['dpr_parksproperties'],
 	-- hash,
-        hash
+    hash,
 	-- geom
 	ST_Centroid(geom),
 	-- idagency

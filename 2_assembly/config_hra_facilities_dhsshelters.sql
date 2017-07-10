@@ -48,7 +48,7 @@ SELECT
 	-- pgtable
 	ARRAY['hra_facilities_dhsshelters'],
 	-- hash,
-        hash
+    hash,
 	-- geom
 	geom,	
 	-- idagency

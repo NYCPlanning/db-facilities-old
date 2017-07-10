@@ -48,7 +48,7 @@ SELECT
 	-- pgtable
 	ARRAY['dot_facilities_ferryterminalslandings'],
 	-- hash,
-        hash
+    hash,
 	-- geom
 	geom,
 	-- idagency

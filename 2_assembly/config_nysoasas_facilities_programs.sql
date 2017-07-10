@@ -48,7 +48,7 @@ SELECT
 	-- pgtable
 	ARRAY['nysoasas_facilities_programs'],
 	-- hash,
-        hash
+    hash,
 	-- geom
 	NULL,
 	-- idagency

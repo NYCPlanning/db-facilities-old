@@ -48,7 +48,7 @@ SELECT
 	-- pgtable
 	ARRAY['doe_facilities_busroutesgarages'],
 	-- hash,
-        hash
+    hash,
 	-- geom
 	ST_Transform(ST_SetSRID(ST_MakePoint(XCoordinates, YCoordinates),2263),4326),
 	-- idagency

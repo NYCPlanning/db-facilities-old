@@ -52,7 +52,7 @@ SELECT
 	-- pgtable
 	ARRAY['dcas_facilities_colp'],
 	-- hash,
-        hash
+    hash,
 	-- geom
 	geom,
 	-- idagency

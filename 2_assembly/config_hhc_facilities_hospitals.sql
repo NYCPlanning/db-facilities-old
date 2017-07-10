@@ -48,7 +48,7 @@ SELECT
 	-- pgtable
 	ARRAY['hhc_facilities_hospitals'],
 	-- hash,
-        hash
+    hash,
 	-- geom
 	ST_SetSRID(
 		ST_MakePoint(

@@ -72,7 +72,7 @@ SELECT
 		ELSE 'mta_facilities_sfpsd'
 	END)],
 	-- hash,
-        hash
+    hash,
 	-- geom
 	geom,
 	-- idold

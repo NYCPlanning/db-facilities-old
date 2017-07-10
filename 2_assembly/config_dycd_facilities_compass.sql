@@ -48,7 +48,7 @@ SELECT
 	-- pgtable
 	ARRAY['dycd_facilities_compass'],
 	-- hash,
-        hash
+    hash,
 	-- geom
 	NULL,
 	-- idagency

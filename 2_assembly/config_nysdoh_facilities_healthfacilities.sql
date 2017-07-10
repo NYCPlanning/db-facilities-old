@@ -48,7 +48,7 @@ SELECT
 	-- pgtable
 	ARRAY['nysdoh_facilities_healthfacilities'],
 	-- hash,
-        hash
+    hash,
 	-- geom
 	-- ST_SetSRID(ST_MakePoint(long, lat),4326)
 	ST_SetSRID(ST_MakePoint(Facility_Longitude, Facility_Latitude),4326),

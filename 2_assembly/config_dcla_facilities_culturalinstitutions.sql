@@ -48,7 +48,7 @@ SELECT
 	-- pgtable
 	ARRAY['dcla_facilities_culturalinstitutions'],
 	-- hash,
-        hash
+    hash,
 	-- geom
 	NULL,
 	-- idagency

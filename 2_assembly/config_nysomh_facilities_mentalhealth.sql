@@ -48,7 +48,7 @@ SELECT
 	-- pgtable
 	ARRAY['nysomh_facilities_mentalhealth'],
 	-- hash,
-        hash
+    hash,
 	-- geom
 	(CASE
 		WHEN (Location IS NOT NULL) AND (Location LIKE '%(%') THEN

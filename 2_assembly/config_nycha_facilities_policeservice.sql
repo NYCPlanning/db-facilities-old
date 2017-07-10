@@ -48,7 +48,7 @@ SELECT
 	-- pgtable
 	ARRAY['nycha_facilities_policeservice'],
 	-- hash,
-        hash
+    hash,
 	-- geom
 	geom,
 	-- idagency

@@ -50,7 +50,7 @@ SELECT
 	-- pgtable
 	ARRAY['nycha_facilities_communitycenters'],
 	-- hash,
-        hash
+    hash,
 	-- geom
 	NULL,
 	-- idagency

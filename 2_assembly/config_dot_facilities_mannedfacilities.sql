@@ -48,7 +48,7 @@ SELECT
 	-- pgtable
 	ARRAY['dot_facilities_mannedfacilities'],
 	-- hash,
-        hash
+    hash,
 	-- geom
 	geom,
 	-- idagency

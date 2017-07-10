@@ -48,7 +48,7 @@ SELECT
 	-- pgtable
 	ARRAY['acs_facilities_daycareheadstart'],
 	-- hash,
-        hash
+    hash,
 	-- geom
 	NULL,
 	-- idagency

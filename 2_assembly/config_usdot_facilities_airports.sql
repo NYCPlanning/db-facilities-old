@@ -48,7 +48,7 @@ SELECT
 	-- pgtable
 	ARRAY['usdot_facilities_airports'],
 	-- hash,
-        hash
+    hash,
 	-- geom
 	geom,
 	-- idagency

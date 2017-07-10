@@ -48,7 +48,7 @@ SELECT
 	-- pgtable
 	ARRAY['dcp_facilities_pops'],
 	-- hash,
-        hash
+    hash,
 	-- geom
 	NULL,
 	-- idagency

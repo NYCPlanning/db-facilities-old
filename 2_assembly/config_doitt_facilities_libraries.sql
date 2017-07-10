@@ -48,7 +48,7 @@ SELECT
 	-- pgtable
 	ARRAY['doitt_facilities_libraries'],
 	-- hash,
-        hash
+    hash,
 	-- geom
 	geom,
 	-- idagency

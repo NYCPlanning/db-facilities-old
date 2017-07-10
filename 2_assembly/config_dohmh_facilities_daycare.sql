@@ -48,7 +48,7 @@ SELECT
 	-- pgtable
 	ARRAY['dohmh_facilities_daycare'],
 	-- hash,
-        hash
+    hash,
 	-- geom
 	NULL,
 	-- idagency

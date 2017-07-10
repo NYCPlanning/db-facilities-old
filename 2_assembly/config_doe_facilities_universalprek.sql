@@ -48,7 +48,7 @@ SELECT
 	-- pgtable
 	ARRAY['doe_facilities_universalprek'],
 	-- hash,
-        hash
+    hash,
 	-- geom
 	ST_Transform(ST_SetSRID(ST_MakePoint(x, y),2263),4326),
 	-- idagency

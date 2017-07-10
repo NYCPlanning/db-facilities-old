@@ -48,7 +48,7 @@ SELECT
 	-- pgtable
 	ARRAY['omb_facilities_libraryvisits'],
 	-- hash,
-        hash
+    hash,
 	-- geom
 	ST_SetSRID(ST_MakePoint(lon, lat),4326),
 	-- idagency

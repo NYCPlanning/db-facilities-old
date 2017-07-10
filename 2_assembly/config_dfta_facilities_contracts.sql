@@ -48,7 +48,7 @@ SELECT
 	-- pgtable
 	ARRAY['dfta_facilities_contracts'],
 	-- hash,
-        hash
+    hash,
 	-- geom
 	NULL,
 	-- idagency

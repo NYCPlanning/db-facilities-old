@@ -48,7 +48,7 @@ SELECT
 	-- pgtable
 	ARRAY['dycd_facilities_otherprograms'],
 	-- hash,
-        hash
+    hash,
 	-- geom
 	NULL,
 	-- idagency

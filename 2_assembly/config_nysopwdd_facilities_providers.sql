@@ -48,7 +48,7 @@ SELECT
 	-- pgtable
 	ARRAY['nysopwdd_facilities_providers'],
 	-- hash,
-        hash
+    hash,
 	-- geom
 	(CASE
 		WHEN (Location_1 IS NOT NULL) AND (Location_1 LIKE '%(%') THEN 

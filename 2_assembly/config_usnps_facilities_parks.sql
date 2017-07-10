@@ -48,7 +48,7 @@ SELECT
 	-- pgtable
 	ARRAY['usnps_facilities_parks'],
 	-- hash,
-        hash
+    hash,
 	-- geom
 	ST_Centroid(geom),
 	-- idagency

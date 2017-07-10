@@ -48,7 +48,7 @@ SELECT
 	-- pgtable
 	ARRAY['doe_facilities_lcgms'],
 	-- hash,
-        hash
+    hash,
 	-- geom
 	NULL,
 	-- idagency

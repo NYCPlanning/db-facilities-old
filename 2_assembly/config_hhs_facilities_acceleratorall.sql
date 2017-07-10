@@ -54,7 +54,7 @@ SELECT
 		WHEN flag = 'proposals' THEN ARRAY['hhs_facilities_proposals']
 	END),
 	-- hash,
-        hash
+    hash,
 	-- geom
 	the_geom,
 	-- idagency

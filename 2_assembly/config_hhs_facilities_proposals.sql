@@ -50,7 +50,7 @@ SELECT
 	-- pgtable
 	ARRAY['hhs_facilities_proposals'],
 	-- hash,
-        hash
+    hash,
 	-- geom
 	NULL,
 	-- idagency

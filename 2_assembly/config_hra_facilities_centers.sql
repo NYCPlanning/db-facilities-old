@@ -48,7 +48,7 @@ SELECT
 	-- pgtable
 	ARRAY['hra_facilities_centers'],
 	-- hash,
-        hash
+    hash,
 	-- geom
 	NULL,	
 	-- idagency

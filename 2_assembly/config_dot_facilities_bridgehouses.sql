@@ -48,7 +48,7 @@ SELECT
 	-- pgtable
 	ARRAY['dot_facilities_bridgehouses'],
 	-- hash,
-        hash
+    hash,
 	-- geom
 	geom,
 	-- idagency
