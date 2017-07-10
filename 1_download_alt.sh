@@ -15,6 +15,10 @@ pwd
 for action in get push after
 do 
 
+	echo 'Loading FacDB helper files...'
+	node loader.js facdb_datasources
+	node loader.js facdb_uid_key
+
 	echo 'Loading open source datasets...'
 	## Data you probably already have loaded
 	node loader.js $action dcp_mappluto
@@ -58,14 +62,12 @@ do
 	node loader.js $action dhs_facilities_shelters
 	node loader.js $action doe_facilities_schoolsbluebook
 	node loader.js $action dot_facilities_pedplazas
-	node loader.js $action dot_facilities_publicparking ## Kind of open, need to see if url can be worked out
 	node loader.js $action dot_facilities_parkingfacilities
 	node loader.js $action dot_facilities_bridgehouses
 	node loader.js $action dot_facilities_ferryterminalslandings
 	node loader.js $action dot_facilities_mannedfacilities
 	node loader.js $action dsny_facilities_mtsgaragemaintenance
-	# node loader.js $action facilities_togeocode ## Addresses copied and pasted from websites
-	node loader.js $action facdb_datasources
+	node loader.js $action facdb_togeocode ## Addresses copied and pasted from websites
 	node loader.js $action foodbankny_facilities_foodbanks
 	node loader.js $action hhs_facilities_fmscontracts
 	node loader.js $action hhs_facilities_financialscontracts

@@ -55,13 +55,12 @@ psql -d facdb -U dbadmin -f datasets/dcas_facilities_colp/after.sql
 psql -d facdb -U dbadmin -f datasets/dhs_facilities_shelters/after.sql
 psql -d facdb -U dbadmin -f datasets/doe_facilities_schoolsbluebook/after.sql
 psql -d facdb -U dbadmin -f datasets/dot_facilities_pedplazas/after.sql
-psql -d facdb -U dbadmin -f datasets/dot_facilities_publicparking ## Kind of open, need to see if url can be worked out/after.sql
 psql -d facdb -U dbadmin -f datasets/dot_facilities_parkingfacilities/after.sql
 psql -d facdb -U dbadmin -f datasets/dot_facilities_bridgehouses/after.sql
 psql -d facdb -U dbadmin -f datasets/dot_facilities_ferryterminalslandings/after.sql
 psql -d facdb -U dbadmin -f datasets/dot_facilities_mannedfacilities/after.sql
 psql -d facdb -U dbadmin -f datasets/dsny_facilities_mtsgaragemaintenance/after.sql
-	# node loader.js $action facilities_togeocode ## Addresses copied and pasted from websites
+psql -d facdb -U dbadmin -f datasets/facdb_togeocode ## Addresses copied and pasted from websites
 psql -d facdb -U dbadmin -f datasets/facdb_datasources/after.sql
 psql -d facdb -U dbadmin -f datasets/foodbankny_facilities_foodbanks/after.sql
 psql -d facdb -U dbadmin -f datasets/hhs_facilities_fmscontracts/after.sql
