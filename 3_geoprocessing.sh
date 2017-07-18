@@ -29,59 +29,59 @@ time node ./3_geoprocessing/geoclient_zipcode.js
 ## Geoclient sometimes fills in Staten Is instead of Staten Island
 time psql -d facdb -U dbadmin -f ./3_geoprocessing/join_boro.sql
 time psql -d facdb -U dbadmin -f ./3_geoprocessing/clean_invalidBIN.sql
-# time psql -d facdb -U dbadmin -f ./3_geoprocessing/copy_backup1.sql
+time psql -d facdb -U dbadmin -f ./3_geoprocessing/copy_backup1.sql
 
-# ## TABULAR JOIN WITH PLUTO FILLING IN MISSING ADDRESS INFO USING BBL WHEN GEOM EXISTS
+## TABULAR JOIN WITH PLUTO FILLING IN MISSING ADDRESS INFO USING BBL WHEN GEOM EXISTS
 
-# echo 'Joining missing address info onto records using BBL...'
-# time psql -d facdb -U dbadmin -f ./3_geoprocessing/join_PLUTOtabular.sql
+echo 'Joining missing address info onto records using BBL...'
+time psql -d facdb -U dbadmin -f ./3_geoprocessing/join_PLUTOtabular.sql
 
-# ## SPATIAL JOINS WITH PLUTO TO GET BBL AND OTHER MISSING INFO
+## SPATIAL JOINS WITH PLUTO TO GET BBL AND OTHER MISSING INFO
 
-# echo 'Spatially joining with dcp_mappluto...'
-# time psql -d facdb -U dbadmin -f ./3_geoprocessing/join_PLUTOspatial.sql
-# echo 'Done spatially joining with dcp_mappluto'
-# time psql -d facdb -U dbadmin -f ./3_geoprocessing/vacuum.sql
-# time psql -d facdb -U dbadmin -f ./2_assembly/standardize_address.sql
-# # ^ need to clean up addresses again after filling in with PLUTO address
+echo 'Spatially joining with dcp_mappluto...'
+time psql -d facdb -U dbadmin -f ./3_geoprocessing/join_PLUTOspatial.sql
+echo 'Done spatially joining with dcp_mappluto'
+time psql -d facdb -U dbadmin -f ./3_geoprocessing/vacuum.sql
+time psql -d facdb -U dbadmin -f ./2_assembly/standardize_address.sql
+# ^ need to clean up addresses again after filling in with PLUTO address
 
-# ## FILLING IN REMAINING MISSING BINS
+## FILLING IN REMAINING MISSING BINS
 
-# echo 'Filling in missing BINS where there is a 1-1 relationship between BBL and BIN...'
-# time psql -d facdb -U dbadmin -f ./3_geoprocessing/bbl2bin.sql
-# echo 'Creating a backup copy before overwriting any geometries...'
-# time psql -d facdb -U dbadmin -f ./3_geoprocessing/copy_backup2.sql
+echo 'Filling in missing BINS where there is a 1-1 relationship between BBL and BIN...'
+time psql -d facdb -U dbadmin -f ./3_geoprocessing/bbl2bin.sql
+echo 'Creating a backup copy before overwriting any geometries...'
+time psql -d facdb -U dbadmin -f ./3_geoprocessing/copy_backup2.sql
 
-# # TABULAR JOINS WITH BUILDINGFOOTPRINTS AND PLUTO TO OVERWRITE GEOMS WITH CENTROID
+# TABULAR JOINS WITH BUILDINGFOOTPRINTS AND PLUTO TO OVERWRITE GEOMS WITH CENTROID
 
-# echo 'Overwriting geometry using BIN centroid...'
-# time psql -d facdb -U dbadmin -f ./3_geoprocessing/bin2overwritegeom.sql
-# echo 'Done overwriting geometry using BIN centroid'
+echo 'Overwriting geometry using BIN centroid...'
+time psql -d facdb -U dbadmin -f ./3_geoprocessing/bin2overwritegeom.sql
+echo 'Done overwriting geometry using BIN centroid'
 
-# echo 'Overwriting geometry using BBL centroid...'
-# time psql -d facdb -U dbadmin -f ./3_geoprocessing/bbl2overwritegeom.sql
-# echo 'Done overwriting geometry using BBL centroid'
+echo 'Overwriting geometry using BBL centroid...'
+time psql -d facdb -U dbadmin -f ./3_geoprocessing/bbl2overwritegeom.sql
+echo 'Done overwriting geometry using BBL centroid'
 
-# ## Calculating lat,long and x,y for all blank records
-# echo 'Calculating x,y for all blank records...'
-# time psql -d facdb -U dbadmin -f ./3_geoprocessing/calcxy.sql
-# echo 'Done calculating x,y for all blank records'
+## Calculating lat,long and x,y for all blank records
+echo 'Calculating x,y for all blank records...'
+time psql -d facdb -U dbadmin -f ./3_geoprocessing/calcxy.sql
+echo 'Done calculating x,y for all blank records'
 
-# echo 'Spatially joining with neighborhood boundaries...'
-# time psql -d facdb -U dbadmin -f ./3_geoprocessing/join_commboard.sql
-# time psql -d facdb -U dbadmin -f ./3_geoprocessing/join_nta.sql
-# time psql -d facdb -U dbadmin -f ./3_geoprocessing/join_zipcode.sql
-# time psql -d facdb -U dbadmin -f ./3_geoprocessing/clean_invalidZIP.sql
-# time psql -d facdb -U dbadmin -f ./3_geoprocessing/clean_cityboro.sql
-# time psql -d facdb -U dbadmin -f ./3_geoprocessing/join_council.sql
-# time psql -d facdb -U dbadmin -f ./3_geoprocessing/join_censtract.sql
-# echo 'Spatially joining with COLP bbls to get propertytype...'
-# time psql -d facdb -U dbadmin -f ./3_geoprocessing/join_proptype.sql
-# ## ^ In FacDB V1.5, will add conditional logic for type of facility
-# echo 'Setting propertytype for street plazas...'
-# time psql -d facdb -U dbadmin -f ./3_geoprocessing/proptype_plazas.sql
-# time psql -d facdb -U dbadmin -f ./3_geoprocessing/vacuum.sql
+echo 'Spatially joining with neighborhood boundaries...'
+time psql -d facdb -U dbadmin -f ./3_geoprocessing/join_commboard.sql
+time psql -d facdb -U dbadmin -f ./3_geoprocessing/join_nta.sql
+time psql -d facdb -U dbadmin -f ./3_geoprocessing/join_zipcode.sql
+time psql -d facdb -U dbadmin -f ./3_geoprocessing/clean_invalidZIP.sql
+time psql -d facdb -U dbadmin -f ./3_geoprocessing/clean_cityboro.sql
+time psql -d facdb -U dbadmin -f ./3_geoprocessing/join_council.sql
+time psql -d facdb -U dbadmin -f ./3_geoprocessing/join_censtract.sql
+echo 'Spatially joining with COLP bbls to get propertytype...'
+time psql -d facdb -U dbadmin -f ./3_geoprocessing/join_proptype.sql
+## ^ In FacDB V1.5, will add conditional logic for type of facility
+echo 'Setting propertytype for street plazas...'
+time psql -d facdb -U dbadmin -f ./3_geoprocessing/proptype_plazas.sql
+time psql -d facdb -U dbadmin -f ./3_geoprocessing/vacuum.sql
 
-# ## Create backup table before merging and dropping duplicates
-# echo 'Creating backup before merging and dropping duplicates...'
-# time psql -d facdb -U dbadmin -f ./3_geoprocessing/copy_backup3.sql
+## Create backup table before merging and dropping duplicates
+echo 'Creating backup before merging and dropping duplicates...'
+time psql -d facdb -U dbadmin -f ./3_geoprocessing/copy_backup3.sql

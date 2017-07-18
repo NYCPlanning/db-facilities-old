@@ -18,8 +18,8 @@ var pgp = require('pg-promise')(),
 
 // REQUIRE JS FILE WITH API CREDENTIALS -- USED IN addressLookup FUNCTION
 // ALSO REQUIRES JS SILE WITH DATABASE CONFIGURATION
-var config = require('../dbconfig.js'),
-  apiCredentials = require('../apiCredentials.js');
+var config = require('../dbconfig.js');
+var apiCredentials = require('../apiCredentials.js');
 
 // USE DATABASE CONFIGURATION JS FILE TO LINK TO DATABASE
 var db = pgp(config);
@@ -181,8 +181,8 @@ function updateFacilities(data, row) {
       ycoord: data.yCoordinate,
       bbl: data.bbl,
       bin: data.buildingIdentificationNumber,
-      borocode: data.bblBoroCode,
-      boro: data.firstBoroName,
+      borocode: data.bblBoroughCode,
+      boro: data.firstBoroughName,
       zipcode: data.zipCode,
       city: data.uspsPreferredCityName,
       newaddressnum: data.houseNumber,
