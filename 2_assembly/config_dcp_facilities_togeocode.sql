@@ -163,4 +163,4 @@ SELECT
 			ELSE FALSE
 		END)
 FROM
-	togeocode
+	dcp_facilities_togeocode

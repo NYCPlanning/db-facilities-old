@@ -20,6 +20,7 @@ psql -d facdb -U dbadmin -f ./2_assembly/config_dcas_facilities_colp.sql
 psql -d facdb -U dbadmin -f ./2_assembly/config_dcla_facilities_culturalinstitutions.sql
 psql -d facdb -U dbadmin -f ./2_assembly/config_dcp_facilities_pops.sql
 psql -d facdb -U dbadmin -f ./2_assembly/config_dcp_facilities_sfpsd.sql
+psql -d facdb -U dbadmin -f ./2_assembly/config_dcp_facilities_togeocode.sql
 psql -d facdb -U dbadmin -f ./2_assembly/config_dhs_facilities_shelters.sql
 psql -d facdb -U dbadmin -f ./2_assembly/config_dfta_facilities_contracts.sql
 psql -d facdb -U dbadmin -f ./2_assembly/config_doe_facilities_busroutesgarages.sql
@@ -55,7 +56,6 @@ psql -d facdb -U dbadmin -f ./2_assembly/config_sbs_facilities_workforce1.sql
 psql -d facdb -U dbadmin -f ./2_assembly/config_usdot_facilities_airports.sql
 psql -d facdb -U dbadmin -f ./2_assembly/config_usdot_facilities_ports.sql
 psql -d facdb -U dbadmin -f ./2_assembly/config_usnps_facilities_parks.sql
-psql -d facdb -U dbadmin -f ./2_assembly/config_facilities_togeocode.sql
 echo 'Done transforming and inserting records from source data'
 
 ## STEP 3 
