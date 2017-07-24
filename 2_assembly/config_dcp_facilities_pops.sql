@@ -1,38 +1,34 @@
 INSERT INTO
-facilities (
-	pgtable,
+facilities(
 	hash,
-	geom,
-	idagency,
+	uid,
 	facname,
 	addressnum,
 	streetname,
 	address,
+	city,
 	boro,
+	borocode,
 	zipcode,
-	bbl,
-	bin,
-	factype,
+	geom geometry,
+	geomsource,
+	latitude,
+	longitude,
+	xcoord,
+	ycoord,
+	commboard,
+	council,
+	censtract,
+	nta,
 	facdomain,
 	facgroup,
 	facsubgrp,
-	agencyclass1,
-	agencyclass2,
-	capacity,
-	util,
-	captype,
-	utilrate,
-	area,
-	areatype,
+	factype,
+	proptype,
 	optype,
 	opname,
 	opabbrev,
-	overagency,
-	overabbrev,
 	datecreated,
-	buildingid,
-	buildingname,
-	schoolorganizationlevel,
 	children,
 	youth,
 	senior,
@@ -44,6 +40,68 @@ facilities (
 	immigrants,
 	groupquarters
 )
+
+-- insert the new values into the key table
+INSERT INTO facdb_uid_key
+SELECT hash
+FROM dcp_facilities_pops
+WHERE hash NOT IN (
+SELECT hash FROM facdb_uid_key
+);
+-- JOIN uid FROM KEY ONTO DATABASE
+UPDATE facilities AS f
+SET uid = k.uid
+FROM facdb_uid_key AS k
+WHERE k.hash = f.hash;
+
+INSERT INTO
+facdb_agencyid(
+
+)
+INSERT INTO
+facdb_area(
+
+)
+INSERT INTO
+facdb_bbl(
+
+)
+INSERT INTO
+facdb_bin(
+
+)
+INSERT INTO
+facdb_capacity(
+
+)
+INSERT INTO
+facdb_pgtable(
+
+)
+INSERT INTO
+facdb_hashesmerged(
+
+)
+INSERT INTO
+facdb_oldid(
+
+)
+INSERT INTO
+facdb_oversight(
+
+)
+INSERT INTO
+facdb_uidsmerged(
+
+)
+INSERT INTO
+facdb_utilization(
+
+)
+
+
+
+
 SELECT
 	-- pgtable
 	ARRAY['dcp_facilities_pops'],
