@@ -1,38 +1,23 @@
 INSERT INTO
-facilities (
-	pgtable,
+facilities(
 	hash,
-	geom,
-	idagency,
+	uid,
+    geom,
+    geomsource,
 	facname,
 	addressnum,
 	streetname,
 	address,
 	boro,
 	zipcode,
-	bbl,
-	bin,
-	factype,
 	facdomain,
 	facgroup,
 	facsubgrp,
-	agencyclass1,
-	agencyclass2,
-	capacity,
-	util,
-	captype,
-	utilrate,
-	area,
-	areatype,
+	factype,
 	optype,
 	opname,
 	opabbrev,
-	overagency,
-	overabbrev,
 	datecreated,
-	buildingid,
-	buildingname,
-	schoolorganizationlevel,
 	children,
 	youth,
 	senior,
@@ -45,14 +30,14 @@ facilities (
 	groupquarters
 )
 SELECT
-	-- pgtable
-	ARRAY['doe_facilities_busroutesgarages'],
 	-- hash,
     hash,
+    -- uid
+    NULL,
 	-- geom
 	ST_Transform(ST_SetSRID(ST_MakePoint(XCoordinates, YCoordinates),2263),4326),
-	-- idagency
-	NULL,
+    -- geomsource
+    'Agency',
 	-- facilityname
 	initcap(Vendor_Name),
 	-- addressnumber
@@ -65,52 +50,22 @@ SELECT
 	NULL,
 	-- zipcode
 	Garage_Zip::integer,
-	-- bbl
-	NULL,
-	-- bin
-	NULL,
-	-- facilitytype
-	'School Bus Depot',
 	-- domain
 	'Core Infrastructure and Transportation',
 	-- facilitygroup
 	'Transportation',
 	-- facilitysubgroup
 	'Bus Depots and Terminals',
-	-- agencyclass1
-	'NA',
-	-- agencyclass2
-	'NA',
-	-- capacity
-	NULL,
-	-- utilization
-	NULL,
-	-- capacitytype
-	NULL,
-	-- utilizationrate
-	NULL,
-	-- area
-	NULL,
-	-- areatype
-	NULL,
+	-- facilitytype
+	'School Bus Depot',
 	-- operatortype
 	'Non-public',
 	-- operatorname
 	initcap(Vendor_Name),
 	-- operatorabbrev
 	'Non-public',
-	-- oversightagency
-	ARRAY['NYC Department of Education'],
-	-- oversightabbrev
-	ARRAY['NYCDOE'],
 	-- datecreated
 	CURRENT_TIMESTAMP,
-	-- buildingid
-	NULL,
-	-- buildingname
-	NULL,
-	-- schoolorganizationlevel
-	NULL,
 	-- children
 	FALSE,
 	-- youth
@@ -131,15 +86,120 @@ SELECT
 	FALSE,
 	-- groupquarters
 	FALSE
-FROM 
-	doe_facilities_busroutesgarages
-WHERE
-	School_Year = '2015-2016'
-GROUP BY
-	hash,
-	Vendor_Name,
-	Garage_Street_Address,
-	Garage_City,
-	Garage_Zip,
-	XCoordinates,
-	YCoordinates
+FROM
+	doe_facilities_busroutesgarages;
+
+-- insert the new values into the key table
+INSERT INTO facdb_uid_key
+SELECT hash
+FROM doe_facilities_busroutesgarages
+WHERE hash NOT IN (
+SELECT hash FROM facdb_uid_key
+);
+-- JOIN uid FROM KEY ONTO DATABASE
+UPDATE facilities AS f
+SET uid = k.uid
+FROM facdb_uid_key AS k
+WHERE k.hash = f.hash AND
+      f.uid IS NULL;
+
+INSERT INTO
+facdb_pgtable(
+   uid,
+   pgtable
+)
+SELECT
+	uid,
+	'doe_facilities_busroutesgarages'
+FROM doe_facilities_busroutesgarages, facilities
+WHERE facilities.hash = doe_facilities_busroutesgarages.hash;
+
+-- INSERT INTO
+-- facdb_agencyid(
+-- 	uid,
+-- 	overabbrev,
+-- 	idagency,
+-- 	idname
+-- )
+-- SELECT
+-- 	uid,
+
+-- FROM doe_facilities_busroutesgarages, facilities
+-- WHERE facilities.hash = doe_facilities_busroutesgarages.hash;
+
+--INSERT INTO
+--facdb_area(
+--	uid,
+--	area,
+--	areatype
+--)
+--SELECT
+--	uid,
+--
+--FROM doe_facilities_busroutesgarages, facilities
+--WHERE facilities.hash = doe_facilities_busroutesgarages.hash;
+--
+--INSERT INTO
+--facdb_bbl(
+--	uid,
+--	bbl
+--)
+--SELECT
+--	uid,
+--
+--FROM doe_facilities_busroutesgarages, facilities
+--WHERE facilities.hash = doe_facilities_busroutesgarages.hash;
+--
+--INSERT INTO
+--facdb_bin(
+--	uid,
+--	bin
+--)
+--SELECT
+--	uid,
+--
+--FROM doe_facilities_busroutesgarages, facilities
+--WHERE facilities.hash = doe_facilities_busroutesgarages.hash;
+--
+-- INSERT INTO
+-- facdb_capacity(
+--   uid,
+--   capacity,
+--   capacitytype
+-- )
+-- SELECT
+-- 	uid,
+
+
+-- FROM doe_facilities_busroutesgarages, facilities
+-- WHERE facilities.hash = doe_facilities_busroutesgarages.hash;
+
+
+INSERT INTO
+facdb_oversight(
+	uid,
+	overagency,
+	overabbrev,
+	overlevel
+)
+SELECT
+	uid,
+    'NYC Department of Education',
+    'NYCDOE',
+    'City'
+FROM doe_facilities_busroutesgarages, facilities
+WHERE facilities.hash = doe_facilities_busroutesgarages.hash;
+
+--INSERT INTO
+--facdb_utilization(
+--	uid,
+--	util,
+--	utiltype
+--)
+--SELECT
+--	uid,
+--
+--FROM doe_facilities_busroutesgarages, facilities
+--WHERE facilities.hash = doe_facilities_busroutesgarages.hash;
+--
+

@@ -99,6 +99,7 @@ SELECT
 	(CASE
 		WHEN owners = 'FTA' THEN 'Federal Transit Administration'
 		WHEN owners = 'EDC' THEN 'NYC Economic Development Corporation'
+		ELSE 'NYC Department of Transportation'
 	END),
 	-- operatorabbrev
 	'NYCDOT',

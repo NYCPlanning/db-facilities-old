@@ -43,8 +43,8 @@ SELECT
 					trim(trim(split_part(split_part(Location_1,'(',2),',',1),'('),' ')::double precision),
 				4326)
 	END),
-        -- geomsource
-        'Agency',
+    -- geomsource
+    'Agency',
 	-- facilityname
 	initcap(BUS_NAME),
 	-- addressnumber
@@ -190,9 +190,9 @@ facdb_oversight(
 )
 SELECT
 	uid,
-        'NYC Business Integrity Commission',
-        'NYCBIC',
-        'City'
+    'NYC Business Integrity Commission',
+    'NYCBIC',
+    'City'
 FROM bic_facilities_tradewaste, facilities
 WHERE facilities.hash = bic_facilities_tradewaste.hash;
 
@@ -207,5 +207,3 @@ WHERE facilities.hash = bic_facilities_tradewaste.hash;
 --
 --FROM bic_facilities_tradewaste, facilities
 --WHERE facilities.hash = bic_facilities_tradewaste.hash;
---
-
