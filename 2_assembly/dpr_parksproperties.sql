@@ -174,8 +174,8 @@ facdb_area(
 	areatype
 )
 SELECT
-	uid
-	ST_Area(geom::geography)::numeric*.000247105,
+	uid,
+	ST_Area(dpr_parksproperties.geom::geography)::numeric*.000247105,
 	'Acres'
 FROM dpr_parksproperties, facilities
 WHERE facilities.hash = dpr_parksproperties.hash;

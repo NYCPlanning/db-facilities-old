@@ -134,7 +134,20 @@ SELECT
 	uid,
 	'dycd_facilities_compass'
 FROM dycd_facilities_compass, facilities
-WHERE facilities.hash = dycd_facilities_compass.hash;
+WHERE facilities.hash = dycd_facilities_compass.hash
+GROUP BY
+        facilities.uid,
+	dycd_facilities_compass.hash,
+	Address_Number,
+	Street_Name,
+	Borough,
+	BBLs,
+	BIN,
+	X_Coordinate,
+	Y_Coordinate,
+	Provider_Name,
+	Date_Source_Data_Updated;
+
 
 --INSERT INTO
 --facdb_agencyid(

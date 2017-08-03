@@ -1,0 +1,11 @@
+;; This buffer is for notes you don't want to save, and for Lisp evaluation.
+;; If you want to create a file, visit that file with C-x C-f,
+;; then enter the text in that file's own buffer.
+
+universal pre-k: no bbl, no utilization?
+
+bluebook: no bbl
+
+dycd other programs --> update from dycd_compass, groupby facility name/type
+
+hhs_facilities_financialscontracts: children no facility_type, groupquarters no facility_type

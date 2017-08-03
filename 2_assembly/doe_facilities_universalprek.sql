@@ -164,19 +164,20 @@ WHERE facilities.hash = doe_facilities_universalprek.hash;
 --FROM doe_facilities_universalprek, facilities
 --WHERE facilities.hash = doe_facilities_universalprek.hash;
 
-INSERT INTO
-facdb_bbl(
-	uid,
-	bbl
-)
-SELECT
-	uid,
-	(CASE
-		WHEN BoroughBlockLot <> '0' THEN ARRAY[BoroughBlockLot]
-	END)
-FROM doe_facilities_universalprek, facilities
-WHERE facilities.hash = doe_facilities_universalprek.hash;
-
+-- no bbl column in source table?
+--INSERT INTO
+--facdb_bbl(
+--	uid,
+--	bbl
+--)
+--SELECT
+--	uid,
+--	(CASE
+--		WHEN BoroughBlockLot <> '0' THEN BoroughBlockLot
+--	END)
+--FROM doe_facilities_universalprek, facilities
+--WHERE facilities.hash = doe_facilities_universalprek.hash;
+--
 --INSERT INTO
 --facdb_bin(
 --	uid,
@@ -216,14 +217,13 @@ SELECT
 FROM doe_facilities_universalprek, facilities
 WHERE facilities.hash = doe_facilities_universalprek.hash;
 
-INSERT INTO
-facdb_utilization(
-	uid,
-	util,
-	utiltype
-)
-SELECT
-	uid,
-
-FROM doe_facilities_universalprek, facilities
-WHERE facilities.hash = doe_facilities_universalprek.hash;
+--INSERT INTO
+--facdb_utilization(
+--	uid,
+--	util,
+--	utiltype
+--)
+--SELECT
+--	uid
+--FROM doe_facilities_universalprek, facilities
+--WHERE facilities.hash = doe_facilities_universalprek.hash;

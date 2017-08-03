@@ -98,10 +98,12 @@ SELECT
 	-- groupquarters
 	FALSE
 FROM
-	dycd_facilities_compass
+	dycd_facilities_otherprograms
 GROUP BY
 	hash,
-	Address_Number,
+        Facility_Name,
+        facility_type,
+        Address_Number,
 	Street_Name,
 	Borough,
 	BBLs,
@@ -114,12 +116,13 @@ GROUP BY
 -- insert the new values into the key table
 INSERT INTO facdb_uid_key
 SELECT hash
-FROM dycd_facilities_compass
+FROM dycd_facilities_otherprograms
 WHERE hash NOT IN (
 SELECT hash FROM facdb_uid_key
 )
 GROUP BY
 	hash,
+        Facility_Name,
 	Address_Number,
 	Street_Name,
 	Borough,
@@ -143,9 +146,9 @@ facdb_pgtable(
 )
 SELECT
 	uid,
-	'dycd_facilities_compass'
-FROM dycd_facilities_compass, facilities
-WHERE facilities.hash = dycd_facilities_compass.hash;
+	'dycd_facilities_otherprograms'
+FROM dycd_facilities_otherprograms, facilities
+WHERE facilities.hash = dycd_facilities_otherprograms.hash;
 
 INSERT INTO
 facdb_agencyid(
@@ -159,8 +162,8 @@ SELECT
 	'NYCDYCD',
 	Unique_ID,
 	'DYCD UniqueID'
-FROM dycd_facilities_compass, facilities
-WHERE facilities.hash = dycd_facilities_compass.hash;
+FROM dycd_facilities_otherprograms, facilities
+WHERE facilities.hash = dycd_facilities_otherprograms.hash;
 
 --INSERT INTO
 --facdb_area(
@@ -171,8 +174,8 @@ WHERE facilities.hash = dycd_facilities_compass.hash;
 --SELECT
 --	uid,
 --
---FROM dycd_facilities_compass, facilities
---WHERE facilities.hash = dycd_facilities_compass.hash;
+--FROM dycd_facilities_otherprograms, facilities
+--WHERE facilities.hash = dycd_facilities_otherprograms.hash;
 --
 --INSERT INTO
 --facdb_bbl(
@@ -182,8 +185,8 @@ WHERE facilities.hash = dycd_facilities_compass.hash;
 --SELECT
 --	uid,
 --
---FROM dycd_facilities_compass, facilities
---WHERE facilities.hash = dycd_facilities_compass.hash;
+--FROM dycd_facilities_otherprograms, facilities
+--WHERE facilities.hash = dycd_facilities_otherprograms.hash;
 --
 --INSERT INTO
 --facdb_bin(
@@ -193,8 +196,8 @@ WHERE facilities.hash = dycd_facilities_compass.hash;
 --SELECT
 --	uid,
 --
---FROM dycd_facilities_compass, facilities
---WHERE facilities.hash = dycd_facilities_compass.hash;
+--FROM dycd_facilities_otherprograms, facilities
+--WHERE facilities.hash = dycd_facilities_otherprograms.hash;
 --
 --INSERT INTO
 --facdb_capacity(
@@ -205,8 +208,8 @@ WHERE facilities.hash = dycd_facilities_compass.hash;
 --SELECT
 --	uid,
 --
---FROM dycd_facilities_compass, facilities
---WHERE facilities.hash = dycd_facilities_compass.hash;
+--FROM dycd_facilities_otherprograms, facilities
+--WHERE facilities.hash = dycd_facilities_otherprograms.hash;
 
 
 INSERT INTO
@@ -221,8 +224,8 @@ SELECT
     'NYC Department of Youth and Community Development',
     'NYCDYCD',
     'City'
-FROM dycd_facilities_compass, facilities
-WHERE facilities.hash = dycd_facilities_compass.hash;
+FROM dycd_facilities_otherprograms, facilities
+WHERE facilities.hash = dycd_facilities_otherprograms.hash;
 
 --INSERT INTO
 --facdb_utilization(
@@ -233,5 +236,5 @@ WHERE facilities.hash = dycd_facilities_compass.hash;
 --SELECT
 --	uid,
 --
---FROM dycd_facilities_compass, facilities
---WHERE facilities.hash = dycd_facilities_compass.hash;
+--FROM dycd_facilities_otherprograms, facilities
+--WHERE facilities.hash = dycd_facilities_otherprograms.hash;

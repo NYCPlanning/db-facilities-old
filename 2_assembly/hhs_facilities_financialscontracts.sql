@@ -186,10 +186,11 @@ SELECT
 	-- datecreated
 	CURRENT_TIMESTAMP,
 	-- children
-		(CASE
-			WHEN facility_type LIKE '%Child%' THEN TRUE
-			ELSE FALSE
-		END),
+        FALSE,
+	--	(CASE
+	--		WHEN facility_type LIKE '%Child%' THEN TRUE
+	--		ELSE FALSE
+	--	END),
 	-- youth
 	FALSE,
 	-- senior
@@ -207,10 +208,11 @@ SELECT
 	-- immigrants
 	FALSE,
 	-- groupquarters
-		(CASE
-			WHEN facility_type LIKE '%Nursing Home%' THEN TRUE
-			ELSE FALSE
-		END)
+	FALSE
+              --  (CASE
+	      --     WHEN facility_type LIKE '%Nursing Home%' THEN TRUE
+              --   ELSE FALSE
+	      --   END)
 FROM
 	hhs_facilities_financialscontracts
 WHERE
@@ -286,7 +288,7 @@ facdb_agencyid(
 	uid,
 	overabbrev,
 	idagency,
-	idnames
+	idname
 )
 SELECT
 	uid,

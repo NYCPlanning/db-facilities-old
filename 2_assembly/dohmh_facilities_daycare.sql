@@ -119,7 +119,21 @@ SELECT
 	-- groupquarters
 	FALSE
 FROM
-	dohmh_facilities_daycare;
+	dohmh_facilities_daycare
+GROUP BY
+	hash,
+	Day_Care_ID,
+	Center_Name,
+	Legal_Name,
+	Building,
+	Street,
+	ZipCode,
+	Borough,
+	facility_type,
+	child_care_type,
+	program_type,
+	Maximum_Capacity
+;
 
 -- insert the new values into the key table
 INSERT INTO facdb_uid_key
@@ -127,7 +141,21 @@ SELECT hash
 FROM dohmh_facilities_daycare
 WHERE hash NOT IN (
 SELECT hash FROM facdb_uid_key
-);
+)
+GROUP BY
+	hash,
+	Day_Care_ID,
+	Center_Name,
+	Legal_Name,
+	Building,
+	Street,
+	ZipCode,
+	Borough,
+	facility_type,
+	child_care_type,
+	program_type,
+	Maximum_Capacity;
+        
 -- JOIN uid FROM KEY ONTO DATABASE
 UPDATE facilities AS f
 SET uid = k.uid
@@ -144,7 +172,21 @@ SELECT
 	uid,
 	'dohmh_facilities_daycare'
 FROM dohmh_facilities_daycare, facilities
-WHERE facilities.hash = dohmh_facilities_daycare.hash;
+WHERE facilities.hash = dohmh_facilities_daycare.hash
+GROUP BY
+	facilities.uid,
+        dohmh_facilities_daycare.hash,
+	Day_Care_ID,
+	Center_Name,
+	Legal_Name,
+	Building,
+	Street,
+	dohmh_facilities_daycare.ZipCode,
+	Borough,
+	facility_type,
+	child_care_type,
+	program_type,
+	Maximum_Capacity;
 
 --INSERT INTO
 --facdb_agencyid(
@@ -205,7 +247,21 @@ SELECT
 	'Maximum Seats Based on Sq Ft'
 FROM dohmh_facilities_daycare, facilities
 WHERE facilities.hash = dohmh_facilities_daycare.hash
-AND Maximum_Capacity <> '0';
+AND Maximum_Capacity <> '0'
+GROUP BY
+	facilities.uid,
+        dohmh_facilities_daycare.hash,
+	Day_Care_ID,
+	Center_Name,
+	Legal_Name,
+	Building,
+	Street,
+	dohmh_facilities_daycare.ZipCode,
+	Borough,
+	facility_type,
+	child_care_type,
+	program_type,
+	Maximum_Capacity;
 
 INSERT INTO
 facdb_oversight(
@@ -220,7 +276,21 @@ SELECT
     'NYCDOHMH',
     'City'
 FROM dohmh_facilities_daycare, facilities
-WHERE facilities.hash = dohmh_facilities_daycare.hash;
+WHERE facilities.hash = dohmh_facilities_daycare.hash
+GROUP BY
+	facilities.uid,
+        dohmh_facilities_daycare.hash,
+	Day_Care_ID,
+	Center_Name,
+	Legal_Name,
+	Building,
+	Street,
+	dohmh_facilities_daycare.ZipCode,
+	Borough,
+	facility_type,
+	child_care_type,
+	program_type,
+	Maximum_Capacity;
 
 --INSERT INTO
 --facdb_utilization(

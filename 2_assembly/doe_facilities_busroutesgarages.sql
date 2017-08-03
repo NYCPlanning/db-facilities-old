@@ -87,7 +87,15 @@ SELECT
 	-- groupquarters
 	FALSE
 FROM
-	doe_facilities_busroutesgarages;
+	doe_facilities_busroutesgarages
+GROUP BY
+	hash,
+	Vendor_Name,
+	Garage_Street_Address,
+	Garage_City,
+	Garage_Zip,
+	XCoordinates,
+	YCoordinates;
 
 -- insert the new values into the key table
 INSERT INTO facdb_uid_key
@@ -95,7 +103,16 @@ SELECT hash
 FROM doe_facilities_busroutesgarages
 WHERE hash NOT IN (
 SELECT hash FROM facdb_uid_key
-);
+)
+GROUP BY
+	hash,
+	Vendor_Name,
+	Garage_Street_Address,
+	Garage_City,
+	Garage_Zip,
+	XCoordinates,
+	YCoordinates
+;
 -- JOIN uid FROM KEY ONTO DATABASE
 UPDATE facilities AS f
 SET uid = k.uid
@@ -112,7 +129,17 @@ SELECT
 	uid,
 	'doe_facilities_busroutesgarages'
 FROM doe_facilities_busroutesgarages, facilities
-WHERE facilities.hash = doe_facilities_busroutesgarages.hash;
+WHERE facilities.hash = doe_facilities_busroutesgarages.hash
+GROUP BY
+	facilities.uid,
+        doe_facilities_busroutesgarages.hash,
+	Vendor_Name,
+	Garage_Street_Address,
+	Garage_City,
+	Garage_Zip,
+	XCoordinates,
+	YCoordinates;
+
 
 -- INSERT INTO
 -- facdb_agencyid(
@@ -188,7 +215,17 @@ SELECT
     'NYCDOE',
     'City'
 FROM doe_facilities_busroutesgarages, facilities
-WHERE facilities.hash = doe_facilities_busroutesgarages.hash;
+WHERE facilities.hash = doe_facilities_busroutesgarages.hash
+GROUP BY
+        facilities.uid,
+	doe_facilities_busroutesgarages.hash,
+	Vendor_Name,
+	Garage_Street_Address,
+	Garage_City,
+	Garage_Zip,
+	XCoordinates,
+	YCoordinates
+;
 
 --INSERT INTO
 --facdb_utilization(

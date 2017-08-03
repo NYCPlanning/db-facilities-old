@@ -266,19 +266,19 @@ WHERE facilities.hash = doe_facilities_schoolsbluebook.hash;
 --FROM doe_facilities_schoolsbluebook, facilities
 --WHERE facilities.hash = doe_facilities_schoolsbluebook.hash;
 
-INSERT INTO
-facdb_bbl(
-	uid,
-	bbl
-)
-SELECT
-	uid,
-	(CASE
-		WHEN BoroughBlockLot <> '0' THEN ARRAY[BoroughBlockLot]
-	END)
-FROM doe_facilities_schoolsbluebook, facilities
-WHERE facilities.hash = doe_facilities_schoolsbluebook.hash;
-
+--INSERT INTO
+--facdb_bbl(
+--	uid,
+--	bbl
+--)
+--SELECT
+--	uid,
+--	(CASE
+--		WHEN BoroughBlockLot <> '0' THEN BoroughBlockLot
+--	END)
+--FROM doe_facilities_schoolsbluebook, facilities
+--WHERE facilities.hash = doe_facilities_schoolsbluebook.hash;
+--
 --INSERT INTO
 --facdb_bin(
 --	uid,
