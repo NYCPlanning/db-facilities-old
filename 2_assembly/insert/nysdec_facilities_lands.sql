@@ -35,42 +35,44 @@ SELECT
     -- uid
     NULL,
 	-- geom
-	(CASE
-		WHEN (Location_1 IS NOT NULL) AND (Location_1 LIKE '%(%') THEN 
-			ST_SetSRID(
-				ST_MakePoint(
-					trim(trim(split_part(split_part(Location_1,'(',2),',',2),' '),')')::double precision,
-					trim(trim(split_part(split_part(Location_1,'(',2),',',1),'('),' ')::double precision),
-				4326)
-	END),
+	ST_Centroid(geom),
     -- geomsource
     'Agency',
-	-- facilityname
-	initcap(BUS_NAME),
+-- facilityname
+	initcap(facility),
 	-- addressnumber
-	initcap(split_part(REPLACE(REPLACE(Mailing_Office,' - ','-'),' -','-'), ' ', 1)),
-	-- streetname
-	trim(both ' ' from substr(trim(both ' ' from initcap(split_part(REPLACE(REPLACE(Mailing_Office,' - ','-'),' -','-'), '(', 1))), strpos(trim(both ' ' from initcap(split_part(REPLACE(REPLACE(Mailing_Office,' - ','-'),' -','-'), '(', 1))), ' ')+1, (length(trim(both ' ' from initcap(split_part(REPLACE(REPLACE(Mailing_Office,' - ','-'),' -','-'), '(', 1))))-strpos(trim(both ' ' from initcap(split_part(REPLACE(REPLACE(Mailing_Office,' - ','-'),' -','-'), '(', 1))), ' ')))),
-        -- address
-	initcap(split_part(REPLACE(REPLACE(Mailing_Office,' - ','-'),' -','-'), '(', 1)),
-	-- borough
 	NULL,
+	-- streetname
+	NULL,
+	-- address
+	NULL,
+	-- borough
+		(CASE
+			WHEN County = 'NEW YORK' THEN 'Manhattan'
+			WHEN County = 'BRONX' THEN 'Bronx'
+			WHEN County = 'KINGS' THEN 'Brooklyn'
+			WHEN County = 'QUEENS' THEN 'Queens'
+			WHEN County = 'RICHMOND' THEN 'Staten Island'
+		END),
 	-- zipcode
 	NULL,
 	-- domain
-	'Core Infrastructure and Transportation',
+	'Parks, Gardens, and Historical Sites',
 	-- facilitygroup
-	'Solid Waste',
+	'Parks and Plazas',
 	-- facilitysubgroup
-	'Solid Waste Transfer and Carting',
+	'Preserves and Conservation Areas',
 	-- facilitytype
-	'Trade Waste Carter Site',
+		(CASE
+			WHEN category = 'NRA' THEN 'Natural Resource Area'
+			ELSE initcap(category)
+		END),
 	-- operatortype
-	'Non-public',
+	'Public',
 	-- operatorname
-	initcap(BUS_NAME),
+	'NYS Department of Environmental Conservation',
 	-- operatorabbrev
-	'Non-public',
+	'NYSDEC',
 	-- datecreated
 	CURRENT_TIMESTAMP,
 	-- children
@@ -133,19 +135,20 @@ WHERE facilities.hash = nysdec_facilities_lands.hash;
 --
 --FROM nysdec_facilities_lands, facilities
 --WHERE facilities.hash = nysdec_facilities_lands.hash;
---
---INSERT INTO
---facdb_area(
---	uid,
---	area,
---	areatype
---)
---SELECT
---	uid,
---
---FROM nysdec_facilities_lands, facilities
---WHERE facilities.hash = nysdec_facilities_lands.hash;
---
+
+INSERT INTO
+facdb_area(
+	uid,
+	area,
+	areatype
+)
+SELECT
+	uid,
+	acres,
+	'Acres'
+FROM nysdec_facilities_lands, facilities
+WHERE facilities.hash = nysdec_facilities_lands.hash;
+
 --INSERT INTO
 --facdb_bbl(
 --	uid,
