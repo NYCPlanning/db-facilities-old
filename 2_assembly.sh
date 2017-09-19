@@ -76,6 +76,9 @@ psql -U $DBUSER -d $DBNAME -f ./2_assembly/standardize_factypes.sql
 psql -U $DBUSER -d $DBNAME -f ./2_assembly/standardize_borough.sql
 ## Switching One to 1 for geocoding and removing invalid (string) address numbers
 psql -U $DBUSER -d $DBNAME -f ./2_assembly/standardize_address.sql
+## Assigning a group and domain to each facility type
+psql -U $DBUSER -d $DBNAME -f ./2_assemblystandardize_group.sql
+psql -U $DBUSER -d $DBNAME -f ./2_assemblystandardize_domain.sql
 
 ## STEP 4
 ## Fill in the uid for all new records in the database
