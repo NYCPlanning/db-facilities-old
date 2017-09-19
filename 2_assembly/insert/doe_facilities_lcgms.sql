@@ -59,10 +59,7 @@ SELECT
 	-- domain
 	'Education, Child Welfare, and Youth',
 	-- facilitygroup
-		(CASE
-			WHEN LocationCategoryDescription LIKE '%Early%' OR LocationCategoryDescription LIKE '%Pre-K%' THEN 'Child Care and Pre-Kindergarten'
-			ELSE 'Schools (K-12)'
-		END),
+	NULL,
 	-- facilitysubgroup
 		(CASE
 			WHEN LocationTypeDescription LIKE '%Special%' THEN 'Public and Private Special Education Schools'

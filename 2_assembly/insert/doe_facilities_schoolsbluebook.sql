@@ -65,30 +65,9 @@ SELECT
 	-- zipcode
 	NULL,
 	-- domain
-		(CASE
-			WHEN RIGHT(Org_ID,3) = 'ADM' THEN 'Administration of Government'
-			WHEN RIGHT(Org_ID,3) = 'CBO' THEN 'Health and Human Services'
-			WHEN RIGHT(Org_ID,3) = 'DRG' THEN 'Health and Human Services'
-			WHEN RIGHT(Org_ID,3) = 'SBH' THEN 'Health and Human Services'
-			WHEN RIGHT(Org_ID,3) = 'SFS' THEN 'Education, Child Welfare, and Youth'
-			WHEN RIGHT(Org_ID,3) = 'OTH' THEN 'Health and Human Services'
-			WHEN RIGHT(Org_ID,3) = 'SST' THEN 'Public Safety, Emergency Services, and Administration of Justice'
-			WHEN RIGHT(Org_ID,3) = 'CEP' THEN 'Health and Human Services'
-			ELSE 'Education, Child Welfare, and Youth'
-		END),
+	NULL,
 	-- facilitygroup
-		(CASE
-			WHEN RIGHT(Org_ID,3) = 'ADM' THEN 'Offices, Training, and Testing'
-			WHEN RIGHT(Org_ID,3) = 'CBO' THEN 'Human Services'
-			WHEN RIGHT(Org_ID,3) = 'DRG' THEN 'Human Services'
-			WHEN RIGHT(Org_ID,3) = 'SBH' THEN 'Health Care'
-			WHEN RIGHT(Org_ID,3) = 'SFS' THEN 'Child Services and Welfare'
-			WHEN RIGHT(Org_ID,3) = 'OTH' THEN 'Human Services'
-			WHEN RIGHT(Org_ID,3) = 'SST' THEN 'Public Safety'
-			WHEN RIGHT(Org_ID,3) = 'CEP' THEN 'Human Services'
-			WHEN Organization_Name LIKE '%PRE-K%' OR Organization_Name LIKE '%LYFE%' THEN 'Child Care and Pre-Kindergarten'
-			ELSE 'Schools (K-12)'
-		END),
+	NULL,
 	-- facilitysubgroup
 		(CASE
 			WHEN Charter IS NOT NULL AND Org_Level <> 'SPED' THEN 'Charter K-12 Schools'

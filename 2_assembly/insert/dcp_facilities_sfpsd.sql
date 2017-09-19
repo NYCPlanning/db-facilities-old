@@ -57,27 +57,9 @@ SELECT
 	-- zipcode
 	NULL,
 	-- domain
-		(CASE 
-			WHEN ft_decode = 'City-State Park' THEN 'Parks, Gardens, and Historical Sites'
-			ELSE 'Core Infrastructure and Transportation'
-		END),
+	NULL,
 	-- facilitygroup
-		(CASE 
-			WHEN ft_decode = 'City-State Park' THEN 'Parks and Plazas'
-			WHEN ft_decode = 'PANYNJ Bus Terminal' THEN 'Transportation'
-			WHEN ft_decode = 'Wastewater Treatment Plant' THEN 'Water and Wastewater'
-			WHEN ft_decode = 'Public Park and Ride Lot' THEN 'Transportation'
-			WHEN ft_decode = 'MTA Paratransit Vehicle Depot' THEN 'Transportation'
-			WHEN ft_decode = 'MTA Bus Depot' THEN 'Transportation'
-			WHEN ft_decode = 'NYCT Maintenance and Other Facility' THEN 'Transportation'
-			WHEN ft_decode = 'NYCT Subway Yard' THEN 'Transportation'
-			WHEN ft_decode = 'Metro-North Maintenance and Other Facility' THEN 'Transportation'
-			WHEN ft_decode = 'Metro-North Yard' THEN 'Transportation'
-			WHEN ft_decode = 'LIRR Maintenance and Other Facility' THEN 'Transportation'
-			WHEN ft_decode = 'LIRR Yard' THEN 'Transportation'
-			WHEN ft_decode = 'Amtrak Maintenance and Other Facility' THEN 'Transportation'
-			WHEN ft_decode = 'Amtrak Yard' THEN 'Transportation'
-		END),
+	NULL,
 	-- facilitysubgroup
 		(CASE 
 			WHEN ft_decode = 'City-State Park' THEN 'Parks'

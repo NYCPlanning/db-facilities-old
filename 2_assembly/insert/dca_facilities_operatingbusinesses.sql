@@ -72,13 +72,7 @@ SELECT
 	-- domain
 	'Core Infrastructure and Transportation',
 	-- facilitygroup
-		(CASE
-			WHEN License_Category = 'Scrap Metal Processor' THEN 'Solid Waste'
-			WHEN License_Category = 'Parking Lot' THEN 'Transportation'
-			WHEN License_Category = 'Garage' THEN 'Transportation'
-	 		WHEN License_Category = 'Garage and Parking Lot' THEN 'Transportation'
-			WHEN License_Category = 'Tow Truck Company' THEN 'Transportation'
-		END),
+	NULL,
 	-- facilitysubgroup
 		(CASE
 			WHEN License_Category = 'Scrap Metal Processor' THEN 'Solid Waste Processing'

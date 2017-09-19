@@ -57,11 +57,7 @@ SELECT
 	-- domain
 	'Education, Child Welfare, and Youth',
 	-- facilitygroup
-		(CASE
-			WHEN (facility_type = 'CAMP' OR facility_type = 'Camp' OR program_type LIKE '%CAMP%' OR program_type LIKE '%Camp%')
-				THEN 'Camps'
-			ELSE 'Child Care and Pre-Kindergarten'
-		END),
+	NULL,
 	-- facilitysubgroup
 		(CASE
 			WHEN (facility_type = 'CAMP' OR facility_type = 'Camp' OR program_type LIKE '%CAMP%' OR program_type LIKE '%Camp%')

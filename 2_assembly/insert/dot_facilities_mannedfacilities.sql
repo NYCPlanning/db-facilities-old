@@ -65,10 +65,7 @@ SELECT
 	-- domain
 	'Core Infrastructure and Transportation',
 	-- facilitygroup
-	(CASE
-		WHEN oper_label LIKE '%Asphalt%' THEN 'Material Supplies and Markets'
-		ELSE 'Transportation'
-	END),
+	NULL,
 	-- facilitysubgroup
 	(CASE
 		WHEN oper_label LIKE '%Asphalt%' THEN 'Material Supplies'

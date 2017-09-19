@@ -54,15 +54,9 @@ SELECT
 	-- zipcode
 	NULL,
 	-- domain
-	(CASE
-		WHEN operations = 'Public Parking Garage' THEN 'Core Infrastructure and Transportation'
-		ELSE 'Administration of Government'
-	END),
+	NULL,
 	-- facilitygroup
-	(CASE
-		WHEN operations = 'Public Parking Garage' THEN 'Transportation'
-		ELSE 'City Agency Parking, Maintenance, and Storage'
-	END),
+	NULL,
 	-- facilitysubgroup
 	(CASE
 		WHEN operations = 'Public Parking Garage' THEN 'Parking Lots and Garages'

@@ -54,6 +54,8 @@ SELECT
 	Borough,
 	-- zipcode
 	NULL,
+	-- domain
+	NULL,
 	-- facilitygroup
 	'Health Care',
 	-- facilitysubgroup

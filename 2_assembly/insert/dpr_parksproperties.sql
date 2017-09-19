@@ -57,23 +57,9 @@ SELECT
 	-- zipcode
 	NULL,
 	-- domain
-		(CASE
-			-- admin of gov
-			WHEN typecatego = 'Undeveloped' THEN 'Administration of Government'
-			WHEN typecatego = 'Lot' THEN 'Administration of Government'
-			-- parks
-			ELSE 'Parks, Gardens, and Historical Sites'
-		END),
+	NULL,
 	-- facilitygroup
-		(CASE
-			-- admin of gov
-			WHEN typecatego = 'Undeveloped' THEN 'Other Property'
-			WHEN typecatego = 'Lot' THEN 'City Agency Parking, Maintenance, and Storage'
-			-- parks
-			WHEN typecatego = 'Cemetery' THEN 'Parks and Plazas'
-			WHEN typecatego = 'Historic House Park' THEN 'Historical Sites'
-			ELSE 'Parks and Plazas'
-		END),
+	NULL,
 	-- facilitysubgroup
 		(CASE
 			-- admin of gov
