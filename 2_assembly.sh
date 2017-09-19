@@ -83,5 +83,5 @@ psql -U $DBUSER -d $DBNAME -f ./2_assembly/insert/hhs_facilities_fmscontracts.sq
 #### Switching One to 1 for geocoding and removing invalid (string) address numbers
 ##psql -U $DBUSER -d $DBNAME -f ./2_assembly/standardize/standardize_address.sql
 #### Assigning group and domain to each facility
-##psql -U $DBUSER -d $DBNAME -f ./2_assembly/standardize/assign_group.sql
-##psql -U $DBUSER -d $DBNAME -f ./2_assembly/standardize/assign_domain.sql
+##psql -U $DBUSER -d $DBNAME -f ./2_assembly/assign_group.sql
+##psql -U $DBUSER -d $DBNAME -f ./2_assembly/assign_domain.sql
