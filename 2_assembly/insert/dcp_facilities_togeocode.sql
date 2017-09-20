@@ -1,9 +1,10 @@
+-- facilities
 INSERT INTO
 facilities(
 	hash,
 	uid,
-        geom,
-        geomsource,
+    geom,
+    geomsource,
 	facname,
 	addressnum,
 	streetname,
@@ -31,13 +32,13 @@ facilities(
 )
 SELECT
 	-- hash,
-        hash,
-        -- uid
-        NULL,
+    hash,
+    -- uid
+    NULL,
 	-- geom
 	NULL,
-        -- geomsource
-        NULL,
+    -- geomsource
+    NULL,
 	-- facilityname
 	facilityname,
 	-- addressnumber
@@ -51,16 +52,16 @@ SELECT
 	-- zipcode
 	NULL,
 	-- domain
-	'Public Safety, Emergency Services, and Administration of Justice',
+	NULL,
 	-- facilitygroup
-	'Justice and Corrections',
+	NULL,
 	-- facilitysubgroup
 		(CASE
 			WHEN (facilitytype LIKE '%Courthouse%') OR (operatorname LIKE '%Court%') THEN
 				'Courthouses and Judicial'
 			ELSE 'Detention and Correctional'
 		END),
-        -- facilitytype
+    -- facilitytype
 	facilitytype,
 	-- operatortype
 	operatortype,
@@ -101,9 +102,9 @@ SELECT
 		END)
 FROM
 	dcp_facilities_togeocode;
+-- the name of this dataset is very misleading
 
-
-
+-- facdb_uid_key
 -- insert the new values into the key table
 INSERT INTO facdb_uid_key
 SELECT hash
@@ -118,6 +119,7 @@ FROM facdb_uid_key AS k
 WHERE k.hash = f.hash AND
       f.uid IS NULL;
 
+-- pgtable
 INSERT INTO
 facdb_pgtable(
    uid,
@@ -136,66 +138,17 @@ SELECT
 FROM dcp_facilities_togeocode, facilities
 WHERE facilities.hash = dcp_facilities_togeocode.hash;
 
---INSERT INTO
---facdb_agencyid(
---	uid,
---	overabbrev,
---	idagency,
---	idname
---)
---SELECT
---	uid,
---
---FROM dcp_facilities_togeocode, facilities
---WHERE facilities.hash = dcp_facilities_togeocode.hash;
---
---INSERT INTO
---facdb_area(
---	uid,
---	area,
---	areatype
---)
---SELECT
---	uid,
---
---FROM dcp_facilities_togeocode, facilities
---WHERE facilities.hash = dcp_facilities_togeocode.hash;
---
---INSERT INTO
---facdb_bbl(
---	uid,
---	bbl
---)
---SELECT
---	uid,
---
---FROM dcp_facilities_togeocode, facilities
---WHERE facilities.hash = dcp_facilities_togeocode.hash;
---
---INSERT INTO
---facdb_bin(
---	uid,
---	bin
---)
---SELECT
---	uid,
---
---FROM dcp_facilities_togeocode, facilities
---WHERE facilities.hash = dcp_facilities_togeocode.hash;
---
---INSERT INTO
---facdb_capacity(
---   uid,
---   capacity,
---   capacitytype
---)
---SELECT
---	uid,
---
---FROM dcp_facilities_togeocode, facilities
---WHERE facilities.hash = dcp_facilities_togeocode.hash;
+-- agency id NA
 
+-- area NA
 
+-- bbl NA
+
+-- bin NA
+
+-- capacity NA
+
+-- oversight
 INSERT INTO
 facdb_oversight(
 	uid,
@@ -221,16 +174,5 @@ SELECT
 FROM dcp_facilities_togeocode, facilities
 WHERE facilities.hash = dcp_facilities_togeocode.hash;
 
---INSERT INTO
---facdb_utilization(
---	uid,
---	util,
---	utiltype
---)
---SELECT
---	uid,
---
---FROM dcp_facilities_togeocode, facilities
---WHERE facilities.hash = dcp_facilities_togeocode.hash;
---
+-- utilization NA
 

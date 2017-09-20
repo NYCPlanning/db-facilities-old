@@ -1,3 +1,4 @@
+-- facilities
 INSERT INTO
 facilities(
 	hash,
@@ -51,9 +52,9 @@ SELECT
 	-- zipcode
 	LEFT(zip_code,5)::integer,
 	-- domain
-	'Health and Human Services',
+	NULL,
 	-- facilitygroup
-	'Human Services',
+	NULL,
 	-- facilitysubgroup
 	'Soup Kitchens and Food Pantries',
 	-- facilitytype
@@ -92,6 +93,7 @@ SELECT
 FROM
 	foodbankny_facilities_foodbanks;
 
+-- facdb_uid_key
 -- insert the new values into the key table
 INSERT INTO facdb_uid_key
 SELECT hash
@@ -106,6 +108,7 @@ FROM facdb_uid_key AS k
 WHERE k.hash = f.hash AND
       f.uid IS NULL;
 
+-- pgtable
 INSERT INTO
 facdb_pgtable(
    uid,
@@ -117,66 +120,17 @@ SELECT
 FROM foodbankny_facilities_foodbanks, facilities
 WHERE facilities.hash = foodbankny_facilities_foodbanks.hash;
 
---INSERT INTO
---facdb_agencyid(
---	uid,
---	overabbrev,
---	idagency,
---	idname
---)
---SELECT
---	uid,
---
---FROM foodbankny_facilities_foodbanks, facilities
---WHERE facilities.hash = foodbankny_facilities_foodbanks.hash;
---
---INSERT INTO
---facdb_area(
---	uid,
---	area,
---	areatype
---)
---SELECT
---	uid,
---
---FROM foodbankny_facilities_foodbanks, facilities
---WHERE facilities.hash = foodbankny_facilities_foodbanks.hash;
---
---INSERT INTO
---facdb_bbl(
---	uid,
---	bbl
---)
---SELECT
---	uid,
---
---FROM foodbankny_facilities_foodbanks, facilities
---WHERE facilities.hash = foodbankny_facilities_foodbanks.hash;
---
---INSERT INTO
---facdb_bin(
---	uid,
---	bin
---)
---SELECT
---	uid,
---
---FROM foodbankny_facilities_foodbanks, facilities
---WHERE facilities.hash = foodbankny_facilities_foodbanks.hash;
---
---INSERT INTO
---facdb_capacity(
---   uid,
---   capacity,
---   capacitytype
---)
---SELECT
---	uid,
---
---FROM foodbankny_facilities_foodbanks, facilities
---WHERE facilities.hash = foodbankny_facilities_foodbanks.hash;
+-- agency id NA
 
+-- area NA
 
+-- bbl NA
+
+-- bin NA
+
+-- capacity NA
+
+-- oversight
 INSERT INTO
 facdb_oversight(
 	uid,
@@ -192,14 +146,4 @@ SELECT
 FROM foodbankny_facilities_foodbanks, facilities
 WHERE facilities.hash = foodbankny_facilities_foodbanks.hash;
 
---INSERT INTO
---facdb_utilization(
---	uid,
---	util,
---	utiltype
---)
---SELECT
---	uid,
---
---FROM foodbankny_facilities_foodbanks, facilities
---WHERE facilities.hash = foodbankny_facilities_foodbanks.hash;
+-- utilization NA

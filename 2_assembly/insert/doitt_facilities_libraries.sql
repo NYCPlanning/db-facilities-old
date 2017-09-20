@@ -1,3 +1,4 @@
+-- facilities
 INSERT INTO
 facilities(
 	hash,

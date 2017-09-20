@@ -1,3 +1,4 @@
+-- facilities
 INSERT INTO
 facilities(
 	hash,
@@ -51,18 +52,18 @@ SELECT
 	location_address,
 	-- borough
 		(CASE
-			WHEN County = 'New York' THEN 'Manhattan'
-			WHEN County = 'Bronx' THEN 'Bronx'
-			WHEN County = 'Kings' THEN 'Brooklyn'
-			WHEN County = 'Queens' THEN 'Queens'
-			WHEN County = 'Richmond' THEN 'Staten Island'
+			WHEN county = 'New York' THEN 'Manhattan'
+			WHEN county = 'Bronx' THEN 'Bronx'
+			WHEN county = 'Kings' THEN 'Brooklyn'
+			WHEN county = 'Queens' THEN 'Queens'
+			WHEN county = 'Richmond' THEN 'Staten Island'
 		END),
 	-- zipcode
 	NULL,
 	-- domain
-	'Core Infrastructure and Transportation',
+	NULL,
 	-- facilitygroup
-	'Solid Waste',
+	NULL,
 	-- facilitysubgroup
 		(CASE
 			WHEN activity_desc LIKE '%Transfer%' THEN 'Solid Waste Transfer and Carting'
@@ -120,23 +121,24 @@ SELECT
 FROM
 	nysdec_facilities_solidwaste
 WHERE
-	County = 'New York'
-	OR County = 'Bronx'
-	OR County = 'Kings'
-	OR County = 'Queens'
-	OR County = 'Richmond';
+	county = 'New York'
+	OR county = 'Bronx'
+	OR county = 'Kings'
+	OR county = 'Queens'
+	OR county = 'Richmond';
 
+-- facdb_uid_key
 -- insert the new values into the key table
 INSERT INTO facdb_uid_key
 SELECT hash
 FROM nysdec_facilities_solidwaste
 WHERE hash NOT IN (
 SELECT hash FROM facdb_uid_key
-) AND (County = 'New York'
-	OR County = 'Bronx'
-	OR County = 'Kings'
-	OR County = 'Queens'
-	OR County = 'Richmond');
+) AND (county = 'New York'
+	OR county = 'Bronx'
+	OR county = 'Kings'
+	OR county = 'Queens'
+	OR county = 'Richmond');
 -- JOIN uid FROM KEY ONTO DATABASE
 UPDATE facilities AS f
 SET uid = k.uid
@@ -144,6 +146,7 @@ FROM facdb_uid_key AS k
 WHERE k.hash = f.hash AND
       f.uid IS NULL;
 
+-- pgtable
 INSERT INTO
 facdb_pgtable(
    uid,
@@ -155,66 +158,17 @@ SELECT
 FROM nysdec_facilities_solidwaste, facilities
 WHERE facilities.hash = nysdec_facilities_solidwaste.hash;
 
---INSERT INTO
---facdb_agencyid(
---	uid,
---	overabbrev,
---	idagency,
---	idname
---)
---SELECT
---	uid,
---
---FROM nysdec_facilities_solidwaste, facilities
---WHERE facilities.hash = nysdec_facilities_solidwaste.hash;
---
---INSERT INTO
---facdb_area(
---	uid,
---	area,
---	areatype
---)
---SELECT
---	uid,
---
---FROM nysdec_facilities_solidwaste, facilities
---WHERE facilities.hash = nysdec_facilities_solidwaste.hash;
---
---INSERT INTO
---facdb_bbl(
---	uid,
---	bbl
---)
---SELECT
---	uid,
---
---FROM nysdec_facilities_solidwaste, facilities
---WHERE facilities.hash = nysdec_facilities_solidwaste.hash;
---
---INSERT INTO
---facdb_bin(
---	uid,
---	bin
---)
---SELECT
---	uid,
---
---FROM nysdec_facilities_solidwaste, facilities
---WHERE facilities.hash = nysdec_facilities_solidwaste.hash;
---
---INSERT INTO
---facdb_capacity(
---   uid,
---   capacity,
---   capacitytype
---)
---SELECT
---	uid,
---
---FROM nysdec_facilities_solidwaste, facilities
---WHERE facilities.hash = nysdec_facilities_solidwaste.hash;
+-- agency id NA
 
+-- area NA
 
+-- bbl NA
+
+-- bin NA
+
+-- capacity NA
+
+-- oversight
 INSERT INTO
 facdb_oversight(
 	uid,
@@ -239,14 +193,4 @@ SELECT
 FROM nysdec_facilities_solidwaste, facilities
 WHERE facilities.hash = nysdec_facilities_solidwaste.hash;
 
---INSERT INTO
---facdb_utilization(
---	uid,
---	util,
---	utiltype
---)
---SELECT
---	uid,
---
---FROM nysdec_facilities_solidwaste, facilities
---WHERE facilities.hash = nysdec_facilities_solidwaste.hash;
+-- utilization NA

@@ -1,3 +1,4 @@
+-- facilities
 INSERT INTO
 facilities(
 	hash,
@@ -48,43 +49,43 @@ SELECT
 	REPLACE(address,' - ','-'),
 	-- borough
 		(CASE
-			WHEN Borough = 'M' THEN 'Manhattan'
-			WHEN Borough = 'X' THEN 'Bronx'
-			WHEN Borough = 'K' THEN 'Brooklyn'
-			WHEN Borough = 'Q' THEN 'Queens'
-			WHEN Borough = 'R' THEN 'Staten Island'
+			WHEN borough = 'M' THEN 'Manhattan'
+			WHEN borough = 'X' THEN 'Bronx'
+			WHEN borough = 'K' THEN 'Brooklyn'
+			WHEN borough = 'Q' THEN 'Queens'
+			WHEN borough = 'R' THEN 'Staten Island'
 		END),
 	-- zipcode
 	zip::integer,
 	-- domain
-	'Education, Child Welfare, and Youth',
+	NULL,
 	-- facilitygroup
-	'Child Care and Pre-Kindergarten',
+	NULL,
 	-- facilitysubgroup
 	'DOE Universal Pre-Kindergarten',
 	-- facilitytype
 		(CASE
-			WHEN PreK_Type = 'DOE' THEN 'DOE Universal Pre-K'
-			WHEN PreK_Type = 'CHARTER' OR PreK_Type = 'Charter' THEN 'DOE Universal Pre-K - Charter '
-			WHEN PreK_Type = 'NYCEEC' THEN 'Early Education Program'
+			WHEN prek_type = 'DOE' THEN 'DOE Universal Pre-K'
+			WHEN prek_type = 'CHARTER' OR prek_type = 'Charter' THEN 'DOE Universal Pre-K - Charter '
+			WHEN prek_type = 'NYCEEC' THEN 'Early Education Program'
 		END),
 	-- operatortype
 		(CASE
-			WHEN PreK_Type = 'DOE' THEN 'Public'
+			WHEN prek_type = 'DOE' THEN 'Public'
 			ELSE 'Non-public'
 		END),
 	-- operatorname
 		(CASE
-			WHEN PreK_Type = 'DOE' THEN 'NYC Department of Education'
-			WHEN PreK_Type = 'CHARTER' THEN LocName
-			WHEN PreK_Type = 'NYCEEC' THEN LocName
+			WHEN prek_type = 'DOE' THEN 'NYC Department of Education'
+			WHEN prek_type = 'CHARTER' THEN locname
+			WHEN prek_type = 'NYCEEC' THEN locname
 			ELSE 'Unknown'
 		END),
 	-- operatorabbrev
 		(CASE
-			WHEN PreK_Type = 'DOE' THEN 'NYCDOE'
-			WHEN PreK_Type = 'CHARTER' THEN 'Charter'
-			WHEN PreK_Type = 'NYCEEC' THEN 'Non-public'
+			WHEN prek_type = 'DOE' THEN 'NYCDOE'
+			WHEN prek_type = 'CHARTER' THEN 'Charter'
+			WHEN prek_type = 'NYCEEC' THEN 'Non-public'
 			ELSE 'Unknown'
 		END),
 	-- datecreated
@@ -112,6 +113,7 @@ SELECT
 FROM
 	doe_facilities_universalprek;
 
+-- facdb_uid_key
 -- insert the new values into the key table
 INSERT INTO facdb_uid_key
 SELECT hash
@@ -126,6 +128,7 @@ FROM facdb_uid_key AS k
 WHERE k.hash = f.hash AND
       f.uid IS NULL;
 
+-- pgtable
 INSERT INTO
 facdb_pgtable(
    uid,
@@ -137,6 +140,7 @@ SELECT
 FROM doe_facilities_universalprek, facilities
 WHERE facilities.hash = doe_facilities_universalprek.hash;
 
+-- agency id
 INSERT INTO
 facdb_agencyid(
 	uid,
@@ -147,48 +151,18 @@ facdb_agencyid(
 SELECT
 	uid,
 	'NYCDOE',
-	LOCCODE,
+	loccode,
 	'DOE Location Code'
 FROM doe_facilities_universalprek, facilities
 WHERE facilities.hash = doe_facilities_universalprek.hash;
 
---INSERT INTO
---facdb_area(
---	uid,
---	area,
---	areatype
---)
---SELECT
---	uid,
---
---FROM doe_facilities_universalprek, facilities
---WHERE facilities.hash = doe_facilities_universalprek.hash;
+-- area NA
 
--- no bbl column in source table?
---INSERT INTO
---facdb_bbl(
---	uid,
---	bbl
---)
---SELECT
---	uid,
---	(CASE
---		WHEN BoroughBlockLot <> '0' THEN BoroughBlockLot
---	END)
---FROM doe_facilities_universalprek, facilities
---WHERE facilities.hash = doe_facilities_universalprek.hash;
---
---INSERT INTO
---facdb_bin(
---	uid,
---	bin
---)
---SELECT
---	uid,
---
---FROM doe_facilities_universalprek, facilities
---WHERE facilities.hash = doe_facilities_universalprek.hash;
+-- bbl NA
 
+-- bin NA
+
+-- capacity
 INSERT INTO
 facdb_capacity(
   uid,
@@ -197,11 +171,12 @@ facdb_capacity(
 )
 SELECT
 	uid,
-	Seats::text,
+	seats::text,
 	'Student Seats Overseen by DOE'
 FROM doe_facilities_universalprek, facilities
 WHERE facilities.hash = doe_facilities_universalprek.hash;
 
+-- oversight
 INSERT INTO
 facdb_oversight(
 	uid,
@@ -217,13 +192,4 @@ SELECT
 FROM doe_facilities_universalprek, facilities
 WHERE facilities.hash = doe_facilities_universalprek.hash;
 
---INSERT INTO
---facdb_utilization(
---	uid,
---	util,
---	utiltype
---)
---SELECT
---	uid
---FROM doe_facilities_universalprek, facilities
---WHERE facilities.hash = doe_facilities_universalprek.hash;
+-- utilization NA

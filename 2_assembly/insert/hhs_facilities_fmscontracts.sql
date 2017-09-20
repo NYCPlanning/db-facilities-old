@@ -1,3 +1,4 @@
+-- facilities
 INSERT INTO
 facilities(
 	hash,
@@ -32,31 +33,31 @@ facilities(
 SELECT
 	-- hash,
     hash,
-        -- uid
-        NULL,
+    -- uid
+    NULL,
 	-- geom
 	NULL,
-        -- geomsource
-        NULL,
+    -- geomsource
+    'None',
 	-- facilityname
-	initcap(LGL_NM),
+	initcap(lgl_nm),
 	-- address number
 		(CASE
-			WHEN Address IS NOT NULL THEN split_part(trim(both ' ' from Address), ' ', 1)
+			WHEN address IS NOT NULL THEN split_part(trim(both ' ' from address), ' ', 1)
 		END),
 	-- street name
 		(CASE
-			WHEN Address IS NOT NULL THEN initcap(trim(both ' ' from substr(trim(both ' ' from Address), strpos(trim(both ' ' from Address), ' ')+1, (length(trim(both ' ' from Address))-strpos(trim(both ' ' from Address), ' ')))))
+			WHEN address IS NOT NULL THEN initcap(trim(both ' ' from substr(trim(both ' ' from address), strpos(trim(both ' ' from address), ' ')+1, (length(trim(both ' ' from address))-strpos(trim(both ' ' from address), ' ')))))
 		END),
 	-- address
 		(CASE
-			WHEN Address IS NOT NULL THEN initcap(Address)
+			WHEN address IS NOT NULL THEN initcap(address)
 		END),
 	-- borough
 	NULL,
 	-- zipcode
 		(CASE
-			WHEN Zip IS NOT NULL THEN Zip::integer
+			WHEN zip IS NOT NULL THEN zip::integer
 		END),
 	-- domain
 	NULL,
@@ -137,18 +138,18 @@ SELECT
 		END),
 	-- facilitytype
 		(CASE
-			WHEN agency LIKE '%Youth%' AND Program_name LIKE '%COMPASS%' THEN 'COMPASS Program'
-			WHEN agency LIKE '%Youth%' AND Program_name LIKE '%Cornerstone%' THEN 'Cornerstone Community Center Program'
-			WHEN agency LIKE '%Youth%' AND Program_name LIKE '%Beacon%' THEN 'Beacon Community Center Program'
-			WHEN agency LIKE '%Youth%' AND Program_name LIKE '%Literacy%' THEN 'Literacy Program'
-			WHEN agency LIKE '%Youth%' AND Program_name LIKE '%Neighborhood Development%' THEN 'Neighborhood Development Area Program'
+			WHEN agency LIKE '%Youth%' AND program_name LIKE '%COMPASS%' THEN 'COMPASS Program'
+			WHEN agency LIKE '%Youth%' AND program_name LIKE '%Cornerstone%' THEN 'Cornerstone Community Center Program'
+			WHEN agency LIKE '%Youth%' AND program_name LIKE '%Beacon%' THEN 'Beacon Community Center Program'
+			WHEN agency LIKE '%Youth%' AND program_name LIKE '%Literacy%' THEN 'Literacy Program'
+			WHEN agency LIKE '%Youth%' AND program_name LIKE '%Neighborhood Development%' THEN 'Neighborhood Development Area Program'
 			WHEN agency LIKE '%Youth%' THEN 'Other Youth Program'
-			ELSE split_part(Program_name,' (',1)
+			ELSE split_part(program_name,' (',1)
 		END),
 	-- operatortype
 	'Non-public',
 	-- operatorname
-	initcap(LGL_NM),
+	initcap(lgl_nm),
 	-- operatorabbrev
 	'Non-public',
 	-- datecreated
@@ -176,15 +177,15 @@ SELECT
 FROM
 	hhs_facilities_fmscontracts
 WHERE
-	Program_name NOT LIKE '%Summer Youth%'
-	AND Program_name NOT LIKE '%Specialized FFC%'
-	AND Program_name NOT LIKE '%Specialized NSP%'
-	AND Program_name NOT LIKE '%Specialized PC%'
-	AND Program_name NOT LIKE '%HIV%'
-	AND Program_name NOT LIKE '%AIDS%'
-	AND Program_name NOT LIKE '%HASA%'
-	AND Agency NOT LIKE '%Homeless%'
-	AND Agency NOT LIKE '%Housing%'
+	program_name NOT LIKE '%Summer Youth%'
+	AND program_name NOT LIKE '%Specialized FFC%'
+	AND program_name NOT LIKE '%Specialized NSP%'
+	AND program_name NOT LIKE '%Specialized PC%'
+	AND program_name NOT LIKE '%HIV%'
+	AND program_name NOT LIKE '%AIDS%'
+	AND program_name NOT LIKE '%HASA%'
+	AND agency NOT LIKE '%Homeless%'
+	AND agency NOT LIKE '%Housing%'
 	AND contract_end_date::date > CURRENT_TIMESTAMP
 GROUP BY
 	hash,
@@ -194,7 +195,7 @@ GROUP BY
 	address,
 	zip;
 
-
+-- facdb_uid_key
 -- insert the new values into the key table
 INSERT INTO facdb_uid_key
 SELECT hash
@@ -208,8 +209,7 @@ GROUP BY
 	lgl_nm,
 	program_name,
 	address,
-	zip
-;
+	zip;
 -- JOIN uid FROM KEY ONTO DATABASE
 UPDATE facilities AS f
 SET uid = k.uid
@@ -217,6 +217,7 @@ FROM facdb_uid_key AS k
 WHERE k.hash = f.hash AND
       f.uid IS NULL;
 
+-- pgtable
 INSERT INTO
 facdb_pgtable(
    uid,
@@ -234,10 +235,9 @@ GROUP BY
 	lgl_nm,
 	program_name,
 	hhs_facilities_fmscontracts.address,
-	zip
-;
+	zip;
 
-
+-- agency id
 INSERT INTO
 facdb_agencyid(
 	uid,
@@ -294,7 +294,7 @@ SELECT
 		THEN 'NYCDOC'
 	    ELSE CONCAT('NYC', UPPER(agency))
 	END),
-        CT_Num,
+        ct_num,
         'Contract Number'
 FROM hhs_facilities_fmscontracts, facilities
 WHERE facilities.hash = hhs_facilities_fmscontracts.hash
@@ -306,57 +306,17 @@ GROUP BY
 	program_name,
 	hhs_facilities_fmscontracts.address,
 	zip,
-	CT_Num
-;
+	ct_num;
 
---INSERT INTO
---facdb_area(
---	uid,
---	area,
---	areatype
---)
---SELECT
---	uid,
---
---FROM hhs_facilities_fmscontracts, facilities
---WHERE facilities.hash = hhs_facilities_fmscontracts.hash;
---
---INSERT INTO
---facdb_bbl(
---	uid,
---	bbl
---)
---SELECT
---	uid,
---
---FROM hhs_facilities_fmscontracts, facilities
---WHERE facilities.hash = hhs_facilities_fmscontracts.hash;
---
---INSERT INTO
---facdb_bin(
---	uid,
---	bin
---)
---SELECT
---	uid,
---
---FROM hhs_facilities_fmscontracts, facilities
---WHERE facilities.hash = hhs_facilities_fmscontracts.hash;
---
---INSERT INTO
---facdb_capacity(
---  uid,
---  capacity,
---  capacitytype
---)
---SELECT
---	uid,
---	ROUND(Total::numeric,0)::text,
---	'Seats in ACS Contract'
---FROM hhs_facilities_fmscontracts, facilities
---WHERE facilities.hash = hhs_facilities_fmscontracts.hash;
---
+-- area NA
 
+-- bbl NA
+
+-- bin NA
+
+-- capacity NA
+
+-- oversight
 INSERT INTO
 facdb_oversight(
 	uid,
@@ -442,18 +402,6 @@ GROUP BY
 	lgl_nm,
 	program_name,
 	hhs_facilities_fmscontracts.address,
-	zip
-;
+	zip;
 
---INSERT INTO
---facdb_utilization(
---	uid,
---	util,
---	utiltype
---)
---SELECT
---	uid,
---
---FROM hhs_facilities_fmscontracts, facilities
---WHERE facilities.hash = hhs_facilities_fmscontracts.hash;
---
+-- utilization

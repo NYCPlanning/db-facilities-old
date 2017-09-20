@@ -1,3 +1,4 @@
+-- facilities
 INSERT INTO
 facilities(
 	hash,
@@ -39,13 +40,13 @@ SELECT
     -- geomsource
     'None',
 	-- facilityname
-	Program_Name,
+	program_name,
 	-- addressnumber
-	split_part(trim(both ' ' from initcap(Program_Address)), ' ', 1),
+	split_part(trim(both ' ' from initcap(program_address)), ' ', 1),
 	-- streetname
-	trim(both ' ' from substr(trim(both ' ' from initcap(Program_Address)), strpos(trim(both ' ' from initcap(Program_Address)), ' ')+1, (length(trim(both ' ' from initcap(Program_Address)))-strpos(trim(both ' ' from initcap(Program_Address)), ' ')))),
+	trim(both ' ' from substr(trim(both ' ' from initcap(program_address)), strpos(trim(both ' ' from initcap(program_address)), ' ')+1, (length(trim(both ' ' from initcap(program_address)))-strpos(trim(both ' ' from initcap(program_address)), ' ')))),
 	-- address
-	initcap(Program_Address),
+	initcap(program_address),
 	-- borough
 		(CASE
 			WHEN Boro = 'MN' THEN 'Manhattan'
@@ -55,11 +56,11 @@ SELECT
 			WHEN Boro = 'SI' THEN 'Staten Island'
 		END),
 	-- zipcode
-	NULL,
+	zip::integer,
 	-- domain
-	'Education, Child Welfare, and Youth',
+	NULL,
 	-- facilitygroup
-	'Child Care and Pre-Kindergarten',
+	NULL,
 	-- facilitysubgroup
 	'Child Care',
 	-- facilitytype
@@ -72,12 +73,12 @@ SELECT
 	-- operatortype
 	'Non-public',
 	-- operatorname
-	Contractor_Name,
+	contractor_name,
 	-- operator abbrev
 	'Non-public',
 	-- datecreated
 	CURRENT_TIMESTAMP,
--- children
+	-- children
 	TRUE,
 	-- youth
 	FALSE,
@@ -100,6 +101,7 @@ SELECT
 FROM
 	acs_facilities_daycareheadstart;
 
+-- facdb_uid_key
 -- insert the new values into the key table
 INSERT INTO facdb_uid_key
 SELECT hash
@@ -114,6 +116,7 @@ FROM facdb_uid_key AS k
 WHERE k.hash = f.hash AND
       f.uid IS NULL;
 
+-- pgtable
 INSERT INTO
 facdb_pgtable(
    uid,
@@ -125,6 +128,7 @@ SELECT
 FROM acs_facilities_daycareheadstart, facilities
 WHERE facilities.hash = acs_facilities_daycareheadstart.hash;
 
+-- agency id
 INSERT INTO
 facdb_agencyid(
 	uid,
@@ -135,45 +139,18 @@ facdb_agencyid(
 SELECT
 	uid,
 	'NYCACS',
-	EL_Program_Number,
+	el_program_number,
 	'Early Learn Program Number'
 FROM acs_facilities_daycareheadstart, facilities
 WHERE facilities.hash = acs_facilities_daycareheadstart.hash;
 
---INSERT INTO
---facdb_area(
---	uid,
---	area,
---	areatype
---)
---SELECT
---	uid,
---
---FROM acs_facilities_daycareheadstart, facilities
---WHERE facilities.hash = acs_facilities_daycareheadstart.hash;
---
---INSERT INTO
---facdb_bbl(
---	uid,
---	bbl
---)
---SELECT
---	uid,
---
---FROM acs_facilities_daycareheadstart, facilities
---WHERE facilities.hash = acs_facilities_daycareheadstart.hash;
---
---INSERT INTO
---facdb_bin(
---	uid,
---	bin
---)
---SELECT
---	uid,
---
---FROM acs_facilities_daycareheadstart, facilities
---WHERE facilities.hash = acs_facilities_daycareheadstart.hash;
---
+-- area NA
+
+-- bbl NA
+
+-- bin NA
+
+-- capacity
 INSERT INTO
 facdb_capacity(
   uid,
@@ -182,12 +159,12 @@ facdb_capacity(
 )
 SELECT
 	uid,
-	ROUND(Total::numeric,0)::text,
+	ROUND(total::numeric,0)::text,
 	'Seats in ACS Contract'
 FROM acs_facilities_daycareheadstart, facilities
 WHERE facilities.hash = acs_facilities_daycareheadstart.hash;
 
-
+-- oversight
 INSERT INTO
 facdb_oversight(
 	uid,
@@ -203,16 +180,5 @@ SELECT
 FROM acs_facilities_daycareheadstart, facilities
 WHERE facilities.hash = acs_facilities_daycareheadstart.hash;
 
---INSERT INTO
---facdb_utilization(
---	uid,
---	util,
---	utiltype
---)
---SELECT
---	uid,
---
---FROM acs_facilities_daycareheadstart, facilities
---WHERE facilities.hash = acs_facilities_daycareheadstart.hash;
---
+-- utilization NA
 

@@ -1,3 +1,4 @@
+-- facilities
 INSERT INTO
 facilities(
 	hash,
@@ -54,9 +55,9 @@ SELECT
 	-- zipcode
 	NULL,
 	-- domain
-	'Core Infrastructure and Transportation',
+	NULL,
 	-- facilitygroup
-	'Solid Waste',
+	NULL,
 	-- facilitysubgroup
 	'Solid Waste Transfer and Carting',
 	-- facilitytype
@@ -96,6 +97,7 @@ SELECT
 FROM
 	dsny_facilities_mtsgaragemaintenance;
 
+-- facdb_uid_key
 -- insert the new values into the key table
 INSERT INTO facdb_uid_key
 SELECT hash
@@ -110,6 +112,7 @@ FROM facdb_uid_key AS k
 WHERE k.hash = f.hash AND
       f.uid IS NULL;
 
+-- pgtable
 INSERT INTO
 facdb_pgtable(
    uid,
@@ -121,66 +124,29 @@ SELECT
 FROM dsny_facilities_mtsgaragemaintenance, facilities
 WHERE facilities.hash = dsny_facilities_mtsgaragemaintenance.hash;
 
---INSERT INTO
---facdb_agencyid(
---	uid,
---	overabbrev,
---	idagency,
---	idname
---)
---SELECT
---	uid,
---
---FROM dsny_facilities_mtsgaragemaintenance, facilities
---WHERE facilities.hash = dsny_facilities_mtsgaragemaintenance.hash;
---
---INSERT INTO
---facdb_area(
---	uid,
---	area,
---	areatype
---)
---SELECT
---	uid,
---
---FROM dsny_facilities_mtsgaragemaintenance, facilities
---WHERE facilities.hash = dsny_facilities_mtsgaragemaintenance.hash;
---
---INSERT INTO
---facdb_bbl(
---	uid,
---	bbl
---)
---SELECT
---	uid,
---
---FROM dsny_facilities_mtsgaragemaintenance, facilities
---WHERE facilities.hash = dsny_facilities_mtsgaragemaintenance.hash;
---
---INSERT INTO
---facdb_bin(
---	uid,
---	bin
---)
---SELECT
---	uid,
---
---FROM dsny_facilities_mtsgaragemaintenance, facilities
---WHERE facilities.hash = dsny_facilities_mtsgaragemaintenance.hash;
---
---INSERT INTO
---facdb_capacity(
---   uid,
---   capacity,
---   capacitytype
---)
---SELECT
---	uid,
---
---FROM dsny_facilities_mtsgaragemaintenance, facilities
---WHERE facilities.hash = dsny_facilities_mtsgaragemaintenance.hash;
+-- agency id
+INSERT INTO
+facdb_agencyid(
+	uid,
+	overabbrev,
+	idagency,
+	idname
+)
+SELECT
+	uid,
+	gid
+FROM dsny_facilities_mtsgaragemaintenance, facilities
+WHERE facilities.hash = dsny_facilities_mtsgaragemaintenance.hash;
 
+-- area NA
 
+-- bbl NA
+
+-- bin NA
+
+-- capacity NA
+
+-- oversight
 INSERT INTO
 facdb_oversight(
 	uid,
@@ -196,14 +162,4 @@ SELECT
 FROM dsny_facilities_mtsgaragemaintenance, facilities
 WHERE facilities.hash = dsny_facilities_mtsgaragemaintenance.hash;
 
---INSERT INTO
---facdb_utilization(
---	uid,
---	util,
---	utiltype
---)
---SELECT
---	uid,
---
---FROM dsny_facilities_mtsgaragemaintenance, facilities
---WHERE facilities.hash = dsny_facilities_mtsgaragemaintenance.hash;
+-- utilization NA

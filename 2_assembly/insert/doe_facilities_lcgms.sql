@@ -1,3 +1,4 @@
+-- facilities
 INSERT INTO
 facilities(
 	hash,
@@ -39,66 +40,66 @@ SELECT
     -- geomsource
     'None',
 -- facilityname
-	initcap(LocationName),
-	-- addressnumber
-	split_part(doe_facilities_schoolsbluebook.Address,' ',1),
+	initcap(locationname),
+	-- addressnumber 
+	split_part(primaryaddress,' ',1),
 	-- streetname
-	initcap(trim(both ' ' from substr(trim(both ' ' from doe_facilities_schoolsbluebook.Address), strpos(trim(both ' ' from doe_facilities_schoolsbluebook.Address), ' ')+1, (length(trim(both ' ' from doe_facilities_schoolsbluebook.Address))-strpos(trim(both ' ' from doe_facilities_schoolsbluebook.Address), ' '))))),
+	initcap(trim(both ' ' from substr(trim(both ' ' from primaryaddress), strpos(trim(both ' ' from primaryaddress), ' ')+1, (length(trim(both ' ' from primaryaddress))-strpos(trim(both ' ' from primaryaddress), ' '))))),
 	-- address
-	initcap(doe_facilities_schoolsbluebook.Address),
+	initcap(primaryaddress),
 	-- borough
 		(CASE
-			WHEN LEFT(LocationCode,1) = 'M' THEN 'Manhattan'
-			WHEN LEFT(LocationCode,1) = 'X' THEN 'Bronx'
-			WHEN LEFT(LocationCode,1) = 'K' THEN 'Brooklyn'
-			WHEN LEFT(LocationCode,1) = 'Q' THEN 'Queens'
-			WHEN LEFT(LocationCode,1) = 'R' THEN 'Staten Island'
+			WHEN LEFT(locationcode,1) = 'M' THEN 'Manhattan'
+			WHEN LEFT(locationcode,1) = 'X' THEN 'Bronx'
+			WHEN LEFT(locationcode,1) = 'K' THEN 'Brooklyn'
+			WHEN LEFT(locationcode,1) = 'Q' THEN 'Queens'
+			WHEN LEFT(locationcode,1) = 'R' THEN 'Staten Island'
 		END),
 	-- zipcode
-	doe_facilities_schoolsbluebook.Zip::numeric,
+	zip::integer,
 	-- domain
-	'Education, Child Welfare, and Youth',
+	NULL,
 	-- facilitygroup
 	NULL,
 	-- facilitysubgroup
 		(CASE
-			WHEN LocationTypeDescription LIKE '%Special%' THEN 'Public and Private Special Education Schools'
-			WHEN LocationCategoryDescription LIKE '%Early%' OR LocationCategoryDescription LIKE '%Pre-K%' THEN 'DOE Universal Pre-Kindergarten'
-			WHEN ManagedByName = 'Charter' THEN 'Charter K-12 Schools'
+			WHEN locationtypedescription LIKE '%Special%' THEN 'Public and Private Special Education Schools'
+			WHEN locationcategorydescription LIKE '%Early%' OR locationcategorydescription LIKE '%Pre-K%' THEN 'DOE Universal Pre-Kindergarten'
+			WHEN managedbyname = 'Charter' THEN 'Charter K-12 Schools'
 			ELSE 'Public K-12 Schools'
 		END),
 	-- facilitytype
 		(CASE
-			WHEN ManagedByName = 'Charter' AND lower(LocationCategoryDescription) LIKE '%school%' THEN CONCAT(LocationCategoryDescription, ' - Charter')
-			WHEN ManagedByName = 'Charter' THEN CONCAT(LocationCategoryDescription, ' School - Charter')
-			WHEN lower(LocationCategoryDescription) LIKE '%school%' THEN CONCAT(LocationCategoryDescription, ' - Public')
-			ELSE CONCAT(LocationCategoryDescription, ' School - Public')
+			WHEN managedbyname = 'Charter' AND lower(locationcategorydescription) LIKE '%school%' THEN CONCAT(locationcategorydescription, ' - Charter')
+			WHEN managedbyname = 'Charter' THEN CONCAT(locationcategorydescription, ' School - Charter')
+			WHEN lower(locationcategorydescription) LIKE '%school%' THEN CONCAT(locationcategorydescription, ' - Public')
+			ELSE CONCAT(locationcategorydescription, ' School - Public')
 		END),
 	-- operatortype
 		(CASE
-			WHEN ManagedByName = 'Charter' THEN 'Non-public'
+			WHEN managedbyname = 'Charter' THEN 'Non-public'
 			ELSE 'Public'
 		END),
 	-- operatorname
 		(CASE
-			WHEN ManagedByName = 'Charter' THEN LocationName
+			WHEN managedbyname = 'Charter' THEN locationname
 			ELSE 'NYC Department of Education'
 		END),
 	-- operator abbrev
 		(CASE
-			WHEN ManagedByName = 'Charter' THEN 'Non-public'
+			WHEN managedbyname = 'Charter' THEN 'Non-public'
 			ELSE 'NYCDOE'
 		END),
 	-- datecreated
 	CURRENT_TIMESTAMP,
 	-- children
 		(CASE
-			WHEN LocationCategoryDescription LIKE '%Pre-K%' OR LocationCategoryDescription LIKE '%Elementary%' OR LocationCategoryDescription LIKE '%Early%' OR LocationCategoryDescription LIKE '%K-%' THEN TRUE
+			WHEN locationcategorydescription LIKE '%Pre-K%' OR locationcategorydescription LIKE '%Elementary%' OR locationcategorydescription LIKE '%Early%' OR locationcategorydescription LIKE '%K-%' THEN TRUE
 			ELSE FALSE
 		END),
 	-- youth
 		(CASE
-			WHEN LocationCategoryDescription LIKE '%High%' OR LocationCategoryDescription LIKE '%Secondary%' OR LocationCategoryDescription LIKE '%K-12%' THEN TRUE
+			WHEN locationcategorydescription LIKE '%High%' OR locationcategorydescription LIKE '%Secondary%' OR locationcategorydescription LIKE '%K-12%' THEN TRUE
 			ELSE FALSE
 		END),
 	-- senior
@@ -120,6 +121,7 @@ SELECT
 FROM
 	doe_facilities_lcgms;
 
+-- facdb_uid_key
 -- insert the new values into the key table
 INSERT INTO facdb_uid_key
 SELECT hash
@@ -134,6 +136,7 @@ FROM facdb_uid_key AS k
 WHERE k.hash = f.hash AND
       f.uid IS NULL;
 
+-- pgtable
 INSERT INTO
 facdb_pgtable(
    uid,
@@ -145,6 +148,7 @@ SELECT
 FROM doe_facilities_lcgms, facilities
 WHERE facilities.hash = doe_facilities_lcgms.hash;
 
+-- agency id
 INSERT INTO
 facdb_agencyid(
 	uid,
@@ -155,7 +159,7 @@ facdb_agencyid(
 SELECT
 	uid,
 	'NYCDOE',
-	LocationCode,
+	locationcode,
 	'DOE Location Code'
 FROM doe_facilities_lcgms, facilities
 WHERE facilities.hash = doe_facilities_lcgms.hash;
@@ -170,23 +174,14 @@ facdb_agencyid(
 SELECT
 	uid,
 	'NYCDOE',
-	BuildingCode,
+	buildingcode,
 	'DOE Building Code'
 FROM doe_facilities_lcgms, facilities
 WHERE facilities.hash = doe_facilities_lcgms.hash;
 
---INSERT INTO
---facdb_area(
---	uid,
---	area,
---	areatype
---)
---SELECT
---	uid,
---
---FROM doe_facilities_lcgms, facilities
---WHERE facilities.hash = doe_facilities_lcgms.hash;
+-- area NA
 
+-- bbl
 INSERT INTO
 facdb_bbl(
 	uid,
@@ -195,34 +190,16 @@ facdb_bbl(
 SELECT
 	uid,
 	(CASE
-		WHEN BoroughBlockLot <> '0' THEN ARRAY[BoroughBlockLot]
+		WHEN boroughblocklot <> '0' THEN boroughblocklot
 	END)
 FROM doe_facilities_lcgms, facilities
 WHERE facilities.hash = doe_facilities_lcgms.hash;
 
---INSERT INTO
---facdb_bin(
---	uid,
---	bin
---)
---SELECT
---	uid,
---
---FROM doe_facilities_lcgms, facilities
---WHERE facilities.hash = doe_facilities_lcgms.hash;
---
---INSERT INTO
---facdb_capacity(
---   uid,
---   capacity,
---   capacitytype
---)
---SELECT
---	uid,
---
---FROM doe_facilities_lcgms, facilities
---WHERE facilities.hash = doe_facilities_lcgms.hash;
+-- bin NA
 
+-- capacity NA
+
+-- oversight
 INSERT INTO
 facdb_oversight(
 	uid,
@@ -238,15 +215,5 @@ SELECT
 FROM doe_facilities_lcgms, facilities
 WHERE facilities.hash = doe_facilities_lcgms.hash;
 
---INSERT INTO
---facdb_utilization(
---	uid,
---	util,
---	utiltype
---)
---SELECT
---	uid,
---
---FROM doe_facilities_lcgms, facilities
---WHERE facilities.hash = doe_facilities_lcgms.hash;
+-- utilization NA 
 --

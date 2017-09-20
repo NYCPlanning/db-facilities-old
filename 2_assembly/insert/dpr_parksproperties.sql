@@ -1,3 +1,4 @@
+-- facilities
 INSERT INTO
 facilities(
 	hash,
@@ -55,7 +56,7 @@ SELECT
 			WHEN Borough = 'R' THEN 'Staten Island'
 		END),
 	-- zipcode
-	NULL,
+	zipcode,
 	-- domain
 	NULL,
 	-- facilitygroup
@@ -113,6 +114,7 @@ SELECT
 FROM
 	dpr_parksproperties;
 
+-- facdb_uid_key
 -- insert the new values into the key table
 INSERT INTO facdb_uid_key
 SELECT hash
@@ -127,6 +129,7 @@ FROM facdb_uid_key AS k
 WHERE k.hash = f.hash AND
       f.uid IS NULL;
 
+-- pgtable
 INSERT INTO
 facdb_pgtable(
    uid,
@@ -138,6 +141,7 @@ SELECT
 FROM dpr_parksproperties, facilities
 WHERE facilities.hash = dpr_parksproperties.hash;
 
+-- agency id
 INSERT INTO
 facdb_agencyid(
 	uid,
@@ -153,6 +157,7 @@ SELECT
 FROM dpr_parksproperties, facilities
 WHERE facilities.hash = dpr_parksproperties.hash;
 
+-- area
 INSERT INTO
 facdb_area(
 	uid,
@@ -166,40 +171,13 @@ SELECT
 FROM dpr_parksproperties, facilities
 WHERE facilities.hash = dpr_parksproperties.hash;
 
--- INSERT INTO
--- facdb_bbl(
--- 	uid,
--- 	bbl
--- )
--- SELECT
--- 	uid,
+-- bbl NA
 
--- FROM dpr_parksproperties, facilities
--- WHERE facilities.hash = dpr_parksproperties.hash;
+-- bin NA
 
--- INSERT INTO
--- facdb_bin(
--- 	uid,
--- 	bin
--- )
--- SELECT
--- 	uid,
+-- capacity NA
 
--- FROM dpr_parksproperties, facilities
--- WHERE facilities.hash = dpr_parksproperties.hash;
-
--- INSERT INTO
--- facdb_capacity(
---   uid,
---   capacity,
---   capacitytype
--- )
--- SELECT
--- 	uid,
-
--- FROM dpr_parksproperties, facilities
--- WHERE facilities.hash = dpr_parksproperties.hash;
-
+-- oversight
 INSERT INTO
 facdb_oversight(
 	uid,
@@ -209,22 +187,10 @@ facdb_oversight(
 )
 SELECT
 	uid,
-	-- oversightagency
 	'NYC Department of Parks and Recreation',
-	-- oversightabbrev
 	'NYCDPR',
     'City'
 FROM dpr_parksproperties, facilities
 WHERE facilities.hash = dpr_parksproperties.hash;
 
---INSERT INTO
---facdb_utilization(
---	uid,
---	util,
---	utiltype
---)
---SELECT
---	uid,
---
---FROM dpr_parksproperties, facilities
---WHERE facilities.hash = dpr_parksproperties.hash;
+-- utilization NA

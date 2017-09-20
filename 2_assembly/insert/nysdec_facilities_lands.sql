@@ -1,3 +1,4 @@
+-- facilities
 INSERT INTO
 facilities(
 	hash,
@@ -38,7 +39,7 @@ SELECT
 	ST_Centroid(geom),
     -- geomsource
     'Agency',
--- facilityname
+	-- facilityname
 	initcap(facility),
 	-- addressnumber
 	NULL,
@@ -48,18 +49,18 @@ SELECT
 	NULL,
 	-- borough
 		(CASE
-			WHEN County = 'NEW YORK' THEN 'Manhattan'
-			WHEN County = 'BRONX' THEN 'Bronx'
-			WHEN County = 'KINGS' THEN 'Brooklyn'
-			WHEN County = 'QUEENS' THEN 'Queens'
-			WHEN County = 'RICHMOND' THEN 'Staten Island'
+			WHEN county = 'NEW YORK' THEN 'Manhattan'
+			WHEN county = 'BRONX' THEN 'Bronx'
+			WHEN county = 'KINGS' THEN 'Brooklyn'
+			WHEN county = 'QUEENS' THEN 'Queens'
+			WHEN county = 'RICHMOND' THEN 'Staten Island'
 		END),
 	-- zipcode
 	NULL,
 	-- domain
-	'Parks, Gardens, and Historical Sites',
+	NULL,
 	-- facilitygroup
-	'Parks and Plazas',
+	NULL,
 	-- facilitysubgroup
 	'Preserves and Conservation Areas',
 	-- facilitytype
@@ -98,6 +99,7 @@ SELECT
 FROM
 	nysdec_facilities_lands;
 
+-- facdb_uid_key
 -- insert the new values into the key table
 INSERT INTO facdb_uid_key
 SELECT hash
@@ -112,6 +114,7 @@ FROM facdb_uid_key AS k
 WHERE k.hash = f.hash AND
       f.uid IS NULL;
 
+-- pgtable
 INSERT INTO
 facdb_pgtable(
    uid,
@@ -123,19 +126,23 @@ SELECT
 FROM nysdec_facilities_lands, facilities
 WHERE facilities.hash = nysdec_facilities_lands.hash;
 
---INSERT INTO
---facdb_agencyid(
---	uid,
---	overabbrev,
---	idagency,
---	idname
---)
---SELECT
---	uid,
---
---FROM nysdec_facilities_lands, facilities
---WHERE facilities.hash = nysdec_facilities_lands.hash;
+-- agency id
+INSERT INTO
+facdb_agencyid(
+	uid,
+	overabbrev,
+	idagency,
+	idname
+)
+SELECT
+	uid,
+	'NYSDEC',
+	gid,
+	'gid'
+FROM nysdec_facilities_lands, facilities
+WHERE facilities.hash = nysdec_facilities_lands.hash;
 
+-- area
 INSERT INTO
 facdb_area(
 	uid,
@@ -149,41 +156,13 @@ SELECT
 FROM nysdec_facilities_lands, facilities
 WHERE facilities.hash = nysdec_facilities_lands.hash;
 
---INSERT INTO
---facdb_bbl(
---	uid,
---	bbl
---)
---SELECT
---	uid,
---
---FROM nysdec_facilities_lands, facilities
---WHERE facilities.hash = nysdec_facilities_lands.hash;
---
---INSERT INTO
---facdb_bin(
---	uid,
---	bin
---)
---SELECT
---	uid,
---
---FROM nysdec_facilities_lands, facilities
---WHERE facilities.hash = nysdec_facilities_lands.hash;
---
---INSERT INTO
---facdb_capacity(
---   uid,
---   capacity,
---   capacitytype
---)
---SELECT
---	uid,
---
---FROM nysdec_facilities_lands, facilities
---WHERE facilities.hash = nysdec_facilities_lands.hash;
+-- bbl NA
 
+-- bin NA
 
+-- capacity NA
+
+-- oversight
 INSERT INTO
 facdb_oversight(
 	uid,
@@ -199,14 +178,4 @@ SELECT
 FROM nysdec_facilities_lands, facilities
 WHERE facilities.hash = nysdec_facilities_lands.hash;
 
---INSERT INTO
---facdb_utilization(
---	uid,
---	util,
---	utiltype
---)
---SELECT
---	uid,
---
---FROM nysdec_facilities_lands, facilities
---WHERE facilities.hash = nysdec_facilities_lands.hash;
+-- utilization NA 

@@ -1,3 +1,4 @@
+-- facilities
 -- Custom insert statement
 INSERT INTO
 facilities(
@@ -33,13 +34,13 @@ facilities(
 )
 SELECT
 	-- hash,
-        hash,
-        -- uid
-        NULL, 
+    hash,
+    -- uid
+    NULL, 
 	-- geom
 	geom,
-        -- geomsource
-        'Agency',
+    -- geomsource
+    'Agency',
 	-- facilityname
 		(CASE
 			WHEN (name = ' ' OR name IS NULL) AND usedec LIKE '%OFFICE%' THEN 'Office'
@@ -48,11 +49,11 @@ SELECT
 			ELSE initcap(REPLACE(usedec, 'OTHER ', ''))
 		END),
 	-- addressnumber
-	split_part(trim(both ' ' from initcap(Address)), ' ', 1),
+	split_part(trim(both ' ' from initcap(address)), ' ', 1),
 	-- streetname
-	trim(both ' ' from substr(trim(both ' ' from initcap(Address)), strpos(trim(both ' ' from initcap(Address)), ' ')+1, (length(trim(both ' ' from initcap(Address)))-strpos(trim(both ' ' from initcap(Address)), ' ')))),
+	trim(both ' ' from substr(trim(both ' ' from initcap(address)), strpos(trim(both ' ' from initcap(address)), ' ')+1, (length(trim(both ' ' from initcap(address)))-strpos(trim(both ' ' from initcap(address)), ' ')))),
 	-- address
-	initcap(Address),
+	initcap(address),
 	-- borough
 	initcap(boro),
 	-- zipcode
@@ -210,9 +211,8 @@ SELECT
 
 			ELSE 'Miscellaneous Use'
 		END),
-        -- facilitytype
+    -- facilitytype
 	initcap(REPLACE(usedec, 'OTHER ', '')),
-
 	-- propertytype
 	(CASE
 		WHEN type='OF' THEN 'City Owned'
@@ -398,11 +398,11 @@ WHERE
 	OR (agency = 'ACS' AND usedec NOT LIKE '%RESIDENTIAL%' AND usedec NOT LIKE '%HOUSING%')
 ;
 -- end select
-
 UPDATE facilities
 SET facname = CONCAT(opname, ' ', facname)
 WHERE facname = 'Office';
 
+-- facdb_uid_key
 -- insert the new values into the key table
 INSERT INTO facdb_uid_key
 SELECT hash
@@ -421,8 +421,7 @@ SELECT hash FROM facdb_uid_key
 	OR (agency = 'DHS' AND usedec NOT LIKE '%RESIDENTIAL%' AND usedec NOT LIKE '%HOUSING%')
 	OR (agency = 'HRA' AND usedec NOT LIKE '%RESIDENTIAL%' AND usedec NOT LIKE '%HOUSING%')
 	OR (agency = 'ACS' AND usedec NOT LIKE '%RESIDENTIAL%' AND usedec NOT LIKE '%HOUSING%')
-        ;
-        
+; 
 -- JOIN uid FROM KEY ONTO DATABASE
 UPDATE facilities AS f
 SET uid = k.uid
@@ -430,6 +429,7 @@ FROM facdb_uid_key AS k
 WHERE k.hash = f.hash AND
       f.uid IS NULL;
 
+-- pgtable
 INSERT INTO
 facdb_pgtable(
    uid,
@@ -441,31 +441,25 @@ SELECT
 FROM dcas_facilities_colp, facilities
 WHERE facilities.hash = dcas_facilities_colp.hash;
 
---INSERT INTO
---facdb_agencyid(
---	uid,
---	overabbrev,
---	idagency,
---	idname
---)
---SELECT
---	uid,
---
---FROM dcas_facilities_colp, facilities
---WHERE facilities.hash = dcas_facilities_colp.hash;
---
---INSERT INTO
---facdb_area(
---	uid,
---	area,
---	areatype
---)
---SELECT
---	uid,
---
---FROM dcas_facilities_colp, facilities
---WHERE facilities.hash = dcas_facilities_colp.hash;
---
+-- agency id
+INSERT INTO
+facdb_agencyid(
+	uid,
+	overabbrev,
+	idagency,
+	idname
+)
+SELECT
+	uid,
+	'NA',
+	gid,
+	'gid'
+FROM dcas_facilities_colp, facilities
+WHERE facilities.hash = dcas_facilities_colp.hash;
+
+-- area NA
+
+-- bbl
 INSERT INTO
 facdb_bbl(
 	uid,
@@ -480,31 +474,12 @@ SELECT uid,
 	END)
 FROM dcas_facilities_colp, facilities
 WHERE facilities.hash = dcas_facilities_colp.hash;
---
---INSERT INTO
---facdb_bin(
---	uid,
---	bin
---)
---SELECT
---	uid,
---
---FROM dcas_facilities_colp, facilities
---WHERE facilities.hash = dcas_facilities_colp.hash;
---
---INSERT INTO
---facdb_capacity(
---   uid,
---   capacity,
---   capacitytype
---)
---SELECT
---	uid,
---
---FROM dcas_facilities_colp, facilities
---WHERE facilities.hash = dcas_facilities_colp.hash;
 
+-- bin NA
 
+-- capacity NA
+
+-- oversight
 INSERT INTO
 facdb_oversight(
 	uid,
@@ -527,15 +502,4 @@ SELECT
 FROM dcas_facilities_colp, facilities
 WHERE facilities.hash = dcas_facilities_colp.hash;
 
---INSERT INTO
---facdb_utilization(
---	uid,
---	util,
---	utiltype
---)
---SELECT
---	uid,
---
---FROM dcas_facilities_colp, facilities
---WHERE facilities.hash = dcas_facilities_colp.hash;
---
+-- utilization NA

@@ -1,3 +1,4 @@
+-- facilities
 INSERT INTO
 facilities(
 	hash,
@@ -39,35 +40,35 @@ SELECT
     -- geomsource
     'None',
 	-- facilityname
-	Organization_Name,
+	organization_name,
 	-- addressnumber
-	split_part(trim(both ' ' from initcap(Address)), ' ', 1),
+	split_part(trim(both ' ' from initcap(address)), ' ', 1),
 	-- streetname
-	trim(both ' ' from substr(trim(both ' ' from initcap(Address)), strpos(trim(both ' ' from initcap(Address)), ' ')+1, (length(trim(both ' ' from initcap(Address)))-strpos(trim(both ' ' from initcap(Address)), ' ')))),
+	trim(both ' ' from substr(trim(both ' ' from initcap(address)), strpos(trim(both ' ' from initcap(address)), ' ')+1, (length(trim(both ' ' from initcap(address)))-strpos(trim(both ' ' from initcap(address)), ' ')))),
 	-- address
-	initcap(Address),
+	initcap(address),
 	-- borough
 	borough,
 	-- zipcode
-	left(zip_code,5)::integer,
+	LEFT(zip_code,5)::integer,
 	-- domain
-	'Libraries and Cultural Programs',
+	NULL,
 	-- facilitygroup
-	'Cultural Institutions',
+	NULL,
 	-- facilitysubgroup
 		(CASE
-			WHEN Discipline LIKE '%Museum%' THEN 'Museums'
+			WHEN discipline LIKE '%Museum%' THEN 'Museums'
 			ELSE 'Other Cultural Institutions'
 		END),
 	-- facilitytype
 		(CASE
-			WHEN Discipline IS NOT NULL THEN Discipline
+			WHEN discipline IS NOT NULL THEN discipline
 			ELSE 'Unspecified Discipline'
 		END),
--- operatortype
+	-- operatortype
 	'Non-public',
 	-- operatorname
-	Organization_Name,
+	organization_name,
 	-- operatorabbrev
 	'Non-public',
 	-- datecreated
@@ -95,6 +96,7 @@ SELECT
 FROM
 	dcla_facilities_culturalinstitutions;
 
+-- facdb_uid_key
 -- insert the new values into the key table
 INSERT INTO facdb_uid_key
 SELECT hash
@@ -109,6 +111,7 @@ FROM facdb_uid_key AS k
 WHERE k.hash = f.hash AND
       f.uid IS NULL;
 
+-- pgtable
 INSERT INTO
 facdb_pgtable(
    uid,
@@ -120,66 +123,17 @@ SELECT
 FROM dcla_facilities_culturalinstitutions, facilities
 WHERE facilities.hash = dcla_facilities_culturalinstitutions.hash;
 
---INSERT INTO
---facdb_agencyid(
---	uid,
---	overabbrev,
---	idagency,
---	idname
---)
---SELECT
---	uid,
---
---FROM dcla_facilities_culturalinstitutions, facilities
---WHERE facilities.hash = dcla_facilities_culturalinstitutions.hash;
---
---INSERT INTO
---facdb_area(
---	uid,
---	area,
---	areatype
---)
---SELECT
---	uid,
---
---FROM dcla_facilities_culturalinstitutions, facilities
---WHERE facilities.hash = dcla_facilities_culturalinstitutions.hash;
---
---INSERT INTO
---facdb_bbl(
---	uid,
---	bbl
---)
---SELECT
---	uid,
---
---FROM dcla_facilities_culturalinstitutions, facilities
---WHERE facilities.hash = dcla_facilities_culturalinstitutions.hash;
---
---INSERT INTO
---facdb_bin(
---	uid,
---	bin
---)
---SELECT
---	uid,
---
---FROM dcla_facilities_culturalinstitutions, facilities
---WHERE facilities.hash = dcla_facilities_culturalinstitutions.hash;
---
---INSERT INTO
---facdb_capacity(
---   uid,
---   capacity,
---   capacitytype
---)
---SELECT
---	uid,
---
---FROM dcla_facilities_culturalinstitutions, facilities
---WHERE facilities.hash = dcla_facilities_culturalinstitutions.hash;
+-- agency id NA
 
+-- area NA
 
+-- bbl NA
+
+-- bin NA
+
+-- capacity NA 
+
+-- oversight
 INSERT INTO
 facdb_oversight(
 	uid,
@@ -195,15 +149,4 @@ SELECT
 FROM dcla_facilities_culturalinstitutions, facilities
 WHERE facilities.hash = dcla_facilities_culturalinstitutions.hash;
 
---INSERT INTO
---facdb_utilization(
---	uid,
---	util,
---	utiltype
---)
---SELECT
---	uid,
---
---FROM dcla_facilities_culturalinstitutions, facilities
---WHERE facilities.hash = dcla_facilities_culturalinstitutions.hash;
---
+-- utilization NA

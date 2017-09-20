@@ -1,3 +1,4 @@
+-- facilities
 INSERT INTO
 facilities(
 	hash,
@@ -43,9 +44,9 @@ SELECT
 	-- addressnumber
 	NULL,
 	-- streetname
-	NULL,
+	street,
 	-- address
-	Street,
+	street,
 	-- borough
 		(CASE
 			WHEN boro_code = 1 THEN 'Manhattan'
@@ -57,9 +58,9 @@ SELECT
 	-- zipcode
 	NULL,
 	-- domain
-	'Parks, Gardens, and Historical Sites',
+	NULL,
 	-- facilitygroup
-	'Parks and Plazas',
+	NULL,
 	-- facilitysubgroup
 	'Streetscapes, Plazas, and Malls',
 	-- facilitytype
@@ -95,6 +96,7 @@ SELECT
 FROM
 	dot_facilities_pedplazas;
 
+-- facdb_uid_key
 -- insert the new values into the key table
 INSERT INTO facdb_uid_key
 SELECT hash
@@ -109,6 +111,7 @@ FROM facdb_uid_key AS k
 WHERE k.hash = f.hash AND
       f.uid IS NULL;
 
+-- pgtable
 INSERT INTO
 facdb_pgtable(
    uid,
@@ -120,6 +123,7 @@ SELECT
 FROM dot_facilities_pedplazas, facilities
 WHERE facilities.hash = dot_facilities_pedplazas.hash;
 
+-- agency id
 INSERT INTO
 facdb_agencyid(
 	uid,
@@ -135,52 +139,15 @@ SELECT
 FROM dot_facilities_pedplazas, facilities
 WHERE facilities.hash = dot_facilities_pedplazas.hash;
 
---INSERT INTO
---facdb_area(
---	uid,
---	area,
---	areatype
---)
---SELECT
---	uid,
---
---FROM dot_facilities_pedplazas, facilities
---WHERE facilities.hash = dot_facilities_pedplazas.hash;
+-- area NA
 
--- INSERT INTO
--- facdb_bbl(
--- 	uid,
--- 	bbl
--- )
--- SELECT
--- 	uid,
+-- bbl NA
 
--- FROM dot_facilities_pedplazas, facilities
--- WHERE facilities.hash = dot_facilities_pedplazas.hash;
+-- bin NA
 
--- INSERT INTO
--- facdb_bin(
--- 	uid,
--- 	bin
--- )
--- SELECT
--- 	uid,
+-- capacity NA
 
--- FROM dot_facilities_pedplazas, facilities
--- WHERE facilities.hash = dot_facilities_pedplazas.hash;
-
--- INSERT INTO
--- facdb_capacity(
---   uid,
---   capacity,
---   capacitytype
--- )
--- SELECT
--- 	uid,
-
--- FROM dot_facilities_pedplazas, facilities
--- WHERE facilities.hash = dot_facilities_pedplazas.hash;
-
+-- oversight
 INSERT INTO
 facdb_oversight(
 	uid,
@@ -190,22 +157,10 @@ facdb_oversight(
 )
 SELECT
 	uid,
-	-- oversightagency
 	'NYC Department of Transportation',
-	-- oversightabbrev
 	'NYCDOT',
     'City'
 FROM dot_facilities_pedplazas, facilities
 WHERE facilities.hash = dot_facilities_pedplazas.hash;
 
---INSERT INTO
---facdb_utilization(
---	uid,
---	util,
---	utiltype
---)
---SELECT
---	uid,
---
---FROM dot_facilities_pedplazas, facilities
---WHERE facilities.hash = dot_facilities_pedplazas.hash;
+-- utilization NA

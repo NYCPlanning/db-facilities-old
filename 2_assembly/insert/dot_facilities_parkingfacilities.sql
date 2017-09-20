@@ -1,3 +1,4 @@
+-- facilities
 INSERT INTO
 facilities(
 	hash,
@@ -98,6 +99,7 @@ SELECT
 FROM
 	dot_facilities_parkingfacilities;
 
+-- facdb_uid_key
 -- insert the new values into the key table
 INSERT INTO facdb_uid_key
 SELECT hash
@@ -112,6 +114,7 @@ FROM facdb_uid_key AS k
 WHERE k.hash = f.hash AND
       f.uid IS NULL;
 
+-- pgtable
 INSERT INTO
 facdb_pgtable(
    uid,
@@ -123,65 +126,41 @@ SELECT
 FROM dot_facilities_parkingfacilities, facilities
 WHERE facilities.hash = dot_facilities_parkingfacilities.hash;
 
---INSERT INTO
---facdb_agencyid(
---	uid,
---	overabbrev,
---	idagency,
---	idname
---)
---SELECT
---	uid,
---
---FROM dot_facilities_parkingfacilities, facilities
---WHERE facilities.hash = dot_facilities_parkingfacilities.hash;
---
---INSERT INTO
---facdb_area(
---	uid,
---	area,
---	areatype
---)
---SELECT
---	uid,
---
---FROM dot_facilities_parkingfacilities, facilities
---WHERE facilities.hash = dot_facilities_parkingfacilities.hash;
+-- agency id
+INSERT INTO
+facdb_agencyid(
+	uid,
+	overabbrev,
+	idagency,
+	idname
+)
+SELECT
+	uid,
+	'DOT',
+	gid,
+	'gid'
+FROM dot_facilities_parkingfacilities, facilities
+WHERE facilities.hash = dot_facilities_parkingfacilities.hash;
 
--- INSERT INTO
--- facdb_bbl(
--- 	uid,
--- 	bbl
--- )
--- SELECT
--- 	uid,
+-- area NA
 
--- FROM dot_facilities_parkingfacilities, facilities
--- WHERE facilities.hash = dot_facilities_parkingfacilities.hash;
+-- bbl
+INSERT INTO
+facdb_bbl(
+	uid,
+	bbl
+)
+SELECT
+	uid,
+	bbl
+FROM dot_facilities_parkingfacilities, facilities
+WHERE facilities.hash = dot_facilities_parkingfacilities.hash;
 
--- INSERT INTO
--- facdb_bin(
--- 	uid,
--- 	bin
--- )
--- SELECT
--- 	uid,
+-- bin NA
 
--- FROM dot_facilities_parkingfacilities, facilities
--- WHERE facilities.hash = dot_facilities_parkingfacilities.hash;
+-- capacity NA
 
--- INSERT INTO
--- facdb_capacity(
---   uid,
---   capacity,
---   capacitytype
--- )
--- SELECT
--- 	uid,
-
--- FROM dot_facilities_parkingfacilities, facilities
--- WHERE facilities.hash = dot_facilities_parkingfacilities.hash;
-
+-- oversight
 INSERT INTO
 facdb_oversight(
 	uid,
@@ -191,22 +170,10 @@ facdb_oversight(
 )
 SELECT
 	uid,
-	-- oversightagency
 	'NYC Department of Transportation',
-	-- oversightabbrev
 	'NYCDOT',
     'City'
 FROM dot_facilities_parkingfacilities, facilities
 WHERE facilities.hash = dot_facilities_parkingfacilities.hash;
 
---INSERT INTO
---facdb_utilization(
---	uid,
---	util,
---	utiltype
---)
---SELECT
---	uid,
---
---FROM dot_facilities_parkingfacilities, facilities
---WHERE facilities.hash = dot_facilities_parkingfacilities.hash;
+-- utilization NA 

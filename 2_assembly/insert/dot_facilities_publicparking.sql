@@ -1,3 +1,4 @@
+-- facilities
 INSERT INTO
 facilities(
 	hash,
@@ -51,9 +52,9 @@ SELECT
 	-- zipcode
 	NULL,
 	-- domain
-	'Core Infrastructure and Transportation',
+	NULL,
 	-- facilitygroup
-	'Transportation',
+	NULL,
 	-- facilitysubgroup
 	'Parking Lots and Garages',
 	-- facilitytype
@@ -89,6 +90,7 @@ SELECT
 FROM
 	dot_facilities_publicparking;
 
+-- facdb_uid_key
 -- insert the new values into the key table
 INSERT INTO facdb_uid_key
 SELECT hash
@@ -103,6 +105,7 @@ FROM facdb_uid_key AS k
 WHERE k.hash = f.hash AND
       f.uid IS NULL;
 
+-- pgtable
 INSERT INTO
 facdb_pgtable(
    uid,
@@ -114,6 +117,7 @@ SELECT
 FROM dot_facilities_publicparking, facilities
 WHERE facilities.hash = dot_facilities_publicparking.hash;
 
+-- agency id
 INSERT INTO
 facdb_agencyid(
 	uid,
@@ -129,40 +133,13 @@ SELECT
 FROM dot_facilities_publicparking, facilities
 WHERE facilities.hash = dot_facilities_publicparking.hash;
 
---INSERT INTO
---facdb_area(
---	uid,
---	area,
---	areatype
---)
---SELECT
---	uid,
---
---FROM dot_facilities_publicparking, facilities
---WHERE facilities.hash = dot_facilities_publicparking.hash;
+-- area NA
 
--- INSERT INTO
--- facdb_bbl(
--- 	uid,
--- 	bbl
--- )
--- SELECT
--- 	uid,
+-- bbl NA
 
--- FROM dot_facilities_publicparking, facilities
--- WHERE facilities.hash = dot_facilities_publicparking.hash;
+-- bin NA
 
--- INSERT INTO
--- facdb_bin(
--- 	uid,
--- 	bin
--- )
--- SELECT
--- 	uid,
-
--- FROM dot_facilities_publicparking, facilities
--- WHERE facilities.hash = dot_facilities_publicparking.hash;
-
+-- capacity
 INSERT INTO
 facdb_capacity(
   uid,
@@ -176,6 +153,7 @@ SELECT
 FROM dot_facilities_publicparking, facilities
 WHERE facilities.hash = dot_facilities_publicparking.hash;
 
+-- oversight
 INSERT INTO
 facdb_oversight(
 	uid,
@@ -185,22 +163,10 @@ facdb_oversight(
 )
 SELECT
 	uid,
-	-- oversightagency
 	'NYC Department of Transportation',
-	-- oversightabbrev
 	'NYCDOT',
     'City'
 FROM dot_facilities_publicparking, facilities
 WHERE facilities.hash = dot_facilities_publicparking.hash;
 
---INSERT INTO
---facdb_utilization(
---	uid,
---	util,
---	utiltype
---)
---SELECT
---	uid,
---
---FROM dot_facilities_publicparking, facilities
---WHERE facilities.hash = dot_facilities_publicparking.hash;
+-- utilization NA

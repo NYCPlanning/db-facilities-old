@@ -1,3 +1,4 @@
+-- facilities
 INSERT INTO
 facilities(
 	hash,
@@ -37,27 +38,27 @@ SELECT
 	-- geom
 	ST_SetSRID(
 		ST_MakePoint(
-			trim(trim(split_part(split_part(Location_1,'(',2),',',2),')'),' ')::double precision,
-			trim(split_part(split_part(Location_1,'(',2),',',1),' ')::double precision),
+			trim(trim(split_part(split_part(location_1,'(',2),',',2),')'),' ')::double precision,
+			trim(split_part(split_part(location_1,'(',2),',',1),' ')::double precision),
 		4326),
     -- geomsource
     'Agency',
 	-- facilityname
 	facility_name,
 	-- addressnumber
-	split_part(Location_1, ' ', 1),
+	split_part(location_1, ' ', 1),
 	-- streetname
-	split_part(split_part(Location_1, ' ', 2),'(',1),
+	split_part(split_part(location_1, ' ', 2),'(',1),
 	-- address
-	split_part(Location_1, '(', 1),
+	split_part(location_1, '(', 1),
 	-- borough
-	Borough,
+	borough,
 	-- zipcode
 	NULL,
 	-- domain
 	NULL,
 	-- facilitygroup
-	'Health Care',
+	NULL,
 	-- facilitysubgroup
 		(CASE
 			WHEN facility_type = 'Nursing Home' THEN 'Residential Health Care'
@@ -105,6 +106,7 @@ SELECT
 FROM
 	hhc_facilities_hospitals;
 
+-- facdb_uid_key
 -- insert the new values into the key table
 INSERT INTO facdb_uid_key
 SELECT hash
@@ -119,6 +121,7 @@ FROM facdb_uid_key AS k
 WHERE k.hash = f.hash AND
       f.uid IS NULL;
 
+-- pgtable
 INSERT INTO
 facdb_pgtable(
    uid,
@@ -130,66 +133,17 @@ SELECT
 FROM hhc_facilities_hospitals, facilities
 WHERE facilities.hash = hhc_facilities_hospitals.hash;
 
---INSERT INTO
---facdb_agencyid(
---	uid,
---	overabbrev,
---	idagency,
---	idname
---)
---SELECT
---	uid,
---
---FROM hhc_facilities_hospitals, facilities
---WHERE facilities.hash = hhc_facilities_hospitals.hash;
---
---INSERT INTO
---facdb_area(
---	uid,
---	area,
---	areatype
---)
---SELECT
---	uid,
---
---FROM hhc_facilities_hospitals, facilities
---WHERE facilities.hash = hhc_facilities_hospitals.hash;
---
---INSERT INTO
---facdb_bbl(
---	uid,
---	bbl
---)
---SELECT
---	uid,
---
---FROM hhc_facilities_hospitals, facilities
---WHERE facilities.hash = hhc_facilities_hospitals.hash;
---
---INSERT INTO
---facdb_bin(
---	uid,
---	bin
---)
---SELECT
---	uid,
---
---FROM hhc_facilities_hospitals, facilities
---WHERE facilities.hash = hhc_facilities_hospitals.hash;
---
---INSERT INTO
---facdb_capacity(
---   uid,
---   capacity,
---   capacitytype
---)
---SELECT
---	uid,
---
---FROM hhc_facilities_hospitals, facilities
---WHERE facilities.hash = hhc_facilities_hospitals.hash;
+-- agency id NA
 
+-- area NA
 
+-- bbl NA
+
+-- bin NA
+
+-- capacity NA
+
+-- oversight
 INSERT INTO
 facdb_oversight(
 	uid,
@@ -205,14 +159,4 @@ SELECT
 FROM hhc_facilities_hospitals, facilities
 WHERE facilities.hash = hhc_facilities_hospitals.hash;
 
---INSERT INTO
---facdb_utilization(
---	uid,
---	util,
---	utiltype
---)
---SELECT
---	uid,
---
---FROM hhc_facilities_hospitals, facilities
---WHERE facilities.hash = hhc_facilities_hospitals.hash;
+-- utilization NA

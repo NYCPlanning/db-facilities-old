@@ -1,3 +1,4 @@
+-- facilities
 INSERT INTO
 facilities(
 	hash,
@@ -47,13 +48,13 @@ SELECT
 	-- address
 	CONCAT(address_number,' ',initcap(street_name)),
 	-- borough
-	initcap(Borough),
+	initcap(borough),
 	-- zipcode
 	NULL,
 	-- domain
-	'Education, Child Welfare, and Youth',
+	NULL,
 	-- facilitygroup
-	'Youth Services',
+	NULL,
 	-- facilitysubgroup
 	'Comprehensive After School System (COMPASS) Sites',
 	-- facilitytype
@@ -90,16 +91,17 @@ FROM
 	dycd_facilities_compass
 GROUP BY
 	hash,
-	Address_Number,
-	Street_Name,
-	Borough,
-	BBLs,
-	BIN,
-	X_Coordinate,
-	Y_Coordinate,
-	Provider_Name,
-	Date_Source_Data_Updated;
+	address_number,
+	street_name,
+	borough,
+	bbls,
+	bin,
+	x_coordinate,
+	y_coordinate,
+	provider_name,
+	date_source_data_updated;
 
+-- facdb_uid_key
 -- insert the new values into the key table
 INSERT INTO facdb_uid_key
 SELECT hash
@@ -109,15 +111,15 @@ SELECT hash FROM facdb_uid_key
 )
 GROUP BY
 	hash,
-	Address_Number,
-	Street_Name,
-	Borough,
-	BBLs,
-	BIN,
-	X_Coordinate,
-	Y_Coordinate,
-	Provider_Name,
-	Date_Source_Data_Updated;
+	address_number,
+	street_name,
+	borough,
+	bbls,
+	bin,
+	x_coordinate,
+	y_coordinate,
+	provider_name,
+	date_source_data_updated;
 -- JOIN uid FROM KEY ONTO DATABASE
 UPDATE facilities AS f
 SET uid = k.uid
@@ -125,6 +127,7 @@ FROM facdb_uid_key AS k
 WHERE k.hash = f.hash AND
       f.uid IS NULL;
 
+-- pgtable
 INSERT INTO
 facdb_pgtable(
    uid,
@@ -138,77 +141,27 @@ WHERE facilities.hash = dycd_facilities_compass.hash
 GROUP BY
         facilities.uid,
 	dycd_facilities_compass.hash,
-	Address_Number,
-	Street_Name,
-	Borough,
-	BBLs,
-	BIN,
-	X_Coordinate,
-	Y_Coordinate,
-	Provider_Name,
-	Date_Source_Data_Updated;
+	address_number,
+	street_name,
+	borough,
+	bbls,
+	bin,
+	x_coordinate,
+	y_coordinate,
+	provider_name,
+	date_source_data_updated;
 
+-- agency id NA
 
---INSERT INTO
---facdb_agencyid(
---	uid,
---	overabbrev,
---	idagency,
---	idname
---)
---SELECT
---	uid,
---
---FROM dycd_facilities_compass, facilities
---WHERE facilities.hash = dycd_facilities_compass.hash;
---
---INSERT INTO
---facdb_area(
---	uid,
---	area,
---	areatype
---)
---SELECT
---	uid,
---
---FROM dycd_facilities_compass, facilities
---WHERE facilities.hash = dycd_facilities_compass.hash;
---
---INSERT INTO
---facdb_bbl(
---	uid,
---	bbl
---)
---SELECT
---	uid,
---
---FROM dycd_facilities_compass, facilities
---WHERE facilities.hash = dycd_facilities_compass.hash;
---
---INSERT INTO
---facdb_bin(
---	uid,
---	bin
---)
---SELECT
---	uid,
---
---FROM dycd_facilities_compass, facilities
---WHERE facilities.hash = dycd_facilities_compass.hash;
---
---INSERT INTO
---facdb_capacity(
---   uid,
---   capacity,
---   capacitytype
---)
---SELECT
---	uid,
---
---FROM dycd_facilities_compass, facilities
---WHERE facilities.hash = dycd_facilities_compass.hash;
+-- area NA
 
+-- bbl NA
 
+-- bin NA
+
+-- capacity NA
+
+-- oversight
 INSERT INTO
 facdb_oversight(
 	uid,
@@ -224,14 +177,4 @@ SELECT
 FROM dycd_facilities_compass, facilities
 WHERE facilities.hash = dycd_facilities_compass.hash;
 
---INSERT INTO
---facdb_utilization(
---	uid,
---	util,
---	utiltype
---)
---SELECT
---	uid,
---
---FROM dycd_facilities_compass, facilities
---WHERE facilities.hash = dycd_facilities_compass.hash;
+-- utilization NA

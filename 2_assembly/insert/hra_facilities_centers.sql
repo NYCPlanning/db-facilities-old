@@ -1,3 +1,4 @@
+-- facilities
 INSERT INTO
 facilities(
 	hash,
@@ -41,19 +42,19 @@ SELECT
 	-- facilityname
 	name,
 	-- addressnumber
-	split_part(trim(both ' ' from Address), ' ', 1),
+	split_part(trim(both ' ' from address), ' ', 1),
 	-- streetname
-	initcap(split_part(trim(both ' ' from Address), ' ', 2)),
+	initcap(split_part(trim(both ' ' from address), ' ', 2)),
 	-- address
-	initcap(Address),
+	initcap(address),
 	-- borough
-	initcap(Borough),
+	initcap(borough),
 	-- zipcode
 	zipcode::integer,
 	-- domain
-	'Health and Human Services',
+	NULL,
 	-- facilitygroup
-	'Human Services',
+	NULL,
 	-- facilitysubgroup
 	(CASE
 		WHEN type = 'Job Centers' THEN 'Workforce Development'
@@ -92,6 +93,7 @@ SELECT
 FROM
 	hra_facilities_centers;
 
+-- facdb_uid_key
 -- insert the new values into the key table
 INSERT INTO facdb_uid_key
 SELECT hash
@@ -106,6 +108,7 @@ FROM facdb_uid_key AS k
 WHERE k.hash = f.hash AND
       f.uid IS NULL;
 
+-- pgtable
 INSERT INTO
 facdb_pgtable(
    uid,
@@ -117,66 +120,17 @@ SELECT
 FROM hra_facilities_centers, facilities
 WHERE facilities.hash = hra_facilities_centers.hash;
 
---INSERT INTO
---facdb_agencyid(
---	uid,
---	overabbrev,
---	idagency,
---	idname
---)
---SELECT
---	uid,
---
---FROM hra_facilities_centers, facilities
---WHERE facilities.hash = hra_facilities_centers.hash;
---
---INSERT INTO
---facdb_area(
---	uid,
---	area,
---	areatype
---)
---SELECT
---	uid,
---
---FROM hra_facilities_centers, facilities
---WHERE facilities.hash = hra_facilities_centers.hash;
---
---INSERT INTO
---facdb_bbl(
---	uid,
---	bbl
---)
---SELECT
---	uid,
---
---FROM hra_facilities_centers, facilities
---WHERE facilities.hash = hra_facilities_centers.hash;
---
---INSERT INTO
---facdb_bin(
---	uid,
---	bin
---)
---SELECT
---	uid,
---
---FROM hra_facilities_centers, facilities
---WHERE facilities.hash = hra_facilities_centers.hash;
---
---INSERT INTO
---facdb_capacity(
---   uid,
---   capacity,
---   capacitytype
---)
---SELECT
---	uid,
---
---FROM hra_facilities_centers, facilities
---WHERE facilities.hash = hra_facilities_centers.hash;
+-- agency id NA
 
+-- area NA
 
+-- bbl NA
+
+-- bin NA
+
+-- capacity NA
+
+-- oversight
 INSERT INTO
 facdb_oversight(
 	uid,
@@ -192,15 +146,4 @@ SELECT
 FROM hra_facilities_centers, facilities
 WHERE facilities.hash = hra_facilities_centers.hash;
 
-
---INSERT INTO
---facdb_utilization(
---	uid,
---	util,
---	utiltype
---)
---SELECT
---	uid,
---
---FROM hra_facilities_centers, facilities
---WHERE facilities.hash = hra_facilities_centers.hash;
+-- utilization NA 

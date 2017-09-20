@@ -1,3 +1,4 @@
+-- facilities
 INSERT INTO
 facilities(
 	hash,
@@ -40,22 +41,22 @@ SELECT
     'None',
 	-- facilityname
 		(CASE
-			WHEN Center_Name LIKE '%SBCC%' THEN initcap(Legal_Name)
-			WHEN Center_Name LIKE '%SCHOOL BASED CHILD CARE%' THEN initcap(Legal_Name)
-			ELSE initcap(Center_Name)
+			WHEN center_name LIKE '%SBCC%' THEN initcap(legal_name)
+			WHEN center_name LIKE '%SCHOOL BASED CHILD CARE%' THEN initcap(legal_name)
+			ELSE initcap(center_name)
 		END),
 	-- addressnumber
-	Building,
+	building,
 	-- streetname
-	initcap(Street),
+	initcap(street),
 	-- address
-	CONCAT(Building,' ',initcap(Street)),
+	CONCAT(building,' ',initcap(street)),
 	-- borough
-	initcap(Borough),
+	initcap(borough),
 	-- zipcode
-	ZipCode::integer,
+	zipcode::integer,
 	-- domain
-	'Education, Child Welfare, and Youth',
+	NULL,
 	-- facilitygroup
 	NULL,
 	-- facilitysubgroup
@@ -89,7 +90,7 @@ SELECT
 	-- operatortype
 	'Non-public',
 	-- operator
-	initcap(Legal_Name),
+	initcap(legal_name),
 	-- operatorabbrev
 	'Non-public',
 	-- datecreated
@@ -118,19 +119,20 @@ FROM
 	dohmh_facilities_daycare
 GROUP BY
 	hash,
-	Day_Care_ID,
-	Center_Name,
-	Legal_Name,
-	Building,
-	Street,
-	ZipCode,
-	Borough,
+	day_care_id,
+	center_name,
+	legal_name,
+	building,
+	street,
+	zipcode,
+	borough,
 	facility_type,
 	child_care_type,
 	program_type,
-	Maximum_Capacity
+	maximum_capacity
 ;
 
+-- facdb_uid_key
 -- insert the new values into the key table
 INSERT INTO facdb_uid_key
 SELECT hash
@@ -139,19 +141,17 @@ WHERE hash NOT IN (
 SELECT hash FROM facdb_uid_key
 )
 GROUP BY
-	hash,
-	Day_Care_ID,
-	Center_Name,
-	Legal_Name,
-	Building,
-	Street,
-	ZipCode,
-	Borough,
+	day_care_id,
+	center_name,
+	legal_name,
+	building,
+	street,
+	zipcode,
+	borough,
 	facility_type,
 	child_care_type,
 	program_type,
-	Maximum_Capacity;
-        
+	maximum_capacity;   
 -- JOIN uid FROM KEY ONTO DATABASE
 UPDATE facilities AS f
 SET uid = k.uid
@@ -159,6 +159,7 @@ FROM facdb_uid_key AS k
 WHERE k.hash = f.hash AND
       f.uid IS NULL;
 
+-- pgtable
 INSERT INTO
 facdb_pgtable(
    uid,
@@ -172,65 +173,27 @@ WHERE facilities.hash = dohmh_facilities_daycare.hash
 GROUP BY
 	facilities.uid,
         dohmh_facilities_daycare.hash,
-	Day_Care_ID,
-	Center_Name,
-	Legal_Name,
-	Building,
-	Street,
-	dohmh_facilities_daycare.ZipCode,
-	Borough,
+	day_care_id,
+	center_name,
+	legal_name,
+	building,
+	street,
+	dohmh_facilities_daycare.zipcode,
+	borough,
 	facility_type,
 	child_care_type,
 	program_type,
-	Maximum_Capacity;
+	maximum_capacity;
 
---INSERT INTO
---facdb_agencyid(
---	uid,
---	overabbrev,
---	idagency,
---	idname
---)
---SELECT
---	uid,
---
---FROM dohmh_facilities_daycare, facilities
---WHERE facilities.hash = dohmh_facilities_daycare.hash;
---
---INSERT INTO
---facdb_area(
---	uid,
---	area,
---	areatype
---)
---SELECT
---	uid,
---
---FROM dohmh_facilities_daycare, facilities
---WHERE facilities.hash = dohmh_facilities_daycare.hash;
---
---INSERT INTO
---facdb_bbl(
---	uid,
---	bbl
---)
---SELECT
---	uid,
---
---FROM dohmh_facilities_daycare, facilities
---WHERE facilities.hash = dohmh_facilities_daycare.hash;
---
---INSERT INTO
---facdb_bin(
---	uid,
---	bin
---)
---SELECT
---	uid,
---
---FROM dohmh_facilities_daycare, facilities
---WHERE facilities.hash = dohmh_facilities_daycare.hash;
+-- agency id NA
 
+-- area NA
+
+-- bbl NA
+
+-- bin NA
+
+-- capacity
 INSERT INTO
 facdb_capacity(
   uid,
@@ -239,26 +202,27 @@ facdb_capacity(
 )
 SELECT
 	uid,
-	Maximum_Capacity::text,
+	maximum_capacity::text,
 	'Maximum Seats Based on Sq Ft'
 FROM dohmh_facilities_daycare, facilities
 WHERE facilities.hash = dohmh_facilities_daycare.hash
-AND Maximum_Capacity <> '0'
+AND maximum_capacity <> '0'
 GROUP BY
 	facilities.uid,
         dohmh_facilities_daycare.hash,
-	Day_Care_ID,
-	Center_Name,
-	Legal_Name,
-	Building,
-	Street,
-	dohmh_facilities_daycare.ZipCode,
-	Borough,
+	day_care_id,
+	center_name,
+	legal_name,
+	building,
+	street,
+	dohmh_facilities_daycare.zipcode,
+	borough,
 	facility_type,
 	child_care_type,
 	program_type,
-	Maximum_Capacity;
+	maximum_capacity;
 
+-- oversight
 INSERT INTO
 facdb_oversight(
 	uid,
@@ -276,27 +240,16 @@ WHERE facilities.hash = dohmh_facilities_daycare.hash
 GROUP BY
 	facilities.uid,
         dohmh_facilities_daycare.hash,
-	Day_Care_ID,
-	Center_Name,
-	Legal_Name,
-	Building,
-	Street,
-	dohmh_facilities_daycare.ZipCode,
-	Borough,
+	day_care_id,
+	center_name,
+	legal_name,
+	building,
+	street,
+	dohmh_facilities_daycare.zipcode,
+	borough,
 	facility_type,
 	child_care_type,
 	program_type,
-	Maximum_Capacity;
+	maximum_capacity;
 
---INSERT INTO
---facdb_utilization(
---	uid,
---	util,
---	utiltype
---)
---SELECT
---	uid,
---
---FROM dohmh_facilities_daycare, facilities
---WHERE facilities.hash = dohmh_facilities_daycare.hash;
---
+-- utilization NA

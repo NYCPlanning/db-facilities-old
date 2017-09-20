@@ -1,3 +1,4 @@
+-- facilities
 INSERT INTO
 facilities(
 	hash,
@@ -35,47 +36,47 @@ SELECT
     -- uid
     NULL,
 	-- geom
-	ST_SetSRID(ST_MakePoint(Facility_Longitude, Facility_Latitude),4326),
+	ST_SetSRID(ST_MakePoint(facility_longitude, facility_latitude),4326),
     -- geomsource
     'Agency',
 	-- facilityname
-	Facility_Name,
+	facility_name,
 	-- addressnumber
-	split_part(trim(both ' ' from Facility_Address_1), ' ', 1),
+	split_part(trim(both ' ' from facility_address_1), ' ', 1),
 	-- streetname
-	initcap(trim(both ' ' from substr(trim(both ' ' from Facility_Address_1), strpos(trim(both ' ' from Facility_Address_1), ' ')+1, (length(trim(both ' ' from Facility_Address_1))-strpos(trim(both ' ' from Facility_Address_1), ' '))))),
+	initcap(trim(both ' ' from substr(trim(both ' ' from facility_address_1), strpos(trim(both ' ' from facility_address_1), ' ')+1, (length(trim(both ' ' from facility_address_1))-strpos(trim(both ' ' from facility_address_1), ' '))))),
 	-- address
-	Facility_Address_1,
+	facility_address_1,
 	-- borough
 		(CASE
-			WHEN Facility_County = 'New York' THEN 'Manhattan'
-			WHEN Facility_County = 'Bronx' THEN 'Bronx'
-			WHEN Facility_County = 'Kings' THEN 'Brooklyn'
-			WHEN Facility_County = 'Queens' THEN 'Queens'
-			WHEN Facility_County = 'Richmond' THEN 'Staten Island'
+			WHEN facility_county = 'New York' THEN 'Manhattan'
+			WHEN facility_county = 'Bronx' THEN 'Bronx'
+			WHEN facility_county = 'Kings' THEN 'Brooklyn'
+			WHEN facility_county = 'Queens' THEN 'Queens'
+			WHEN facility_county = 'Richmond' THEN 'Staten Island'
 		END),
 	-- zipcode
-	LEFT(Facility_Zip_Code,5)::integer,
+	LEFT(facility_zip_code,5)::integer,
 	-- domain
-	'Health and Human Services',
+	NULL,
 	-- facilitygroup
-	'Health Care',
+	NULL,
 	-- facilitysubgroup
 		(CASE
-			WHEN Description LIKE '%Residential%'
-				OR Description LIKE '%Hospice%'
+			WHEN description LIKE '%Residential%'
+				OR description LIKE '%Hospice%'
 				THEN 'Residential Health Care'
-			WHEN Description LIKE '%Adult Day Health%'
+			WHEN description LIKE '%Adult Day Health%'
 				THEN 'Other Health Care'
-			WHEN Description LIKE '%Home%'
+			WHEN description LIKE '%Home%'
 				THEN 'Other Health Care'
 			ELSE 'Hospitals and Clinics'
 		END),
 	-- facilitytype
 		(CASE
-			WHEN Description LIKE '%Residential%'
+			WHEN description LIKE '%Residential%'
 				THEN 'Residential Health Care'
-			ELSE Description
+			ELSE description
 		END),
 	-- operatortype
 		(CASE
@@ -127,23 +128,24 @@ SELECT
 FROM
 	nysdoh_facilities_healthfacilities AS f
 WHERE
-	Facility_County = 'New York'
-	OR Facility_County = 'Bronx'
-	OR Facility_County = 'Kings'
-	OR Facility_County = 'Queens'
-	OR Facility_County = 'Richmond';
+	facility_county = 'New York'
+	OR facility_county = 'Bronx'
+	OR facility_county = 'Kings'
+	OR facility_county = 'Queens'
+	OR facility_county = 'Richmond';
 
+-- facdb_uid_key
 -- insert the new values into the key table
 INSERT INTO facdb_uid_key
 SELECT hash
 FROM nysdoh_facilities_healthfacilities
 WHERE hash NOT IN (
 SELECT hash FROM facdb_uid_key
-) AND (Facility_County = 'New York'
-	OR Facility_County = 'Bronx'
-	OR Facility_County = 'Kings'
-	OR Facility_County = 'Queens'
-	OR Facility_County = 'Richmond');
+) AND (facility_county = 'New York'
+	OR facility_county = 'Bronx'
+	OR facility_county = 'Kings'
+	OR facility_county = 'Queens'
+	OR facility_county = 'Richmond');
 -- JOIN uid FROM KEY ONTO DATABASE
 UPDATE facilities AS f
 SET uid = k.uid
@@ -151,6 +153,7 @@ FROM facdb_uid_key AS k
 WHERE k.hash = f.hash AND
       f.uid IS NULL;
 
+-- pgtable
 INSERT INTO
 facdb_pgtable(
    uid,
@@ -162,6 +165,7 @@ SELECT
 FROM nysdoh_facilities_healthfacilities, facilities
 WHERE facilities.hash = nysdoh_facilities_healthfacilities.hash;
 
+-- agency id
 INSERT INTO
 facdb_agencyid(
 	uid,
@@ -172,45 +176,18 @@ facdb_agencyid(
 SELECT
 	uid,
 	'NYSDOH',
-	Facility_ID,
+	facility_id,
 	'NYSDOH Facility ID'
 FROM nysdoh_facilities_healthfacilities, facilities
 WHERE facilities.hash = nysdoh_facilities_healthfacilities.hash;
 
---INSERT INTO
---facdb_area(
---	uid,
---	area,
---	areatype
---)
---SELECT
---	uid,
---
---FROM nysdoh_facilities_healthfacilities, facilities
---WHERE facilities.hash = nysdoh_facilities_healthfacilities.hash;
---
---INSERT INTO
---facdb_bbl(
---	uid,
---	bbl
---)
---SELECT
---	uid,
---
---FROM nysdoh_facilities_healthfacilities, facilities
---WHERE facilities.hash = nysdoh_facilities_healthfacilities.hash;
---
---INSERT INTO
---facdb_bin(
---	uid,
---	bin
---)
---SELECT
---	uid,
---
---FROM nysdoh_facilities_healthfacilities, facilities
---WHERE facilities.hash = nysdoh_facilities_healthfacilities.hash;
+-- area NA
 
+-- bbl NA
+
+-- bin NA
+
+-- capacity
 INSERT INTO
 facdb_capacity(
   uid,
@@ -218,9 +195,9 @@ facdb_capacity(
   capacitytype
 )
 SELECT
-	uid,
-	total_capacity,
-	total_capacity-c.total_available
+	censusuids.uid,
+	censusuids.total_capacity,
+	'beds'
 FROM
 	facilities,
 	(SELECT
@@ -230,11 +207,11 @@ FROM
 		facdb_agencyid AS f
 	LEFT JOIN
 		nysdoh_nursinghomebedcensus AS c
-	ON
-		f.idagency=c.facility_id::numeric
+	ON f.idagency::numeric=c.facility_id::numeric
 		AND f.overabbrev = 'NYSDOH') AS censusuids
 WHERE facilities.uid = censusuids.uid;
 
+-- oversight
 INSERT INTO
 facdb_oversight(
 	uid,
@@ -250,6 +227,7 @@ SELECT
 FROM nysdoh_facilities_healthfacilities, facilities
 WHERE facilities.hash = nysdoh_facilities_healthfacilities.hash;
 
+-- utilization
 INSERT INTO
 facdb_utilization(
 	uid,
@@ -257,7 +235,18 @@ facdb_utilization(
 	utiltype
 )
 SELECT
-	uid,
-
-FROM nysdoh_facilities_healthfacilities, facilities
-WHERE facilities.hash = nysdoh_facilities_healthfacilities.hash;
+	censusuids.uid,
+	censusuids.total_capacity-censusuids.total_available,
+	'beds'
+FROM
+	facilities,
+	(SELECT
+		f.uid,
+		c.*
+	FROM
+		facdb_agencyid AS f
+	LEFT JOIN
+		nysdoh_nursinghomebedcensus AS c
+	ON f.idagency::numeric=c.facility_id::numeric
+		AND f.overabbrev = 'NYSDOH') AS censusuids
+WHERE facilities.uid = censusuids.uid;

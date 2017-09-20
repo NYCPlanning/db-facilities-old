@@ -1,3 +1,4 @@
+-- facilities
 INSERT INTO
 facilities(
 	hash,
@@ -39,36 +40,36 @@ SELECT
     -- geomsource
     'None',
 	-- facilityname
-	initcap(Sponsor_Name),
+	initcap(sponsor_name),
 	-- addressnumber
-	split_part(trim(both ' ' from initcap(Program_Address)), ' ', 1),
+	split_part(trim(both ' ' from initcap(program_address)), ' ', 1),
 	-- streetname
-	trim(both ' ' from substr(trim(both ' ' from initcap(Program_Address)), strpos(trim(both ' ' from initcap(Program_Address)), ' ')+1, (length(trim(both ' ' from initcap(Program_Address)))-strpos(trim(both ' ' from initcap(Program_Address)), ' ')))),
+	trim(both ' ' from substr(trim(both ' ' from initcap(program_address)), strpos(trim(both ' ' from initcap(program_address)), ' ')+1, (length(trim(both ' ' from initcap(program_address)))-strpos(trim(both ' ' from initcap(program_address)), ' ')))),
 	-- address
-	initcap(Program_Address),
+	initcap(program_address),
 	-- borough
 	NULL,
 	-- zipcode
-	Program_Zipcode::integer,
+	program_zipcode::integer,
 	-- domain
-	'Health and Human Services',
+	NULL,
 	-- facilitygroup
-	'Human Services',
+	NULL,
 	-- facilitysubgroup
 	'Senior Services',
 	-- facilitytype
 		(CASE
-			WHEN Contract_Type LIKE '%INNOVATIVE%' AND RIGHT(Provider_ID,2) <> '01' THEN 'Satellite Senior Centers'
-			WHEN Contract_Type LIKE '%NEIGHBORHOOD%' AND RIGHT(Provider_ID,2) <> '01' THEN 'Satellite Senior Centers'
-			WHEN Contract_Type LIKE '%INNOVATIVE%' THEN 'Innovative Senior Centers'
-			WHEN Contract_Type LIKE '%NEIGHBORHOOD%' THEN 'Neighborhood Senior Centers'
-			WHEN Contract_Type LIKE '%MEALS%' THEN  initcap(Contract_Type)
+			WHEN contract_type LIKE '%INNOVATIVE%' AND RIGHT(provider_id,2) <> '01' THEN 'Satellite Senior Centers'
+			WHEN contract_type LIKE '%NEIGHBORHOOD%' AND RIGHT(provider_id,2) <> '01' THEN 'Satellite Senior Centers'
+			WHEN contract_type LIKE '%INNOVATIVE%' THEN 'Innovative Senior Centers'
+			WHEN contract_type LIKE '%NEIGHBORHOOD%' THEN 'Neighborhood Senior Centers'
+			WHEN contract_type LIKE '%MEALS%' THEN  initcap(contract_type)
 			ELSE 'Senior Services'
 		END),
 	-- operatortype
 	'Non-public',
 	-- operatorname
-	initcap(Sponsor_Name),
+	initcap(sponsor_name),
 	-- operatorabbrev
 	'Non-public',
 	-- datecreated
@@ -96,6 +97,7 @@ SELECT
 FROM
 	dfta_facilities_contracts;
 
+-- facdb_uid_key
 -- insert the new values into the key table
 INSERT INTO facdb_uid_key
 SELECT hash
@@ -110,6 +112,7 @@ FROM facdb_uid_key AS k
 WHERE k.hash = f.hash AND
       f.uid IS NULL;
 
+-- pgtable
 INSERT INTO
 facdb_pgtable(
    uid,
@@ -121,6 +124,7 @@ SELECT
 FROM dfta_facilities_contracts, facilities
 WHERE facilities.hash = dfta_facilities_contracts.hash;
 
+-- agency id
 INSERT INTO
 facdb_agencyid(
 	uid,
@@ -136,53 +140,15 @@ SELECT
 FROM dfta_facilities_contracts, facilities
 WHERE facilities.hash = dfta_facilities_contracts.hash;
 
---INSERT INTO
---facdb_area(
---	uid,
---	area,
---	areatype
---)
---SELECT
---	uid,
---
---FROM dfta_facilities_contracts, facilities
---WHERE facilities.hash = dfta_facilities_contracts.hash;
---
---INSERT INTO
---facdb_bbl(
---	uid,
---	bbl
---)
---SELECT
---	uid,
---
---FROM dfta_facilities_contracts, facilities
---WHERE facilities.hash = dfta_facilities_contracts.hash;
---
---INSERT INTO
---facdb_bin(
---	uid,
---	bin
---)
---SELECT
---	uid,
---
---FROM dfta_facilities_contracts, facilities
---WHERE facilities.hash = dfta_facilities_contracts.hash;
---
---INSERT INTO
---facdb_capacity(
---   uid,
---   capacity,
---   capacitytype
---)
---SELECT
---	uid,
---
---FROM dfta_facilities_contracts, facilities
---WHERE facilities.hash = dfta_facilities_contracts.hash;
+-- area NA
 
+-- bbl NA
 
+-- bin NA
+
+-- capacity NA
+
+-- oversight
 INSERT INTO
 facdb_oversight(
 	uid,
@@ -198,16 +164,5 @@ SELECT
 FROM dfta_facilities_contracts, facilities
 WHERE facilities.hash = dfta_facilities_contracts.hash;
 
---INSERT INTO
---facdb_utilization(
---	uid,
---	util,
---	utiltype
---)
---SELECT
---	uid,
---
---FROM dfta_facilities_contracts, facilities
---WHERE facilities.hash = dfta_facilities_contracts.hash;
---
+-- utilization NA
 

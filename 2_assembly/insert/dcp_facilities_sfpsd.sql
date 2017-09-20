@@ -1,3 +1,4 @@
+-- facilities
 INSERT INTO
 facilities(
 	hash,
@@ -55,7 +56,7 @@ SELECT
 			WHEN borocode = 5 THEN 'Staten Island'
 		END),
 	-- zipcode
-	NULL,
+	zipcode::integer,
 	-- domain
 	NULL,
 	-- facilitygroup
@@ -168,6 +169,7 @@ WHERE 1=1
 	OR ft_decode = 'Amtrak Maintenance and Other Facility'
 	OR ft_decode = 'Amtrak Yard');
 
+-- facdb_uid_key
 -- insert the new values into the key table
 INSERT INTO facdb_uid_key
 SELECT hash
@@ -195,6 +197,7 @@ FROM facdb_uid_key AS k
 WHERE k.hash = f.hash AND
       f.uid IS NULL;
 
+-- pgtable
 INSERT INTO
 facdb_pgtable(
    uid,
@@ -226,19 +229,23 @@ SELECT
 FROM dcp_facilities_sfpsd, facilities
 WHERE facilities.hash = dcp_facilities_sfpsd.hash;
 
---INSERT INTO
---facdb_agencyid(
---	uid,
---	overabbrev,
---	idagency,
---	idname
---)
---SELECT
---	uid,
---
---FROM dcp_facilities_sfpsd, facilities
---WHERE facilities.hash = dcp_facilities_sfpsd.hash;
+-- agency id
+INSERT INTO
+facdb_agencyid(
+	uid,
+	overabbrev,
+	idagency,
+	idname
+)
+SELECT
+	uid,
+	'NA'
+	gid,
+	'gid'
+FROM dcp_facilities_sfpsd, facilities
+WHERE facilities.hash = dcp_facilities_sfpsd.hash;
 
+-- area
 INSERT INTO
 facdb_area(
 	uid,
@@ -258,6 +265,7 @@ SELECT
 FROM dcp_facilities_sfpsd, facilities
 WHERE facilities.hash = dcp_facilities_sfpsd.hash;
 
+-- bbl
 INSERT INTO
 facdb_bbl(
 	uid,
@@ -269,30 +277,11 @@ SELECT
 FROM dcp_facilities_sfpsd, facilities
 WHERE facilities.hash = dcp_facilities_sfpsd.hash;
 
---INSERT INTO
---facdb_bin(
---	uid,
---	bin
---)
---SELECT
---	uid,
---
---FROM dcp_facilities_sfpsd, facilities
---WHERE facilities.hash = dcp_facilities_sfpsd.hash;
---
---INSERT INTO
---facdb_capacity(
---   uid,
---   capacity,
---   capacitytype
---)
---SELECT
---	uid,
---
---FROM dcp_facilities_sfpsd, facilities
---WHERE facilities.hash = dcp_facilities_sfpsd.hash;
+-- bin NA
 
+-- capacity NA
 
+-- oversight
 INSERT INTO
 facdb_oversight(
 	uid,
@@ -371,15 +360,4 @@ SELECT
 FROM dcp_facilities_sfpsd, facilities
 WHERE facilities.hash = dcp_facilities_sfpsd.hash;
 
---INSERT INTO
---facdb_utilization(
---	uid,
---	util,
---	utiltype
---)
---SELECT
---	uid,
---
---FROM dcp_facilities_sfpsd, facilities
---WHERE facilities.hash = dcp_facilities_sfpsd.hash;
---
+-- utilization NA

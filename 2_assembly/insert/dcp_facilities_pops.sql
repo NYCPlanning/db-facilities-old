@@ -1,3 +1,4 @@
+-- facilities
 INSERT INTO
 facilities(
 	hash,
@@ -40,27 +41,27 @@ SELECT
 	'None',
 	-- facilityname
 	(CASE
-		WHEN Building_Name IS NOT NULL AND Building_Name <> '' THEN Building_Name
-		ELSE Building_Address
+		WHEN building_name IS NOT NULL AND building_name <> '' THEN building_name
+		ELSE building_address
 	END),
 	-- addressnumber
-	split_part(trim(both ' ' from initcap(Building_Address)), ' ', 1),
+	split_part(trim(both ' ' from initcap(building_address)), ' ', 1),
 	-- streetname
-	trim(both ' ' from substr(trim(both ' ' from initcap(Building_Address)), strpos(trim(both ' ' from initcap(Building_Address)), ' ')+1, (length(trim(both ' ' from initcap(Building_Address)))-strpos(trim(both ' ' from initcap(Building_Address)), ' ')))),
+	trim(both ' ' from substr(trim(both ' ' from initcap(building_address)), strpos(trim(both ' ' from initcap(building_address)), ' ')+1, (length(trim(both ' ' from initcap(building_address)))-strpos(trim(both ' ' from initcap(building_address)), ' ')))),
 	-- address
-	initcap(Building_Address),
+	initcap(building_address),
 	-- borough
 		(CASE
-			WHEN LEFT(DCP_RECORD,1) = 'B' THEN 'Brooklyn'
-			WHEN LEFT(DCP_RECORD,1) = 'Q' THEN 'Queens'
+			WHEN LEFT(dcp_record,1) = 'B' THEN 'Brooklyn'
+			WHEN LEFT(dcp_record,1) = 'Q' THEN 'Queens'
 			ELSE 'Manhattan'
 		END),
 	-- zipcode
 	NULL,
 	-- facilitydomain
-	'Parks, Gardens, and Historical Sites',
+	NULL,
 	-- facilitygroup
-	'Parks and Plazas',
+	NULL,
 	-- facilitysubgroup
 	'Privately Owned Public Space',
 	-- facilitytype
@@ -96,6 +97,7 @@ SELECT
 FROM
 	dcp_facilities_pops;
 
+-- facdb_uid_key
 -- Insert the new values into the key table
 INSERT INTO facdb_uid_key
 SELECT hash
@@ -109,6 +111,7 @@ SET uid = k.uid
 FROM facdb_uid_key AS k
 WHERE k.hash = f.hash AND f.uid IS NULL;
 
+-- pgtable
 INSERT INTO
 facdb_pgtable(
    uid,
@@ -123,6 +126,7 @@ FROM
 WHERE
 	facilities.hash = dcp_facilities_pops.hash;
 
+-- agency id
 INSERT INTO
 facdb_agencyid(
 	uid,
@@ -133,7 +137,7 @@ facdb_agencyid(
 SELECT
 	uid,
 	'NYCDCP',
-	DCP_RECORD,
+	dcp_record,
 	'DCP Record ID'
 FROM
 	dcp_facilities_pops,
@@ -141,64 +145,15 @@ FROM
 WHERE
 	facilities.hash = dcp_facilities_pops.hash;
 
--- INSERT INTO
--- facdb_area(
--- 	uid,
--- 	area,
--- 	areatype
--- )
--- SELECT
--- 	uid,
+-- area NA
 
--- FROM
--- 	dcp_facilities_pops,
--- 	facilities
--- WHERE
--- 	facilities.hash = dcp_facilities_pops.hash;
+-- bbl NA
+ 
+-- bin NA
 
--- INSERT INTO
--- facdb_bbl(
--- 	uid,
--- 	bbl
--- )
--- SELECT
--- 	uid,
+-- capacity NA 
 
--- FROM
--- 	dcp_facilities_pops,
--- 	facilities
--- WHERE
--- 	facilities.hash = dcp_facilities_pops.hash;
-
--- INSERT INTO
--- facdb_bin(
--- 	uid,
--- 	bin
--- )
--- SELECT
--- 	uid,
-
--- FROM
--- 	dcp_facilities_pops,
--- 	facilities
--- WHERE
--- 	facilities.hash = dcp_facilities_pops.hash;
-
--- INSERT INTO
--- facdb_capacity(
---    uid,
---    capacity,
---    capacitytype
--- )
--- SELECT
--- 	uid,
-
--- FROM
--- 	dcp_facilities_pops,
--- 	facilities
--- WHERE
--- 	facilities.hash = dcp_facilities_pops.hash;
-
+-- oversight
 INSERT INTO
 facdb_oversight(
 	uid,
@@ -217,35 +172,4 @@ FROM
 WHERE
 	facilities.hash = dcp_facilities_pops.hash;
 
-INSERT INTO
-facdb_oversight(
-	uid,
-	overagency,
-	overabbrev,
-	overlevel
-)
-SELECT
-	uid,
-	'NYC Department of Buildings',
-	'NYCDOB',
-	'City'
-FROM
-	dcp_facilities_pops,
-	facilities
-WHERE
-	facilities.hash = dcp_facilities_pops.hash;
-
--- INSERT INTO
--- facdb_utilization(
--- 	uid,
--- 	util,
--- 	utiltype
--- )
--- SELECT
--- 	uid,
-
--- FROM
--- 	dcp_facilities_pops,
--- 	facilities
--- WHERE
--- 	facilities.hash = dcp_facilities_pops.hash;
+-- utilization NA

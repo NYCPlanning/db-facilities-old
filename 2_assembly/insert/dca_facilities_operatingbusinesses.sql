@@ -1,3 +1,4 @@
+-- facilities
 INSERT INTO
 facilities(
 	hash,
@@ -41,56 +42,59 @@ SELECT
 	END),
     -- geomsource
     'Agency',
-		-- facilityname
-	initcap(Business_Name),
+	-- facilityname
+	initcap(business_name),
 	-- addressnumber
-	Address_Building,
+	address_building,
 	-- streetname
-	initcap(Address_Street_Name),
+	initcap(address_street_name),
 	-- address
-	CONCAT(Address_Building,' ',initcap(Address_Street_Name)),
-	-- borough
+	CONCAT(address_building,' ',initcap(address_street_name)),
+	-- borough -- should borough be assigned from Lat/Long to avoid using address_city?
 		(CASE
-			WHEN (Address_Borough IS NULL) AND (Address_City = 'NEW YORK') THEN 'Manhattan'
-			WHEN (Address_Borough IS NULL) AND (Address_City = 'BRONX') THEN 'Bronx'
-			WHEN (Address_Borough IS NULL) AND (Address_City = 'BROOKLYN') THEN 'Brooklyn'
-			WHEN (Address_Borough IS NULL) AND (Address_City = 'QUEENS') THEN 'Queens'
-			WHEN (Address_Borough IS NULL) AND (Address_City = 'ASTORIA') THEN 'Queens'
-			WHEN (Address_Borough IS NULL) AND (Address_City = 'LONG ISLAND CITY') THEN 'Queens'
-			WHEN (Address_Borough IS NULL) AND (Address_City = 'QUEENS VLG') THEN 'Queens'
-			WHEN (Address_Borough IS NULL) AND (Address_City = 'JAMAICA') THEN 'Queens'
-			WHEN (Address_Borough IS NULL) AND (Address_City = 'WOODSIDE') THEN 'Queens'
-			WHEN (Address_Borough IS NULL) AND (Address_City = 'FLUSHING') THEN 'Queens'
-			WHEN (Address_Borough IS NULL) AND (Address_City = 'CORONA') THEN 'Queens'
-			WHEN (Address_Borough IS NULL) AND (Address_City = 'STATEN ISLAND') THEN 'Staten Island'
-			ELSE Address_Borough
+			WHEN address_borough IS NULL AND upper(address_city) = 'NEW YORK' THEN 'Manhattan'
+			WHEN address_borough IS NULL AND upper(address_city) = 'BRONX' THEN 'Bronx'
+			WHEN address_borough IS NULL AND upper(address_city) = 'BROOKLYN' THEN 'Brooklyn'
+			WHEN address_borough IS NULL AND upper(address_city) = 'STATEN ISLAND' THEN 'Staten Island'
+			WHEN address_borough IS NULL AND upper(address_city) = 'QUEENS' THEN 'Queens'
+			WHEN address_borough IS NULL AND upper(address_city) = 'ASTORIA' THEN 'Queens'
+			WHEN address_borough IS NULL AND upper(address_city) = 'BAYSIDE' THEN 'Queens'
+			WHEN address_borough IS NULL AND upper(address_city) = 'BAYSIDE HILLS' THEN 'Queens'
+			WHEN address_borough IS NULL AND upper(address_city) = 'CORONA' THEN 'Queens'
+			WHEN address_borough IS NULL AND upper(address_city) = 'CORONA' THEN 'Queens'
+			WHEN address_borough IS NULL AND upper(address_city) = 'FLUSHING' THEN 'Queens'
+			WHEN address_borough IS NULL AND upper(address_city) = 'JAMAICA' THEN 'Queens'
+			WHEN address_borough IS NULL AND upper(address_city) = 'LONG ISLAND CITY' THEN 'Queens'
+			WHEN address_borough IS NULL AND upper(address_city) = 'QUEENS VLG' THEN 'Queens'
+			WHEN address_borough IS NULL AND upper(address_city) = 'WOODSIDE' THEN 'Queens'
+			ELSE address_borough
 		END),
 	-- zipcode
 		(CASE
-			WHEN Address_Zip ~'^([0-9]+\.?[0-9]*|\.[0-9]+)$' THEN Address_Zip::integer
+			WHEN address_zip ~'^([0-9]+\.?[0-9]*|\.[0-9]+)$' THEN address_zip::integer
 		END),
 	-- domain
-	'Core Infrastructure and Transportation',
+	NULL,
 	-- facilitygroup
 	NULL,
 	-- facilitysubgroup
 		(CASE
-			WHEN License_Category = 'Scrap Metal Processor' THEN 'Solid Waste Processing'
-			WHEN License_Category = 'Parking Lot' THEN 'Parking Lots and Garages'
-			WHEN License_Category = 'Garage' THEN 'Parking Lots and Garages'
-	 		WHEN License_Category = 'Garage and Parking Lot' THEN 'Parking Lots and Garages'
-			WHEN License_Category = 'Tow Truck Company' THEN 'Parking Lots and Garages'
+			WHEN license_category = 'Scrap Metal Processor' THEN 'Solid Waste Processing'
+			WHEN license_category = 'Parking Lot' THEN 'Parking Lots and Garages'
+			WHEN license_category = 'Garage' THEN 'Parking Lots and Garages'
+	 		WHEN license_category = 'Garage and Parking Lot' THEN 'Parking Lots and Garages'
+			WHEN license_category = 'Tow Truck Company' THEN 'Parking Lots and Garages'
 		END),
 	-- facilitytype
 		(CASE 
-			WHEN License_Category LIKE '%Scrap Metal%' THEN 'Scrap Metal Processing'
-			WHEN License_Category LIKE '%Tow%' THEN 'Tow Truck Company'
-			ELSE CONCAT('Commercial ', License_Category)
+			WHEN license_category LIKE '%Scrap Metal%' THEN 'Scrap Metal Processing'
+			WHEN license_category LIKE '%Tow%' THEN 'Tow Truck Company'
+			ELSE CONCAT('Commercial ', license_category)
 		END),
 	-- operatortype
 	'Non-public',
 	-- operatorname
-	initcap(Business_Name),
+	initcap(business_name),
 	-- operatorabbrev
 	'Non-public',
 	-- datecreated
@@ -118,12 +122,13 @@ SELECT
 FROM
 	dca_facilities_operatingbusinesses
 WHERE
-	License_Category = 'Scrap Metal Processor'
-	OR License_Category = 'Parking Lot'
-	OR License_Category = 'Garage'
-	OR License_Category = 'Garage and Parking Lot'
-	OR License_Category = 'Tow Truck Company';
+	license_category = 'Scrap Metal Processor'
+	OR license_category = 'Parking Lot'
+	OR license_category = 'Garage'
+	OR license_category = 'Garage and Parking Lot'
+	OR license_category = 'Tow Truck Company';
 
+-- facdb_uid_key
 -- insert the new values into the key table
 INSERT INTO facdb_uid_key
 SELECT hash
@@ -142,6 +147,7 @@ FROM facdb_uid_key AS k
 WHERE k.hash = f.hash AND
       f.uid IS NULL;
 
+-- pgtable
 INSERT INTO
 facdb_pgtable(
    uid,
@@ -153,6 +159,7 @@ SELECT
 FROM dca_facilities_operatingbusinesses, facilities
 WHERE facilities.hash = dca_facilities_operatingbusinesses.hash;
 
+-- agency id
 INSERT INTO
 facdb_agencyid(
 	uid,
@@ -168,40 +175,13 @@ SELECT
 FROM dca_facilities_operatingbusinesses, facilities
 WHERE facilities.hash = dca_facilities_operatingbusinesses.hash;
 
---INSERT INTO
---facdb_area(
---	uid,
---	area,
---	areatype
---)
---SELECT
---	uid,
---
---FROM dca_facilities_operatingbusinesses, facilities
---WHERE facilities.hash = dca_facilities_operatingbusinesses.hash;
---
---INSERT INTO
---facdb_bbl(
---	uid,
---	bbl
---)
---SELECT
---	uid,
---
---FROM dca_facilities_operatingbusinesses, facilities
---WHERE facilities.hash = dca_facilities_operatingbusinesses.hash;
---
---INSERT INTO
---facdb_bin(
---	uid,
---	bin
---)
---SELECT
---	uid,
---
---FROM dca_facilities_operatingbusinesses, facilities
---WHERE facilities.hash = dca_facilities_operatingbusinesses.hash;
---
+-- area NA
+
+-- bbl NA
+
+-- bin NA
+
+-- capacity
 INSERT INTO
 facdb_capacity(
   uid,
@@ -211,14 +191,15 @@ facdb_capacity(
 SELECT
 	uid,
 	(CASE
-		WHEN Detail LIKE '%Vehicle Spaces%' THEN split_part(split_part(Detail,': ',2),',',1)::text
+		WHEN detail LIKE '%Vehicle Spaces%' THEN split_part(split_part(detail,': ',2),',',1)::text
 	END),
 	(CASE
-		WHEN Detail LIKE '%Vehicle Spaces%' THEN 'Parking Spaces'
+		WHEN detail LIKE '%Vehicle Spaces%' THEN 'Parking Spaces'
 	END)
 FROM dca_facilities_operatingbusinesses, facilities
 WHERE facilities.hash = dca_facilities_operatingbusinesses.hash;
 
+-- oversight
 INSERT INTO
 facdb_oversight(
 	uid,
@@ -234,15 +215,4 @@ SELECT
 FROM dca_facilities_operatingbusinesses, facilities
 WHERE facilities.hash = dca_facilities_operatingbusinesses.hash;
 
---INSERT INTO
---facdb_utilization(
---	uid,
---	util,
---	utiltype
---)
---SELECT
---	uid,
---
---FROM dca_facilities_operatingbusinesses, facilities
---WHERE facilities.hash = dca_facilities_operatingbusinesses.hash;
---
+-- utilization NA

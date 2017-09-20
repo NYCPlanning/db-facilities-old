@@ -1,3 +1,4 @@
+-- facilities
 INSERT INTO
 facilities(
 	hash,
@@ -41,7 +42,7 @@ SELECT
     -- geomsource
     'Agency',
 	-- facilityname
-	initcap(Facility_Name),
+	initcap(facility_name),
 	-- addressnumber
 	address_number,
 	-- streetname
@@ -49,13 +50,13 @@ SELECT
 	-- address
 	CONCAT(address_number,' ',initcap(street_name)),
 	-- borough
-	initcap(Borough),
+	initcap(borough),
 	-- zipcode
 	NULL,
 	-- domain
-	'Health and Human Services',
+	NULL,
 	-- facilitygroup
-	'Human Services',
+	NULL,
 	-- facilitysubgroup
 	(CASE
 		WHEN (facility_type LIKE '%DROP%' OR facility_type LIKE '%Drop%') THEN 'Non-residential Housing and Homeless Services'
@@ -104,6 +105,7 @@ SELECT
 FROM
 	dhs_facilities_shelters;
 
+-- facdb_uid_key
 -- insert the new values into the key table
 INSERT INTO facdb_uid_key
 SELECT hash
@@ -118,6 +120,7 @@ FROM facdb_uid_key AS k
 WHERE k.hash = f.hash AND
       f.uid IS NULL;
 
+-- pgtable
 INSERT INTO
 facdb_pgtable(
    uid,
@@ -129,6 +132,7 @@ SELECT
 FROM dhs_facilities_shelters, facilities
 WHERE facilities.hash = dhs_facilities_shelters.hash;
 
+-- agency id
 INSERT INTO
 facdb_agencyid(
 	uid,
@@ -140,46 +144,39 @@ SELECT
 	uid,
 	'NYCDHS',
 	(CASE
-		WHEN Unique_ID IS NOT NULL THEN ARRAY[Unique_ID]
+		WHEN unique_id IS NOT NULL THEN unique_id]
 	END),
 	'Unique ID'
 FROM dhs_facilities_shelters, facilities
 WHERE facilities.hash = dhs_facilities_shelters.hash;
 
---INSERT INTO
---facdb_area(
---	uid,
---	area,
---	areatype
---)
---SELECT
---	uid,
---
---FROM dhs_facilities_shelters, facilities
---WHERE facilities.hash = dhs_facilities_shelters.hash;
---
---INSERT INTO
---facdb_bbl(
---	uid,
---	bbl
---)
---SELECT
---	uid,
---
---FROM dhs_facilities_shelters, facilities
---WHERE facilities.hash = dhs_facilities_shelters.hash;
---
---INSERT INTO
---facdb_bin(
---	uid,
---	bin
---)
---SELECT
---	uid,
---
---FROM dhs_facilities_shelters, facilities
---WHERE facilities.hash = dhs_facilities_shelters.hash;
---
+-- area NA
+
+-- bbl
+INSERT INTO
+facdb_bbl(
+	uid,
+	bbl
+)
+SELECT
+	uid,
+	REPLACE(bbls,'|','')
+FROM doe_facilities_busroutesgarages, facilities
+WHERE facilities.hash = doe_facilities_busroutesgarages.hash;
+
+-- bin
+INSERT INTO
+facdb_bin(
+	uid,
+	bin
+)
+SELECT
+	uid,
+	bin
+FROM doe_facilities_busroutesgarages, facilities
+WHERE facilities.hash = doe_facilities_busroutesgarages.hash;
+
+-- capacity
 INSERT INTO
 facdb_capacity(
   uid,
@@ -189,15 +186,15 @@ facdb_capacity(
 SELECT
 	uid,
 	(CASE
-		WHEN capacity <> '--' THEN ARRAY[capacity::text]
+		WHEN capacity <> '--' THEN capacity::text
 	END),
 	(CASE
-		WHEN capacity <> '--' AND capacity IS NOT NULL THEN ARRAY[capacity_type]
+		WHEN capacity <> '--' AND capacity IS NOT NULL THEN capacity_type
 	END)
 FROM dhs_facilities_shelters, facilities
 WHERE facilities.hash = dhs_facilities_shelters.hash;
 
-
+-- oversight
 INSERT INTO
 facdb_oversight(
 	uid,
@@ -213,16 +210,5 @@ SELECT
 FROM dhs_facilities_shelters, facilities
 WHERE facilities.hash = dhs_facilities_shelters.hash;
 
---INSERT INTO
---facdb_utilization(
---	uid,
---	util,
---	utiltype
---)
---SELECT
---	uid,
---
---FROM dhs_facilities_shelters, facilities
---WHERE facilities.hash = dhs_facilities_shelters.hash;
---
+-- utilization NA
 

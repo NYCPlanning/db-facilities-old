@@ -1,3 +1,4 @@
+-- facilities
 INSERT INTO
 facilities(
 	hash,
@@ -51,9 +52,9 @@ SELECT
 	-- zipcode
 	ROUND(zip_code::numeric,0),
 	-- domain
-	'Public Safety, Emergency Services, and Administration of Justice',
+	NULL,
 	-- facilitygroup
-	'Public Safety',
+	NULL,
 	-- facilitysubgroup
 	'Police Services',
 	-- facilitytype
@@ -89,6 +90,7 @@ SELECT
 FROM
 	nycha_facilities_communitycenters;
 
+-- facdb_uid_key
 -- insert the new values into the key table
 INSERT INTO facdb_uid_key
 SELECT hash
@@ -103,6 +105,7 @@ FROM facdb_uid_key AS k
 WHERE k.hash = f.hash AND
       f.uid IS NULL;
 
+-- pgtable
 INSERT INTO
 facdb_pgtable(
    uid,
@@ -114,66 +117,17 @@ SELECT
 FROM nycha_facilities_communitycenters, facilities
 WHERE facilities.hash = nycha_facilities_communitycenters.hash;
 
---INSERT INTO
---facdb_agencyid(
---	uid,
---	overabbrev,
---	idagency,
---	idname
---)
---SELECT
---	uid,
---
---FROM nycha_facilities_communitycenters, facilities
---WHERE facilities.hash = nycha_facilities_communitycenters.hash;
---
---INSERT INTO
---facdb_area(
---	uid,
---	area,
---	areatype
---)
---SELECT
---	uid,
---
---FROM nycha_facilities_communitycenters, facilities
---WHERE facilities.hash = nycha_facilities_communitycenters.hash;
---
---INSERT INTO
---facdb_bbl(
---	uid,
---	bbl
---)
---SELECT
---	uid,
---
---FROM nycha_facilities_communitycenters, facilities
---WHERE facilities.hash = nycha_facilities_communitycenters.hash;
---
---INSERT INTO
---facdb_bin(
---	uid,
---	bin
---)
---SELECT
---	uid,
---
---FROM nycha_facilities_communitycenters, facilities
---WHERE facilities.hash = nycha_facilities_communitycenters.hash;
---
---INSERT INTO
---facdb_capacity(
---   uid,
---   capacity,
---   capacitytype
---)
---SELECT
---	uid,
---
---FROM nycha_facilities_communitycenters, facilities
---WHERE facilities.hash = nycha_facilities_communitycenters.hash;
+-- agency id NA
 
+-- area NA
 
+-- bbl NA 
+
+-- bin NA
+
+-- capacity NA
+
+-- oversight
 INSERT INTO
 facdb_oversight(
 	uid,
@@ -189,14 +143,4 @@ SELECT
 FROM nycha_facilities_communitycenters, facilities
 WHERE facilities.hash = nycha_facilities_communitycenters.hash;
 
---INSERT INTO
---facdb_utilization(
---	uid,
---	util,
---	utiltype
---)
---SELECT
---	uid,
---
---FROM nycha_facilities_communitycenters, facilities
---WHERE facilities.hash = nycha_facilities_communitycenters.hash;
+-- utilization NA 
