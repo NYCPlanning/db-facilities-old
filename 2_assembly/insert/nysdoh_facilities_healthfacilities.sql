@@ -31,7 +31,7 @@ facilities(
 	groupquarters
 )
 SELECT
-	-- hash,
+	-- hash
     hash,
     -- uid
     NULL,

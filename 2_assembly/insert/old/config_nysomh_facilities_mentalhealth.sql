@@ -167,4 +167,4 @@ WHERE
 	OR Program_County = 'Bronx'
 	OR Program_County = 'Kings'
 	OR Program_County = 'Queens'
-	OR Program_County = 'Richmond'
+	OR Program_County = 'Richmond';
