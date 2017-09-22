@@ -134,7 +134,9 @@ facdb_agencyid(
 )
 SELECT
 	uid,
-	gid
+	'NA'
+	gid,
+	'gid'
 FROM dsny_facilities_mtsgaragemaintenance, facilities
 WHERE facilities.hash = dsny_facilities_mtsgaragemaintenance.hash;
 

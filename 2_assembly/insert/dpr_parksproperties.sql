@@ -56,7 +56,7 @@ SELECT
 			WHEN Borough = 'R' THEN 'Staten Island'
 		END),
 	-- zipcode
-	zipcode,
+	zipcode::integer,
 	-- domain
 	NULL,
 	-- facilitygroup

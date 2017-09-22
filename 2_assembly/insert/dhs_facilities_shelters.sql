@@ -144,7 +144,7 @@ SELECT
 	uid,
 	'NYCDHS',
 	(CASE
-		WHEN unique_id IS NOT NULL THEN unique_id]
+		WHEN unique_id IS NOT NULL THEN unique_id
 	END),
 	'Unique ID'
 FROM dhs_facilities_shelters, facilities

@@ -141,6 +141,7 @@ WHERE hash NOT IN (
 SELECT hash FROM facdb_uid_key
 )
 GROUP BY
+	hash,
 	day_care_id,
 	center_name,
 	legal_name,

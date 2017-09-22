@@ -246,7 +246,7 @@ INSERT INTO
 facdb_agencyid(
 	uid,
 	overabbrev,
-	idagency_name,
+	idagency,
 	idname
 )
 SELECT
@@ -325,7 +325,7 @@ GROUP BY
 INSERT INTO
 facdb_oversight(
 	uid,
-	overagency_name,
+	overagency,
 	overabbrev,
 	overlevel
 )

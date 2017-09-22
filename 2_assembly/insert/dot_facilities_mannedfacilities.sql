@@ -161,7 +161,7 @@ facdb_agencyid(
 )
 SELECT
 	uid,
-	'DOT'
+	'DOT',
 	gid,
 	'gid'
 FROM dot_facilities_mannedfacilities, facilities
