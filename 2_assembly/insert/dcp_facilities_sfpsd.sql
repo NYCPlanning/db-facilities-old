@@ -239,7 +239,7 @@ facdb_agencyid(
 )
 SELECT
 	uid,
-	'NA'
+	'NA',
 	gid,
 	'gid'
 FROM dcp_facilities_sfpsd, facilities
