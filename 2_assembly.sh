@@ -15,7 +15,7 @@ echo 'Creating empty facilities table...'
 
 
 ## create facilities table and relational tables
-for S in 2_assembly/create/*; do psql -U dbadmin capdb -f 2_assembly/$S; done
+for S in 2_assembly/create/*; do psql -U $DBUSER -d $DBNAME -f $S; done
 psql -U $DBUSER -d $DBNAME -f ./2_assembly/assign_uid.sql
 
 
