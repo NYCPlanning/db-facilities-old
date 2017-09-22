@@ -21,33 +21,33 @@ psql -U $DBUSER -d $DBNAME -f ./2_assembly/assign_uid.sql
 
 ## STEP 2
 ## configure (transform) each dataset and insert into master table
-echo 'Transforming and inserting records from source data'
-psql -U $DBUSER -d $DBNAME -f ./2_assembly/insert/acs_facilities_daycareheadstart.sql
-psql -U $DBUSER -d $DBNAME -f ./2_assembly/insert/bic_facilities_tradewaste.sql
-psql -U $DBUSER -d $DBNAME -f ./2_assembly/insert/dca_facilities_operatingbusinesses.sql
-psql -U $DBUSER -d $DBNAME -f ./2_assembly/insert/dcas_facilities_colp.sql
-psql -U $DBUSER -d $DBNAME -f ./2_assembly/insert/dcla_facilities_culturalinstitutions.sql
-psql -U $DBUSER -d $DBNAME -f ./2_assembly/insert/dcp_facilities_pops.sql
-psql -U $DBUSER -d $DBNAME -f ./2_assembly/insert/dcp_facilities_sfpsd.sql
-psql -U $DBUSER -d $DBNAME -f ./2_assembly/insert/dcp_facilities_togeocode.sql
-psql -U $DBUSER -d $DBNAME -f ./2_assembly/insert/dhs_facilities_shelters.sql
-psql -U $DBUSER -d $DBNAME -f ./2_assembly/insert/dfta_facilities_contracts.sql
-psql -U $DBUSER -d $DBNAME -f ./2_assembly/insert/doe_facilities_busroutesgarages.sql
-psql -U $DBUSER -d $DBNAME -f ./2_assembly/insert/doe_facilities_universalprek.sql
-psql -U $DBUSER -d $DBNAME -f ./2_assembly/insert/doe_facilities_schoolsbluebook.sql
-psql -U $DBUSER -d $DBNAME -f ./2_assembly/insert/dohmh_facilities_daycare.sql
-psql -U $DBUSER -d $DBNAME -f ./2_assembly/insert/dot_facilities_pedplazas.sql
-psql -U $DBUSER -d $DBNAME -f ./2_assembly/insert/dot_facilities_bridgehouses.sql
-psql -U $DBUSER -d $DBNAME -f ./2_assembly/insert/dot_facilities_ferryterminalslandings.sql
-psql -U $DBUSER -d $DBNAME -f ./2_assembly/insert/dot_facilities_mannedfacilities.sql
-psql -U $DBUSER -d $DBNAME -f ./2_assembly/insert/dot_facilities_parkingfacilities.sql
-psql -U $DBUSER -d $DBNAME -f ./2_assembly/insert/dpr_parksproperties.sql
-psql -U $DBUSER -d $DBNAME -f ./2_assembly/insert/dsny_facilities_mtsgaragemaintenance.sql
-psql -U $DBUSER -d $DBNAME -f ./2_assembly/insert/dycd_facilities_compass.sql
-psql -U $DBUSER -d $DBNAME -f ./2_assembly/insert/dycd_facilities_otherprograms.sql
-psql -U $DBUSER -d $DBNAME -f ./2_assembly/insert/foodbankny_facilities_foodbanks.sql
-psql -U $DBUSER -d $DBNAME -f ./2_assembly/insert/hhs_facilities_financialscontracts.sql
-psql -U $DBUSER -d $DBNAME -f ./2_assembly/insert/hhs_facilities_fmscontracts.sql
+# echo 'Transforming and inserting records from source data'
+# psql -U $DBUSER -d $DBNAME -f ./2_assembly/insert/acs_facilities_daycareheadstart.sql
+# psql -U $DBUSER -d $DBNAME -f ./2_assembly/insert/bic_facilities_tradewaste.sql
+# psql -U $DBUSER -d $DBNAME -f ./2_assembly/insert/dca_facilities_operatingbusinesses.sql
+# psql -U $DBUSER -d $DBNAME -f ./2_assembly/insert/dcas_facilities_colp.sql
+# psql -U $DBUSER -d $DBNAME -f ./2_assembly/insert/dcla_facilities_culturalinstitutions.sql
+# psql -U $DBUSER -d $DBNAME -f ./2_assembly/insert/dcp_facilities_pops.sql
+# psql -U $DBUSER -d $DBNAME -f ./2_assembly/insert/dcp_facilities_sfpsd.sql
+# psql -U $DBUSER -d $DBNAME -f ./2_assembly/insert/dcp_facilities_togeocode.sql
+# psql -U $DBUSER -d $DBNAME -f ./2_assembly/insert/dhs_facilities_shelters.sql
+# psql -U $DBUSER -d $DBNAME -f ./2_assembly/insert/dfta_facilities_contracts.sql
+# psql -U $DBUSER -d $DBNAME -f ./2_assembly/insert/doe_facilities_busroutesgarages.sql
+# psql -U $DBUSER -d $DBNAME -f ./2_assembly/insert/doe_facilities_universalprek.sql
+# psql -U $DBUSER -d $DBNAME -f ./2_assembly/insert/doe_facilities_schoolsbluebook.sql
+# psql -U $DBUSER -d $DBNAME -f ./2_assembly/insert/dohmh_facilities_daycare.sql
+# psql -U $DBUSER -d $DBNAME -f ./2_assembly/insert/dot_facilities_pedplazas.sql
+# psql -U $DBUSER -d $DBNAME -f ./2_assembly/insert/dot_facilities_bridgehouses.sql
+# psql -U $DBUSER -d $DBNAME -f ./2_assembly/insert/dot_facilities_ferryterminalslandings.sql
+# psql -U $DBUSER -d $DBNAME -f ./2_assembly/insert/dot_facilities_mannedfacilities.sql
+# psql -U $DBUSER -d $DBNAME -f ./2_assembly/insert/dot_facilities_parkingfacilities.sql
+# psql -U $DBUSER -d $DBNAME -f ./2_assembly/insert/dpr_parksproperties.sql
+# psql -U $DBUSER -d $DBNAME -f ./2_assembly/insert/dsny_facilities_mtsgaragemaintenance.sql
+# psql -U $DBUSER -d $DBNAME -f ./2_assembly/insert/dycd_facilities_compass.sql
+# psql -U $DBUSER -d $DBNAME -f ./2_assembly/insert/dycd_facilities_otherprograms.sql
+# psql -U $DBUSER -d $DBNAME -f ./2_assembly/insert/foodbankny_facilities_foodbanks.sql
+# psql -U $DBUSER -d $DBNAME -f ./2_assembly/insert/hhs_facilities_financialscontracts.sql
+# psql -U $DBUSER -d $DBNAME -f ./2_assembly/insert/hhs_facilities_fmscontracts.sql
 ##psql -U $DBUSER -d $DBNAME -f ./2_assembly/insert/hhs_facilities_proposals.sql
 ##psql -U $DBUSER -d $DBNAME -f ./2_assembly/insert/hra_facilities_centers.sql
 ##psql -U $DBUSER -d $DBNAME -f ./2_assembly/insert/nycha_facilities_policeservice.sql
