@@ -88,13 +88,13 @@ SELECT
 	-- groupquarters
 	FALSE
 FROM
-	nycha_facilities_communitycenters;
+	nycha_facilities_policeservice;
 
 -- facdb_uid_key
 -- insert the new values into the key table
 INSERT INTO facdb_uid_key
 SELECT hash
-FROM nycha_facilities_communitycenters
+FROM nycha_facilities_policeservice
 WHERE hash NOT IN (
 SELECT hash FROM facdb_uid_key
 );
@@ -113,9 +113,9 @@ facdb_pgtable(
 )
 SELECT
 	uid,
-	'nycha_facilities_communitycenters'
-FROM nycha_facilities_communitycenters, facilities
-WHERE facilities.hash = nycha_facilities_communitycenters.hash;
+	'nycha_facilities_policeservice'
+FROM nycha_facilities_policeservice, facilities
+WHERE facilities.hash = nycha_facilities_policeservice.hash;
 
 -- agency id NA
 
@@ -140,7 +140,7 @@ SELECT
     'New York City Housing Authority',
     'NYCHA',
     'City'
-FROM nycha_facilities_communitycenters, facilities
-WHERE facilities.hash = nycha_facilities_communitycenters.hash;
+FROM nycha_facilities_policeservice, facilities
+WHERE facilities.hash = nycha_facilities_policeservice.hash;
 
 -- utilization NA 

@@ -170,7 +170,7 @@ SELECT
 	uid,
 	'nysomh_facilities_mentalhealth',
 	sponsor_code||'-'||facility_code||'-'||program_code,
-	'sponsor_code,'-',facility_code,'-', program_code'
+	'sponsor_code-facility_code-program_code'
 FROM nysomh_facilities_mentalhealth, facilities
 WHERE facilities.hash = nysomh_facilities_mentalhealth.hash;
 

@@ -161,8 +161,8 @@ facdb_bbl(
 SELECT
 	uid,
 	REPLACE(bbls,'|','')
-FROM doe_facilities_busroutesgarages, facilities
-WHERE facilities.hash = doe_facilities_busroutesgarages.hash;
+FROM dhs_facilities_shelters, facilities
+WHERE facilities.hash = dhs_facilities_shelters.hash;
 
 -- bin
 INSERT INTO
@@ -173,8 +173,8 @@ facdb_bin(
 SELECT
 	uid,
 	bin
-FROM doe_facilities_busroutesgarages, facilities
-WHERE facilities.hash = doe_facilities_busroutesgarages.hash;
+FROM dhs_facilities_shelters, facilities
+WHERE facilities.hash = dhs_facilities_shelters.hash;
 
 -- capacity
 INSERT INTO

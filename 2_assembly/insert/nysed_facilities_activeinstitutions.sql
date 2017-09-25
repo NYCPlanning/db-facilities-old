@@ -296,7 +296,7 @@ SELECT
 	(CASE 
 		WHEN enrollment IS NOT NULL THEN 'Seats'
 		ELSE NULL
-	END),
+	END)
 FROM (SELECT
 		nysed_facilities_activeinstitutions.*,
 		nysed_nonpublicenrollment.*,
