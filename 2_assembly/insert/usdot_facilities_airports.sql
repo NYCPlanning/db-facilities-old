@@ -169,7 +169,7 @@ facdb_area(
 SELECT
 	uid,
 	acres,
-	'Acres',
+	'Acres'
 FROM usdot_facilities_airports, facilities
 WHERE facilities.hash = usdot_facilities_airports.hash;
 

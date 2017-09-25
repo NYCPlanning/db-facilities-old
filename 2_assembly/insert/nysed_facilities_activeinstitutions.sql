@@ -326,8 +326,9 @@ WHERE
 	AND Institution_Sub_Type_Desc <> 'NYC BUREAU'
 	AND Institution_Sub_Type_Desc <> 'NYC NETWORK'
 	AND Institution_Sub_Type_Desc <> 'OUT OF DISTRICT PLACEMENT'
-	AND Institution_Sub_Type_Desc <> 'BUILDINGS UNDER CONSTRUCTION'), facilities
-AND facilities.hash = nysed_facilities_activeinstitutions.hash;
+	AND Institution_Sub_Type_Desc <> 'BUILDINGS UNDER CONSTRUCTION') 
+AND facilities.hash = nysed_facilities_activeinstitutions.hash,
+facilities;
 
 -- oversight
 INSERT INTO
