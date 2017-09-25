@@ -239,7 +239,7 @@ WHERE
 	AND Institution_Sub_Type_Desc <> 'NYC NETWORK'
 	AND Institution_Sub_Type_Desc <> 'OUT OF DISTRICT PLACEMENT'
 	AND Institution_Sub_Type_Desc <> 'BUILDINGS UNDER CONSTRUCTION')
-WHERE hash NOT IN (
+AND hash NOT IN (
 SELECT hash FROM facdb_uid_key
 );
 -- JOIN uid FROM KEY ONTO DATABASE
@@ -327,7 +327,7 @@ WHERE
 	AND Institution_Sub_Type_Desc <> 'NYC NETWORK'
 	AND Institution_Sub_Type_Desc <> 'OUT OF DISTRICT PLACEMENT'
 	AND Institution_Sub_Type_Desc <> 'BUILDINGS UNDER CONSTRUCTION'), facilities
-WHERE facilities.hash = nysed_facilities_activeinstitutions.hash;
+AND facilities.hash = nysed_facilities_activeinstitutions.hash;
 
 -- oversight
 INSERT INTO

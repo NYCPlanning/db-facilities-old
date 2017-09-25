@@ -207,7 +207,7 @@ FROM
 		facdb_agencyid AS f
 	LEFT JOIN
 		nysdoh_nursinghomebedcensus AS c
-	ON f.idagency::numeric=c.facility_id::numeric
+	ON f.idagency=c.facility_id
 		AND f.overabbrev = 'NYSDOH') AS censusuids
 WHERE facilities.uid = censusuids.uid;
 
@@ -247,6 +247,6 @@ FROM
 		facdb_agencyid AS f
 	LEFT JOIN
 		nysdoh_nursinghomebedcensus AS c
-	ON f.idagency::numeric=c.facility_id::numeric
+	ON f.idagency=c.facility_id
 		AND f.overabbrev = 'NYSDOH') AS censusuids
 WHERE facilities.uid = censusuids.uid;

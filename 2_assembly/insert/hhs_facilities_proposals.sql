@@ -66,7 +66,6 @@ SELECT
 	NULL,
 	-- facilitysubgroup
 		(CASE
-
 			WHEN agency_name LIKE '%Children%' AND (Program_name LIKE '%secure Placement%' OR Program_name LIKE '%Secure Placement%' OR Program_name LIKE '%Detention%')
 				THEN 'Detention and Correctional'
 			WHEN agency_name LIKE '%Children%' AND Program_name LIKE '%Early Learn%'
@@ -80,7 +79,6 @@ SELECT
 
 			WHEN agency_name LIKE '%Education%'
 				THEN 'Community Centers and Community School Programs'
-				
 			WHEN agency_name LIKE '%Youth%' AND Program_name LIKE '%COMPASS%'
 				THEN 'Comprehensive After School System (COMPASS) Sites'
 			WHEN agency_name LIKE '%Youth%' AND Program_name LIKE '%Summer%'
@@ -310,9 +308,8 @@ GROUP BY
     program_name,
     site_name,
 	hhs_facilities_proposals.Address_1,
-	zip,
+	zip_code,
 	proposal_id;
-
 -- area NA
 
 -- bbl NA
@@ -404,9 +401,8 @@ GROUP BY
         facilities.uid,
 	hhs_facilities_proposals.hash,
 	agency_name,
-	lgl_nm,
 	program_name,
 	hhs_facilities_proposals.Address_1,
-	zip;
+	zip_code;
 
 -- utilization NA 

@@ -34,7 +34,7 @@ SELECT
 	-- hash
 	hash,
     -- uid
-    NULL
+    NULL,
 	-- geom
 	ST_SetSRID(ST_MakePoint(lon, lat),4326),
     -- geomsource

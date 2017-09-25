@@ -134,7 +134,7 @@ facdb_agencyid(
 )
 SELECT
 	uid,
-	'NA'
+	'NA',
 	gid,
 	'gid'
 FROM dsny_facilities_mtsgaragemaintenance, facilities
