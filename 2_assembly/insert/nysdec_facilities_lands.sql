@@ -130,15 +130,17 @@ WHERE facilities.hash = nysdec_facilities_lands.hash;
 INSERT INTO
 facdb_agencyid(
 	uid,
-	overabbrev,
 	idagency,
-	idname
+	idname,
+	idfield,
+	idtable
 )
 SELECT
 	uid,
-	'NYSDEC',
 	gid,
-	'gid'
+	'Global ID'
+	'gid',
+	'nysdec_facilities_lands'
 FROM nysdec_facilities_lands, facilities
 WHERE facilities.hash = nysdec_facilities_lands.hash;
 

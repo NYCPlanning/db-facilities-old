@@ -128,15 +128,17 @@ WHERE facilities.hash = dfta_facilities_contracts.hash;
 INSERT INTO
 facdb_agencyid(
 	uid,
-	overabbrev,
 	idagency,
-	idname
+	idname,
+	idfield,
+	idtable
 )
 SELECT
 	uid,
-	'NYCDFTA',
 	Provider_ID,
-	'Provider ID'
+	'Provider ID',
+	'Provider_ID',
+	'dfta_facilities_contracts'
 FROM dfta_facilities_contracts, facilities
 WHERE facilities.hash = dfta_facilities_contracts.hash;
 

@@ -1,3 +1,13 @@
+DROP VIEW dca_facilities_operatingbusinesses_facdbview;
+CREATE VIEW dca_facilities_operatingbusinesses_facdbview AS 
+SELECT * FROM dca_facilities_operatingbusinesses
+WHERE
+	license_category = 'Scrap Metal Processor'
+	OR license_category = 'Parking Lot'
+	OR license_category = 'Garage'
+	OR license_category = 'Garage and Parking Lot'
+	OR license_category = 'Tow Truck Company';
+
 -- facilities
 INSERT INTO
 facilities(
@@ -119,27 +129,16 @@ SELECT
 	FALSE,
 	-- groupquarters
 	FALSE
-FROM
-	dca_facilities_operatingbusinesses
-WHERE
-	license_category = 'Scrap Metal Processor'
-	OR license_category = 'Parking Lot'
-	OR license_category = 'Garage'
-	OR license_category = 'Garage and Parking Lot'
-	OR license_category = 'Tow Truck Company';
+FROM dca_facilities_operatingbusinesses_facdbview
+;
 
 -- facdb_uid_key
 -- insert the new values into the key table
 INSERT INTO facdb_uid_key
 SELECT hash
-FROM dca_facilities_operatingbusinesses
+FROM dca_facilities_operatingbusinesses_facdbview
 WHERE hash NOT IN (
-SELECT hash FROM facdb_uid_key
-) AND (License_Category = 'Scrap Metal Processor'
-	OR License_Category = 'Parking Lot'
-	OR License_Category = 'Garage'
-	OR License_Category = 'Garage and Parking Lot'
-	OR License_Category = 'Tow Truck Company');
+SELECT hash FROM facdb_uid_key);
 -- JOIN uid FROM KEY ONTO DATABASE
 UPDATE facilities AS f
 SET uid = k.uid
@@ -163,15 +162,17 @@ WHERE facilities.hash = dca_facilities_operatingbusinesses.hash;
 INSERT INTO
 facdb_agencyid(
 	uid,
-	overabbrev,
 	idagency,
-	idname
+	idname,
+	idfield,
+	idtable
 )
 SELECT
 	uid,
-	'NYCDCA',
 	DCA_License_Number,
-	'DCA License Number'
+	'DCA License Number',
+	'DCA_License_Number',
+	'dca_facilities_operatingbusinesses'
 FROM dca_facilities_operatingbusinesses, facilities
 WHERE facilities.hash = dca_facilities_operatingbusinesses.hash;
 

@@ -16,7 +16,7 @@ address text,
 city text,
 boro text,
 borocode smallint,
-zipcode integer,
+zipcode text,
 -- core geospatial reference information
 geom geometry,
 geomsource text,

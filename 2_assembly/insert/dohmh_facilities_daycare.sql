@@ -1,3 +1,20 @@
+DROP VIEW dohmh_facilities_daycare_facdbview;
+CREATE VIEW dohmh_facilities_daycare_facdbview AS 
+SELECT DISTINCT
+	hash,
+	day_care_id,
+	center_name,
+	legal_name,
+	building,
+	street,
+	zipcode,
+	borough,
+	facility_type,
+	child_care_type,
+	program_type,
+	maximum_capacity
+FROM dohmh_facilities_daycare;
+
 -- facilities
 INSERT INTO
 facilities(
@@ -115,44 +132,15 @@ SELECT
 	FALSE,
 	-- groupquarters
 	FALSE
-FROM
-	dohmh_facilities_daycare
-GROUP BY
-	hash,
-	day_care_id,
-	center_name,
-	legal_name,
-	building,
-	street,
-	zipcode,
-	borough,
-	facility_type,
-	child_care_type,
-	program_type,
-	maximum_capacity
-;
+FROM dohmh_facilities_daycare_facdbview;
 
 -- facdb_uid_key
 -- insert the new values into the key table
 INSERT INTO facdb_uid_key
 SELECT hash
-FROM dohmh_facilities_daycare
+FROM dohmh_facilities_daycare_facdbview
 WHERE hash NOT IN (
-SELECT hash FROM facdb_uid_key
-)
-GROUP BY
-	hash,
-	day_care_id,
-	center_name,
-	legal_name,
-	building,
-	street,
-	zipcode,
-	borough,
-	facility_type,
-	child_care_type,
-	program_type,
-	maximum_capacity;   
+SELECT hash FROM facdb_uid_key);   
 -- JOIN uid FROM KEY ONTO DATABASE
 UPDATE facilities AS f
 SET uid = k.uid

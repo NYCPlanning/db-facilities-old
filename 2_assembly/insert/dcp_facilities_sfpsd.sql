@@ -1,3 +1,22 @@
+DROP VIEW dcp_facilities_sfpsd_facdbview;
+CREATE VIEW dcp_facilities_sfpsd_facdbview AS 
+SELECT * FROM dcp_facilities_sfpsd
+WHERE 1=1
+	AND (ft_decode = 'City-State Park'
+	OR ft_decode = 'PANYNJ Bus Terminal'
+	OR ft_decode = 'Wastewater Treatment Plant'
+	OR ft_decode = 'Public Park and Ride Lot'
+	OR ft_decode = 'MTA Paratransit Vehicle Depot'
+	OR ft_decode = 'MTA Bus Depot'
+	OR ft_decode = 'NYCT Maintenance and Other Facility'
+	OR ft_decode = 'NYCT Subway Yard'
+	OR ft_decode = 'Metro-North Maintenance and Other Facility'
+	OR ft_decode = 'Metro-North Yard'
+	OR ft_decode = 'LIRR Maintenance and Other Facility'
+	OR ft_decode = 'LIRR Yard'
+	OR ft_decode = 'Amtrak Maintenance and Other Facility'
+	OR ft_decode = 'Amtrak Yard');
+
 -- facilities
 INSERT INTO
 facilities(
@@ -151,45 +170,15 @@ SELECT
 	FALSE,
 	-- groupquarters
 	FALSE
-FROM
-	dcp_facilities_sfpsd
-WHERE 1=1
-	AND (ft_decode = 'City-State Park'
-	OR ft_decode = 'PANYNJ Bus Terminal'
-	OR ft_decode = 'Wastewater Treatment Plant'
-	OR ft_decode = 'Public Park and Ride Lot'
-	OR ft_decode = 'MTA Paratransit Vehicle Depot'
-	OR ft_decode = 'MTA Bus Depot'
-	OR ft_decode = 'NYCT Maintenance and Other Facility'
-	OR ft_decode = 'NYCT Subway Yard'
-	OR ft_decode = 'Metro-North Maintenance and Other Facility'
-	OR ft_decode = 'Metro-North Yard'
-	OR ft_decode = 'LIRR Maintenance and Other Facility'
-	OR ft_decode = 'LIRR Yard'
-	OR ft_decode = 'Amtrak Maintenance and Other Facility'
-	OR ft_decode = 'Amtrak Yard');
+FROM dcp_facilities_sfpsd_facdbview;
 
 -- facdb_uid_key
 -- insert the new values into the key table
 INSERT INTO facdb_uid_key
 SELECT hash
-FROM dcp_facilities_sfpsd
+FROM dcp_facilities_sfpsd_facdbview
 WHERE hash NOT IN (
-SELECT hash FROM facdb_uid_key
-) AND (ft_decode = 'City-State Park'
-	OR ft_decode = 'PANYNJ Bus Terminal'
-	OR ft_decode = 'Wastewater Treatment Plant'
-	OR ft_decode = 'Public Park and Ride Lot'
-	OR ft_decode = 'MTA Paratransit Vehicle Depot'
-	OR ft_decode = 'MTA Bus Depot'
-	OR ft_decode = 'NYCT Maintenance and Other Facility'
-	OR ft_decode = 'NYCT Subway Yard'
-	OR ft_decode = 'Metro-North Maintenance and Other Facility'
-	OR ft_decode = 'Metro-North Yard'
-	OR ft_decode = 'LIRR Maintenance and Other Facility'
-	OR ft_decode = 'LIRR Yard'
-	OR ft_decode = 'Amtrak Maintenance and Other Facility'
-	OR ft_decode = 'Amtrak Yard');
+SELECT hash FROM facdb_uid_key);
 -- JOIN uid FROM KEY ONTO DATABASE
 UPDATE facilities AS f
 SET uid = k.uid
@@ -233,15 +222,17 @@ WHERE facilities.hash = dcp_facilities_sfpsd.hash;
 INSERT INTO
 facdb_agencyid(
 	uid,
-	overabbrev,
 	idagency,
-	idname
+	idname,
+	idfield,
+	idtable
 )
 SELECT
 	uid,
-	'NA',
 	gid,
-	'gid'
+	'Global ID',
+	'gid',
+	'dcp_facilities_sfpsd'
 FROM dcp_facilities_sfpsd, facilities
 WHERE facilities.hash = dcp_facilities_sfpsd.hash;
 

@@ -1,3 +1,12 @@
+DROP VIEW doe_facilities_busroutesgarages_facdbview;
+CREATE VIEW doe_facilities_schoolsbluebook_facdbview AS 
+SELECT * FROM doe_facilities_schoolsbluebook
+WHERE
+	RIGHT(org_id,3) <> 'SPE'
+	AND RIGHT(org_id,3) <> 'AAC'
+	AND RIGHT(org_id,3) <> 'UFT';
+
+
 --facilities
 INSERT INTO
 facilities(
@@ -169,24 +178,15 @@ SELECT
 	FALSE,
 	-- groupquarters
 	FALSE
-FROM
-	doe_facilities_schoolsbluebook
-WHERE
-	RIGHT(org_id,3) <> 'SPE'
-	AND RIGHT(org_id,3) <> 'AAC'
-	AND RIGHT(org_id,3) <> 'UFT';
+FROM doe_facilities_schoolsbluebook_facdbview;
 
 -- facdb_uid_key
 -- insert the new values into the key table
 INSERT INTO facdb_uid_key
 SELECT hash
-FROM doe_facilities_schoolsbluebook
+FROM doe_facilities_schoolsbluebook_facdbview
 WHERE hash NOT IN (
-SELECT hash FROM facdb_uid_key
-)
-AND RIGHT(org_id,3) <> 'SPE'
-AND RIGHT(org_id,3) <> 'AAC'
-AND RIGHT(org_id,3) <> 'UFT';
+SELECT hash FROM facdb_uid_key);
 -- JOIN uid FROM KEY ONTO DATABASE
 UPDATE facilities AS f
 SET uid = k.uid
@@ -225,15 +225,17 @@ WHERE facilities.hash = doe_facilities_schoolsbluebook.hash;
 INSERT INTO
 facdb_agencyid(
 	uid,
-	overabbrev,
 	idagency,
-	idname
+	idname,
+	idfield,
+	idtable
 )
 SELECT
 	uid,
-	'NYCDOE',
 	bldg_id,
-	'DOE Building ID'
+	'DOE Building ID',
+	'bldg_id',
+	'doe_facilities_schoolsbluebook'
 FROM doe_facilities_schoolsbluebook, facilities
 WHERE facilities.hash = doe_facilities_schoolsbluebook.hash;
 

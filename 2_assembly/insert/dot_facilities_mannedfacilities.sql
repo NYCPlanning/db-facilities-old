@@ -155,15 +155,17 @@ WHERE facilities.hash = dot_facilities_mannedfacilities.hash;
 INSERT INTO
 facdb_agencyid(
 	uid,
-	overabbrev,
 	idagency,
-	idname
+	idname,
+	idfield,
+	idtable
 )
 SELECT
 	uid,
-	'DOT',
 	gid,
-	'gid'
+	'Global ID',
+	'gid',
+	'dot_facilities_mannedfacilities'
 FROM dot_facilities_mannedfacilities, facilities
 WHERE facilities.hash = dot_facilities_mannedfacilities.hash;
 

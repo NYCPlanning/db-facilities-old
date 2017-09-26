@@ -1,3 +1,37 @@
+DROP VIEW nysed_facilities_activeinstitutions_facdbview;
+CREATE VIEW nysed_facilities_activeinstitutions_facdbview AS 
+SELECT * FROM 
+	((SELECT
+		nysed_facilities_activeinstitutions.*,
+		nysed_nonpublicenrollment.*,
+		(CASE 
+			WHEN (prek::numeric+halfk::numeric+fullk::numeric+gr1::numeric+gr2::numeric+gr3::numeric+gr4::numeric+gr5::numeric+gr6::numeric+uge::numeric+gr7::numeric+gr8::numeric+gr9::numeric+gr10::numeric+gr11::numeric+gr12::numeric+ugs::numeric) IS NOT NULL THEN (prek::numeric+halfk::numeric+fullk::numeric+gr1::numeric+gr2::numeric+gr3::numeric+gr4::numeric+gr5::numeric+gr6::numeric+uge::numeric+gr7::numeric+gr8::numeric+gr9::numeric+gr10::numeric+gr11::numeric+gr12::numeric+ugs::numeric)
+			ELSE NULL
+		END) AS enrollment
+		FROM nysed_facilities_activeinstitutions
+		LEFT JOIN nysed_nonpublicenrollment
+		ON trim(replace(nysed_nonpublicenrollment.beds_code,',',''),' ')::text = nysed_facilities_activeinstitutions.sed_code::text
+		) AS nysed_facilities_activeinstitutions
+WHERE
+	(Institution_Type_Desc = 'PUBLIC SCHOOLS' AND Institution_Sub_Type_Desc LIKE '%GED%')
+	OR Institution_Sub_Type_Desc LIKE '%CHARTER SCHOOL%'
+	OR (Institution_Type_Desc <> 'PUBLIC SCHOOLS'
+	AND Institution_Type_Desc <> 'NON-IMF SCHOOLS'
+	AND Institution_Type_Desc <> 'GOVERNMENT AGENCIES' -- MAY ACTUALLY WANT TO USE THESE
+	AND Institution_Type_Desc <> 'INDEPENDENT ORGANIZATIONS'
+	AND Institution_Type_Desc <> 'LIBRARY SYSTEMS'
+	AND Institution_Type_Desc <> 'LOCAL GOVERNMENTS'
+	AND Institution_Type_Desc <> 'SCHOOL DISTRICTS'
+	AND Institution_Sub_Type_Desc <> 'PUBLIC LIBRARIES'
+	AND Institution_Sub_Type_Desc <> 'HISTORICAL RECORDS REPOSITORIES'
+	AND Institution_Sub_Type_Desc <> 'CHARTER CORPORATION'
+	AND Institution_Sub_Type_Desc <> 'HOME BOUND'
+	AND Institution_Sub_Type_Desc <> 'HOME INSTRUCTED'
+	AND Institution_Sub_Type_Desc <> 'NYC BUREAU'
+	AND Institution_Sub_Type_Desc <> 'NYC NETWORK'
+	AND Institution_Sub_Type_Desc <> 'OUT OF DISTRICT PLACEMENT'
+	AND Institution_Sub_Type_Desc <> 'BUILDINGS UNDER CONSTRUCTION'));
+
 -- facilities
 INSERT INTO
 facilities(
@@ -173,75 +207,14 @@ SELECT
 			WHEN Institution_Sub_Type_Desc LIKE '%RESIDENTIAL%' THEN TRUE
 			ELSE FALSE
 		END)
-FROM
-	(SELECT
-		nysed_facilities_activeinstitutions.*,
-		nysed_nonpublicenrollment.*,
-		(CASE 
-			WHEN (prek::numeric+halfk::numeric+fullk::numeric+gr1::numeric+gr2::numeric+gr3::numeric+gr4::numeric+gr5::numeric+gr6::numeric+uge::numeric+gr7::numeric+gr8::numeric+gr9::numeric+gr10::numeric+gr11::numeric+gr12::numeric+ugs::numeric) IS NOT NULL THEN (prek::numeric+halfk::numeric+fullk::numeric+gr1::numeric+gr2::numeric+gr3::numeric+gr4::numeric+gr5::numeric+gr6::numeric+uge::numeric+gr7::numeric+gr8::numeric+gr9::numeric+gr10::numeric+gr11::numeric+gr12::numeric+ugs::numeric)
-			ELSE NULL
-		END) AS enrollment
-		FROM nysed_facilities_activeinstitutions
-		LEFT JOIN nysed_nonpublicenrollment
-		ON trim(replace(nysed_nonpublicenrollment.beds_code,',',''),' ')::text = nysed_facilities_activeinstitutions.sed_code::text
-		) AS nysed_facilities_activeinstitutions
-WHERE
-	(Institution_Type_Desc = 'PUBLIC SCHOOLS' AND Institution_Sub_Type_Desc LIKE '%GED%')
-	OR Institution_Sub_Type_Desc LIKE '%CHARTER SCHOOL%'
-	OR (Institution_Type_Desc <> 'PUBLIC SCHOOLS'
-	AND Institution_Type_Desc <> 'NON-IMF SCHOOLS'
-	AND Institution_Type_Desc <> 'GOVERNMENT AGENCIES' -- MAY ACTUALLY WANT TO USE THESE
-	AND Institution_Type_Desc <> 'INDEPENDENT ORGANIZATIONS'
-	AND Institution_Type_Desc <> 'LIBRARY SYSTEMS'
-	AND Institution_Type_Desc <> 'LOCAL GOVERNMENTS'
-	AND Institution_Type_Desc <> 'SCHOOL DISTRICTS'
-	AND Institution_Sub_Type_Desc <> 'PUBLIC LIBRARIES'
-	AND Institution_Sub_Type_Desc <> 'HISTORICAL RECORDS REPOSITORIES'
-	AND Institution_Sub_Type_Desc <> 'CHARTER CORPORATION'
-	AND Institution_Sub_Type_Desc <> 'HOME BOUND'
-	AND Institution_Sub_Type_Desc <> 'HOME INSTRUCTED'
-	AND Institution_Sub_Type_Desc <> 'NYC BUREAU'
-	AND Institution_Sub_Type_Desc <> 'NYC NETWORK'
-	AND Institution_Sub_Type_Desc <> 'OUT OF DISTRICT PLACEMENT'
-	AND Institution_Sub_Type_Desc <> 'BUILDINGS UNDER CONSTRUCTION');
+FROM nysed_facilities_activeinstitutions_facdbview;
 
 -- facdb_uid_key
 -- insert the new values into the key table
 INSERT INTO facdb_uid_key
 SELECT hash
-FROM (SELECT
-		nysed_facilities_activeinstitutions.*,
-		nysed_nonpublicenrollment.*,
-		(CASE 
-			WHEN (prek::numeric+halfk::numeric+fullk::numeric+gr1::numeric+gr2::numeric+gr3::numeric+gr4::numeric+gr5::numeric+gr6::numeric+uge::numeric+gr7::numeric+gr8::numeric+gr9::numeric+gr10::numeric+gr11::numeric+gr12::numeric+ugs::numeric) IS NOT NULL THEN (prek::numeric+halfk::numeric+fullk::numeric+gr1::numeric+gr2::numeric+gr3::numeric+gr4::numeric+gr5::numeric+gr6::numeric+uge::numeric+gr7::numeric+gr8::numeric+gr9::numeric+gr10::numeric+gr11::numeric+gr12::numeric+ugs::numeric)
-			ELSE NULL
-		END) AS enrollment
-		FROM nysed_facilities_activeinstitutions
-		LEFT JOIN nysed_nonpublicenrollment
-		ON trim(replace(nysed_nonpublicenrollment.beds_code,',',''),' ')::text = nysed_facilities_activeinstitutions.sed_code::text
-		) AS nysed_facilities_activeinstitutions
-WHERE
-	(Institution_Type_Desc = 'PUBLIC SCHOOLS' AND Institution_Sub_Type_Desc LIKE '%GED%')
-	OR Institution_Sub_Type_Desc LIKE '%CHARTER SCHOOL%'
-	OR (Institution_Type_Desc <> 'PUBLIC SCHOOLS'
-	AND Institution_Type_Desc <> 'NON-IMF SCHOOLS'
-	AND Institution_Type_Desc <> 'GOVERNMENT AGENCIES' -- MAY ACTUALLY WANT TO USE THESE
-	AND Institution_Type_Desc <> 'INDEPENDENT ORGANIZATIONS'
-	AND Institution_Type_Desc <> 'LIBRARY SYSTEMS'
-	AND Institution_Type_Desc <> 'LOCAL GOVERNMENTS'
-	AND Institution_Type_Desc <> 'SCHOOL DISTRICTS'
-	AND Institution_Sub_Type_Desc <> 'PUBLIC LIBRARIES'
-	AND Institution_Sub_Type_Desc <> 'HISTORICAL RECORDS REPOSITORIES'
-	AND Institution_Sub_Type_Desc <> 'CHARTER CORPORATION'
-	AND Institution_Sub_Type_Desc <> 'HOME BOUND'
-	AND Institution_Sub_Type_Desc <> 'HOME INSTRUCTED'
-	AND Institution_Sub_Type_Desc <> 'NYC BUREAU'
-	AND Institution_Sub_Type_Desc <> 'NYC NETWORK'
-	AND Institution_Sub_Type_Desc <> 'OUT OF DISTRICT PLACEMENT'
-	AND Institution_Sub_Type_Desc <> 'BUILDINGS UNDER CONSTRUCTION')
-AND hash NOT IN (
-SELECT hash FROM facdb_uid_key
-);
+FROM nysed_facilities_activeinstitutions_facdbview
+(SELECT hash FROM facdb_uid_key);
 -- JOIN uid FROM KEY ONTO DATABASE
 UPDATE facilities AS f
 SET uid = k.uid
@@ -265,15 +238,17 @@ WHERE facilities.hash = nysed_facilities_activeinstitutions.hash;
 INSERT INTO
 facdb_agencyid(
 	uid,
-	overabbrev,
 	idagency,
-	idname
+	idname,
+	idfield,
+	idtable
 )
 SELECT
 	uid,
-	'NA',
 	Sed_Code,
-	'Sed_Code'
+	'Sed Code',
+	'Sed_Code',
+	'nysed_facilities_activeinstitutions'
 FROM nysed_facilities_activeinstitutions, facilities
 WHERE facilities.hash = nysed_facilities_activeinstitutions.hash;
 
@@ -297,38 +272,8 @@ SELECT
 		WHEN enrollment IS NOT NULL THEN 'Seats'
 		ELSE NULL
 	END)
-FROM (SELECT
-		nysed_facilities_activeinstitutions.*,
-		nysed_nonpublicenrollment.*,
-		(CASE 
-			WHEN (prek::numeric+halfk::numeric+fullk::numeric+gr1::numeric+gr2::numeric+gr3::numeric+gr4::numeric+gr5::numeric+gr6::numeric+uge::numeric+gr7::numeric+gr8::numeric+gr9::numeric+gr10::numeric+gr11::numeric+gr12::numeric+ugs::numeric) IS NOT NULL THEN (prek::numeric+halfk::numeric+fullk::numeric+gr1::numeric+gr2::numeric+gr3::numeric+gr4::numeric+gr5::numeric+gr6::numeric+uge::numeric+gr7::numeric+gr8::numeric+gr9::numeric+gr10::numeric+gr11::numeric+gr12::numeric+ugs::numeric)
-			ELSE NULL
-		END) AS enrollment
-		FROM nysed_facilities_activeinstitutions
-		LEFT JOIN nysed_nonpublicenrollment
-		ON trim(replace(nysed_nonpublicenrollment.beds_code,',',''),' ')::text = nysed_facilities_activeinstitutions.sed_code::text
-		) AS nysed_facilities_activeinstitutions
-WHERE
-	(Institution_Type_Desc = 'PUBLIC SCHOOLS' AND Institution_Sub_Type_Desc LIKE '%GED%')
-	OR Institution_Sub_Type_Desc LIKE '%CHARTER SCHOOL%'
-	OR (Institution_Type_Desc <> 'PUBLIC SCHOOLS'
-	AND Institution_Type_Desc <> 'NON-IMF SCHOOLS'
-	AND Institution_Type_Desc <> 'GOVERNMENT AGENCIES' -- MAY ACTUALLY WANT TO USE THESE
-	AND Institution_Type_Desc <> 'INDEPENDENT ORGANIZATIONS'
-	AND Institution_Type_Desc <> 'LIBRARY SYSTEMS'
-	AND Institution_Type_Desc <> 'LOCAL GOVERNMENTS'
-	AND Institution_Type_Desc <> 'SCHOOL DISTRICTS'
-	AND Institution_Sub_Type_Desc <> 'PUBLIC LIBRARIES'
-	AND Institution_Sub_Type_Desc <> 'HISTORICAL RECORDS REPOSITORIES'
-	AND Institution_Sub_Type_Desc <> 'CHARTER CORPORATION'
-	AND Institution_Sub_Type_Desc <> 'HOME BOUND'
-	AND Institution_Sub_Type_Desc <> 'HOME INSTRUCTED'
-	AND Institution_Sub_Type_Desc <> 'NYC BUREAU'
-	AND Institution_Sub_Type_Desc <> 'NYC NETWORK'
-	AND Institution_Sub_Type_Desc <> 'OUT OF DISTRICT PLACEMENT'
-	AND Institution_Sub_Type_Desc <> 'BUILDINGS UNDER CONSTRUCTION') 
-AND facilities.hash = nysed_facilities_activeinstitutions.hash,
-facilities;
+FROM nysed_facilities_activeinstitutions_facdbview 
+AND facilities.hash = nysed_facilities_activeinstitutions.hash;
 
 -- oversight
 INSERT INTO

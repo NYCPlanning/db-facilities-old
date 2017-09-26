@@ -1,3 +1,11 @@
+DROP VIEW usnps_facilities_parks_facdbview;
+CREATE VIEW usnps_facilities_parks_facdbview AS
+SELECT * FROM usnps_facilities_parks
+WHERE
+	state = 'NY'
+	AND unit_code <> 'GATE'
+	AND unit_code <> 'FIIS';
+
 -- facilities
 INSERT INTO
 facilities(
@@ -87,23 +95,15 @@ SELECT
 	FALSE,
 	-- groupquarters
 	FALSE
-FROM
-	usnps_facilities_parks
-WHERE
-	state = 'NY'
-	AND unit_code <> 'GATE'
-	AND unit_code <> 'FIIS';
+FROM usnps_facilities_parks_facdbview;
 
 
 -- insert the new values into the key table
 INSERT INTO facdb_uid_key
 SELECT hash
-FROM usnps_facilities_parks
+FROM usnps_facilities_parks_facdbview
 WHERE hash NOT IN (
-SELECT hash FROM facdb_uid_key)
-AND state = 'NY'
-	AND unit_code <> 'GATE'
-	AND unit_code <> 'FIIS';
+SELECT hash FROM facdb_uid_key);
 -- JOIN uid FROM KEY ONTO DATABASE
 UPDATE facilities AS f
 SET uid = k.uid
@@ -127,15 +127,17 @@ WHERE facilities.hash = usnps_facilities_parks.hash;
 INSERT INTO
 facdb_agencyid(
 	uid,
-	overabbrev,
 	idagency,
-	idname
+	idname,
+	idfield,
+	idtable
 )
 SELECT
 	uid,
-	'NA',
 	unit_code,
-	'unit_code'
+	'Unit Code',
+	'unit_code',
+	'usnps_facilities_parks'
 FROM usnps_facilities_parks, facilities
 WHERE facilities.hash = usnps_facilities_parks.hash;
 

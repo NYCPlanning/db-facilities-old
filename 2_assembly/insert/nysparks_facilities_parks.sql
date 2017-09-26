@@ -1,3 +1,13 @@
+DROP VIEW nysparks_facilities_parks_facdbview;
+CREATE VIEW nysparks_facilities_parks_facdbview AS
+SELECT * FROM nysparks_facilities_parks
+WHERE
+	county = 'New York'
+	OR county = 'Bronx'
+	OR county = 'Kings'
+	OR county = 'Queens'
+	OR county = 'Richmond';
+
 -- facilities
 INSERT INTO
 facilities(
@@ -95,27 +105,15 @@ SELECT
 	FALSE,
 	-- groupquarters
 	FALSE
-FROM
-	nysparks_facilities_parks
-WHERE
-	county = 'New York'
-	OR county = 'Bronx'
-	OR county = 'Kings'
-	OR county = 'Queens'
-	OR county = 'Richmond';
+FROM nysparks_facilities_parks_facdbview;
 
 -- facdb_uid_key
 -- insert the new values into the key table
 INSERT INTO facdb_uid_key
 SELECT hash
-FROM nysparks_facilities_parks
+FROM nysparks_facilities_parks_facdbview
 WHERE hash NOT IN (
-SELECT hash FROM facdb_uid_key)
-AND county = 'New York'
-	OR county = 'Bronx'
-	OR county = 'Kings'
-	OR county = 'Queens'
-	OR county = 'Richmond';
+SELECT hash FROM facdb_uid_key);
 -- JOIN uid FROM KEY ONTO DATABASE
 UPDATE facilities AS f
 SET uid = k.uid

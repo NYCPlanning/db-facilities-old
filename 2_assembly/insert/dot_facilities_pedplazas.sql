@@ -127,15 +127,17 @@ WHERE facilities.hash = dot_facilities_pedplazas.hash;
 INSERT INTO
 facdb_agencyid(
 	uid,
-	overabbrev,
 	idagency,
-	idname
+	idname,
+	idfield,
+	idtable
 )
 SELECT
 	uid,
-	'NYCDOT',
 	mapid,
-	'Map ID'
+	'Map ID',
+	'mapid',
+	'dot_facilities_pedplazas'
 FROM dot_facilities_pedplazas, facilities
 WHERE facilities.hash = dot_facilities_pedplazas.hash;
 

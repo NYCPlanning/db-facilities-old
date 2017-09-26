@@ -125,31 +125,11 @@ SELECT
 FROM doitt_facilities_libraries, facilities
 WHERE facilities.hash = doitt_facilities_libraries.hash;
 
---INSERT INTO
---facdb_agencyid(
---	uid,
---	overabbrev,
---	idagency,
---	idname
---)
---SELECT
---	uid,
---
---FROM doitt_facilities_libraries, facilities
---WHERE facilities.hash = doitt_facilities_libraries.hash;
---
---INSERT INTO
---facdb_area(
---	uid,
---	area,
---	areatype
---)
---SELECT
---	uid,
---
---FROM doitt_facilities_libraries, facilities
---WHERE facilities.hash = doitt_facilities_libraries.hash;
+-- agency id NA
 
+-- area NA
+
+-- bbl
 INSERT INTO
 facdb_bbl(
 	uid,
@@ -161,6 +141,7 @@ SELECT
 FROM doitt_facilities_libraries, facilities
 WHERE facilities.hash = doitt_facilities_libraries.hash;
 
+--bin
 INSERT INTO
 facdb_bin(
 	uid,
@@ -172,18 +153,9 @@ SELECT
 FROM doitt_facilities_libraries, facilities
 WHERE facilities.hash = doitt_facilities_libraries.hash;
 
--- INSERT INTO
--- facdb_capacity(
---   uid,
---   capacity,
---   capacitytype
--- )
--- SELECT
--- 	uid,
+-- capacity NA
 
--- FROM doitt_facilities_libraries, facilities
--- WHERE facilities.hash = doitt_facilities_libraries.hash;
-
+-- oversight
 INSERT INTO
 facdb_oversight(
 	uid,
@@ -205,15 +177,4 @@ SELECT
 FROM doitt_facilities_libraries, facilities
 WHERE facilities.hash = doitt_facilities_libraries.hash;
 
---INSERT INTO
---facdb_utilization(
---	uid,
---	util,
---	utiltype
---)
---SELECT
---	uid,
---
---FROM doitt_facilities_libraries, facilities
---WHERE facilities.hash = doitt_facilities_libraries.hash;
---
+-- utilization NA 

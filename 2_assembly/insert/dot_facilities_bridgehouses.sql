@@ -121,15 +121,17 @@ WHERE facilities.hash = dot_facilities_bridgehouses.hash;
 INSERT INTO
 facdb_agencyid(
 	uid,
-	overabbrev,
 	idagency,
-	idname
+	idname,
+	idfield,
+	idtable
 )
 SELECT
 	uid,
-	'DOT',
 	id,
-	'id'
+	'id',
+	'id',
+	'dot_facilities_bridgehouses'
 FROM dot_facilities_bridgehouses, facilities
 WHERE facilities.hash = dot_facilities_bridgehouses.hash;
 

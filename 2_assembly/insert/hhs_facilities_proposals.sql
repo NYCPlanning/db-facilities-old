@@ -1,3 +1,26 @@
+DROP VIEW hhs_facilities_proposals_facdbview;
+CREATE VIEW hhs_facilities_proposals_facdbview AS 
+SELECT DISTINCT 
+	hash,
+	agency_name,
+    provider_name,
+    program_name,
+    site_name,
+    address_1,
+    zip_code
+FROM hhs_facilities_proposals
+WHERE
+	program_name NOT LIKE '%Summer Youth%'
+	AND program_name NOT LIKE '%Specialized FFC%'
+	AND program_name NOT LIKE '%Specialized NSP%'
+	AND program_name NOT LIKE '%Specialized PC%'
+	AND program_name NOT LIKE '%HIV%'
+	AND program_name NOT LIKE '%AIDS%'
+	AND program_name NOT LIKE '%HASA%'
+	AND agency_name NOT LIKE '%Homeless%'
+	AND agency_name NOT LIKE '%Housing%'
+	AND contract_end_date::date > CURRENT_TIMESTAMP;
+
 -- facilities
 INSERT INTO
 facilities(
@@ -173,44 +196,15 @@ SELECT
 	NULL,
 	-- groupquarters
 	NULL
-FROM
-	hhs_facilities_proposals
-WHERE
-	program_name NOT LIKE '%Summer Youth%'
-	AND program_name NOT LIKE '%Specialized FFC%'
-	AND program_name NOT LIKE '%Specialized NSP%'
-	AND program_name NOT LIKE '%Specialized PC%'
-	AND program_name NOT LIKE '%HIV%'
-	AND program_name NOT LIKE '%AIDS%'
-	AND program_name NOT LIKE '%HASA%'
-	AND agency_name NOT LIKE '%Homeless%'
-	AND agency_name NOT LIKE '%Housing%'
-	AND contract_end_date::date > CURRENT_TIMESTAMP
-GROUP BY
-	hash,
-	agency_name,
-    provider_name,
-    program_name,
-    site_name,
-    address_1,
-    zip_code;
+FROM hhs_facilities_proposals_facdbview;
 
 -- facdb_uid_key
 -- insert the new values into the key table
 INSERT INTO facdb_uid_key
 SELECT hash
-FROM hhs_facilities_proposals
+FROM hhs_facilities_proposals_facdbview
 WHERE hash NOT IN (
-SELECT hash FROM facdb_uid_key
-)
-GROUP BY
-	hash,
-	agency_name,
-    provider_name,
-    program_name,
-    site_name,
-    address_1,
-    zip_code;
+SELECT hash FROM facdb_uid_key);
 -- JOIN uid FROM KEY ONTO DATABASE
 UPDATE facilities AS f
 SET uid = k.uid
@@ -228,76 +222,23 @@ SELECT
 	uid,
 	'hhs_facilities_proposals'
 FROM hhs_facilities_proposals, facilities
-WHERE facilities.hash = hhs_facilities_proposals.hash
-GROUP BY
-    facilities.uid,
-	hhs_facilities_proposals.hash,
-	agency_name,
-    provider_name,
-    program_name,
-    site_name,
-	hhs_facilities_proposals.Address_1,
-	zip_code;
+WHERE facilities.hash = hhs_facilities_proposals.hash;
 
 -- agency id
 INSERT INTO
 facdb_agencyid(
 	uid,
-	overabbrev,
 	idagency,
-	idname
+	idname,
+	idfield,
+	idtable
 )
 SELECT
 	uid,
-	(CASE
-        WHEN agency_name LIKE '%DOE%'
-        OR agency_name LIKE '%Department of Education%'
-		THEN 'NYCDOE'
-        WHEN agency_name LIKE '%SBS%'
-		OR agency_name LIKE '%Small Business Services%'
-		THEN 'NYCSBS'
-	    WHEN agency_name LIKE '%DHS%'
-		OR agency_name LIKE '%Homeless Services%'
-		THEN 'NYCDHS'
-	    WHEN agency_name LIKE '%HRA%'
-		OR agency_name LIKE '%Human Resources%'
-		THEN 'NYCHRA/DSS'
-	    WHEN agency_name LIKE '%DFTA%'
-		OR agency_name LIKE '%Aging%'
-        THEN 'NYCDFTA'
-	    WHEN agency_name LIKE '%HPD%'
-		OR agency_name LIKE '%Housing Preservation%'
-		THEN 'NYCHPD'
-	    WHEN agency_name LIKE '%DOHMH%'
-		OR agency_name LIKE '%Health and Mental Hygiene%'
-		THEN 'NYCDOHMH'
-	    WHEN agency_name LIKE '%ACS%'
-        OR agency_name LIKE '%Children%'
-        THEN 'NYCACS'
-        WHEN agency_name LIKE '%NYPD%'
-		OR agency_name LIKE '%Police%'
-		THEN 'NYPD'
-	    WHEN agency_name LIKE '%DOP%'
-		OR agency_name LIKE '%Probation%'
-		THEN 'NYCDOP'
-	    WHEN agency_name LIKE '%DYCD%'
-		OR agency_name LIKE '%Youth and Community%'
-		THEN 'NYCDYCD'
-	    WHEN agency_name LIKE '%MOCJ%'
-		OR agency_name LIKE '%Criminal Justice%'
-		OR agency_name LIKE '%MAYORALITY%'
-		OR agency_name LIKE '%Mayor%'
-		THEN 'NYCMO'
-	    WHEN agency_name LIKE '%Social Services%'
-		OR agency_name LIKE '%DSS%'
-		THEN 'NYCHRA/DSS'
-	    WHEN agency_name LIKE '%Correction%'
-		OR agency_name LIKE '%DOC%'
-		THEN 'NYCDOC'
-	    ELSE CONCAT('NYC', UPPER(agency_name))
-	END),
-        proposal_id,
-        'proposal_id'
+    proposal_id,
+    'Proposal ID',
+    'proposal_id',
+    'hhs_facilities_proposals'
 FROM hhs_facilities_proposals, facilities
 WHERE facilities.hash = hhs_facilities_proposals.hash
 GROUP BY

@@ -128,15 +128,17 @@ WHERE facilities.hash = dsny_facilities_mtsgaragemaintenance.hash;
 INSERT INTO
 facdb_agencyid(
 	uid,
-	overabbrev,
 	idagency,
-	idname
+	idname,
+	idfield,
+	idtable
 )
 SELECT
 	uid,
-	'NA',
 	gid,
-	'gid'
+	'Global ID',
+	'gid',
+	'dsny_facilities_mtsgaragemaintenance'
 FROM dsny_facilities_mtsgaragemaintenance, facilities
 WHERE facilities.hash = dsny_facilities_mtsgaragemaintenance.hash;
 

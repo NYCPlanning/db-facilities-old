@@ -130,15 +130,17 @@ WHERE
 INSERT INTO
 facdb_agencyid(
 	uid,
-	overabbrev,
 	idagency,
-	idname
+	idname,
+	idfield,
+	idtable
 )
 SELECT
 	uid,
-	'NYCDCP',
 	dcp_record,
-	'DCP Record ID'
+	'DCP Record ID',
+	'dcp_record',
+	'dcp_facilities_pops'
 FROM
 	dcp_facilities_pops,
 	facilities

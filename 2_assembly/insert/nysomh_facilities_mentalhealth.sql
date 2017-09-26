@@ -1,3 +1,13 @@
+DROP VIEW nysomh_facilities_mentalhealth_facdbview;
+CREATE VIEW nysomh_facilities_mentalhealth_facdbview AS
+SELECT * FROM nysomh_facilities_mentalhealth
+WHERE
+	program_county = 'New York'
+	OR program_county = 'Bronx'
+	OR program_county = 'Kings'
+	OR program_county = 'Queens'
+	OR program_county = 'Richmond';
+
 -- facilities
 INSERT INTO
 facilities(
@@ -116,29 +126,17 @@ SELECT
 			WHEN Program_Category_Description LIKE '%Residential%' THEN TRUE
 			ELSE FALSE
 		END)
-FROM
-	nysomh_facilities_mentalhealth
-WHERE
-	program_county = 'New York'
-	OR program_county = 'Bronx'
-	OR program_county = 'Kings'
-	OR program_county = 'Queens'
-	OR program_county = 'Richmond';
+FROM nysomh_facilities_mentalhealth_facdbview;
+
 
 
 -- facdb_uid_key
 -- insert the new values into the key table
 INSERT INTO facdb_uid_key
 SELECT hash
-FROM nysomh_facilities_mentalhealth
+FROM nysomh_facilities_mentalhealth_facdbview
 WHERE hash NOT IN (
-SELECT hash FROM facdb_uid_key
-)
-AND program_county = 'New York'
-	OR program_county = 'Bronx'
-	OR program_county = 'Kings'
-	OR program_county = 'Queens'
-	OR program_county = 'Richmond';
+SELECT hash FROM facdb_uid_key);
 -- JOIN uid FROM KEY ONTO DATABASE
 UPDATE facilities AS f
 SET uid = k.uid
@@ -162,15 +160,17 @@ WHERE facilities.hash = nysomh_facilities_mentalhealth.hash;
 INSERT INTO
 facdb_agencyid(
 	uid,
-	overabbrev,
 	idagency,
-	idname
+	idname,
+	idfield,
+	idtable
 )
 SELECT
 	uid,
-	'nysomh_facilities_mentalhealth',
 	sponsor_code||'-'||facility_code||'-'||program_code,
-	'sponsor_code-facility_code-program_code'
+	'NYSOMH ID'
+	'sponsor_code-facility_code-program_code',
+	'nysomh_facilities_mentalhealth'
 FROM nysomh_facilities_mentalhealth, facilities
 WHERE facilities.hash = nysomh_facilities_mentalhealth.hash;
 

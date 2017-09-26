@@ -14,7 +14,7 @@ pwd
 echo 'Loading FacDB helper files...'
 node loader.js install facdb_datasources
 node loader.js install facdb_uid_key
-node loader.js install dcp_facilities_togeocode
+node loader.js install dcp_facilities_togeocode # data copied from websites
 
 echo 'Loading open source datasets...'
 ## Data you probably already have loaded
@@ -39,7 +39,7 @@ node loader.js install doe_facilities_universalprek
 node loader.js install dohmh_facilities_daycare
 node loader.js install dpr_parksproperties
 node loader.js install hhc_facilities_hospitals
-node loader.js install nycha_facilities_policeservice
+node loader.js install nycha_facilities_policeservice # File name changes
 node loader.js install nysdec_facilities_lands
 node loader.js install nysdec_facilities_solidwaste
 node loader.js install nysdoh_facilities_healthfacilities
@@ -71,7 +71,7 @@ node loader.js install hhs_facilities_proposals
 node loader.js install nysoasas_facilities_programs ## Being shared with us monthly by email in xlsx
 node loader.js install nysed_facilities_activeinstitutions ## Actually is open but need to figue out url
 node loader.js install nysed_nonpublicenrollment ## Actually is open but in xlsx that needs to be formatted
-node loader.js install omb_facilities_libraryvisits
+node loader.js install doitt_facilities_libraries # File name changes
 node loader.js install dycd_facilities_compass
 node loader.js install dycd_facilities_otherprograms
 node loader.js install hra_facilities_centers

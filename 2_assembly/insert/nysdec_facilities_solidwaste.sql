@@ -1,3 +1,13 @@
+DROP VIEW nysdec_facilities_solidwaste_facdbveiw;
+CREATE VIEW AS nysdec_facilities_solidwaste_facdbveiw
+SELECT * FROM nysdec_facilities_solidwaste
+WHERE
+	county = 'New York'
+	OR county = 'Bronx'
+	OR county = 'Kings'
+	OR county = 'Queens'
+	OR county = 'Richmond';
+
 -- facilities
 INSERT INTO
 facilities(
@@ -53,10 +63,9 @@ SELECT
 	-- borough
 		(CASE
 			WHEN county = 'New York' THEN 'Manhattan'
-			WHEN county = 'Bronx' THEN 'Bronx'
 			WHEN county = 'Kings' THEN 'Brooklyn'
-			WHEN county = 'Queens' THEN 'Queens'
 			WHEN county = 'Richmond' THEN 'Staten Island'
+			ELSE county
 		END),
 	-- zipcode
 	NULL,
@@ -118,27 +127,15 @@ SELECT
 	FALSE,
 	-- groupquarters
 	FALSE
-FROM
-	nysdec_facilities_solidwaste
-WHERE
-	county = 'New York'
-	OR county = 'Bronx'
-	OR county = 'Kings'
-	OR county = 'Queens'
-	OR county = 'Richmond';
+FROM nysdec_facilities_solidwaste_facdbveiw;
 
 -- facdb_uid_key
 -- insert the new values into the key table
 INSERT INTO facdb_uid_key
 SELECT hash
-FROM nysdec_facilities_solidwaste
+FROM nysdec_facilities_solidwaste_facdbveiw
 WHERE hash NOT IN (
-SELECT hash FROM facdb_uid_key
-) AND (county = 'New York'
-	OR county = 'Bronx'
-	OR county = 'Kings'
-	OR county = 'Queens'
-	OR county = 'Richmond');
+SELECT hash FROM facdb_uid_key);
 -- JOIN uid FROM KEY ONTO DATABASE
 UPDATE facilities AS f
 SET uid = k.uid

@@ -1,3 +1,13 @@
+DROP VIEW nysdoh_facilities_healthfacilities_facdbview;
+CREATE VIEW nysdoh_facilities_healthfacilities_facdbview AS
+SELECT * FROM nysdoh_facilities_healthfacilities
+WHERE
+	facility_county = 'New York'
+	OR facility_county = 'Bronx'
+	OR facility_county = 'Kings'
+	OR facility_county = 'Queens'
+	OR facility_county = 'Richmond';
+
 -- facilities
 INSERT INTO
 facilities(
@@ -125,27 +135,15 @@ SELECT
 			WHEN description LIKE '%Residential%' THEN TRUE
 			ELSE FALSE
 		END)
-FROM
-	nysdoh_facilities_healthfacilities AS f
-WHERE
-	facility_county = 'New York'
-	OR facility_county = 'Bronx'
-	OR facility_county = 'Kings'
-	OR facility_county = 'Queens'
-	OR facility_county = 'Richmond';
+FROM nysdoh_facilities_healthfacilities_facdbview;
 
 -- facdb_uid_key
 -- insert the new values into the key table
 INSERT INTO facdb_uid_key
 SELECT hash
-FROM nysdoh_facilities_healthfacilities
+FROM nysdoh_facilities_healthfacilities_facdbview
 WHERE hash NOT IN (
-SELECT hash FROM facdb_uid_key
-) AND (facility_county = 'New York'
-	OR facility_county = 'Bronx'
-	OR facility_county = 'Kings'
-	OR facility_county = 'Queens'
-	OR facility_county = 'Richmond');
+SELECT hash FROM facdb_uid_key);
 -- JOIN uid FROM KEY ONTO DATABASE
 UPDATE facilities AS f
 SET uid = k.uid
@@ -169,15 +167,17 @@ WHERE facilities.hash = nysdoh_facilities_healthfacilities.hash;
 INSERT INTO
 facdb_agencyid(
 	uid,
-	overabbrev,
 	idagency,
-	idname
+	idname,
+	idfield,
+	idtable
 )
 SELECT
 	uid,
-	'NYSDOH',
 	facility_id,
-	'NYSDOH Facility ID'
+	'NYSDOH Facility ID',
+	'facility_id',
+	'nysdoh_facilities_healthfacilities'
 FROM nysdoh_facilities_healthfacilities, facilities
 WHERE facilities.hash = nysdoh_facilities_healthfacilities.hash;
 

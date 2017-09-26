@@ -152,15 +152,17 @@ WHERE facilities.hash = doe_facilities_lcgms.hash;
 INSERT INTO
 facdb_agencyid(
 	uid,
-	overabbrev,
 	idagency,
-	idname
+	idname,
+	idfield,
+	idtable
 )
 SELECT
 	uid,
-	'NYCDOE',
 	locationcode,
-	'DOE Location Code'
+	'DOE Location Code',
+	'locationcode',
+	'doe_facilities_lcgms'
 FROM doe_facilities_lcgms, facilities
 WHERE facilities.hash = doe_facilities_lcgms.hash;
 

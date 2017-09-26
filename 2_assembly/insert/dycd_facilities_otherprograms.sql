@@ -1,3 +1,20 @@
+DROP VIEW dycd_facilities_otherprograms_facdbview;
+CREATE VIEW dycd_facilities_otherprograms_facdbview AS 
+SELECT DISTINCT
+	hash,
+    facility_name,
+    facility_type,
+    address_number,
+	street_name,
+	borough,
+	bbls,
+	bin,
+	x_coordinate,
+	y_coordinate,
+	provider_name,
+	date_source_data_updated
+FROM dycd_facilities_otherprograms;
+
 -- facilities
 INSERT INTO
 facilities(
@@ -98,43 +115,15 @@ SELECT
 	FALSE,
 	-- groupquarters
 	FALSE
-FROM
-	dycd_facilities_otherprograms
-GROUP BY
-	hash,
-    facility_name,
-    facility_type,
-    address_number,
-	street_name,
-	borough,
-	bbls,
-	bin,
-	x_coordinate,
-	y_coordinate,
-	provider_name,
-	date_source_data_updated;
+FROM dycd_facilities_otherprograms_facdbview;
 
 -- facdb_uid_key
 -- insert the new values into the key table
 INSERT INTO facdb_uid_key
 SELECT hash
-FROM dycd_facilities_otherprograms
+FROM dycd_facilities_otherprograms_facdbview
 WHERE hash NOT IN (
-SELECT hash FROM facdb_uid_key
-)
-GROUP BY
-	hash,
-    facility_name,
-    facility_type,
-    address_number,
-	street_name,
-	borough,
-	bbls,
-	bin,
-	x_coordinate,
-	y_coordinate,
-	provider_name,
-	date_source_data_updated;
+SELECT hash FROM facdb_uid_key);
 -- JOIN uid FROM KEY ONTO DATABASE
 UPDATE facilities AS f
 SET uid = k.uid
@@ -158,15 +147,17 @@ WHERE facilities.hash = dycd_facilities_otherprograms.hash;
 INSERT INTO
 facdb_agencyid(
 	uid,
-	overabbrev,
 	idagency,
-	idname
+	idname,
+	idfield,
+	idtable
 )
 SELECT
 	uid,
-	'NYCDYCD',
 	unique_id,
-	'DYCD unique_id'
+	'DYCD unique_id',
+	'unique_id',
+	'dycd_facilities_otherprograms'
 FROM dycd_facilities_otherprograms, facilities
 WHERE facilities.hash = dycd_facilities_otherprograms.hash;
 

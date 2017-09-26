@@ -1,3 +1,42 @@
+DROP VIEW nysopwdd_facilities_providers_facdbview;
+CREATE VIEW nysopwdd_facilities_providers_facdbview AS
+SELECT DISTINCT
+	hash,
+	Developmental_Disability_Services_Office,
+	Service_Provider_Agency,
+	Street_Address_,
+	Street_Address_Line_2,
+	City,
+	State,
+	Zip_Code,
+	Phone,
+	County,
+	Website_Url,
+	Intermediate_Care_Facilities_ICFs,
+	Individual_Residential_Alternative_IRA,
+	Family_Care,
+	Consolidated_Supports_And_Services,
+	Individual_Support_Services_ISSs,
+	Day_Training,
+	Day_Treatment,
+	Senior_Geriatric_Services,
+	Day_Habilitation,
+	Work_Shop,
+	Prevocational,
+	Supported_Employment_Enrollments,
+	Community_Habilitation,
+	Family_Support_Services,
+	Care_at_Home_Waiver_Services,
+	Developmental_Centers_And_Special_Population_Services,
+	Location_1
+FROM nysopwdd_facilities_providers
+WHERE
+	county = 'NEW YORK'
+	OR county = 'BRONX'
+	OR county = 'KINGS'
+	OR county = 'QUEENS'
+	OR county = 'RICHMOND';
+
 -- facilities
 INSERT INTO
 facilities(
@@ -110,86 +149,15 @@ SELECT
 			WHEN Individual_Residential_Alternative_IRA = 'Y' THEN TRUE
 			ELSE FALSE
 		END)
-FROM
-	nysopwdd_facilities_providers
-WHERE
-	county = 'NEW YORK'
-	OR county = 'BRONX'
-	OR county = 'KINGS'
-	OR county = 'QUEENS'
-	OR county = 'RICHMOND'
-GROUP BY
-	hash,
-	Developmental_Disability_Services_Office,
-	Service_Provider_Agency,
-	Street_Address_,
-	Street_Address_Line_2,
-	City,
-	State,
-	Zip_Code,
-	Phone,
-	County,
-	Website_Url,
-	Intermediate_Care_Facilities_ICFs,
-	Individual_Residential_Alternative_IRA,
-	Family_Care,
-	Consolidated_Supports_And_Services,
-	Individual_Support_Services_ISSs,
-	Day_Training,
-	Day_Treatment,
-	Senior_Geriatric_Services,
-	Day_Habilitation,
-	Work_Shop,
-	Prevocational,
-	Supported_Employment_Enrollments,
-	Community_Habilitation,
-	Family_Support_Services,
-	Care_at_Home_Waiver_Services,
-	Developmental_Centers_And_Special_Population_Services,
-	Location_1;
+FROM nysopwdd_facilities_providers_facdbview;
 
 -- facdb_uid_key
 -- insert the new values into the key table
 INSERT INTO facdb_uid_key
 SELECT hash
-FROM nysopwdd_facilities_providers
+FROM nysopwdd_facilities_providers_facdbview
 WHERE hash NOT IN (
-SELECT hash FROM facdb_uid_key
-)
-AND 	county = 'NEW YORK'
-	OR county = 'BRONX'
-	OR county = 'KINGS'
-	OR county = 'QUEENS'
-	OR county = 'RICHMOND'
-GROUP BY
-	hash,
-	Developmental_Disability_Services_Office,
-	Service_Provider_Agency,
-	Street_Address_,
-	Street_Address_Line_2,
-	City,
-	State,
-	Zip_Code,
-	Phone,
-	County,
-	Website_Url,
-	Intermediate_Care_Facilities_ICFs,
-	Individual_Residential_Alternative_IRA,
-	Family_Care,
-	Consolidated_Supports_And_Services,
-	Individual_Support_Services_ISSs,
-	Day_Training,
-	Day_Treatment,
-	Senior_Geriatric_Services,
-	Day_Habilitation,
-	Work_Shop,
-	Prevocational,
-	Supported_Employment_Enrollments,
-	Community_Habilitation,
-	Family_Support_Services,
-	Care_at_Home_Waiver_Services,
-	Developmental_Centers_And_Special_Population_Services,
-	Location_1;
+SELECT hash FROM facdb_uid_key);
 -- JOIN uid FROM KEY ONTO DATABASE
 UPDATE facilities AS f
 SET uid = k.uid

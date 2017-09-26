@@ -1,3 +1,15 @@
+DROP VIEW doe_facilities_busroutesgarages_facdbview;
+CREATE VIEW doe_facilities_busroutesgarages_facdbview AS 
+SELECT DISTINCT
+	hash,
+	vendor_name,
+	garage_street_address,
+	garage_city,
+	garage_zip,
+	xcoordinates,
+	ycoordinates
+FROM doe_facilities_busroutesgarages;
+
 -- facilities
 INSERT INTO
 facilities(
@@ -87,33 +99,15 @@ SELECT
 	FALSE,
 	-- groupquarters
 	FALSE
-FROM
-	doe_facilities_busroutesgarages
-GROUP BY
-	hash,
-	vendor_name,
-	garage_street_address,
-	garage_city,
-	garage_zip,
-	xcoordinates,
-	ycoordinates;
+FROM doe_facilities_busroutesgarages_facdbview;
 
 -- facdb_uid_key
 -- insert the new values into the key table
 INSERT INTO facdb_uid_key
 SELECT hash
-FROM doe_facilities_busroutesgarages
+FROM doe_facilities_busroutesgarages_facdbview
 WHERE hash NOT IN (
-SELECT hash FROM facdb_uid_key
-)
-GROUP BY
-	hash,
-	vendor_name,
-	garage_street_address,
-	garage_city,
-	garage_zip,
-	xcoordinates,
-	ycoordinates;
+SELECT hash FROM facdb_uid_key);
 
 -- JOIN uid FROM KEY ONTO DATABASE
 UPDATE facilities AS f

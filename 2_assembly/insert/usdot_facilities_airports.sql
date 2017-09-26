@@ -1,3 +1,14 @@
+DROP VIEW usdot_facilities_airports_facdbview;
+CREATE VIEW usdot_facilities_airports_facdbview AS 
+SELECT * FROM usdot_facilities_airports
+WHERE
+	stateabbv = 'NY' 
+	AND (county = 'New York'
+	OR county = 'Bronx'
+	OR county = 'Kings'
+	OR county = 'Queens'
+	OR county = 'Richmond');
+
 -- facilities
 INSERT INTO
 facilities(
@@ -101,29 +112,15 @@ SELECT
 	FALSE,
 	-- groupquarters
 	FALSE
-FROM
-	usdot_facilities_airports
-WHERE
-	stateabbv = 'NY' 
-	AND (county = 'New York'
-	OR county = 'Bronx'
-	OR county = 'Kings'
-	OR county = 'Queens'
-	OR county = 'Richmond');
+FROM usdot_facilities_airports_facdbview;
 
 -- facdb_uid_key
 -- insert the new values into the key table
 INSERT INTO facdb_uid_key
 SELECT hash
-FROM usdot_facilities_airports
+FROM usdot_facilities_airports_facdbview
 WHERE hash NOT IN (
-SELECT hash FROM facdb_uid_key)
-AND stateabbv = 'NY' 
-	AND (county = 'New York'
-	OR county = 'Bronx'
-	OR county = 'Kings'
-	OR county = 'Queens'
-	OR county = 'Richmond');
+SELECT hash FROM facdb_uid_key);
 -- JOIN uid FROM KEY ONTO DATABASE
 UPDATE facilities AS f
 SET uid = k.uid
@@ -147,15 +144,17 @@ WHERE facilities.hash = usdot_facilities_airports.hash;
 INSERT INTO
 facdb_agencyid(
 	uid,
-	overabbrev,
 	idagency,
-	idname
+	idname,
+	idfield,
+	idtable
 )
 SELECT
 	uid,
-	'NA',
 	locationid,
-	'locationid'
+	'Location ID'
+	'locationid',
+	'usdot_facilities_airports'
 FROM usdot_facilities_airports, facilities
 WHERE facilities.hash = usdot_facilities_airports.hash;
 

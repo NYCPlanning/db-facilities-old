@@ -145,15 +145,17 @@ WHERE facilities.hash = dpr_parksproperties.hash;
 INSERT INTO
 facdb_agencyid(
 	uid,
-	overabbrev,
 	idagency,
-	idname
+	idname,
+	idfield,
+	idtable
 )
 SELECT
 	uid,
-	'NYCDPR',
 	gispropnum,
-	'Park ID'
+	'Park ID',
+	'gispropnum',
+	'dpr_parksproperties'
 FROM dpr_parksproperties, facilities
 WHERE facilities.hash = dpr_parksproperties.hash;
 

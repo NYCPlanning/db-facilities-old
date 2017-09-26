@@ -1,3 +1,23 @@
+DROP VIEW nysparks_facilities_historicplaces_facdbview;
+CREATE VIEW nysparks_facilities_historicplaces_facdbview AS 
+SELECT DISTINCT 
+	hash,
+	Resource_Name,
+	County,
+	National_Register_Date,
+	National_Register_Number,
+	Longitude,
+	Latitude,
+	Location
+FROM nysparks_facilities_historicplaces
+WHERE
+	Resource_Name NOT LIKE '%Historic District%'
+	AND (County = 'New York'
+	OR County = 'Bronx'
+	OR County = 'Kings'
+	OR County = 'Queens'
+	OR County = 'Richmond');
+
 -- facilities
 INSERT INTO
 facilities(
@@ -92,47 +112,15 @@ SELECT
 	FALSE,
 	-- groupquarters
 	FALSE
-FROM
-	nysparks_facilities_historicplaces
-WHERE
-	Resource_Name NOT LIKE '%Historic District%'
-	AND (County = 'New York'
-	OR County = 'Bronx'
-	OR County = 'Kings'
-	OR County = 'Queens'
-	OR County = 'Richmond')
-GROUP BY
-	hash,
-	Resource_Name,
-	County,
-	National_Register_Date,
-	National_Register_Number,
-	Longitude,
-	Latitude,
-	Location;
+FROM nysparks_facilities_historicplaces_facdbview;
 
 -- facdb_uid_key
 -- insert the new values into the key table
 INSERT INTO facdb_uid_key
 SELECT hash
-FROM nysparks_facilities_historicplaces
+FROM nysparks_facilities_historicplaces_facdbview
 WHERE hash NOT IN (
-SELECT hash FROM facdb_uid_key)
-AND Resource_Name NOT LIKE '%Historic District%'
-	AND (County = 'New York'
-	OR County = 'Bronx'
-	OR County = 'Kings'
-	OR County = 'Queens'
-	OR County = 'Richmond')
-GROUP BY
-	hash,
-	Resource_Name,
-	County,
-	National_Register_Date,
-	National_Register_Number,
-	Longitude,
-	Latitude,
-	Location;
+SELECT hash FROM facdb_uid_key);
 -- JOIN uid FROM KEY ONTO DATABASE
 UPDATE facilities AS f
 SET uid = k.uid
@@ -156,15 +144,17 @@ WHERE facilities.hash = nysparks_facilities_historicplaces.hash;
 INSERT INTO
 facdb_agencyid(
 	uid,
-	overabbrev,
 	idagency,
-	idname
+	idname,
+	idfield,
+	idtable
 )
 SELECT
 	uid,
-	'NA',
 	National_Register_Number,
-	'National_Register_Number'
+	'National Register Number',
+	'National_Register_Number',
+	'nysparks_facilities_historicplaces'
 FROM nysparks_facilities_historicplaces, facilities
 WHERE facilities.hash = nysparks_facilities_historicplaces.hash;
 

@@ -1,3 +1,21 @@
+DROP VIEW usdot_facilities_ports_facdbview;
+CREATE VIEW usdot_facilities_ports_facdbview AS 
+SELECT * FROM usdot_facilities_ports
+WHERE
+	state_post = 'NY' 
+	AND (County_nam = 'New York'
+	OR County_nam = 'Bronx'
+	OR County_nam = 'Kings'
+	OR County_nam = 'Queens'
+	OR County_nam = 'Richmond')
+	AND (owners like '%City of New York%'
+	OR owners like '%US Government%'
+	OR operators like '%City of New York%'
+	OR operators like '%Port Authority%'
+	OR owners like '%Port Authority%'
+	OR operators like '%Economic Development%'
+	OR owners like '%Economic Development%');
+
 -- facilities
 INSERT INTO
 facilities(
@@ -169,43 +187,15 @@ SELECT
 	FALSE,
 	-- groupquarters
 	FALSE
-FROM
-	usdot_facilities_ports
-WHERE
-	state_post = 'NY' 
-	AND (County_nam = 'New York'
-	OR County_nam = 'Bronx'
-	OR County_nam = 'Kings'
-	OR County_nam = 'Queens'
-	OR County_nam = 'Richmond')
-	AND (owners like '%City of New York%'
-	OR owners like '%US Government%'
-	OR operators like '%City of New York%'
-	OR operators like '%Port Authority%'
-	OR owners like '%Port Authority%'
-	OR operators like '%Economic Development%'
-	OR owners like '%Economic Development%');
+FROM usdot_facilities_ports_facdbview;
 
 -- facdb_uid_key
 -- insert the new values into the key table
 INSERT INTO facdb_uid_key
 SELECT hash
-FROM usdot_facilities_ports
+FROM usdot_facilities_ports_facdbview
 WHERE hash NOT IN (
-SELECT hash FROM facdb_uid_key)
-AND state_post = 'NY' 
-	AND (County_nam = 'New York'
-	OR County_nam = 'Bronx'
-	OR County_nam = 'Kings'
-	OR County_nam = 'Queens'
-	OR County_nam = 'Richmond')
-	AND (owners like '%City of New York%'
-	OR owners like '%US Government%'
-	OR operators like '%City of New York%'
-	OR operators like '%Port Authority%'
-	OR owners like '%Port Authority%'
-	OR operators like '%Economic Development%'
-	OR owners like '%Economic Development%');
+SELECT hash FROM facdb_uid_key);
 -- JOIN uid FROM KEY ONTO DATABASE
 UPDATE facilities AS f
 SET uid = k.uid
@@ -229,15 +219,17 @@ WHERE facilities.hash = usdot_facilities_ports.hash;
 INSERT INTO
 facdb_agencyid(
 	uid,
-	overabbrev,
 	idagency,
-	idname
+	idname,
+	idfield,
+	idtable
 )
 SELECT
 	uid,
-	'NA',
 	nav_unit_i,
-	'nav_unit_i'
+	'Nav Unit',
+	'nav_unit_i',
+	'usdot_facilities_ports'
 FROM usdot_facilities_ports, facilities
 WHERE facilities.hash = usdot_facilities_ports.hash;
 

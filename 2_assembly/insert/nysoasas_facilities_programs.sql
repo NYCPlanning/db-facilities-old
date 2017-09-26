@@ -1,3 +1,13 @@
+DROP VIEW nysoasas_facilities_programs_facdbview;
+CREATE VIEW nysoasas_facilities_programs_facdbview AS
+SELECT * FROM nysoasas_facilities_programs
+WHERE
+	program_county = 'New York'
+	OR program_county = 'Bronx'
+	OR program_county = 'Kings'
+	OR program_county = 'Queens'
+	OR program_county = 'Richmond';
+
 -- facilities
 INSERT INTO
 facilities(
@@ -96,28 +106,15 @@ SELECT
 			WHEN program_category LIKE '%Residential%' THEN TRUE
 			ELSE FALSE
 		END)
-FROM
-	nysoasas_facilities_programs
-WHERE
-	program_county = 'New York'
-	OR program_county = 'Bronx'
-	OR program_county = 'Kings'
-	OR program_county = 'Queens'
-	OR program_county = 'Richmond';
+FROM nysoasas_facilities_programs_facdbview;
 
 -- facdb_uid_key
 -- insert the new values into the key table
 INSERT INTO facdb_uid_key
 SELECT hash
-FROM nysoasas_facilities_programs
+FROM nysoasas_facilities_programs_facdbview
 WHERE hash NOT IN (
-SELECT hash FROM facdb_uid_key
-)
-AND program_county = 'New York'
-	OR program_county = 'Bronx'
-	OR program_county = 'Kings'
-	OR program_county = 'Queens'
-	OR program_county = 'Richmond';
+SELECT hash FROM facdb_uid_key);
 -- JOIN uid FROM KEY ONTO DATABASE
 UPDATE facilities AS f
 SET uid = k.uid
@@ -141,15 +138,17 @@ WHERE facilities.hash = nysoasas_facilities_programs.hash;
 INSERT INTO
 facdb_agencyid(
 	uid,
-	overabbrev,
 	idagency,
-	idname
+	idname,
+	idfield,
+	idtable
 )
 SELECT
 	uid,
-	'NA',
 	program_number,
-	'program_number'
+	'Program Number',
+	'program_number',
+	'nysoasas_facilities_programs'
 FROM nysoasas_facilities_programs, facilities
 WHERE facilities.hash = nysoasas_facilities_programs.hash;
 

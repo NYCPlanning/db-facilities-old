@@ -1,3 +1,29 @@
+DROP VIEW hhs_facilities_financialscontracts_facdbview;
+CREATE VIEW hhs_facilities_financialscontracts_facdbview AS 
+SELECT DISTINCT 
+	hash,
+	agency_name,
+	provider_name,
+	Program_name,
+	site_name,
+	address_1,
+	address_2,
+	city,
+	state,
+	zip_code
+FROM hhs_facilities_financialscontracts
+WHERE
+	program_name NOT LIKE '%Summer Youth%'
+	AND program_name NOT LIKE '%Specialized FFC%'
+	AND program_name NOT LIKE '%Specialized NSP%'
+	AND program_name NOT LIKE '%Specialized PC%'
+	AND program_name NOT LIKE '%HIV%'
+	AND program_name NOT LIKE '%AIDS%'
+	AND Program_name NOT LIKE '%HASA%'
+	AND agency_name NOT LIKE '%Homeless%'
+	AND agency_name NOT LIKE '%Housing%'
+	AND contract_end_date::date > CURRENT_TIMESTAMP;
+
 -- facilities
 INSERT INTO
 facilities(
@@ -183,59 +209,15 @@ SELECT
 	      --     WHEN facility_type LIKE '%Nursing Home%' THEN TRUE
               --   ELSE FALSE
 	      --   END)
-FROM
-	hhs_facilities_financialscontracts
-WHERE
-	program_name NOT LIKE '%Summer Youth%'
-	AND program_name NOT LIKE '%Specialized FFC%'
-	AND program_name NOT LIKE '%Specialized NSP%'
-	AND program_name NOT LIKE '%Specialized PC%'
-	AND program_name NOT LIKE '%HIV%'
-	AND program_name NOT LIKE '%AIDS%'
-	AND Program_name NOT LIKE '%HASA%'
-	AND agency_name NOT LIKE '%Homeless%'
-	AND agency_name NOT LIKE '%Housing%'
-	AND contract_end_date::date > CURRENT_TIMESTAMP
-GROUP BY
-	hash,
-	agency_name,
-	provider_name,
-	Program_name,
-	site_name,
-	address_1,
-	address_2,
-	city,
-	state,
-	zip_code;
+FROM hhs_facilities_financialscontracts_facdbview;
 
 -- facdb_uid_key
 -- insert the new values into the key table
 INSERT INTO facdb_uid_key
 SELECT hash
-FROM hhs_facilities_financialscontracts
+FROM hhs_facilities_financialscontracts_facdbview
 WHERE hash NOT IN (
-SELECT hash FROM facdb_uid_key
-) 	AND program_name NOT LIKE '%Summer Youth%'
-	AND program_name NOT LIKE '%Specialized FFC%'
-	AND program_name NOT LIKE '%Specialized NSP%'
-	AND program_name NOT LIKE '%Specialized PC%'
-	AND program_name NOT LIKE '%HIV%'
-	AND program_name NOT LIKE '%AIDS%'
-	AND Program_name NOT LIKE '%HASA%'
-	AND agency_name NOT LIKE '%Homeless%'
-	AND agency_name NOT LIKE '%Housing%'
-	AND contract_end_date::date > CURRENT_TIMESTAMP
-GROUP BY
-	hash,
-	agency_name,
-	provider_name,
-	Program_name,
-	site_name,
-	address_1,
-	address_2,
-	city,
-	state,
-	zip_code;
+SELECT hash FROM facdb_uid_key);
 -- JOIN uid FROM KEY ONTO DATABASE
 UPDATE facilities AS f
 SET uid = k.uid
@@ -259,15 +241,17 @@ WHERE facilities.hash = hhs_facilities_financialscontracts.hash;
 INSERT INTO
 facdb_agencyid(
 	uid,
-	overabbrev,
 	idagency,
-	idname
+	idname,
+	idfield,
+	idtable
 )
 SELECT
 	uid,
-	'HHS Accelerator',
 	external_contract_number,
-	'External Contract Number'
+	'External Contract Number',
+	'external_contract_number',
+	'hhs_facilities_financialscontracts'
 FROM hhs_facilities_financialscontracts, facilities
 WHERE facilities.hash = hhs_facilities_financialscontracts.hash;
 

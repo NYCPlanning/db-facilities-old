@@ -1,3 +1,19 @@
+DROP VIEW dycd_facilities_compass_facdbview;
+CREATE VIEW dycd_facilities_compass_facdbview AS 
+SELECT DISTINCT
+	hash,
+	address_number,
+	street_name,
+	borough,
+	bbls,
+	bin,
+	x_coordinate,
+	y_coordinate,
+	provider_name,
+	date_source_data_updated
+FROM dycd_facilities_compass;
+
+
 -- facilities
 INSERT INTO
 facilities(
@@ -87,39 +103,17 @@ SELECT
 	FALSE,
 	-- groupquarters
 	FALSE
-FROM
-	dycd_facilities_compass
-GROUP BY
-	hash,
-	address_number,
-	street_name,
-	borough,
-	bbls,
-	bin,
-	x_coordinate,
-	y_coordinate,
-	provider_name,
-	date_source_data_updated;
+FROM dycd_facilities_compass_facdbview;
+
 
 -- facdb_uid_key
 -- insert the new values into the key table
 INSERT INTO facdb_uid_key
 SELECT hash
-FROM dycd_facilities_compass
+FROM dycd_facilities_compass_facdbview
 WHERE hash NOT IN (
 SELECT hash FROM facdb_uid_key
-)
-GROUP BY
-	hash,
-	address_number,
-	street_name,
-	borough,
-	bbls,
-	bin,
-	x_coordinate,
-	y_coordinate,
-	provider_name,
-	date_source_data_updated;
+);
 -- JOIN uid FROM KEY ONTO DATABASE
 UPDATE facilities AS f
 SET uid = k.uid
@@ -137,19 +131,7 @@ SELECT
 	uid,
 	'dycd_facilities_compass'
 FROM dycd_facilities_compass, facilities
-WHERE facilities.hash = dycd_facilities_compass.hash
-GROUP BY
-        facilities.uid,
-	dycd_facilities_compass.hash,
-	address_number,
-	street_name,
-	borough,
-	bbls,
-	bin,
-	x_coordinate,
-	y_coordinate,
-	provider_name,
-	date_source_data_updated;
+WHERE facilities.hash = dycd_facilities_compass.hash;
 
 -- agency id NA
 

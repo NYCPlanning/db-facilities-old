@@ -136,17 +136,19 @@ WHERE facilities.hash = dhs_facilities_shelters.hash;
 INSERT INTO
 facdb_agencyid(
 	uid,
-	overabbrev,
 	idagency,
-	idname
+	idname,
+	idfield,
+	idtable
 )
 SELECT
 	uid,
-	'NYCDHS',
 	(CASE
 		WHEN unique_id IS NOT NULL THEN unique_id
 	END),
-	'Unique ID'
+	'Unique ID',
+	'unique_id',
+	'dhs_facilities_shelters'
 FROM dhs_facilities_shelters, facilities
 WHERE facilities.hash = dhs_facilities_shelters.hash;
 

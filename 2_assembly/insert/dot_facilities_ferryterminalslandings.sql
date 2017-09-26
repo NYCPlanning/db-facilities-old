@@ -129,15 +129,17 @@ WHERE facilities.hash = dot_facilities_ferryterminalslandings.hash;
 INSERT INTO
 facdb_agencyid(
 	uid,
-	overabbrev,
 	idagency,
-	idname
+	idname,
+	idfield,
+	idtable
 )
 SELECT
 	uid,
-	'DOT',
 	id,
-	'id'
+	'id',
+	'id',
+	'dot_facilities_ferryterminalslandings'
 FROM dot_facilities_ferryterminalslandings, facilities
 WHERE facilities.hash = dot_facilities_ferryterminalslandings.hash;
 

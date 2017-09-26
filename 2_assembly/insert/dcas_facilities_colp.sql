@@ -445,15 +445,17 @@ WHERE facilities.hash = dcas_facilities_colp.hash;
 INSERT INTO
 facdb_agencyid(
 	uid,
-	overabbrev,
 	idagency,
-	idname
+	idname,
+	idfield,
+	idtable
 )
 SELECT
 	uid,
-	'NA',
 	gid,
-	'gid'
+	'Global ID',
+	'gid',
+	'dcas_facilities_colp'
 FROM dcas_facilities_colp, facilities
 WHERE facilities.hash = dcas_facilities_colp.hash;
 

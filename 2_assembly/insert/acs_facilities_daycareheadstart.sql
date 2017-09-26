@@ -56,7 +56,7 @@ SELECT
 			WHEN Boro = 'SI' THEN 'Staten Island'
 		END),
 	-- zipcode
-	zip::integer,
+	zip,
 	-- domain
 	NULL,
 	-- facilitygroup
@@ -132,15 +132,17 @@ WHERE facilities.hash = acs_facilities_daycareheadstart.hash;
 INSERT INTO
 facdb_agencyid(
 	uid,
-	overabbrev,
 	idagency,
-	idname
+	idname,
+	idfield,
+	idtable
 )
 SELECT
 	uid,
-	'NYCACS',
 	el_program_number,
-	'Early Learn Program Number'
+	'Early Learn Program Number',
+	'el_program_number',
+	'acs_facilities_daycareheadstart'
 FROM acs_facilities_daycareheadstart, facilities
 WHERE facilities.hash = acs_facilities_daycareheadstart.hash;
 

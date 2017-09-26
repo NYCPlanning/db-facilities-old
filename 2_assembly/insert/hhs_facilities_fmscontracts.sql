@@ -1,3 +1,25 @@
+DROP VIEW hhs_facilities_fmscontracts_facdbview;
+CREATE VIEW hhs_facilities_fmscontracts_facdbview AS 
+SELECT DISTINCT
+	hash,
+	agency,
+	lgl_nm,
+	program_name,
+	address,
+	zip
+FROM hhs_facilities_fmscontracts
+WHERE
+	program_name NOT LIKE '%Summer Youth%'
+	AND program_name NOT LIKE '%Specialized FFC%'
+	AND program_name NOT LIKE '%Specialized NSP%'
+	AND program_name NOT LIKE '%Specialized PC%'
+	AND program_name NOT LIKE '%HIV%'
+	AND program_name NOT LIKE '%AIDS%'
+	AND program_name NOT LIKE '%HASA%'
+	AND agency NOT LIKE '%Homeless%'
+	AND agency NOT LIKE '%Housing%'
+	AND contract_end_date::date > CURRENT_TIMESTAMP;
+
 -- facilities
 INSERT INTO
 facilities(
@@ -174,42 +196,15 @@ SELECT
 	NULL,
 	-- groupquarters
 	NULL
-FROM
-	hhs_facilities_fmscontracts
-WHERE
-	program_name NOT LIKE '%Summer Youth%'
-	AND program_name NOT LIKE '%Specialized FFC%'
-	AND program_name NOT LIKE '%Specialized NSP%'
-	AND program_name NOT LIKE '%Specialized PC%'
-	AND program_name NOT LIKE '%HIV%'
-	AND program_name NOT LIKE '%AIDS%'
-	AND program_name NOT LIKE '%HASA%'
-	AND agency NOT LIKE '%Homeless%'
-	AND agency NOT LIKE '%Housing%'
-	AND contract_end_date::date > CURRENT_TIMESTAMP
-GROUP BY
-	hash,
-	agency,
-	lgl_nm,
-	program_name,
-	address,
-	zip;
+FROM hhs_facilities_fmscontracts_facdbview;
 
 -- facdb_uid_key
 -- insert the new values into the key table
 INSERT INTO facdb_uid_key
 SELECT hash
-FROM hhs_facilities_fmscontracts
+FROM hhs_facilities_fmscontracts_facdbview
 WHERE hash NOT IN (
-SELECT hash FROM facdb_uid_key
-)
-GROUP BY
-	hash,
-	agency,
-	lgl_nm,
-	program_name,
-	address,
-	zip;
+SELECT hash FROM facdb_uid_key);
 -- JOIN uid FROM KEY ONTO DATABASE
 UPDATE facilities AS f
 SET uid = k.uid
@@ -241,72 +236,19 @@ GROUP BY
 INSERT INTO
 facdb_agencyid(
 	uid,
-	overabbrev,
 	idagency,
-	idname
+	idname,
+	idfield,
+	idtable
 )	
 SELECT
 	uid,
-	(CASE
-        WHEN agency LIKE '%DOE%'
-        OR agency LIKE '%Department of Education%'
-		THEN 'NYCDOE'
-        WHEN agency LIKE '%SBS%'
-		OR agency LIKE '%Small Business Services%'
-		THEN 'NYCSBS'
-	    WHEN agency LIKE '%DHS%'
-		OR agency LIKE '%Homeless Services%'
-		THEN 'NYCDHS'
-	    WHEN agency LIKE '%HRA%'
-		OR agency LIKE '%Human Resources%'
-		THEN 'NYCHRA/DSS'
-	    WHEN agency LIKE '%DFTA%'
-		OR agency LIKE '%Aging%'
-        THEN 'NYCDFTA'
-	    WHEN agency LIKE '%HPD%'
-		OR agency LIKE '%Housing Preservation%'
-		THEN 'NYCHPD'
-	    WHEN agency LIKE '%DOHMH%'
-		OR agency LIKE '%Health and Mental Hygiene%'
-		THEN 'NYCDOHMH'
-	    WHEN agency LIKE '%ACS%'
-        OR agency LIKE '%Children%'
-        THEN 'NYCACS'
-        WHEN agency LIKE '%NYPD%'
-		OR agency LIKE '%Police%'
-		THEN 'NYPD'
-	    WHEN agency LIKE '%DOP%'
-		OR agency LIKE '%Probation%'
-		THEN 'NYCDOP'
-	    WHEN agency LIKE '%DYCD%'
-		OR agency LIKE '%Youth and Community%'
-		THEN 'NYCDYCD'
-	    WHEN agency LIKE '%MOCJ%'
-		OR agency LIKE '%Criminal Justice%'
-		OR agency LIKE '%MAYORALITY%'
-		OR agency LIKE '%Mayor%'
-		THEN 'NYCMO'
-	    WHEN agency LIKE '%Social Services%'
-		OR agency LIKE '%DSS%'
-		THEN 'NYCHRA/DSS'
-	    WHEN agency LIKE '%Correction%'
-		OR agency LIKE '%DOC%'
-		THEN 'NYCDOC'
-	    ELSE CONCAT('NYC', UPPER(agency))
-	END),
-        ct_num,
-        'Contract Number'
+    ct_num,
+    'Contract Number',
+    'ct_num',
+    'hhs_facilities_fmscontracts'
 FROM hhs_facilities_fmscontracts, facilities
-WHERE facilities.hash = hhs_facilities_fmscontracts.hash
-GROUP BY
-    facilities.uid,
-	hhs_facilities_fmscontracts.hash,
-	agency,
-	lgl_nm,
-	program_name,
-	hhs_facilities_fmscontracts.address,
-	zip,
-	ct_num;
+WHERE facilities.hash = hhs_facilities_fmscontracts.hash;
 
 -- area NA
 
