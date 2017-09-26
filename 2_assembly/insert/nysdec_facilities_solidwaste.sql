@@ -1,5 +1,5 @@
 DROP VIEW nysdec_facilities_solidwaste_facdbveiw;
-CREATE VIEW AS nysdec_facilities_solidwaste_facdbveiw
+CREATE VIEW nysdec_facilities_solidwaste_facdbveiw AS
 SELECT * FROM nysdec_facilities_solidwaste
 WHERE
 	county = 'New York'

@@ -208,7 +208,7 @@ FROM
 	LEFT JOIN
 		nysdoh_nursinghomebedcensus AS c
 	ON f.idagency=c.facility_id
-		AND f.overabbrev = 'NYSDOH') AS censusuids
+		AND f.idname = 'NYSDOH Facility ID') AS censusuids
 WHERE facilities.uid = censusuids.uid;
 
 -- oversight
@@ -248,5 +248,5 @@ FROM
 	LEFT JOIN
 		nysdoh_nursinghomebedcensus AS c
 	ON f.idagency=c.facility_id
-		AND f.overabbrev = 'NYSDOH') AS censusuids
+		AND f.idname = 'NYSDOH Facility ID') AS censusuids
 WHERE facilities.uid = censusuids.uid;

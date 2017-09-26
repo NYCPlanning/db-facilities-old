@@ -210,15 +210,17 @@ WHERE facilities.hash = doe_facilities_schoolsbluebook.hash;
 INSERT INTO
 facdb_agencyid(
 	uid,
-	overabbrev,
 	idagency,
-	idname
+	idname,
+	idfield,
+	idtable
 )
 SELECT
 	uid,
-	'NYCDOE',
 	org_id,
-	'DOE Organization ID'
+	'DOE Organization ID',
+	'org_id',
+	'doe_facilities_schoolsbluebook'
 FROM doe_facilities_schoolsbluebook, facilities
 WHERE facilities.hash = doe_facilities_schoolsbluebook.hash;
 

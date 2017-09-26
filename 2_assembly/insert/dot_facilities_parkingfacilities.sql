@@ -138,7 +138,7 @@ facdb_agencyid(
 SELECT
 	uid,
 	gid,
-	'Global ID'
+	'Global ID',
 	'gid',
 	'dot_facilities_parkingfacilities'
 FROM dot_facilities_parkingfacilities, facilities

@@ -138,7 +138,7 @@ facdb_agencyid(
 SELECT
 	uid,
 	gid,
-	'Global ID'
+	'Global ID',
 	'gid',
 	'nysdec_facilities_lands'
 FROM nysdec_facilities_lands, facilities

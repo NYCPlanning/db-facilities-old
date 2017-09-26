@@ -152,7 +152,7 @@ facdb_agencyid(
 SELECT
 	uid,
 	locationid,
-	'Location ID'
+	'Location ID',
 	'locationid',
 	'usdot_facilities_airports'
 FROM usdot_facilities_airports, facilities

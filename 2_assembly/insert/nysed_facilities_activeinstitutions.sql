@@ -1,7 +1,7 @@
 DROP VIEW nysed_facilities_activeinstitutions_facdbview;
 CREATE VIEW nysed_facilities_activeinstitutions_facdbview AS 
 SELECT * FROM 
-	((SELECT
+	(SELECT
 		nysed_facilities_activeinstitutions.*,
 		nysed_nonpublicenrollment.*,
 		(CASE 
@@ -30,7 +30,7 @@ WHERE
 	AND Institution_Sub_Type_Desc <> 'NYC BUREAU'
 	AND Institution_Sub_Type_Desc <> 'NYC NETWORK'
 	AND Institution_Sub_Type_Desc <> 'OUT OF DISTRICT PLACEMENT'
-	AND Institution_Sub_Type_Desc <> 'BUILDINGS UNDER CONSTRUCTION'));
+	AND Institution_Sub_Type_Desc <> 'BUILDINGS UNDER CONSTRUCTION');
 
 -- facilities
 INSERT INTO
@@ -214,6 +214,7 @@ FROM nysed_facilities_activeinstitutions_facdbview;
 INSERT INTO facdb_uid_key
 SELECT hash
 FROM nysed_facilities_activeinstitutions_facdbview
+WHERE hash NOT IN
 (SELECT hash FROM facdb_uid_key);
 -- JOIN uid FROM KEY ONTO DATABASE
 UPDATE facilities AS f
@@ -273,7 +274,7 @@ SELECT
 		ELSE NULL
 	END)
 FROM nysed_facilities_activeinstitutions_facdbview 
-AND facilities.hash = nysed_facilities_activeinstitutions.hash;
+WHERE facilities.hash = nysed_facilities_activeinstitutions.hash;
 
 -- oversight
 INSERT INTO

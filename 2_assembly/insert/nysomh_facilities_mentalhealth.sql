@@ -168,7 +168,7 @@ facdb_agencyid(
 SELECT
 	uid,
 	sponsor_code||'-'||facility_code||'-'||program_code,
-	'NYSOMH ID'
+	'NYSOMH ID',
 	'sponsor_code-facility_code-program_code',
 	'nysomh_facilities_mentalhealth'
 FROM nysomh_facilities_mentalhealth, facilities

@@ -40,7 +40,7 @@ SELECT
     -- geomsource
     'None',
 	-- facilityname
-	initcap(development_name),
+	initcap(psa),
 	-- addressnumber
 	split_part(trim(both ' ' from address), ' ', 1),
 	-- streetname
