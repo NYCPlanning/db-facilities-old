@@ -137,8 +137,8 @@ facdb_pgtable(
 SELECT
 	uid,
 	'usdot_facilities_airports'
-FROM usdot_facilities_airports, facilities
-WHERE facilities.hash = usdot_facilities_airports.hash;
+FROM usdot_facilities_airports_facdbview, facilities
+WHERE facilities.hash = usdot_facilities_airports_facdbview.hash;
 
 -- agency id
 INSERT INTO

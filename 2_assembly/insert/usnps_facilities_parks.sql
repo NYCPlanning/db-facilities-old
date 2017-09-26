@@ -120,8 +120,8 @@ facdb_pgtable(
 SELECT
 	uid,
 	'usnps_facilities_parks'
-FROM usnps_facilities_parks, facilities
-WHERE facilities.hash = usnps_facilities_parks.hash;
+FROM usnps_facilities_parks_facdbview, facilities
+WHERE facilities.hash = usnps_facilities_parks_facdbview.hash;
 
 -- agency id
 INSERT INTO

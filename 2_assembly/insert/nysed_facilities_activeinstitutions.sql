@@ -232,8 +232,8 @@ facdb_pgtable(
 SELECT
 	uid,
 	'nysed_facilities_activeinstitutions'
-FROM nysed_facilities_activeinstitutions, facilities
-WHERE facilities.hash = nysed_facilities_activeinstitutions.hash;
+FROM nysed_facilities_activeinstitutions_facdbview, facilities
+WHERE facilities.hash = nysed_facilities_activeinstitutions_facdbview.hash;
 
 -- agency id
 INSERT INTO

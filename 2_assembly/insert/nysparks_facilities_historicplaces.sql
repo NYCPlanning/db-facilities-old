@@ -137,8 +137,8 @@ facdb_pgtable(
 SELECT
 	uid,
 	'nysparks_facilities_historicplaces'
-FROM nysparks_facilities_historicplaces, facilities
-WHERE facilities.hash = nysparks_facilities_historicplaces.hash;
+FROM nysparks_facilities_historicplaces_facdbview, facilities
+WHERE facilities.hash = nysparks_facilities_historicplaces_facdbview.hash;
 
 -- agency id
 INSERT INTO

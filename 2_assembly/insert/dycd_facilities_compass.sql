@@ -130,8 +130,8 @@ facdb_pgtable(
 SELECT
 	uid,
 	'dycd_facilities_compass'
-FROM dycd_facilities_compass, facilities
-WHERE facilities.hash = dycd_facilities_compass.hash;
+FROM dycd_facilities_compass_facdbview, facilities
+WHERE facilities.hash = dycd_facilities_compass_facdbview.hash;
 
 -- agency id NA
 

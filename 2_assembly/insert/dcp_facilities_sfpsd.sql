@@ -215,8 +215,8 @@ SELECT
 		WHEN agencyoper = '84.0000000000' THEN 'tgi_facilities_sfpsd'
 		ELSE 'mta_facilities_sfpsd'
 	END)
-FROM dcp_facilities_sfpsd, facilities
-WHERE facilities.hash = dcp_facilities_sfpsd.hash;
+FROM dcp_facilities_sfpsd_facdbview, facilities
+WHERE facilities.hash = dcp_facilities_sfpsd_facdbview.hash;
 
 -- agency id
 INSERT INTO

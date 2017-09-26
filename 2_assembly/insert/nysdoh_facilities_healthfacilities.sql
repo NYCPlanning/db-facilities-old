@@ -160,8 +160,8 @@ facdb_pgtable(
 SELECT
 	uid,
 	'nysdoh_facilities_healthfacilities'
-FROM nysdoh_facilities_healthfacilities, facilities
-WHERE facilities.hash = nysdoh_facilities_healthfacilities.hash;
+FROM nysdoh_facilities_healthfacilities_facdbview, facilities
+WHERE facilities.hash = nysdoh_facilities_healthfacilities_facdbview.hash;
 
 -- agency id
 INSERT INTO

@@ -140,8 +140,8 @@ facdb_pgtable(
 SELECT
 	uid,
 	'dycd_facilities_otherprograms'
-FROM dycd_facilities_otherprograms, facilities
-WHERE facilities.hash = dycd_facilities_otherprograms.hash;
+FROM dycd_facilities_otherprograms_facdbview, facilities
+WHERE facilities.hash = dycd_facilities_otherprograms_facdbview.hash;
 
 -- agency id
 INSERT INTO

@@ -203,8 +203,8 @@ facdb_pgtable(
 SELECT
 	uid,
 	'doe_facilities_schoolsbluebook'
-FROM doe_facilities_schoolsbluebook, facilities
-WHERE facilities.hash = doe_facilities_schoolsbluebook.hash;
+FROM doe_facilities_schoolsbluebook_facdbview, facilities
+WHERE facilities.hash = doe_facilities_schoolsbluebook_facdbview.hash;
 
 -- agency id
 INSERT INTO

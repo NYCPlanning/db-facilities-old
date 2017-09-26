@@ -157,22 +157,8 @@ facdb_pgtable(
 SELECT
 	uid,
 	'dohmh_facilities_daycare'
-FROM dohmh_facilities_daycare, facilities
-WHERE facilities.hash = dohmh_facilities_daycare.hash
-GROUP BY
-	facilities.uid,
-        dohmh_facilities_daycare.hash,
-	day_care_id,
-	center_name,
-	legal_name,
-	building,
-	street,
-	dohmh_facilities_daycare.zipcode,
-	borough,
-	facility_type,
-	child_care_type,
-	program_type,
-	maximum_capacity;
+FROM dohmh_facilities_daycare_facdbview, facilities
+WHERE facilities.hash = dohmh_facilities_daycare_facdbview.hash;
 
 -- agency id NA
 

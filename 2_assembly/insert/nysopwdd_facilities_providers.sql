@@ -174,8 +174,8 @@ facdb_pgtable(
 SELECT
 	uid,
 	'nysopwdd_facilities_providers'
-FROM nysopwdd_facilities_providers, facilities
-WHERE facilities.hash = nysopwdd_facilities_providers.hash;
+FROM nysopwdd_facilities_providers_facdbview, facilities
+WHERE facilities.hash = nysopwdd_facilities_providers_facdbview.hash;
 
 -- agency id NA
 

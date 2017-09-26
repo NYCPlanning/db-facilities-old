@@ -130,8 +130,8 @@ facdb_pgtable(
 SELECT
 	uid,
 	'nysparks_facilities_parks'
-FROM nysparks_facilities_parks, facilities
-WHERE facilities.hash = nysparks_facilities_parks.hash;
+FROM nysparks_facilities_parks_facdbview, facilities
+WHERE facilities.hash = nysparks_facilities_parks_facdbview.hash;
 
 -- agency id NA
 

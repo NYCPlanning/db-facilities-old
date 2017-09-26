@@ -234,8 +234,8 @@ facdb_pgtable(
 SELECT
 	uid,
 	'hhs_facilities_financialscontracts'
-FROM hhs_facilities_financialscontracts, facilities
-WHERE facilities.hash = hhs_facilities_financialscontracts.hash;
+FROM hhs_facilities_financialscontracts_facdbview, facilities
+WHERE facilities.hash = hhs_facilities_financialscontracts_facdbview.hash;
 
 -- agency id
 INSERT INTO

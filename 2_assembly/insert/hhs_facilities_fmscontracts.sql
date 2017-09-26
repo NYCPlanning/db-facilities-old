@@ -221,16 +221,8 @@ facdb_pgtable(
 SELECT
 	uid,
 	'hhs_facilities_fmscontracts'
-FROM hhs_facilities_fmscontracts, facilities
-WHERE facilities.hash = hhs_facilities_fmscontracts.hash
-GROUP BY
-    facilities.uid,
-	hhs_facilities_fmscontracts.hash,
-	agency,
-	lgl_nm,
-	program_name,
-	hhs_facilities_fmscontracts.address,
-	zip;
+FROM hhs_facilities_fmscontracts_facdbview, facilities
+WHERE facilities.hash = hhs_facilities_fmscontracts_facdbview.hash;
 
 -- agency id
 INSERT INTO

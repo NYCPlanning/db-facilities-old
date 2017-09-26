@@ -125,17 +125,8 @@ facdb_pgtable(
 SELECT
 	uid,
 	'doe_facilities_busroutesgarages'
-FROM doe_facilities_busroutesgarages, facilities
-WHERE facilities.hash = doe_facilities_busroutesgarages.hash
-GROUP BY
-	facilities.uid,
-        doe_facilities_busroutesgarages.hash,
-	vendor_name,
-	garage_street_address,
-	garage_city,
-	garage_zip,
-	xcoordinates,
-	ycoordinates;
+FROM doe_facilities_busroutesgarages_facdbview, facilities
+WHERE facilities.hash = doe_facilities_busroutesgarages_facdbview.hash
 
 -- agency id NA
 

@@ -155,8 +155,8 @@ facdb_pgtable(
 SELECT
 	uid,
 	'dca_facilities_operatingbusinesses'
-FROM dca_facilities_operatingbusinesses, facilities
-WHERE facilities.hash = dca_facilities_operatingbusinesses.hash;
+FROM dca_facilities_operatingbusinesses_facdbview, facilities
+WHERE facilities.hash = dca_facilities_operatingbusinesses_facdbview.hash;
 
 -- agency id
 INSERT INTO

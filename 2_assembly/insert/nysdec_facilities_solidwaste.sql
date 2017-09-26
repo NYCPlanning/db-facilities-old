@@ -152,8 +152,8 @@ facdb_pgtable(
 SELECT
 	uid,
 	'nysdec_facilities_solidwaste'
-FROM nysdec_facilities_solidwaste, facilities
-WHERE facilities.hash = nysdec_facilities_solidwaste.hash;
+FROM nysdec_facilities_solidwaste_facdbveiw, facilities
+WHERE facilities.hash = nysdec_facilities_solidwaste_facdbveiw.hash;
 
 -- agency id NA
 

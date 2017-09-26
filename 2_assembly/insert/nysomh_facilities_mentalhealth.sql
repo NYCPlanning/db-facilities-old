@@ -153,8 +153,8 @@ facdb_pgtable(
 SELECT
 	uid,
 	'nysomh_facilities_mentalhealth'
-FROM nysomh_facilities_mentalhealth, facilities
-WHERE facilities.hash = nysomh_facilities_mentalhealth.hash;
+FROM nysomh_facilities_mentalhealth_facdbview, facilities
+WHERE facilities.hash = nysomh_facilities_mentalhealth_facdbview.hash;
 
 -- agency id
 INSERT INTO
