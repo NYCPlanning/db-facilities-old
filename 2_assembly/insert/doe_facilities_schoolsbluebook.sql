@@ -1,4 +1,4 @@
-DROP VIEW doe_facilities_busroutesgarages_facdbview;
+DROP VIEW doe_facilities_schoolsbluebook_facdbview;
 CREATE VIEW doe_facilities_schoolsbluebook_facdbview AS 
 SELECT * FROM doe_facilities_schoolsbluebook
 WHERE

@@ -1,7 +1,7 @@
 DROP TABLE IF EXISTS facdb_uid_key;
 CREATE TABLE facdb_uid_key (
 	hash text UNIQUE, 
-	uid SERIAL PRIMARY KEY
+	uid BIGSERIAL PRIMARY KEY
 );
 
 

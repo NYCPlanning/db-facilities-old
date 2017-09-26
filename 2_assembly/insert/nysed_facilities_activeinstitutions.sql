@@ -273,7 +273,7 @@ SELECT
 		WHEN enrollment IS NOT NULL THEN 'Seats'
 		ELSE NULL
 	END)
-FROM nysed_facilities_activeinstitutions_facdbview 
+FROM nysed_facilities_activeinstitutions_facdbview, facilities
 WHERE facilities.hash = nysed_facilities_activeinstitutions.hash;
 
 -- oversight

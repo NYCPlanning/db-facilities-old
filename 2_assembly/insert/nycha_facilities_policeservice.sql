@@ -50,7 +50,7 @@ SELECT
 	-- borough
 	initcap(borough),
 	-- zipcode
-	ROUND(zip_code::numeric,0),
+	zipcode,
 	-- domain
 	NULL,
 	-- facilitygroup
