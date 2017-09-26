@@ -126,7 +126,7 @@ SELECT
 	uid,
 	'doe_facilities_busroutesgarages'
 FROM doe_facilities_busroutesgarages_facdbview, facilities
-WHERE facilities.hash = doe_facilities_busroutesgarages_facdbview.hash
+WHERE facilities.hash = doe_facilities_busroutesgarages_facdbview.hash;
 
 -- agency id NA
 
