@@ -1,3 +1,11 @@
+WITH facilities AS (
+    SELECT * FROM facilities f
+     LEFT JOIN facdb_bbl b
+     ON f.uid=b.uid
+     LEFT JOIN facdb_bin n
+     ON f.uid=n.uid
+     )
+
 UPDATE facilities AS f
     SET
         geom = ST_Centroid(p.geom),
@@ -9,7 +17,7 @@ UPDATE facilities AS f
     FROM
         dcp_mappluto AS p        
     WHERE
-        f.bbl = ARRAY[ROUND(p.bbl,0)::text]
+        f.bbl = ROUND(p.bbl,0)::text
         AND f.bbl IS NOT NULL
         AND f.processingflag NOT LIKE '%bin2overwritegeom%'
         AND f.processingflag NOT LIKE '%bbl2overwritegeom%'

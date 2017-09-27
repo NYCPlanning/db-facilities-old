@@ -1,6 +1,13 @@
-UPDATE facilities AS f
+WITH facilities AS
+    (SELECT * FROM facilities f
+    LEFT JOIN facdb_bbl b
+    ON f.uid=b.uid
+    LEFT JOIN facdb_bin n
+    ON f.uid=n.uid)
+
+UPDATE facilities f
     SET
-        bbl = ARRAY[ROUND(p.bbl,0)],
+        bbl = ROUND(p.bbl,0),
         boro = 
 	        (CASE
 	        	WHEN p.borough = 'MN' THEN 'Manhattan'

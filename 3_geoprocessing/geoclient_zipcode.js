@@ -138,8 +138,15 @@ function addressLookup1(row) {
 
 function updateFacilities(data, row) {
 
-  var insertTemplate = `UPDATE
-                          facilities
+  var insertTemplate = `WITH facilities AS
+                          (SELECT * FROM facilities f
+                          LEFT JOIN facdb_bbl b
+                          ON f.uid=b.uid
+                          LEFT JOIN facdb_bin n
+                          ON f.uid=n.uid
+                          )
+
+                        UPDATE facilities
                         SET
                           geom=(CASE
                             WHEN geom IS NULL THEN ST_SetSRID(ST_GeomFromText(\'POINT({{longitude}} {{latitude}})\'),4326)

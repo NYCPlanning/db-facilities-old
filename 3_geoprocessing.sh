@@ -1,6 +1,6 @@
-################################################################################################
+#################################################################################################
 ## GEOPROCESSING
-################################################################################################
+#################################################################################################
 ## NOTE: This script requires that your setup the DATABASE_URL environment variable. 
 ## Directions are in the README.md.
 
@@ -73,10 +73,11 @@ echo 'Spatially joining with neighborhood boundaries...'
 time psql -U $DBUSER -d $DBNAME -f ./3_geoprocessing/join_commboard.sql
 time psql -U $DBUSER -d $DBNAME -f ./3_geoprocessing/join_nta.sql
 time psql -U $DBUSER -d $DBNAME -f ./3_geoprocessing/join_zipcode.sql
-time psql -U $DBUSER -d $DBNAME -f ./3_geoprocessing/clean_invalidZIP.sql
-time psql -U $DBUSER -d $DBNAME -f ./3_geoprocessing/clean_cityboro.sql
 time psql -U $DBUSER -d $DBNAME -f ./3_geoprocessing/join_council.sql
 time psql -U $DBUSER -d $DBNAME -f ./3_geoprocessing/join_censtract.sql
+## Cleaning up values
+time psql -U $DBUSER -d $DBNAME -f ./3_geoprocessing/clean_invalidZIP.sql
+time psql -U $DBUSER -d $DBNAME -f ./3_geoprocessing/clean_cityboro.sql
 echo 'Spatially joining with COLP bbls to get propertytype...'
 time psql -U $DBUSER -d $DBNAME -f ./3_geoprocessing/join_proptype.sql
 ## ^ In FacDB V1.5, will add conditional logic for type of facility

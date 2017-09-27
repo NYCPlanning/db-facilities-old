@@ -7,4 +7,4 @@ UPDATE facilities AS f
     WHERE
         f.geom IS NOT NULL
         AND ST_Intersects(p.geom,f.geom)
-        AND (boro IS NULL AND zipcode IS NULL)
+        AND boro IS NULL;

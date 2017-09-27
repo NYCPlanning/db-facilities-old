@@ -15,10 +15,17 @@ UPDATE facilities AS f
         address = initcap(p.address),
         processingflag = 'joinPLUTOtabular2address'
     FROM 
-        dcp_mappluto AS p
+        dcp_mappluto AS p,
+        facilities f
+        LEFT JOIN facdb_bbl b
+        ON f.uid=b.uid
     WHERE
-        f.bbl = ARRAY[ROUND(p.bbl,0)::text]
-        AND f.bbl IS NOT NULL
-        AND f.geom IS NOT NULL
+        b.bbl = ROUND(p.bbl,0)::text
+        AND b.bbl IS NOT NULL
         AND f.addressnum IS NULL
-        AND f.processingflag IS NULL;
+        AND f.processingflag IS NULL
+        AND b.bbl IN 
+        (SELECT split_part(bbl::text,'.',1) FROM bblbin_one2one);
+
+
+        

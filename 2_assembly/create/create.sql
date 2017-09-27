@@ -20,6 +20,7 @@ zipcode text,
 -- core geospatial reference information
 geom geometry,
 geomsource text,
+processingflag text,
 latitude double precision,
 longitude double precision,
 xcoord double precision,
