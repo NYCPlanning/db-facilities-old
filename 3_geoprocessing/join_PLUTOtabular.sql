@@ -1,4 +1,4 @@
-UPDATE facilities AS f
+UPDATE facilities
     SET
         boro = 
 	        (CASE

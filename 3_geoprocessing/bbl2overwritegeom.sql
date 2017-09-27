@@ -4,7 +4,7 @@ WITH facilities AS (
      ON f.uid=b.uid
      LEFT JOIN facdb_bin n
      ON f.uid=n.uid
-     )
+     ) f
 
 UPDATE facilities AS f
     SET

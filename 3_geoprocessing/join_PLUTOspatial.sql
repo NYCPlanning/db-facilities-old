@@ -3,9 +3,9 @@ WITH facilities AS
     LEFT JOIN facdb_bbl b
     ON f.uid=b.uid
     LEFT JOIN facdb_bin n
-    ON f.uid=n.uid)
+    ON f.uid=n.uid) f
 
-UPDATE facilities f
+UPDATE facilities 
     SET
         bbl = ROUND(p.bbl,0),
         boro = 
