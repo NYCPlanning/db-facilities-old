@@ -1,4 +1,26 @@
-UPDATE facilities
+WITH target AS (
+    SELECT
+        hash,
+        f.uid,
+        p.borough,
+        p.borocode,
+        p.zipcode,
+        p.address
+    FROM 
+        dcp_mappluto AS p,
+        facilities f
+        LEFT JOIN facdb_bbl b
+        ON f.uid=b.uid
+    WHERE
+        b.bbl = ROUND(p.bbl,0)::text
+        AND b.bbl IS NOT NULL
+        AND f.addressnum IS NULL
+        AND f.processingflag IS NULL
+        AND b.bbl IN 
+        (SELECT split_part(bbl::text,'.',1) FROM bblbin_one2one)
+)
+
+UPDATE facilities f
     SET
         boro = 
 	        (CASE
@@ -14,18 +36,8 @@ UPDATE facilities
         streetname = initcap(trim(both ' ' from substr(trim(both ' ' from p.address), strpos(trim(both ' ' from p.address), ' ')+1, (length(trim(both ' ' from p.address))-strpos(trim(both ' ' from p.address), ' '))))),
         address = initcap(p.address),
         processingflag = 'joinPLUTOtabular2address'
-    FROM 
-        dcp_mappluto AS p,
-        facilities f
-        LEFT JOIN facdb_bbl b
-        ON f.uid=b.uid
-    WHERE
-        b.bbl = ROUND(p.bbl,0)::text
-        AND b.bbl IS NOT NULL
-        AND f.addressnum IS NULL
-        AND f.processingflag IS NULL
-        AND b.bbl IN 
-        (SELECT split_part(bbl::text,'.',1) FROM bblbin_one2one);
+    FROM target p
+        WHERE f.uid=p.uid;
 
 
         

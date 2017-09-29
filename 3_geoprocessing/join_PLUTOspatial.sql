@@ -1,13 +1,27 @@
-WITH facilities AS
-    (SELECT * FROM facilities f
-    LEFT JOIN facdb_bbl b
-    ON f.uid=b.uid
-    LEFT JOIN facdb_bin n
-    ON f.uid=n.uid) f
+DROP VIEW target;
+CREATE VIEW target AS
+    SELECT
+        hash,
+        f.uid,
+        p.borough,
+        p.borocode,
+        p.zipcode,
+        p.address,
+        p.bbl
+    FROM 
+        dcp_mappluto AS p,
+        facilities f
+        LEFT JOIN facdb_bbl b
+        ON f.uid=b.uid
+    WHERE
+        (b.bbl IS NULL
+            OR f.addressnum IS NULL)
+        AND f.geom IS NOT NULL
+        AND ST_Intersects(p.geom,f.geom)
+        AND processingflag IS NULL;
 
-UPDATE facilities 
+UPDATE facilities f
     SET
-        bbl = ROUND(p.bbl,0),
         boro = 
 	        (CASE
 	        	WHEN p.borough = 'MN' THEN 'Manhattan'
@@ -38,11 +52,13 @@ UPDATE facilities
 	        	WHEN f.addressnum IS NULL AND p.address IS NOT NULL THEN 'joinPLUTOspatial2address'
 	        	ELSE 'joinPLUTOspatial'
         	END)
-    FROM 
-        dcp_mappluto AS p
-    WHERE
-        (f.bbl IS NULL
-            OR f.addressnum IS NULL)
-        AND f.geom IS NOT NULL
-        AND ST_Intersects(p.geom,f.geom)
-        AND processingflag IS NULL;
+    FROM target AS p 
+    WHERE f.uid=p.uid;
+
+UPDATE facdb_bbl f
+SET bbl = ROUND(p.bbl,0)
+FROM target AS p 
+    WHERE f.uid=p.uid;
+
+DROP VIEW target;
+

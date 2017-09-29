@@ -69,19 +69,19 @@ echo 'Done transforming and inserting records from source data'
 
 #### STEP 3
 #### Joining on source data info and standardizing capitalization
-##psql -U $DBUSER -d $DBNAME -f ./2_assembly/join_sourcedatainfo.sql
-##echo 'Cleaning up capitalization, standardizing values, and adding agency tags in arrays...'
-##psql -U $DBUSER -d $DBNAME -f ./2_assembly/standardize/standardize_fixallcaps.sql
-##psql -U $DBUSER -d $DBNAME -f ./2_assembly/standardize/standardize_capacity.sql
-##psql -U $DBUSER -d $DBNAME -f ./2_assembly/standardize/standardize_oversightlevel.sql
-### psql -U $DBUSER -d $DBNAME -f ./2_assembly/standardize/undo_agencytags.sql
-##psql -U $DBUSER -d $DBNAME -f ./2_assembly/standardize/standardize_agencytag.sql
-##psql -U $DBUSER -d $DBNAME -f ./2_assembly/standardize/standardize_trim.sql
-##psql -U $DBUSER -d $DBNAME -f ./2_assembly/standardize/standardize_factypes.sql
-#### Standardizing borough and assigning borough code
-##psql -U $DBUSER -d $DBNAME -f ./2_assembly/standardize/standardize_borough.sql
-#### Switching One to 1 for geocoding and removing invalid (string) address numbers
-##psql -U $DBUSER -d $DBNAME -f ./2_assembly/standardize/standardize_address.sql
-#### Assigning group and domain to each facility
-##psql -U $DBUSER -d $DBNAME -f ./2_assembly/assign_group.sql
-##psql -U $DBUSER -d $DBNAME -f ./2_assembly/assign_domain.sql
+psql -U $DBUSER -d $DBNAME -f ./2_assembly/join_sourcedatainfo.sql
+echo 'Cleaning up capitalization, standardizing values, and adding agency tags in arrays...'
+psql -U $DBUSER -d $DBNAME -f ./2_assembly/standardize/standardize_fixallcaps.sql
+psql -U $DBUSER -d $DBNAME -f ./2_assembly/standardize/standardize_capacity.sql
+psql -U $DBUSER -d $DBNAME -f ./2_assembly/standardize/standardize_oversightlevel.sql
+# psql -U $DBUSER -d $DBNAME -f ./2_assembly/standardize/undo_agencytags.sql
+psql -U $DBUSER -d $DBNAME -f ./2_assembly/standardize/standardize_agencytag.sql
+psql -U $DBUSER -d $DBNAME -f ./2_assembly/standardize/standardize_trim.sql
+psql -U $DBUSER -d $DBNAME -f ./2_assembly/standardize/standardize_factypes.sql
+## Standardizing borough and assigning borough code
+psql -U $DBUSER -d $DBNAME -f ./2_assembly/standardize/standardize_borough.sql
+## Switching One to 1 for geocoding and removing invalid (string) address numbers
+psql -U $DBUSER -d $DBNAME -f ./2_assembly/standardize/standardize_address.sql
+## Assigning group and domain to each facility
+psql -U $DBUSER -d $DBNAME -f ./2_assembly/assign_group.sql
+psql -U $DBUSER -d $DBNAME -f ./2_assembly/assign_domain.sql
