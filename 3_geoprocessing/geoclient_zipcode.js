@@ -31,6 +31,7 @@ var db = pgp(config);
 
 // querying for records without geoms
 var nullGeomQuery = `SELECT DISTINCT 
+                      uid,
                       zipcode,
                       addressnum,
                       streetname
@@ -172,9 +173,13 @@ function updateFacilities(data, row) {
                           addressnum=\'{{oldaddressnum}}\'
                           AND streetname=\'{{oldstreetname}}\'
                           AND zipcode=\'{{zipcode}}\'
-                          AND processingflag IS NULL`;
+                          AND processingflag IS NULL;
 
-  //                        bbl=\'{{bbl}}\',
+                          UPDATE facdb_bbl
+                          SET bbl=\'{{bbl}}\'
+                          WHERE uid=\'{{uid}}\'`;
+
+  //                        
   //                        bin=\'{{bin}}\',
 
   if(data.latitude && data.longitude) {
@@ -198,7 +203,8 @@ function updateFacilities(data, row) {
 
       // row. comes from original table row from psql query
       oldaddressnum: row.addressnum,
-      oldstreetname: row.streetname
+      oldstreetname: row.streetname,
+      originaluid: row.uid
     })
 
     // console.log(insert);
