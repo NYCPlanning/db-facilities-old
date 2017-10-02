@@ -1,11 +1,11 @@
-UPDATE facilities AS f
+UPDATE facdb_capacity AS f
     SET 
 		capacity = NULL
 	WHERE
 		array_to_string(capacity,',') LIKE '% 0%'
 		;
 
-UPDATE facilities AS f
+UPDATE facdb_utilization AS f
     SET 
 		util = NULL
 	WHERE
@@ -13,16 +13,23 @@ UPDATE facilities AS f
 		AND capacity IS NULL
 		;
 
-UPDATE facilities AS f
+UPDATE facdb_capacity AS f
     SET 
-		captype = NULL,
+		captype = NULL
+	WHERE
+		capacity IS NULL
+		AND util IS NULL
+		;
+
+UPDATE facdb_utilization AS f
+    SET 
 		utilrate = NULL
 	WHERE
 		capacity IS NULL
 		AND util IS NULL
 		;
 
-UPDATE facilities AS f
+UPDATE facdb_area AS f
     SET 
 		area =
 			(CASE

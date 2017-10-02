@@ -1,34 +1,34 @@
-UPDATE facilities AS f
+UPDATE facdb_oversight AS f
     SET 
 		overlevel = 
 			(CASE
 				WHEN 
-					array_to_string(overabbrev, ',') LIKE '%NYS%'
-					OR array_to_string(overabbrev, ',') LIKE '%MTA%'
-					OR array_to_string(overabbrev, ',') LIKE '%NYCHA%'
-					OR array_to_string(overabbrev, ',') LIKE '%PANYNJ%'
-					OR array_to_string(overabbrev, ',') LIKE '%RIOC%'
-				THEN ARRAY['State']
+					overabbrev LIKE '%NYS%'
+					OR overabbrev LIKE '%MTA%'
+					OR overabbrev LIKE '%NYCHA%'
+					OR overabbrev LIKE '%PANYNJ%'
+					OR overabbrev LIKE '%RIOC%'
+				THEN'State'
 				WHEN
-					array_to_string(overabbrev, ',') LIKE '%NYC%'
-					OR array_to_string(overabbrev, ',') LIKE '%FDNY%'
-					OR array_to_string(overabbrev, ',') LIKE '%NYPD%'
-					OR array_to_string(overabbrev, ',') LIKE '%CUNY%'
-				THEN ARRAY['City']
+					overabbrev LIKE '%NYC%'
+					OR overabbrev LIKE '%FDNY%'
+					OR overabbrev LIKE '%NYPD%'
+					OR overabbrev LIKE '%CUNY%'
+				THEN 'City'
 				WHEN
-					array_to_string(overabbrev, ',') LIKE '%US%'
-					OR array_to_string(overabbrev, ',') LIKE '%FBOP%'
-					OR array_to_string(overabbrev, ',') LIKE '%Amtrak%'
-				THEN ARRAY['Federal']
+					overabbrev LIKE '%US%'
+					OR overabbrev LIKE '%FBOP%'
+					OR overabbrev LIKE '%Amtrak%'
+				THEN 'Federal'
 				WHEN
-					array_to_string(overabbrev, ',') LIKE '%HYDC%'
-					OR array_to_string(overabbrev, ',') LIKE '%HRPT%'
-					OR array_to_string(overabbrev, ',') LIKE '%BBPC%'
-					OR array_to_string(overabbrev, ',') LIKE '%TGI%'
-				THEN ARRAY['City-State']
-				ELSE ARRAY['Non-public Oversight']
+					overabbrev LIKE '%HYDC%'
+					OR overabbrev LIKE '%HRPT%'
+					OR overabbrev LIKE '%BBPC%'
+					OR overabbrev LIKE '%TGI%'
+				THEN 'City-State'
+				ELSE 'Non-public Oversight'
 			END);
 
-UPDATE facilities AS f
-	SET overlevel = ARRAY['NYCDOE: City','NYSED: State']
-	WHERE overlevel = ARRAY['NYCDOE,NYSED: State'];
+UPDATE facdb_oversight AS f
+	SET overlevel = 'NYCDOE: City, NYSED: State'
+	WHERE overlevel = 'NYCDOE,NYSED: State';

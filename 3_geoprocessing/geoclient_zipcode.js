@@ -138,15 +138,7 @@ function addressLookup1(row) {
 
 function updateFacilities(data, row) {
 
-  var insertTemplate = `WITH facilities AS
-                          (SELECT * FROM facilities f
-                          LEFT JOIN facdb_bbl b
-                          ON f.uid=b.uid
-                          LEFT JOIN facdb_bin n
-                          ON f.uid=n.uid
-                          )
-
-                        UPDATE facilities
+  var insertTemplate = `UPDATE facilities
                         SET
                           geom=(CASE
                             WHEN geom IS NULL THEN ST_SetSRID(ST_GeomFromText(\'POINT({{longitude}} {{latitude}})\'),4326)
@@ -163,8 +155,6 @@ function updateFacilities(data, row) {
                           addressnum=\'{{newaddressnum}}\',
                           streetname=initcap(\'{{newstreetname}}\'),
                           address=CONCAT(\'{{newaddressnum}}\',\' \',initcap(\'{{newstreetname}}\')),
-                          bbl=ARRAY[\'{{bbl}}\'],
-                          bin=ARRAY[\'{{bin}}\'],
                           boro=initcap(\'{{boro}}\'),
                           borocode=(CASE
                             WHEN \'{{boro}}\'=\'MANHATTAN\' THEN 1
@@ -183,6 +173,9 @@ function updateFacilities(data, row) {
                           AND streetname=\'{{oldstreetname}}\'
                           AND zipcode=\'{{zipcode}}\'
                           AND processingflag IS NULL`;
+
+  //                        bbl=\'{{bbl}}\',
+  //                        bin=\'{{bin}}\',
 
   if(data.latitude && data.longitude) {
     // console.log('Updating facilities');
