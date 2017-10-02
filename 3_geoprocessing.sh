@@ -26,7 +26,7 @@ psql -U $DBUSER -d $DBNAME -f ./3_geoprocessing/join_boro_pregeoclient.sql
 echo 'Running through GeoClient using address and borough...'
 node ./3_geoprocessing/geoclient_boro.js
 echo 'Running through GeoClient using address and zip code...'
-node ./3_geoprocessing/geoclient_zipcode.js
+python ./3_geoprocessing/geoclient_zipcode.py
 ## Standardizing borough and assigning borough code again because
 ## Geoclient sometimes fills in Staten Is instead of Staten Island
 psql -U $DBUSER -d $DBNAME -f ./3_geoprocessing/join_boro.sql ## this always returns 0 - can we remove it?
