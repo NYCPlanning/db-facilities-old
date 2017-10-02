@@ -1,8 +1,14 @@
+#!/bin/bash
+
 #################################################################################################
 ## GEOPROCESSING
 #################################################################################################
 ## NOTE: This script requires that your setup the DATABASE_URL environment variable. 
 ## Directions are in the README.md.
+
+# make sure we are at the top of the git directory
+REPOLOC="$(git rev-parse --show-toplevel)"
+cd $REPOLOC
 
 DBNAME=$(cat config.json | jq -r '.DBNAME')
 DBUSER=$(cat config.json | jq -r '.DBUSER')
