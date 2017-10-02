@@ -111,7 +111,7 @@ for i in range(len(facdb_geocodezip)):
     elif (locs['lat'][i] == 'none') & (locs['lon'][i] == 'none') & (locs['bin'][i] == 'none'):
         upd = "UPDATE facilities a SET geom = NULL WHERE addressnum = '" + facdb_geocodezip['addressnum'][i] + "' AND streetname = '" + facdb_geocodezip['streetname'][i] + "' AND zipcode = '" + facdb_geocodezip['zipcode'][i] + "';"
     engine.execute(upd)
-
+print i
 # not deleting because if I ever figure it out this is probably a better way of doing this... 
 #md = sql.MetaData(engine)
 #table = sql.Table('sca', md, autoload=True)
