@@ -17,7 +17,7 @@ var pgp = require('pg-promise')(),
 
 // REQUIRE JS FILE WITH API CREDENTIALS -- USED IN addressLookup FUNCTION
 // ALSO REQUIRES JS SILE WITH DATABASE CONFIGURATION
-var config = require('../dbconfig.js'),
+var config = require('../config.js'),
   apiCredentials = require('../apiCredentials.js');
 
 // USE DATABASE CONFIGURATION JS FILE TO LINK TO DATABASE
