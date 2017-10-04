@@ -31,6 +31,7 @@ var db = pgp(config);
 
 // querying for records without geoms
 var nullGeomQuery = `SELECT DISTINCT 
+                      uid,
                       zipcode,
                       addressnum,
                       streetname
@@ -173,7 +174,14 @@ function updateFacilities(data, row) {
                           addressnum=\'{{oldaddressnum}}\'
                           AND streetname=\'{{oldstreetname}}\'
                           AND zipcode=\'{{zipcode}}\'
-                          AND processingflag IS NULL`;
+                          AND processingflag IS NULL;
+
+                          UPDATE 
+                            create_bbl
+                          SET
+                            bbl=\'{{bbl}}\'
+                          WHERE
+                            uid=\'{{uid}}\'`;
 
                           // bbl=\'{{bbl}}\',
                           // bin=\'{{bin}}\',
