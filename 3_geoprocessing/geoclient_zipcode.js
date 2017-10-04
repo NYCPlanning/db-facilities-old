@@ -177,7 +177,7 @@ function updateFacilities(data, row) {
                           AND processingflag IS NULL;
 
                           UPDATE 
-                            create_bbl
+                            facdb_bbl
                           SET
                             bbl=\'{{bbl}}\'
                           WHERE
