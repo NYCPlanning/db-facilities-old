@@ -31,7 +31,6 @@ var db = pgp(config);
 
 // querying for records without geoms
 var nullGeomQuery = `SELECT DISTINCT 
-                      uid,
                       zipcode,
                       addressnum,
                       streetname
@@ -139,7 +138,8 @@ function addressLookup1(row) {
 
 function updateFacilities(data, row) {
 
-  var insertTemplate = `UPDATE facilities
+  var insertTemplate = `UPDATE
+                          facilities
                         SET
                           geom=(CASE
                             WHEN geom IS NULL THEN ST_SetSRID(ST_GeomFromText(\'POINT({{longitude}} {{latitude}})\'),4326)
@@ -173,14 +173,10 @@ function updateFacilities(data, row) {
                           addressnum=\'{{oldaddressnum}}\'
                           AND streetname=\'{{oldstreetname}}\'
                           AND zipcode=\'{{zipcode}}\'
-                          AND processingflag IS NULL;
+                          AND processingflag IS NULL`;
 
-                          UPDATE facdb_bbl
-                          SET bbl=\'{{bbl}}\'
-                          WHERE uid=\'{{uid}}\'`;
-
-  //                        
-  //                        bin=\'{{bin}}\',
+                          // bbl=\'{{bbl}}\',
+                          // bin=\'{{bin}}\',
 
   if(data.latitude && data.longitude) {
     // console.log('Updating facilities');
@@ -203,8 +199,7 @@ function updateFacilities(data, row) {
 
       // row. comes from original table row from psql query
       oldaddressnum: row.addressnum,
-      oldstreetname: row.streetname,
-      originaluid: row.uid
+      oldstreetname: row.streetname
     })
 
     // console.log(insert);
@@ -235,5 +230,3 @@ function updateFacilities(data, row) {
         }
   }
 }
-
-
