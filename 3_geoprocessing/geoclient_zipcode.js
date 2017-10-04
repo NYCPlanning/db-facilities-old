@@ -154,6 +154,8 @@ function updateFacilities(data, row) {
                             WHEN geom IS NULL THEN \'{{longitude}}\'
                             ELSE longitude
                           END),
+                          bbl=\'{{bbl}}\',
+                          bin=\'{{bin}}\',
                           addressnum=\'{{newaddressnum}}\',
                           streetname=initcap(\'{{newstreetname}}\'),
                           address=CONCAT(\'{{newaddressnum}}\',\' \',initcap(\'{{newstreetname}}\')),
@@ -182,9 +184,6 @@ function updateFacilities(data, row) {
                             bbl=\'{{bbl}}\'
                           WHERE
                             uid=\'{{uid}}\'`;
-
-                          // bbl=\'{{bbl}}\',
-                          // bin=\'{{bin}}\',
 
   if(data.latitude && data.longitude) {
     // console.log('Updating facilities');

@@ -17,8 +17,8 @@ var pgp = require('pg-promise')(),
   Mustache = require('mustache');
 
 // REQUIRE JS FILE WITH API CREDENTIALS -- USED IN addressLookup FUNCTION
-// ALSO REQUIRES JS FILE WITH DATABASE CONFIGURATION
-var config = require('../dbconfig.js');
+// ALSO REQUIRES JS SILE WITH DATABASE CONFIGURATION
+var config = require('../config.js');
 var apiCredentials = require('../apiCredentials.js');
 
 // USE DATABASE CONFIGURATION JS FILE TO LINK TO DATABASE
@@ -138,15 +138,7 @@ function addressLookup1(row) {
 
 function updateFacilities(data, row) {
 
-  var insertTemplate = `WITH facilities AS
-                          (SELECT * FROM facilities f
-                          LEFT JOIN facdb_bbl b
-                          ON f.uid=b.uid
-                          LEFT JOIN facdb_bin n
-                          ON f.uid=n.uid
-                          )
-
-                        UPDATE facilities 
+  var insertTemplate = `UPDATE facilities 
                         SET
                           geom=(CASE
                             WHEN geom IS NULL THEN ST_SetSRID(ST_GeomFromText(\'POINT({{longitude}} {{latitude}})\'),4326)
@@ -163,10 +155,10 @@ function updateFacilities(data, row) {
                           addressnum=\'{{newaddressnum}}\',
                           streetname=initcap(\'{{newstreetname}}\'),
                           address=initcap(CONCAT(\'{{newaddressnum}}\',\' \',\'{{newstreetname}}\')),
+                          bbl=ARRAY[\'{{bbl}}\'],
+                          bin=ARRAY[\'{{bin}}\'],
                           zipcode=\'{{zipcode}}\',
                           city=initcap(\'{{city}}\'),
-                          bin=\'{{bin}}\',
-                          bbl=\'{{bbl}}\',
                           processingflag=(CASE
                             WHEN geom IS NULL THEN \'geoclientboro2geom\'
                             ELSE \'geoclientboro\'
