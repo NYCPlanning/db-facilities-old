@@ -69,7 +69,7 @@ echo 'Done transforming and inserting records from source data'
 
 #### STEP 3
 #### Joining on source data info and standardizing capitalization
-psql -U $DBUSER -d $DBNAME -f ./2_assembly/join_sourcedatainfo.sql ## need to create
+## psql -U $DBUSER -d $DBNAME -f ./2_assembly/join_sourcedatainfo.sql ## need to develop process for creating facdb_datasources relational table but this process does not need to be done anymore
 echo 'Cleaning up capitalization, standardizing values, and adding agency tags in arrays...'
 psql -U $DBUSER -d $DBNAME -f ./2_assembly/standardize/standardize_fixallcaps.sql
 psql -U $DBUSER -d $DBNAME -f ./2_assembly/standardize/standardize_capacity.sql
