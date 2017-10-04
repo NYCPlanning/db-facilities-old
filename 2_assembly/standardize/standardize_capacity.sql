@@ -10,7 +10,6 @@ UPDATE facdb_utilization AS f
 		util = NULL
 	WHERE
 		util LIKE '% 0%'
-		AND capacity IS NULL
 		;
 
 UPDATE facdb_capacity AS f
