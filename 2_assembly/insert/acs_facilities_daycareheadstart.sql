@@ -9,7 +9,7 @@ facname,
 addressnum,
 streetname,
 address,
-boro
+boro,
 zipcode,
 bbl,
 bin,
