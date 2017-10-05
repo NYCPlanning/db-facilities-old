@@ -4,6 +4,8 @@ facilities (
 	hash,
 	geom,
 	idagency,
+	idname,
+	idfield,
 	facname,
 	addressnum,
 	streetname,
@@ -12,15 +14,12 @@ facilities (
 	zipcode,
 	bbl,
 	bin,
+	geomsource,
 	factype,
-	facdomain,
-	facgroup,
 	facsubgrp,
-	agencyclass1,
-	agencyclass2,
 	capacity,
 	util,
-	captype,
+	capacitytype,
 	utilrate,
 	area,
 	areatype,
@@ -30,9 +29,6 @@ facilities (
 	overagency,
 	overabbrev,
 	datecreated,
-	buildingid,
-	buildingname,
-	schoolorganizationlevel,
 	children,
 	youth,
 	senior,
@@ -46,13 +42,15 @@ facilities (
 )
 SELECT
 	-- pgtable
-	ARRAY['dcp_facilities_pops'],
+	'dcp_facilities_pops',
 	-- hash,
     hash,
 	-- geom
 	NULL,
 	-- idagency
-	ARRAY[DCP_RECORD],
+	DCP_RECORD,
+	'DCP Record ID',
+	'dcp_record',
 	-- facilityname
 	(CASE
 		WHEN Building_Name IS NOT NULL AND Building_Name <> '' THEN Building_Name
@@ -76,18 +74,11 @@ SELECT
 	NULL,
 	-- bin
 	NULL,
+	NULL,
 	-- facilitytype
 	'Privately Owned Public Space',
-	-- domain
-	'Parks, Gardens, and Historical Sites',
-	-- facilitygroup
-	'Parks and Plazas',
 	-- facilitysubgroup
 	'Privately Owned Public Space',
-	-- agencyclass1
-	NULL,
-	-- agencyclass2
-	NULL,
 	-- capacity
 	NULL,
 	-- utilization
@@ -112,12 +103,6 @@ SELECT
 	ARRAY['NYCDCP', 'NYCDOB'],
 	-- datecreated
 	CURRENT_TIMESTAMP,
-	-- buildingid
-	NULL,
-	-- buildingname
-	NULL,
-	-- schoolorganizationlevel
-	NULL,
 	-- children
 	FALSE,
 	-- youth

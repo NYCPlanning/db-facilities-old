@@ -1,53 +1,52 @@
 INSERT INTO
 facilities (
-pgtable,
-hash,
-idagency,
-idname,
-idfield,
-facname,
-addressnum,
-streetname,
-address,
-boro,
-zipcode,
-bbl,
-bin,
-geom,
-geomsource,
-latitude,
-longitude,
-factype,
-facsubgrp,
-capacity,
-util,
-capacitytype,
-utilrate,
-area,
-areatype,
-optype,
-opname,
-opabbrev,
-overagency,
-overabbrev,
-overlevel,
-datecreated,
-children,
-youth,
-senior,
-family,
-disabilities,
-dropouts,
-unemployed,
-homeless,
-immigrants,
-groupquarters
+	pgtable,
+	hash,
+	geom,
+	idagency,
+	idname,
+	idfield,
+	facname,
+	addressnum,
+	streetname,
+	address,
+	boro,
+	zipcode,
+	bbl,
+	bin,
+	geomsource,
+	factype,
+	facsubgrp,
+	capacity,
+	util,
+	capacitytype,
+	utilrate,
+	area,
+	areatype,
+	optype,
+	opname,
+	opabbrev,
+	overagency,
+	overabbrev,
+	datecreated,
+	children,
+	youth,
+	senior,
+	family,
+	disabilities,
+	dropouts,
+	unemployed,
+	homeless,
+	immigrants,
+	groupquarters
 )
 SELECT
 	-- pgtable
 	'acs_facilities_daycareheadstart',
 	-- hash,
     hash,
+	-- geom
+	NULL,
     -- idagency
 	el_program_number,
 	-- idname
@@ -76,13 +75,7 @@ SELECT
 	NULL,
 	-- bin
 	NULL,
-	-- geom
-	NULL,
 	-- geomsource
-	NULL,
-	-- latitude
-	NULL,
-	-- longitude
 	NULL,
 	-- facilitytype
 		(CASE
@@ -115,8 +108,6 @@ SELECT
 	'NYC Administration for Childrens Services',
 	-- oversightabbrev
 	'NYCACS',
-	-- oversightlevel
-	'City',
 	-- datecreated
 	CURRENT_TIMESTAMP,
 	-- children

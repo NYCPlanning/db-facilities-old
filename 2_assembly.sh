@@ -17,7 +17,7 @@ echo 'Done creating empty facilities table'
 ## configure (transform) each dataset and insert into master table
 echo 'Transforming and inserting records from source data'
 psql -U $DBUSER -d $DBNAME -f ./2_assembly/insert/acs_facilities_daycareheadstart.sql
-psql -U $DBUSER -d $DBNAME -f ./2_assembly/config_bic_facilities_tradewaste.sql
+psql -U $DBUSER -d $DBNAME -f ./2_assembly/insert/config_bic_facilities_tradewaste.sql
 psql -U $DBUSER -d $DBNAME -f ./2_assembly/config_dca_facilities_operatingbusinesses.sql
 psql -U $DBUSER -d $DBNAME -f ./2_assembly/config_dcas_facilities_colp.sql
 psql -U $DBUSER -d $DBNAME -f ./2_assembly/config_dcla_facilities_culturalinstitutions.sql

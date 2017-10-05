@@ -5,8 +5,8 @@ CREATE TABLE facilities (
 
 -- ids
 -- guid UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-hash text PRIMARY KEY,
-uid text,
+hash text UNIQUE,
+uid BIGSERIAL PRIMARY KEY,
 
 idagency text,
 idname text,
@@ -60,7 +60,6 @@ proptype text,
 optype text,
 opname text,
 opabbrev text,
-overtype text ARRAY,
 overlevel text,
 overagency text,
 overabbrev text,

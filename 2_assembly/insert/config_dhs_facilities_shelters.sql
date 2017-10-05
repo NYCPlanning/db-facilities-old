@@ -4,6 +4,8 @@ facilities (
 	hash,
 	geom,
 	idagency,
+	idname,
+	idfield,
 	facname,
 	addressnum,
 	streetname,
@@ -12,15 +14,12 @@ facilities (
 	zipcode,
 	bbl,
 	bin,
+	geomsource,
 	factype,
-	facdomain,
-	facgroup,
 	facsubgrp,
-	agencyclass1,
-	agencyclass2,
 	capacity,
 	util,
-	captype,
+	capacitytype,
 	utilrate,
 	area,
 	areatype,
@@ -30,9 +29,6 @@ facilities (
 	overagency,
 	overabbrev,
 	datecreated,
-	buildingid,
-	buildingname,
-	schoolorganizationlevel,
 	children,
 	youth,
 	senior,
@@ -46,7 +42,7 @@ facilities (
 )
 SELECT
 	-- pgtable
-	ARRAY['dhs_facilities_shelters'],
+	'dhs_facilities_shelters',
 	-- hash,
     hash,
 	-- geom
@@ -55,8 +51,10 @@ SELECT
 	END),
 	-- idagency
 	(CASE
-		WHEN Unique_ID IS NOT NULL THEN ARRAY[Unique_ID]
+		WHEN Unique_ID IS NOT NULL THEN Unique_ID
 	END),
+	'Unique ID',
+	'unique_id',
 	-- facilityname
 	initcap(Facility_Name),
 	-- addressnumber
@@ -73,22 +71,15 @@ SELECT
 	NULL,
 	-- bin
 	NULL,
+	'agency',
 	-- facilitytype
 	initcap(facility_type),
-	-- domain
-	'Health and Human Services',
-	-- facilitygroup
-	'Human Services',
 	-- facilitysubgroup
 	(CASE
 		WHEN (facility_type LIKE '%DROP%' OR facility_type LIKE '%Drop%') THEN 'Non-residential Housing and Homeless Services'
 		WHEN facility_type LIKE '%Supportive Housing%' THEN 'Permanent Supportive SRO Housing' 
 		ELSE 'Shelters and Transitional Housing'
 	END),
-	-- agencyclass1
-	facility_type,
-	-- agencyclass2
-	NULL,
 	-- capacity
 	(CASE
 		WHEN capacity <> '--' THEN ARRAY[capacity::text]
@@ -118,17 +109,11 @@ SELECT
 			ELSE 'Non-public'
 		END),
 	-- oversightagency
-	ARRAY['NYC Department of Homeless Services'],
+	'NYC Department of Homeless Services',
 	-- oversightabbrev
-	ARRAY['NYCDHS'],
+	'NYCDHS',
 	-- datecreated
 	CURRENT_TIMESTAMP,
-	-- buildingid
-	NULL,
-	-- buildingname
-	NULL,
-	-- schoolorganizationlevel
-	NULL,
 	-- children
 	FALSE,
 	-- youth
@@ -153,4 +138,4 @@ SELECT
 	-- groupquarters
 	TRUE
 FROM 
-	dhs_facilities_shelters
+	dhs_facilities_shelters;

@@ -4,6 +4,8 @@ facilities (
 	hash,
 	geom,
 	idagency,
+	idname,
+	idfield,
 	facname,
 	addressnum,
 	streetname,
@@ -12,15 +14,12 @@ facilities (
 	zipcode,
 	bbl,
 	bin,
+	geomsource,
 	factype,
-	facdomain,
-	facgroup,
 	facsubgrp,
-	agencyclass1,
-	agencyclass2,
 	capacity,
 	util,
-	captype,
+	capacitytype,
 	utilrate,
 	area,
 	areatype,
@@ -30,9 +29,6 @@ facilities (
 	overagency,
 	overabbrev,
 	datecreated,
-	buildingid,
-	buildingname,
-	schoolorganizationlevel,
 	children,
 	youth,
 	senior,
@@ -46,7 +42,7 @@ facilities (
 )
 SELECT
 	-- pgtable
-	ARRAY['dca_facilities_operatingbusinesses'],
+	'dca_facilities_operatingbusinesses',
 	-- hash,
     hash,
 	-- geom
@@ -55,7 +51,9 @@ SELECT
 		ELSE NULL
 	END),
 	-- idagency
-	ARRAY[DCA_License_Number],
+	DCA_License_Number,
+	'DCA License Number',
+	'DCA_License_Number',
 	-- facilityname
 	initcap(Business_Name),
 	-- addressnumber
@@ -88,21 +86,12 @@ SELECT
 	NULL,
 	-- bin
 	NULL,
+	'agency',
 	-- facilitytype
 		(CASE 
 			WHEN License_Category LIKE '%Scrap Metal%' THEN 'Scrap Metal Processing'
 			WHEN License_Category LIKE '%Tow%' THEN 'Tow Truck Company'
 			ELSE CONCAT('Commercial ', License_Category)
-		END),
-	-- domain
-	'Core Infrastructure and Transportation',
-	-- facilitygroup
-		(CASE
-			WHEN License_Category = 'Scrap Metal Processor' THEN 'Solid Waste'
-			WHEN License_Category = 'Parking Lot' THEN 'Transportation'
-			WHEN License_Category = 'Garage' THEN 'Transportation'
-	 		WHEN License_Category = 'Garage and Parking Lot' THEN 'Transportation'
-			WHEN License_Category = 'Tow Truck Company' THEN 'Transportation'
 		END),
 	-- facilitysubgroup
 		(CASE
@@ -112,21 +101,16 @@ SELECT
 	 		WHEN License_Category = 'Garage and Parking Lot' THEN 'Parking Lots and Garages'
 			WHEN License_Category = 'Tow Truck Company' THEN 'Parking Lots and Garages'
 		END),
-	-- agencyclass1
-	License_Category,
-	-- agencyclass2
-	License_Type,
-
 	-- capacity
 		(CASE
-			WHEN Detail LIKE '%Vehicle Spaces%' THEN ARRAY[split_part(split_part(Detail,': ',2),',',1)::text]
+			WHEN Detail LIKE '%Vehicle Spaces%' THEN split_part(split_part(Detail,': ',2),',',1)::text
 			ELSE NULL
 		END),
 	-- utilization
 	NULL,
 	-- capacitytype
 		(CASE
-			WHEN Detail LIKE '%Vehicle Spaces%' THEN ARRAY['Parking Spaces']
+			WHEN Detail LIKE '%Vehicle Spaces%' THEN 'Parking Spaces'
 			ELSE NULL
 		END),
 	-- utilizationrate
@@ -142,17 +126,11 @@ SELECT
 	-- operatorabbrev
 	'Non-public',
 	-- oversightagency
-	ARRAY['NYC Department of Consumer Affairs'],
+	'NYC Department of Consumer Affairs',
 	-- oversightabbrev
-	ARRAY['NYCDCA'],
+	'NYCDCA',
 	-- datecreated
 	CURRENT_TIMESTAMP,
-	-- buildingid
-	NULL,
-	-- buildingname
-	NULL,
-	-- schoolorganizationlevel
-	NULL,
 	-- children
 	FALSE,
 	-- youth

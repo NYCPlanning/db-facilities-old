@@ -4,6 +4,8 @@ facilities (
 	hash,
 	geom,
 	idagency,
+	idname,
+	idfield,
 	facname,
 	addressnum,
 	streetname,
@@ -12,15 +14,12 @@ facilities (
 	zipcode,
 	bbl,
 	bin,
+	geomsource,
 	factype,
-	facdomain,
-	facgroup,
 	facsubgrp,
-	agencyclass1,
-	agencyclass2,
 	capacity,
 	util,
-	captype,
+	capacitytype,
 	utilrate,
 	area,
 	areatype,
@@ -30,9 +29,6 @@ facilities (
 	overagency,
 	overabbrev,
 	datecreated,
-	buildingid,
-	buildingname,
-	schoolorganizationlevel,
 	children,
 	youth,
 	senior,
@@ -46,7 +42,7 @@ facilities (
 )
 SELECT
 	-- pgtable
-	ARRAY['bic_facilities_tradewaste'],
+	'bic_facilities_tradewaste',
 	-- hash,
     hash,
 	-- geom
@@ -59,6 +55,8 @@ SELECT
 				4326)
 	END),
 	-- idagency
+	NULL,
+	NULL,
 	NULL,
 	-- facilityname
 	initcap(BUS_NAME),
@@ -76,18 +74,11 @@ SELECT
 	NULL,
 	-- bin
 	NULL,
+	'agecny',
 	-- facilitytype
 	'Trade Waste Carter Site',
-	-- domain
-	'Core Infrastructure and Transportation',
-	-- facilitygroup
-	'Solid Waste',
 	-- facilitysubgroup
 	'Solid Waste Transfer and Carting',
-	-- agencyclass1
-	type,
-	-- agencyclass2
-	'NA',
 	-- capacity
 	NULL,
 	-- utilization
@@ -107,9 +98,9 @@ SELECT
 	-- operatorabbrev
 	'Non-public',
 	-- oversightagency
-	ARRAY['NYC Business Integrity Commission'],
+	'NYC Business Integrity Commission',
 	-- oversightabbrev
-	ARRAY['NYCBIC'],
+	'NYCBIC',
 	-- datecreated
 	CURRENT_TIMESTAMP,
 	-- buildingid

@@ -4,6 +4,8 @@ facilities (
 	hash,
 	geom,
 	idagency,
+	idname,
+	idfield,
 	facname,
 	addressnum,
 	streetname,
@@ -12,15 +14,12 @@ facilities (
 	zipcode,
 	bbl,
 	bin,
+	geomsource,
 	factype,
-	facdomain,
-	facgroup,
 	facsubgrp,
-	agencyclass1,
-	agencyclass2,
 	capacity,
 	util,
-	captype,
+	capacitytype,
 	utilrate,
 	area,
 	areatype,
@@ -30,9 +29,6 @@ facilities (
 	overagency,
 	overabbrev,
 	datecreated,
-	buildingid,
-	buildingname,
-	schoolorganizationlevel,
 	children,
 	youth,
 	senior,
@@ -46,13 +42,15 @@ facilities (
 )
 SELECT
 	-- pgtable
-	ARRAY['dfta_facilities_contracts'],
+	'dfta_facilities_contracts',
 	-- hash,
     hash,
 	-- geom
 	NULL,
 	-- idagency
-	ARRAY[Provider_ID],
+	Provider_ID,
+	'Provider ID',
+	'Provider_ID',
 	-- facilityname
 	initcap(Sponsor_Name),
 	-- addressnumber
@@ -69,6 +67,7 @@ SELECT
 	NULL,
 	-- bin
 	NULL,
+	NULL,
 	-- facilitytype
 		(CASE
 			WHEN Contract_Type LIKE '%INNOVATIVE%' AND RIGHT(Provider_ID,2) <> '01' THEN 'Satellite Senior Centers'
@@ -78,16 +77,8 @@ SELECT
 			WHEN Contract_Type LIKE '%MEALS%' THEN  initcap(Contract_Type)
 			ELSE 'Senior Services'
 		END),
-	-- domain
-	'Health and Human Services',
-	-- facilitygroup
-	'Human Services',
 	-- facilitysubgroup
 	'Senior Services',
-	-- agencyclass1
-	Contract_Type,
-	-- agencyclass2
-	'NA',
 	-- capacity
 	NULL,
 	-- utilization
@@ -107,17 +98,11 @@ SELECT
 	-- operatorabbrev
 	'Non-public',
 	-- oversightagency
-	ARRAY['NYC Department for the Aging'],
+	'NYC Department for the Aging',
 	-- oversightabbrev
-	ARRAY['NYCDFTA'],
+	'NYCDFTA',
 	-- datecreated
 	CURRENT_TIMESTAMP,
-	-- buildingid
-	NULL,
-	-- buildingname
-	NULL,
-	-- schoolorganizationlevel
-	NULL,
 	-- children
 	FALSE,
 	-- youth

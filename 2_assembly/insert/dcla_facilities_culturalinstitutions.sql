@@ -4,6 +4,8 @@ facilities (
 	hash,
 	geom,
 	idagency,
+	idname,
+	idfield,
 	facname,
 	addressnum,
 	streetname,
@@ -12,15 +14,12 @@ facilities (
 	zipcode,
 	bbl,
 	bin,
+	geomsource,
 	factype,
-	facdomain,
-	facgroup,
 	facsubgrp,
-	agencyclass1,
-	agencyclass2,
 	capacity,
 	util,
-	captype,
+	capacitytype,
 	utilrate,
 	area,
 	areatype,
@@ -30,9 +29,6 @@ facilities (
 	overagency,
 	overabbrev,
 	datecreated,
-	buildingid,
-	buildingname,
-	schoolorganizationlevel,
 	children,
 	youth,
 	senior,
@@ -46,12 +42,14 @@ facilities (
 )
 SELECT
 	-- pgtable
-	ARRAY['dcla_facilities_culturalinstitutions'],
+	'dcla_facilities_culturalinstitutions',
 	-- hash,
     hash,
 	-- geom
 	NULL,
 	-- idagency
+	NULL,
+	NULL,
 	NULL,
 	-- facilityname
 	Organization_Name,
@@ -69,24 +67,17 @@ SELECT
 	NULL,
 	-- bin
 	NULL,
+	NULL,
 	-- facilitytype
 		(CASE
 			WHEN Discipline IS NOT NULL THEN Discipline
 			ELSE 'Unspecified Discipline'
 		END),
-	-- domain
-	'Libraries and Cultural Programs',
-	-- facilitygroup
-	'Cultural Institutions',
 	-- facilitysubgroup
 		(CASE
 			WHEN Discipline LIKE '%Museum%' THEN 'Museums'
 			ELSE 'Other Cultural Institutions'
 		END),
-	-- agencyclass1
-	Discipline,
-	-- agencyclass2
-	'NA',
 	-- capacity
 	NULL,
 	-- utilization
@@ -106,17 +97,11 @@ SELECT
 	-- operatorabbrev
 	'Non-public',
 	-- oversightagencyn
-	ARRAY['NYC Department of Cultural Affairs'],
+	'NYC Department of Cultural Affairs',
 	-- oversightabbrev
-	ARRAY['NYCDCLA'],
+	'NYCDCLA',
 	-- datecreated
 	CURRENT_TIMESTAMP,
-	-- buildingid
-	NULL,
-	-- buildingname
-	NULL,
-	-- schoolorganizationlevel
-	NULL,
 	-- children
 	FALSE,
 	-- youth
