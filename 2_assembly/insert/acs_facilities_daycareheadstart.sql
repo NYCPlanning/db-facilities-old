@@ -53,7 +53,7 @@ SELECT
 	-- idname
 	'Early Learn Program Number',
 	-- idfield
-	'acs_facilities_daycareheadstart'
+	'acs_facilities_daycareheadstart',
 	-- facilityname
 	Program_Name,
 	-- addressnumber
