@@ -1,4 +1,6 @@
 {
  "DBNAME":"capdb",
- "DBUSER":"dbadmin"
+ "DBUSER":"dbadmin",
+ "GEOCLIENT_APP_ID":"ead3ec7a",
+ "GEOCLIENT_APP_KEY":"e4b1299a68e86030c59a01f8979f5d11"
 }
