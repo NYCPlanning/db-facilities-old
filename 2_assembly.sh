@@ -4,19 +4,19 @@
 ## NOTE: This script requires that you setup the DATABASE_URL environment variable. 
 ## Directions are in the README.md.
 
-DBNAME=$(cat $REPOLOC/config.json | jq -r '.DBNAME')
-DBUSER=$(cat $REPOLOC/config.json | jq -r '.DBUSER')
+DBNAME=$(cat $REPOLOC/facdb.config.json| jq -r '.DBNAME')
+DBUSER=$(cat $REPOLOC/facdb.config.json | jq -r '.DBUSER')
 
 ## STEP 1
 ## create empty master table with facilities db schema
 echo 'Creating empty facilities table...'
-psql -U $DBUSER -d $DBNAME -f ./2_assembly/create.sql
+psql -U $DBUSER -d $DBNAME -f ./2_assembly/create/create.sql
 echo 'Done creating empty facilities table'
 
 ## STEP 2
 ## configure (transform) each dataset and insert into master table
 echo 'Transforming and inserting records from source data'
-psql -U $DBUSER -d $DBNAME -f ./2_assembly/config_acs_facilities_daycareheadstart.sql
+psql -U $DBUSER -d $DBNAME -f ./2_assembly/insert/acs_facilities_daycareheadstart.sql
 psql -U $DBUSER -d $DBNAME -f ./2_assembly/config_bic_facilities_tradewaste.sql
 psql -U $DBUSER -d $DBNAME -f ./2_assembly/config_dca_facilities_operatingbusinesses.sql
 psql -U $DBUSER -d $DBNAME -f ./2_assembly/config_dcas_facilities_colp.sql
@@ -63,24 +63,24 @@ echo 'Done transforming and inserting records from source data'
 
 ## STEP 3 
 ## Joining on source data info and standardizing capitalization
-psql -U $DBUSER -d $DBNAME -f ./2_assembly/join_sourcedatainfo.sql
+psql -U $DBUSER -d $DBNAME -f ./2_assembly/standardize/join_sourcedatainfo.sql
 echo 'Cleaning up capitalization, standardizing values, and adding agency tags in arrays...'
-psql -U $DBUSER -d $DBNAME -f ./2_assembly/standardize_fixallcaps.sql
-psql -U $DBUSER -d $DBNAME -f ./2_assembly/standardize_capacity.sql
-psql -U $DBUSER -d $DBNAME -f ./2_assembly/standardize_oversightlevel.sql
+psql -U $DBUSER -d $DBNAME -f ./2_assembly/standardize/standardize_fixallcaps.sql
+psql -U $DBUSER -d $DBNAME -f ./2_assembly/standardize/standardize_capacity.sql
+psql -U $DBUSER -d $DBNAME -f ./2_assembly/standardize/standardize_oversightlevel.sql
 # psql -U $DBUSER -d $DBNAME -f ./2_assembly/undo_agencytags.sql
-psql -U $DBUSER -d $DBNAME -f ./2_assembly/standardize_agencytag.sql
-psql -U $DBUSER -d $DBNAME -f ./2_assembly/standardize_trim.sql
-psql -U $DBUSER -d $DBNAME -f ./2_assembly/standardize_factypes.sql
+psql -U $DBUSER -d $DBNAME -f ./2_assembly/standardize/standardize_agencytag.sql
+psql -U $DBUSER -d $DBNAME -f ./2_assembly/standardize/standardize_trim.sql
+psql -U $DBUSER -d $DBNAME -f ./2_assembly/standardize/standardize_factypes.sql
 ## Standardizing borough and assigning borough code
-psql -U $DBUSER -d $DBNAME -f ./2_assembly/standardize_borough.sql
+psql -U $DBUSER -d $DBNAME -f ./2_assembly/standardize/standardize_borough.sql
 ## Switching One to 1 for geocoding and removing invalid (string) address numbers
-psql -U $DBUSER -d $DBNAME -f ./2_assembly/standardize_address.sql
+psql -U $DBUSER -d $DBNAME -f ./2_assembly/standardize/standardize_address.sql
 ## Assigning a group and domain to each facility type
-psql -U $DBUSER -d $DBNAME -f ./2_assemblystandardize_group.sql
-psql -U $DBUSER -d $DBNAME -f ./2_assemblystandardize_domain.sql
+psql -U $DBUSER -d $DBNAME -f ./2_assembly/standardize/standardize_group.sql
+psql -U $DBUSER -d $DBNAME -f ./2_assembly/standardize/standardize_domain.sql
 
 ## STEP 4
 ## Fill in the uid for all new records in the database
 echo 'Filling in / creating uid...'
-psql -U $DBUSER -d $DBNAME -f ./2_assembly/create_uid.sql
+psql -U $DBUSER -d $DBNAME -f ./2_assembly/create/create_uid.sql
