@@ -1,58 +1,59 @@
 INSERT INTO
 facilities (
-	pgtable,
-	hash,
-	geom,
-	idagency,
-	facname,
-	addressnum,
-	streetname,
-	address,
-	boro,
-	zipcode,
-	bbl,
-	bin,
-	factype,
-	facdomain,
-	facgroup,
-	facsubgrp,
-	agencyclass1,
-	agencyclass2,
-	capacity,
-	util,
-	captype,
-	utilrate,
-	area,
-	areatype,
-	optype,
-	opname,
-	opabbrev,
-	overagency,
-	overabbrev,
-	datecreated,
-	buildingid,
-	buildingname,
-	schoolorganizationlevel,
-	children,
-	youth,
-	senior,
-	family,
-	disabilities,
-	dropouts,
-	unemployed,
-	homeless,
-	immigrants,
-	groupquarters
+pgtable,
+hash,
+idagency,
+idname,
+idfield,
+facname,
+addressnum,
+streetname,
+address,
+boro
+zipcode,
+bbl,
+bin,
+geom,
+geomsource,
+latitude,
+longitude,
+factype,
+facsubgrp,
+capacity,
+util,
+capacitytype,
+utilrate,
+area,
+areatype,
+optype,
+opname,
+opabbrev,
+overagency,
+overabbrev,
+overlevel,
+datecreated,
+children,
+youth,
+senior,
+family,
+disabilities,
+dropouts,
+unemployed,
+homeless,
+immigrants,
+groupquarters
 )
 SELECT
 	-- pgtable
-	ARRAY['acs_facilities_daycareheadstart'],
+	'acs_facilities_daycareheadstart',
 	-- hash,
     hash,
-	-- geom
-	NULL,
-	-- idagency
-	ARRAY[EL_Program_Number],
+    -- idagency
+	el_program_number,
+	-- idname
+	'Early Learn Program Number',
+	-- idfield
+	'acs_facilities_daycareheadstart'
 	-- facilityname
 	Program_Name,
 	-- addressnumber
@@ -75,6 +76,14 @@ SELECT
 	NULL,
 	-- bin
 	NULL,
+	-- geom
+	NULL,
+	-- geomsource
+	NULL,
+	-- latitude
+	NULL,
+	-- longitude
+	NULL,
 	-- facilitytype
 		(CASE
 			WHEN Model_Type = 'DE' OR Model_Type = 'DU' THEN 'Dual Enrollment Child Care/Head Start'
@@ -82,22 +91,14 @@ SELECT
 			WHEN Model_Type = 'HS' THEN 'Head Start'
 			ELSE 'Child Care'
 		END),
-	-- domain
-	'Education, Child Welfare, and Youth',
-	-- facilitygroup
-	'Child Care and Pre-Kindergarten',
 	-- facilitysubgroup
 	'Child Care',
-	-- agencyclass1
-	Model_Type,
-	-- agencyclass2
-	'NA',
 	-- capacity
-	ARRAY[ROUND(Total::numeric,0)::text],
+	ROUND(Total::numeric,0)::text,
 	-- utilization
 	NULL,
 	-- capacitytype
-	ARRAY['Seats in Contract'],
+	'Seats in Contract',
 	-- utilizationrate
 	NULL,
 	-- area
@@ -111,17 +112,13 @@ SELECT
 	-- operator abbrev
 	'Non-public',
 	-- oversightagency
-	ARRAY['NYC Administration for Childrens Services'],
+	'NYC Administration for Childrens Services',
 	-- oversightabbrev
-	ARRAY['NYCACS'],
+	'NYCACS',
+	-- oversightlevel
+	'City',
 	-- datecreated
 	CURRENT_TIMESTAMP,
-	-- buildingid
-	NULL,
-	-- buildingname
-	NULL,
-	-- schoolorganizationlevel
-	NULL,
 	-- children
 	TRUE,
 	-- youth
@@ -143,4 +140,4 @@ SELECT
 	-- groupquarters
 	FALSE
 FROM
-	acs_facilities_daycareheadstart
+	acs_facilities_daycareheadstart;
