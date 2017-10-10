@@ -9,7 +9,7 @@ UPDATE facilities AS f
     FROM
         dcp_mappluto AS p        
     WHERE
-        f.bbl = ARRAY[ROUND(p.bbl,0)::text]
+        f.bbl = ROUND(p.bbl,0)::text
         AND f.bbl IS NOT NULL
         AND f.processingflag NOT LIKE '%bin2overwritegeom%'
         AND f.processingflag NOT LIKE '%bbl2overwritegeom%'

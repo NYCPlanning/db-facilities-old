@@ -1,6 +1,6 @@
 UPDATE facilities AS f
     SET
-        bbl = ARRAY[ROUND(p.bbl,0)],
+        bbl = ROUND(p.bbl,0),
         boro = 
 	        (CASE
 	        	WHEN p.borough = 'MN' THEN 'Manhattan'

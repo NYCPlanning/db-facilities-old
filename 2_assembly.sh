@@ -2,7 +2,7 @@
 ## ASSEMBLY
 ################################################################################################
 ## NOTE: This script requires that you setup the DATABASE_URL environment variable. 
-## Directions are in the README.md.
+## Directions are in the README.md
 
 DBNAME=$(cat facdb.config.json| jq -r '.DBNAME')
 DBUSER=$(cat facdb.config.json | jq -r '.DBUSER')
@@ -68,8 +68,8 @@ echo 'Cleaning up capitalization, standardizing values, and adding agency tags i
 psql -U $DBUSER -d $DBNAME -f ./2_assembly/standardize/standardize_fixallcaps.sql
 psql -U $DBUSER -d $DBNAME -f ./2_assembly/standardize/standardize_capacity.sql
 psql -U $DBUSER -d $DBNAME -f ./2_assembly/standardize/standardize_oversightlevel.sql
-# psql -U $DBUSER -d $DBNAME -f ./2_assembly/undo_agencytags.sql
-# psql -U $DBUSER -d $DBNAME -f ./2_assembly/standardize/standardize_agencytag.sql ## shouldn't be doing this at this point
+# psql -U $DBUSER -d $DBNAME -f ./2_assembly/standardize/undo_agencytags.sql ## DELETE NO LONGER NEEDED
+# psql -U $DBUSER -d $DBNAME -f ./2_assembly/standardize/standardize_agencytag.sql ## DELETE NO LONGER NEEDED
 psql -U $DBUSER -d $DBNAME -f ./2_assembly/standardize/standardize_trim.sql
 psql -U $DBUSER -d $DBNAME -f ./2_assembly/standardize/standardize_factypes.sql
 ## Standardizing borough and assigning borough code
