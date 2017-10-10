@@ -125,11 +125,11 @@ SELECT
 	NULL,
 	-- area
 	(CASE 
-		WHEN ft_decode = 'City-State Park' AND acreage::numeric > 0 THEN ARRAY[ROUND(acreage::numeric,3)::text]
+		WHEN ft_decode = 'City-State Park' AND acreage::numeric > 0 THEN ROUND(acreage::numeric,3)::text
 	END),
 	-- areatype
 	(CASE 
-		WHEN ft_decode = 'City-State Park' AND acreage::numeric > 0 THEN ARRAY['Acres']
+		WHEN ft_decode = 'City-State Park' AND acreage::numeric > 0 THEN 'Acres'
 	END),
 	-- operatortype
 		(CASE
