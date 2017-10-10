@@ -49,7 +49,7 @@ SELECT
 	NULL,
 	-- idagency
 	Proposal_ID,
-	'Proposal ID'
+	'Proposal ID',
 	'Proposal_ID',
 	-- facilityname
 		(CASE

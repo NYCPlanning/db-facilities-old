@@ -49,7 +49,7 @@ SELECT
 	NULL,
 	-- idagency
 	External_Contract_Number,
-	'HHS External Contract Number'
+	'HHS External Contract Number',
 	'External_Contract_Number',
 	-- facilityname
 	(CASE

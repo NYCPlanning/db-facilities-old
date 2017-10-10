@@ -36,5 +36,4 @@ UPDATE facilities AS f
 			END)
 	WHERE
 		area IS NOT NULL
-		AND area NOT LIKE CONCAT('%',datasource,'%')
 		;
