@@ -63,13 +63,13 @@ echo 'Done transforming and inserting records from source data'
 
 ## STEP 3 
 ## Joining on source data info and standardizing capitalization
-psql -U $DBUSER -d $DBNAME -f ./2_assembly/standardize/join_sourcedatainfo.sql
+# psql -U $DBUSER -d $DBNAME -f ./2_assembly/standardize/join_sourcedatainfo.sql ##should remove
 echo 'Cleaning up capitalization, standardizing values, and adding agency tags in arrays...'
 psql -U $DBUSER -d $DBNAME -f ./2_assembly/standardize/standardize_fixallcaps.sql
 psql -U $DBUSER -d $DBNAME -f ./2_assembly/standardize/standardize_capacity.sql
 psql -U $DBUSER -d $DBNAME -f ./2_assembly/standardize/standardize_oversightlevel.sql
 # psql -U $DBUSER -d $DBNAME -f ./2_assembly/undo_agencytags.sql
-psql -U $DBUSER -d $DBNAME -f ./2_assembly/standardize/standardize_agencytag.sql
+# psql -U $DBUSER -d $DBNAME -f ./2_assembly/standardize/standardize_agencytag.sql ## shouldn't be doing this at this point
 psql -U $DBUSER -d $DBNAME -f ./2_assembly/standardize/standardize_trim.sql
 psql -U $DBUSER -d $DBNAME -f ./2_assembly/standardize/standardize_factypes.sql
 ## Standardizing borough and assigning borough code
@@ -83,4 +83,4 @@ psql -U $DBUSER -d $DBNAME -f ./2_assembly/standardize/standardize_domain.sql
 ## STEP 4
 ## Fill in the uid for all new records in the database
 echo 'Filling in / creating uid...'
-psql -U $DBUSER -d $DBNAME -f ./2_assembly/create/create_uid.sql
+# psql -U $DBUSER -d $DBNAME -f ./2_assembly/create/create_uid.sql ## I don't think this is needed

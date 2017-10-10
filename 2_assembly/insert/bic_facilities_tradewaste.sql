@@ -103,12 +103,6 @@ SELECT
 	'NYCBIC',
 	-- datecreated
 	CURRENT_TIMESTAMP,
-	-- buildingid
-	NULL,
-	-- buildingname
-	NULL,
-	-- schoolorganizationlevel
-	NULL,
 	-- children
 	FALSE,
 	-- youth

@@ -178,8 +178,8 @@ SELECT
 		END),
 	-- oversightagency
 		(CASE
-			WHEN Institution_Type_Desc = 'Public K-12 Schools' THEN 'NYC Department of Education', 'NYS Education Department'
-			WHEN Institution_Type_Desc LIKE '%NON-IMF%' THEN 'NYC Department of Education', 'NYS Education Department'
+			WHEN Institution_Type_Desc = 'Public K-12 Schools' THEN 'NYC Department of Education, NYS Education Department'
+			WHEN Institution_Type_Desc LIKE '%NON-IMF%' THEN 'NYC Department of Education, NYS Education Department'
 			ELSE 'NYS Education Department'
 		END),
 	-- oversightabbrev

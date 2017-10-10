@@ -57,6 +57,8 @@ SELECT
 	END),
 	-- idagency
 	CONCAT(sponsor_code,'-',facility_code,'-', program_code),
+	'NYS Unique ID',
+	'sponsor_code-facility_code-program_code',
 	-- facilityname
 	Program_Name,
 	-- addressnumber

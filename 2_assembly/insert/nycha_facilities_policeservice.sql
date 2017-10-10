@@ -67,7 +67,7 @@ SELECT
 	NULL,
 	-- bin
 	NULL,
-	'agency'
+	'agency',
 	-- facilitytype
 	'NYCHA Police Service',
 	-- facilitysubgroup

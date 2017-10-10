@@ -73,11 +73,11 @@ SELECT
 	NULL,
 	-- bbl
 	(CASE
-		WHEN boro = 'MANHATTAN' THEN ARRAY[CONCAT('1',LPAD(block::text, 5, '0'),LPAD(lot::text, 4, '0'))::text]
-		WHEN boro = 'BRONX' THEN ARRAY[CONCAT('2',LPAD(block::text, 5, '0'),LPAD(lot::text, 4, '0'))::text]
-		WHEN boro = 'BROOKLYN' THEN ARRAY[CONCAT('3',LPAD(block::text, 5, '0'),LPAD(lot::text, 4, '0'))::text]
-		WHEN boro = 'QUEENS' THEN ARRAY[CONCAT('4',LPAD(block::text, 5, '0'),LPAD(lot::text, 4, '0'))::text]
-		WHEN boro = 'STATEN ISLAND' THEN ARRAY[CONCAT('5',LPAD(block::text, 5, '0'),LPAD(lot::text, 4, '0'))::text]
+		WHEN boro = 'MANHATTAN' THEN CONCAT('1',LPAD(block::text, 5, '0'),LPAD(lot::text, 4, '0'))::text
+		WHEN boro = 'BRONX' THEN CONCAT('2',LPAD(block::text, 5, '0'),LPAD(lot::text, 4, '0'))::text
+		WHEN boro = 'BROOKLYN' THEN CONCAT('3',LPAD(block::text, 5, '0'),LPAD(lot::text, 4, '0'))::text
+		WHEN boro = 'QUEENS' THEN CONCAT('4',LPAD(block::text, 5, '0'),LPAD(lot::text, 4, '0'))::text
+		WHEN boro = 'STATEN ISLAND' THEN CONCAT('5',LPAD(block::text, 5, '0'),LPAD(lot::text, 4, '0'))::text
 	END),
 	-- bin
 	NULL,
@@ -565,5 +565,5 @@ WHERE
 	OR (agency = 'ACS' AND usedec NOT LIKE '%RESIDENTIAL%' AND usedec NOT LIKE '%HOUSING%');
 
 UPDATE facilities
-SET facname = CONCAT(array_to_string(overagency,','), ' ', facname)
+SET facname = CONCAT(overagency,' ', facname)
 WHERE facname = 'Office';

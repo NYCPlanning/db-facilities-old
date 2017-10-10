@@ -2,20 +2,20 @@ UPDATE facilities AS f
     SET 
 		capacity = NULL
 	WHERE
-		array_to_string(capacity,',') LIKE '% 0%'
+		capacity LIKE '% 0%'
 		;
 
 UPDATE facilities AS f
     SET 
 		util = NULL
 	WHERE
-		array_to_string(util,',') LIKE '% 0%'
+		util LIKE '% 0%'
 		AND capacity IS NULL
 		;
 
 UPDATE facilities AS f
     SET 
-		captype = NULL,
+		capacitytype = NULL,
 		utilrate = NULL
 	WHERE
 		capacity IS NULL
@@ -26,7 +26,7 @@ UPDATE facilities AS f
     SET 
 		area =
 			(CASE
-				WHEN area[1]::numeric <> 0 THEN ARRAY[ROUND(area[1]::numeric,3)]
+				WHEN area[1]::numeric <> 0 THEN ROUND(area[1]::numeric,3)
 				ELSE NULL
 			END),
 		areatype =
@@ -36,5 +36,5 @@ UPDATE facilities AS f
 			END)
 	WHERE
 		area IS NOT NULL
-		AND array_to_string(area,',') NOT LIKE CONCAT('%',array_to_string(datasource,','),'%')
+		AND area NOT LIKE CONCAT('%',datasource,'%')
 		;

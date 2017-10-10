@@ -67,7 +67,7 @@ SELECT
 	NULL,
 	-- bin
 	NULL,
-	'agency'
+	'agency',
 	-- facilitytype
 	'Ferry Terminal or Landing',
 	-- facilitysubgroup

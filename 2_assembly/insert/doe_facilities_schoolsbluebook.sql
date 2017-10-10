@@ -81,7 +81,7 @@ SELECT
 	NULL,
 	-- bin
 	NULL,
-	'agency'
+	'agency',
 	-- facilitytype
 		(CASE
 			WHEN RIGHT(Org_ID,3) = 'ADM' THEN 'School Administration Site'

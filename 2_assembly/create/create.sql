@@ -55,7 +55,7 @@ area text,
 areatype text,
 
 -- operator, oversight, and property information
-proptype text,
+propertytype text,
 -- propertynycha boolean,
 optype text,
 opname text,

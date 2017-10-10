@@ -279,6 +279,7 @@ WHERE
 	AND Agency NOT LIKE '%Housing%'
 	AND contract_end_date::date > CURRENT_TIMESTAMP
 GROUP BY
+	CT_Num,
 	hash,
 	agency,
 	lgl_nm,

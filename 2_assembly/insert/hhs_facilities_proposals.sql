@@ -280,6 +280,7 @@ WHERE
 	AND Agency_name NOT LIKE '%Housing%'
 	AND contract_end_date::date > CURRENT_TIMESTAMP
 GROUP BY
+	Proposal_ID,
 	hash,
 	agency_name,
     provider_name,
@@ -287,3 +288,6 @@ GROUP BY
     site_name,
     address_1,
     zip_code
+
+
+

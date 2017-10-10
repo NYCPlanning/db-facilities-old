@@ -40,7 +40,7 @@ facilities (
 	unemployed,
 	homeless,
 	immigrants,
-	groupquarters\
+	groupquarters
 )
 SELECT
 	-- pgtable
