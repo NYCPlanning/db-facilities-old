@@ -26,12 +26,12 @@ UPDATE facilities AS f
     SET 
 		area =
 			(CASE
-				WHEN area[1]::numeric <> 0 THEN ROUND(area[1]::numeric,3)
+				WHEN area::numeric <> 0 THEN ROUND(area::numeric,3)
 				ELSE NULL
 			END),
 		areatype =
 			(CASE
-				WHEN area[1]::numeric <> 0 THEN areatype
+				WHEN area::numeric <> 0 THEN areatype
 				ELSE NULL
 			END)
 	WHERE

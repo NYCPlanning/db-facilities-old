@@ -91,10 +91,6 @@ SELECT
 				THEN 'Other Health Care'
 			ELSE 'Hospitals and Clinics'
 		END),
-	-- agencyclass1
-	Description,
-	-- agencyclass2
-	ownership_type,
 	-- capacity
 	capacity::text,
 	-- utilization

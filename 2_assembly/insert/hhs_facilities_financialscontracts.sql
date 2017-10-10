@@ -246,10 +246,6 @@ SELECT
 		END),
 	-- datecreated
 	CURRENT_TIMESTAMP,
-	-- agencysource
-	'NYCHHS',
-	-- sourcedatasetname
-	'HHS Accelerator - Financials Contracts',
 	-- children
 	NULL,
 	-- youth
