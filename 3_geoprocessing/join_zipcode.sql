@@ -11,4 +11,4 @@ UPDATE facilities AS f
     WHERE
         (f.geom IS NOT NULL
         AND ST_Intersects(p.geom,f.geom))
-        OR f.zipcode = p.zipcode::integer
+        OR f.zipcode = p.zipcode

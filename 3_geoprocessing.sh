@@ -45,7 +45,7 @@ echo 'Spatially joining with dcp_mappluto...'
 psql -U $DBUSER -d $DBNAME -f ./3_geoprocessing/join_PLUTOspatial.sql
 echo 'Done spatially joining with dcp_mappluto'
 psql -U $DBUSER -d $DBNAME -f ./3_geoprocessing/vacuum.sql
-psql -U $DBUSER -d $DBNAME -f ./2_assembly/standardize_address.sql
+psql -U $DBUSER -d $DBNAME -f ./2_assembly/standardize/standardize_address.sql
 # ^ need to clean up addresses again after filling in with PLUTO address
 
 ## FILLING IN REMAINING MISSING BINS
