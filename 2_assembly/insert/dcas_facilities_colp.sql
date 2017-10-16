@@ -56,7 +56,7 @@ SELECT
 	NULL,
 	-- facilityname
 		(CASE
-			WHEN (name = ' ' OR name IS NULL) AND usedec LIKE '%OFFICE%' THEN 'Office'
+			WHEN (name = ' ' OR name IS NULL) AND usedec LIKE '%OFFICE%' THEN agency||' Office'
 			WHEN (name = ' ' OR name IS NULL) AND usedec LIKE '%NO USE%' THEN 'City Owned Property'
 			WHEN name <> ' ' AND name IS NOT NULL THEN initcap(name)
 			ELSE initcap(REPLACE(usedec, 'OTHER ', ''))
