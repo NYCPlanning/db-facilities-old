@@ -126,7 +126,7 @@ SELECT
 				THEN 'Preschools for Students with Disabilities'
 			WHEN (Institution_Type_Desc LIKE '%DISABILITIES%')
 				THEN 'Public and Private Special Education Schools'
-			WHEN Institution_Sub_Type_Desc LIKE '%PRE-K%' THEN 'Offices'
+			WHEN Institution_Sub_Type_Desc LIKE '%PRE-K%' THEN 'Government Offices'
 			WHEN (Institution_Type_Desc LIKE 'PUBLIC%') OR (Institution_Sub_Type_Desc LIKE 'PUBLIC%') THEN 'Public K-12 Schools'
 			WHEN (Institution_Type_Desc LIKE '%COLLEGE%') OR (Institution_Type_Desc LIKE '%CUNY%') OR 
 				(Institution_Type_Desc LIKE '%SUNY%') OR (Institution_Type_Desc LIKE '%SUNY%')

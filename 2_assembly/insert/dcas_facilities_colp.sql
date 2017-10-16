@@ -100,7 +100,7 @@ SELECT
 			WHEN usedec LIKE '%STORAGE%' OR usedec LIKE '%STRG%' THEN 'Storage'
 			WHEN usedec LIKE '%CUSTODIAL%' THEN 'Custodial'
 			WHEN usedec LIKE '%GARAGE%' THEN 'Maintenance and Garages'
-			WHEN usedec LIKE '%OFFICE%' THEN 'City Government Offices'
+			WHEN usedec LIKE '%OFFICE%' THEN 'Government Offices'
 			WHEN usedec LIKE '%MAINTENANCE%' THEN 'Maintenance and Garages'
 			WHEN usedec LIKE '%NO USE%' THEN 'Miscellaneous Use'
 			WHEN usedec LIKE '%MISCELLANEOUS USE%' THEN 'Miscellaneous Use'

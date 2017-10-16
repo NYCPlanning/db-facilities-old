@@ -166,7 +166,7 @@ OR facsubgrp = 'Wholesale Markets'
 
 UPDATE facilities
 SET facgroup = 'Offices, Training, and Testing'
-WHERE facsubgrp = 'Offices'
+WHERE facsubgrp = 'Government Offices'
 OR facsubgrp = 'Training and Testing'
 ;
 
