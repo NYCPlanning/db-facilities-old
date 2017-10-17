@@ -4,9 +4,9 @@ UPDATE facilities
 	SET factype = initcap(factype)
 	WHERE
 		upper(factype) = factype
-		AND factype <> 'IMPACT'
-		AND factype <> 'COMPASS'
-		AND factype <> 'WIOA CUNY MOU'
+		AND (factype <> 'IMPACT'
+		OR factype <> 'COMPASS'
+		OR factype <> 'WIOA CUNY MOU')
 	;
 
 UPDATE facilities
