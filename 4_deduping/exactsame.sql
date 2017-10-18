@@ -1,6 +1,6 @@
-## Reconcile duplicate records that are basically exactly the same
+-- Reconcile duplicate records that are basically exactly the same
 
-## Finding duplicate records
+-- Finding duplicate records
 CREATE VIEW duplicates AS
 	WITH grouping AS (
 		SELECT LEFT(
@@ -57,7 +57,7 @@ CREATE VIEW duplicates AS
 		WHERE b.count>1
 	;
 
-## Inserting values into relational tables
+-- Inserting values into relational tables
 WITH distincts AS(
 	SELECT DISTINCT minuid, bbl
 	FROM duplicates
@@ -148,10 +148,10 @@ WITH distincts AS(
 	SELECT minuid, util, utiltype
 	FROM distincts;
 
-## Deleting duplicate records
+-- Deleting duplicate records
 DELETE FROM facilities USING duplicates
 WHERE facilities.uid = duplicates.uid
 AND duplicates.uid<>duplicates.minuid;
 
-## Dropping duplicate records
+-- Dropping duplicate records
 DROP VIEW IF EXISTS duplicates;
