@@ -9,6 +9,9 @@ DBUSER=$(cat $REPOLOC/config.json | jq -r '.DBUSER')
 
 ## DEDUPING
 
+## Make a backup
+psql -U $DBUSER -d $DBNAME -f ./4_deduping/backuppredup.sql
+
 # Merge Child Care and Pre-K Duplicate records
 echo 'Merging and dropping Child Care and Pre-K duplicates...'
 psql -U $DBUSER -d $DBNAME -f ./4_deduping/duplicates_ccprek_acs_hhs.sql

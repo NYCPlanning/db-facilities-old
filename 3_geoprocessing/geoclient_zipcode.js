@@ -156,8 +156,8 @@ function updateFacilities(data, row) {
                           addressnum=\'{{newaddressnum}}\',
                           streetname=initcap(\'{{newstreetname}}\'),
                           address=CONCAT(\'{{newaddressnum}}\',\' \',initcap(\'{{newstreetname}}\')),
-                          bbl=ARRAY[\'{{bbl}}\'],
-                          bin=ARRAY[\'{{bin}}\'],
+                          bbl=\'{{bbl}}\',
+                          bin=\'{{bin}}\',
                           boro=initcap(\'{{boro}}\'),
                           borocode=(CASE
                             WHEN \'{{boro}}\'=\'MANHATTAN\' THEN 1

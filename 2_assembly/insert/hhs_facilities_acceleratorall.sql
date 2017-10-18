@@ -184,7 +184,7 @@ SELECT
 	-- operatorabbrev
 	'Non-public',
 	-- oversightagency
-		ARRAY[(CASE
+		(CASE
 			WHEN agency LIKE '%DOE%' THEN 'NYC Department of Education'
 			WHEN agency LIKE '%SBS%' THEN 'NYC Department of Small Business Services'
 			WHEN agency LIKE '%DHS%' THEN 'NYC Department of Homeless Services'
@@ -200,9 +200,9 @@ SELECT
 			WHEN agency LIKE '%Mayor%' OR agency LIKE '%MAYOR%' THEN 'NYC Office of the Mayor'
 			WHEN agency LIKE '%DOC%' THEN 'NYC Department of Correction'
 			ELSE CONCAT('NYC ', agency)
-		END)],
+		END),
 	-- oversightabbrev
-		ARRAY[(CASE
+		(CASE
 			WHEN agency LIKE '%DOE%'
 				OR agency LIKE '%Department of Education%'
 				THEN 'NYCDOE'
@@ -248,7 +248,7 @@ SELECT
 				OR agency LIKE '%DOC%'
 				THEN 'NYCDOC'
 			ELSE CONCAT('NYC', UPPER(agency))
-		END)],
+		END),
 	-- datecreated
 	CURRENT_TIMESTAMP,
 	-- agencysource

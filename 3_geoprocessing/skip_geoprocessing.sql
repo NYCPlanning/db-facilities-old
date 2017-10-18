@@ -21,7 +21,7 @@ SET
 FROM
 	facdb_uid_geo_lookup AS gl
 WHERE
-	string_to_array(f.hash,';') @> ARRAY[gl.hash]
+	f.hash @> gl.hash
 
 
 -- create table facdb_uid_geo_lookup AS (

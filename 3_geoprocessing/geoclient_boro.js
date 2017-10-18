@@ -155,8 +155,8 @@ function updateFacilities(data, row) {
                           addressnum=\'{{newaddressnum}}\',
                           streetname=initcap(\'{{newstreetname}}\'),
                           address=initcap(CONCAT(\'{{newaddressnum}}\',\' \',\'{{newstreetname}}\')),
-                          bbl=ARRAY[\'{{bbl}}\'],
-                          bin=ARRAY[\'{{bin}}\'],
+                          bbl=\'{{bbl}}\',
+                          bin=\'{{bin}}\',
                           zipcode=\'{{zipcode}}\',
                           city=initcap(\'{{city}}\'),
                           processingflag=(CASE

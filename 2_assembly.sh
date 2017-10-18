@@ -9,9 +9,22 @@ DBUSER=$(cat facdb.config.json | jq -r '.DBUSER')
 
 ## STEP 1
 ## create empty master table with facilities db schema
-echo 'Creating empty facilities table...'
+echo 'Creating empty facilities tables...'
 psql -U $DBUSER -d $DBNAME -f ./2_assembly/create/create.sql
-echo 'Done creating empty facilities table'
+
+psql -U $DBUSER -d $DBNAME -f ./2_assembly/create/agencyid.sql
+psql -U $DBUSER -d $DBNAME -f ./2_assembly/create/area.sql
+psql -U $DBUSER -d $DBNAME -f ./2_assembly/create/bbl.sql
+psql -U $DBUSER -d $DBNAME -f ./2_assembly/create/bin.sql
+psql -U $DBUSER -d $DBNAME -f ./2_assembly/create/capacity.sql
+psql -U $DBUSER -d $DBNAME -f ./2_assembly/create/hashesmerged.sql
+psql -U $DBUSER -d $DBNAME -f ./2_assembly/create/oversight.sql
+psql -U $DBUSER -d $DBNAME -f ./2_assembly/create/pgtable.sql
+psql -U $DBUSER -d $DBNAME -f ./2_assembly/create/uid.sql
+psql -U $DBUSER -d $DBNAME -f ./2_assembly/create/uidsmerged.sql
+psql -U $DBUSER -d $DBNAME -f ./2_assembly/create/utilization.sql
+
+echo 'Done creating empty facilities tables'
 
 ## STEP 2
 ## configure (transform) each dataset and insert into master table
