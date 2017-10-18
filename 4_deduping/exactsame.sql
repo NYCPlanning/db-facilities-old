@@ -29,8 +29,6 @@ CREATE VIEW duplicates AS
 		FROM facilities
 		GROUP BY facnamefour, factype, opname, address, boro
 	),
-
-	duplicates AS (
 		SELECT a.*, 
 			b.minuid
 		FROM facilities a
@@ -56,8 +54,8 @@ CREATE VIEW duplicates AS
 		AND a.opname=b.opname
 		AND a.address=b.address
 		AND a.boro=b.boro
-		WHERE b.count>1)
-	SELECT * FROM duplicates;
+		WHERE b.count>1
+	;
 
 ## Inserting values into relational tables
 WITH distincts AS(
