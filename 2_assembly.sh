@@ -4,8 +4,8 @@
 ## NOTE: This script requires that you setup the DATABASE_URL environment variable. 
 ## Directions are in the README.md
 
-DBNAME=$(cat facdb.config.json| jq -r '.DBNAME')
-DBUSER=$(cat facdb.config.json | jq -r '.DBUSER')
+DBNAME=$(cat config.json| jq -r '.DBNAME')
+DBUSER=$(cat config.json | jq -r '.DBUSER')
 
 ## STEP 1
 ## create empty master table with facilities db schema
