@@ -1,5 +1,5 @@
-DROP TABLE IF EXISTS facdb_uidmerged;
-CREATE TABLE  facdb_uidmerged (
+DROP TABLE IF EXISTS facdb_uidsmerged;
+CREATE TABLE  facdb_uidsmerged (
    uid text,
    uid_merged text
 );

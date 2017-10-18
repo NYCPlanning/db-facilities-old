@@ -129,3 +129,9 @@ WHERE f.uid = d.uid
 
 DELETE FROM facilities
 WHERE facilities.uid IN (SELECT unnest(facilities.uid_merged) FROM facilities);
+
+
+
+
+
+

@@ -1,5 +1,5 @@
-DROP TABLE IF EXISTS facdb_hashesmerged;
-CREATE TABLE  facdb_hashesmerged (
+DROP TABLE IF EXISTS facdb_hashes;
+CREATE TABLE  facdb_hashes (
    uid text,
-   hash_merged text
+   hash text
 );

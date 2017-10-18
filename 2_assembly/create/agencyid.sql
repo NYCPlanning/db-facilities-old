@@ -4,5 +4,5 @@ CREATE TABLE  facdb_agencyid (
    idagency text,
    idname text,
    idfield text,
-   idtable text
+   pgtable text
 );
