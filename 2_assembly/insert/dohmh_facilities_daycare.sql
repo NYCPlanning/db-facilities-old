@@ -108,7 +108,11 @@ SELECT
 	-- utilization
 	NULL,
 	-- capacitytype
-	'Seats Based on Sq Ft',
+	(CASE
+		WHEN program_type LIKE '%INFANT%' THEN  captype = 'Infant and toddler maxiumum capacity calculated by DOHMH'
+		WHEN upper(program_type) LIKE '%PRESCHOOL%' THEN captype = 'Preschooler maxiumum capacity calculated by DOHMH'
+		ELSE 'Maxiumum child capacity calculated by DOHMH'
+	END),
 	-- utilizationrate
 	NULL,
 	-- area

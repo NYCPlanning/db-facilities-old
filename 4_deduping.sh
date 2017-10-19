@@ -10,7 +10,7 @@ DBUSER=$(cat config.json | jq -r '.DBUSER')
 ## DEDUPING
 
 ## Make a backup
-psql -U $DBUSER -d $DBNAME -f ./4_deduping/copy_backuppredup.sql
+## psql -U $DBUSER -d $DBNAME -f ./4_deduping/copy_backuppredup.sql
 
 # Create relatipnal tables
 psql -U $DBUSER -d $DBNAME -f ./2_assembly/create/agencyid.sql

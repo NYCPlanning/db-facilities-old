@@ -91,7 +91,7 @@ SELECT
 	-- utilization
 	NULL,
 	-- capacitytype
-	'Seats in Contract',
+	'Seats in ACS Contract',
 	-- utilizationrate
 	NULL,
 	-- area
