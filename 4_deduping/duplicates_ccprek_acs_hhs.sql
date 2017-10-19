@@ -2,7 +2,7 @@ WITH matches AS (
 	SELECT
 		CONCAT(a.pgtable,'-',b.pgtable) as sourcecombo,
 		a.idagency,
-		(CASE WHEN b.idagency IS NULL THEN ARRAY['FAKE!'] ELSE b.idagency END) as idagency_b,
+		b.idagency as idagency_b,
 		a.uid,
 		b.uid as uid_b,
 		a.hash,
@@ -22,12 +22,6 @@ WITH matches AS (
 		a.geom,
 		a.pgtable,
 		b.pgtable as pgtable_b,
-		a.datasource,
-		b.datasource as datasource_b,
-		a.dataname,
-		b.dataname as dataname_b,
-		b.datadate as datadate_b,
-		(CASE WHEN b.dataurl IS NULL THEN ARRAY['FAKE!'] ELSE b.dataurl END) as dataurl_b,
 		a.overagency,
 		b.overlevel as overlevel_b,
 		b.overagency as overagency_b,
@@ -37,10 +31,10 @@ WITH matches AS (
 	LEFT JOIN facilities b
 	ON a.bin = b.bin
 	WHERE
-		a.pgtable = ARRAY['acs_facilities_daycareheadstart']::text[]
-		AND (b.pgtable = ARRAY['hhs_facilities_fmscontracts']::text[]
-			OR b.pgtable = ARRAY['hhs_facilities_financialscontracts']::text[]
-			OR b.pgtable = ARRAY['hhs_facilities_proposals']::text[])
+		a.pgtable = 'acs_facilities_daycareheadstart'
+		AND (b.pgtable = 'hhs_facilities_fmscontracts'
+			OR b.pgtable = 'hhs_facilities_financialscontracts'
+			OR b.pgtable = 'hhs_facilities_proposals')
 		AND b.facgroup LIKE '%Child Care%'
 		AND a.geom IS NOT NULL
 		AND b.geom IS NOT NULL
