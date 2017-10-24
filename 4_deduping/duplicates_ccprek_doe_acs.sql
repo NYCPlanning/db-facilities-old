@@ -1,52 +1,40 @@
-WITH matches AS (
-	SELECT
-		CONCAT(a.pgtable,'-',b.pgtable) as sourcecombo,
-		a.idagency,
-		b.idagency as idagency_b,
-		a.uid,
-		b.uid as uid_b,
-		a.hash,
-		b.hash as hash_b,
-		a.facname,
-		b.facname as facname_b,
-		a.facsubgrp,
-		b.facsubgrp as facsubgrp_b,
-		a.factype,
-		b.factype as factype_b,
-		a.processingflag,
-		b.processingflag as processingflag_b,
-		a.bin,
-		b.bin as bin_b,
-		a.address,
-		b.address as address_b,
-		a.geom,
-		a.pgtable,
-		b.pgtable as pgtable_b,
-		a.datasource,
-		b.datasource as datasource_b,
-		a.dataname,
-		b.dataname as dataname_b,
-		b.datadate as datadate_b,
-		(CASE WHEN b.dataurl IS NULL THEN ARRAY['FAKE!'] ELSE b.dataurl END) as dataurl_b,
-		a.overagency,
-		b.overlevel as overlevel_b,
-		b.overagency as overagency_b,
-		a.overabbrev,
-		b.overabbrev as overabbrev_b,
-		(CASE WHEN b.capacity IS NULL THEN ARRAY['FAKE!'] ELSE b.capacity END) as capacity_b,
-		(CASE WHEN b.captype IS NULL THEN ARRAY['FAKE!'] ELSE b.captype END) captype_b,
-		(CASE WHEN b.util IS NULL THEN ARRAY['FAKE!'] ELSE b.util END) as util_b,
-		(CASE WHEN b.area IS NULL THEN ARRAY['FAKE!'] ELSE b.area END) as area_b,
-		(CASE WHEN b.areatype IS NULL THEN ARRAY['FAKE!'] ELSE b.areatype END) areatype_b
+-- Reconcile duplicate records in DOE and ACS data keeping DOE as the primary record
+
+-- Finding duplicate records
+CREATE VIEW duplicates AS
+WITH grouping AS (
+SELECT 
+	min(a.uid) as minuid,
+	count(*) as count,
+	LEFT(
+		TRIM(
+			split_part(
+		REPLACE(
+			REPLACE(
+		REPLACE(
+			REPLACE(
+		REPLACE(
+			UPPER(a.facname)
+		,'THE ','')
+			,'-','')
+		,' ','')
+			,'.','')
+		,',','')
+			,'(',1)
+		,' ')
+	,4) as facnamefour,
+	a.pgtable,
+	b.pgtable as pgtable_b,
+	a.bin
 	FROM facilities a
 	LEFT JOIN facilities b
 	ON a.bin = b.bin
 	WHERE
-		a.facgroup LIKE '%Child Care%'
+		a.pgtable = 'doe_facilities_universalprek'
+		AND b.pgtable = 'acs_facilities_daycareheadstart'
+		AND a.facgroup LIKE '%Child Care%'
 		AND (a.factype LIKE '%Early%'
-		OR a.factype LIKE '%Charter%')
-		AND a.pgtable = ARRAY['doe_facilities_universalprek']::text[]
-		AND b.pgtable = ARRAY['acs_facilities_daycareheadstart']::text[]
+			OR a.factype LIKE '%Charter%')
 		AND a.geom IS NOT NULL
 		AND b.geom IS NOT NULL
 		AND a.bin IS NOT NULL
@@ -69,7 +57,7 @@ WITH matches AS (
 					,'(',1)
 				,' ')
 			,4)
-			LIKE
+			=
 			LEFT(
 				TRIM(
 					split_part(
@@ -89,59 +77,177 @@ WITH matches AS (
 			,4)
 		AND a.pgtable <> b.pgtable
 		AND a.uid <> b.uid
-		ORDER BY CONCAT(a.pgtable,'-',b.pgtable), a.facname, a.facsubgrp
-	), 
-
-duplicates AS (
-	SELECT
-		count(*) AS countofdups,
-		facname,
-		factype,
-		array_agg(distinct factype_b) AS factype_merged,
-		uid,
-		array_agg(distinct uid_b) AS uid_merged,
-		array_agg(distinct idagency_b) AS idagency_merged,
-		array_agg(distinct hash_b) AS hash_merged,
-		array_agg(distinct datasource_b) AS datasource,
-		array_agg(distinct dataname_b) AS dataname,
-		array_agg(distinct datadate_b) AS datadate,
-		array_agg(distinct dataurl_b) AS dataurl,
-		array_agg(distinct overlevel_b) AS overlevel,
-		array_agg(distinct overagency_b) AS overagency,
-		array_agg(distinct overabbrev_b) AS overabbrev,
-		array_agg(distinct pgtable_b) AS pgtable,
-		array_agg(capacity_b) AS capacity,
-		array_agg(distinct captype_b) AS captype,
-		array_agg(util_b) AS util,
-		array_agg(area_b) AS area,
-		array_agg(distinct areatype_b) AS areatype
-	FROM matches
-	GROUP BY
-	uid, facname, factype
-	ORDER BY factype, countofdups DESC )
-
-UPDATE facilities AS f
-SET
-	idagency = array_cat(idagency, d.idagency_merged),
-	uid_merged = d.uid_merged,
-	hash_merged = d.hash_merged,
-	pgtable = array_cat(f.pgtable,d.pgtable),
-	datasource = array_cat(f.datasource, d.datasource),
-	dataname = array_cat(f.dataname, d.dataname),
-	datadate = array_cat(f.datadate, d.datadate),
-	dataurl = array_cat(f.dataurl, d.dataurl),
-	overlevel = array_cat(f.overlevel, d.overlevel),
-	overagency = array_cat(f.overagency, d.overagency),
-	overabbrev = array_cat(f.overabbrev, d.overabbrev),
-	capacity = (CASE WHEN d.capacity <> ARRAY['FAKE!'] THEN array_cat(f.capacity, d.capacity) END),
-	captype = (CASE WHEN d.captype <> ARRAY['FAKE!'] THEN array_cat(f.captype, d.captype) END),
-	util = (CASE WHEN d.util <> ARRAY['FAKE!'] THEN array_cat(f.util, d.util) END),
-	area = (CASE WHEN d.area <> ARRAY['FAKE!'] THEN array_cat(f.area, d.area) END),
-	areatype = (CASE WHEN d.areatype <> ARRAY['FAKE!'] THEN array_cat(f.areatype, d.areatype) END),
-	facsubgrp = 'Dual Child Care and Universal Pre-K'
-FROM duplicates AS d
-WHERE f.uid = d.uid
+		GROUP BY
+		LEFT(
+		TRIM(
+			split_part(
+		REPLACE(
+			REPLACE(
+		REPLACE(
+			REPLACE(
+		REPLACE(
+			UPPER(a.facname)
+		,'THE ','')
+			,'-','')
+		,' ','')
+			,'.','')
+		,',','')
+			,'(',1)
+		,' ')
+	,4),
+	LEFT(
+		TRIM(
+			split_part(
+		REPLACE(
+			REPLACE(
+		REPLACE(
+			REPLACE(
+		REPLACE(
+			UPPER(b.facname)
+		,'THE ','')
+			,'-','')
+		,' ','')
+			,'.','')
+		,',','')
+			,'(',1)
+		,' ')
+	,4),
+	a.pgtable,
+	b.pgtable,
+	a.bin,
+	b.bin
+)
+		SELECT a.*, 
+			b.minuid
+		FROM facilities a
+		JOIN grouping b
+		ON LEFT(
+				TRIM(
+					split_part(
+				REPLACE(
+					REPLACE(
+				REPLACE(
+					REPLACE(
+				REPLACE(
+					UPPER(a.facname)
+				,'THE ','')
+					,'-','')
+				,' ','')
+					,'.','')
+				,',','')
+					,'(',1)
+				,' ')
+			,4)=b.facnamefour
+		AND (a.pgtable = b.pgtable 
+			OR a.pgtable = b.pgtable_b)
+		AND a.bin=b.bin
+		WHERE b.count>1
 ;
 
-DELETE FROM facilities
-WHERE facilities.uid IN (SELECT unnest(facilities.uid_merged) FROM facilities);
+-- Inserting values into relational tables
+WITH distincts AS(
+	SELECT DISTINCT minuid, bbl
+	FROM duplicates
+	WHERE bbl IS NOT NULL)
+
+	INSERT INTO facdb_bbl
+	SELECT minuid, bbl
+	FROM distincts;
+
+WITH distincts AS(
+	SELECT DISTINCT minuid, bin
+	FROM duplicates
+	WHERE bin IS NOT NULL)
+
+	INSERT INTO facdb_bin
+	SELECT minuid, bin
+	FROM distincts;
+
+WITH distincts AS(
+	SELECT DISTINCT minuid, idagency, idname, idfield, pgtable
+	FROM duplicates
+	WHERE idagency IS NOT NULL)
+
+	INSERT INTO facdb_agencyid
+	SELECT minuid, idagency, idname, idfield, pgtable
+	FROM distincts;
+
+WITH distincts AS(
+	SELECT DISTINCT minuid, area, areatype
+	FROM duplicates
+	WHERE area IS NOT NULL)
+
+	INSERT INTO facdb_area
+	SELECT minuid, area, areatype
+	FROM distincts;
+
+WITH distincts AS(
+	SELECT DISTINCT minuid, capacity, capacitytype
+	FROM duplicates
+	WHERE capacity IS NOT NULL)
+
+	INSERT INTO facdb_capacity
+	SELECT minuid, capacity, capacitytype
+	FROM distincts;
+
+WITH distincts AS(
+	SELECT DISTINCT minuid, hash
+	FROM duplicates
+	WHERE hash IS NOT NULL)
+
+	INSERT INTO facdb_hashes
+	SELECT minuid, hash
+	FROM distincts;
+
+WITH distincts AS(
+	SELECT DISTINCT minuid, overagency, overabbrev, overlevel
+	FROM duplicates
+	WHERE overagency IS NOT NULL)
+
+	INSERT INTO facdb_oversight
+	SELECT minuid, overagency, overabbrev, overlevel
+	FROM distincts;
+
+WITH distincts AS(
+	SELECT DISTINCT minuid, pgtable
+	FROM duplicates
+	WHERE pgtable IS NOT NULL)
+
+	INSERT INTO facdb_pgtable
+	SELECT minuid, pgtable
+	FROM distincts;
+
+WITH distincts AS(
+	SELECT DISTINCT minuid, uid
+	FROM duplicates
+	WHERE uid IS NOT NULL)
+
+	INSERT INTO facdb_uidsmerged
+	SELECT minuid, uid
+	FROM distincts;
+
+WITH distincts AS(
+	SELECT DISTINCT minuid, util, utiltype
+	FROM duplicates
+	WHERE util IS NOT NULL)
+
+	INSERT INTO facdb_utilization
+	SELECT minuid, util, utiltype
+	FROM distincts;
+
+-- Changing the facsubgrp for duplicate records
+UPDATE facilities AS f
+SET
+facsubgrp = 'Dual Child Care and Universal Pre-K'
+WHERE facilities.uid = duplicates.minuid;
+
+-- Deleting duplicate records
+DELETE FROM facilities USING duplicates
+WHERE facilities.uid = duplicates.uid
+AND duplicates.uid<>duplicates.minuid;
+
+-- Dropping duplicate records
+DROP VIEW IF EXISTS duplicates;
+
+
+

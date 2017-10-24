@@ -28,7 +28,7 @@ CREATE VIEW duplicates AS
 			min(uid) AS minuid
 		FROM facilities
 		GROUP BY facnamefour, factype, opname, address, boro
-	),
+	)
 		SELECT a.*, 
 			b.minuid
 		FROM facilities a

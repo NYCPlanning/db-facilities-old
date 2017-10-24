@@ -1,106 +1,124 @@
-WITH matches AS (
+-- Reconcile duplicate records in SFPSD 
+
+-- Finding duplicate records
+CREATE VIEW duplicates AS
+WITH grouping AS (
 	SELECT
-		CONCAT(a.pgtable,'-',b.pgtable) as sourcecombo,
-		a.idagency,
-		b.idagency as idagency_b,
-		a.uid,
-		b.uid as uid_b,
-		a.hash,
-		b.hash as hash_b,
-		a.facname,
-		b.facname as facname_b,
-		a.facsubgrp,
-		b.facsubgrp as facsubgrp_b,
-		a.factype,
-		b.factype as factype_b,
-		a.processingflag,
-		b.processingflag as processingflag_b,
-		a.bbl,
-		(CASE WHEN b.bin IS NULL THEN ARRAY ['FAKE!'] ELSE b.bin END) as bin_b,
-		a.address,
-		b.address as address_b,
-		a.geom,
-		a.pgtable,
-		b.pgtable as pgtable_b,
-		a.datasource,
-		b.datasource as datasource_b,
-		a.dataname,
-		b.dataname as dataname_b,
-		b.datadate as datadate_b,
-		(CASE WHEN b.dataurl IS NULL THEN ARRAY['FAKE!'] ELSE b.dataurl END) as dataurl_b,
-		a.overagency,
-		b.overlevel as overlevel_b,
-		b.overagency as overagency_b,
-		a.overabbrev,
-		b.overabbrev as overabbrev_b,
-		b.agencyclass2,
-		b.proptype as proptype_b,
-		b.colpusetype
+		min(a.uid) as minuid,
+		count(*) as count,
+		bbl,
+		facsubgrp,
+		overabbrev
 	FROM facilities a
-	LEFT JOIN facilities b
-	ON a.bbl = b.bbl
 	WHERE
-		a.facsubgrp = b.facsubgrp
-		AND b.pgtable = ARRAY['dcas_facilities_colp']
-		AND a.pgtable <> ARRAY['dcas_facilities_colp']
-		AND a.overabbrev @> b.overabbrev
-		AND a.geom IS NOT NULL
-		AND b.geom IS NOT NULL
-		AND a.bbl IS NOT NULL
-		AND b.bbl IS NOT NULL
-		AND a.pgtable <> b.pgtable
-		AND a.uid <> b.uid
-		ORDER BY CONCAT(a.pgtable,'-',b.pgtable), a.facname, a.facsubgrp
-	), 
-
-duplicates AS (
-	SELECT
-		count(*) AS countofdups,
-		facname,
-		factype,
-		array_agg(distinct factype_b) AS factype_merged,
-		uid,
-		array_agg(distinct uid_b) AS uid_merged,
-		array_agg(distinct hash_b) AS hash_merged,
-		array_agg(distinct bin_b) AS bin,
-		array_agg(distinct datasource_b) AS datasource,
-		array_agg(distinct dataname_b) AS dataname,
-		array_agg(distinct datadate_b) AS datadate,
-		array_agg(distinct dataurl_b) AS dataurl,
-		array_agg(distinct overlevel_b) AS overlevel,
-		array_agg(distinct overagency_b) AS overagency,
-		array_agg(distinct overabbrev_b) AS overabbrev,
-		array_agg(distinct pgtable_b) AS pgtable,
-		array_agg(distinct colpusetype) AS colpusetype,
-		array_to_string(array_agg(distinct proptype_b),';') AS proptype
-	FROM matches
-	GROUP BY
-	uid, facname, factype
-	ORDER BY factype, countofdups DESC )
-
-UPDATE facilities AS f
-SET
-	uid_merged = d.uid_merged,
-	hash_merged = d.hash_merged,
-	bin = 
-		(CASE
-			WHEN d.bin <> ARRAY['FAKE!'] THEN array_cat(f.bin,d.bin)
-			ELSE f.bin
-		END),
-	pgtable = string_to_array(CONCAT(array_to_string(f.pgtable,';'),';',array_to_string(d.pgtable,';')),';'),
-	datasource = string_to_array(CONCAT(array_to_string(f.datasource,';'),';',array_to_string(d.datasource,';')),';'),
-	dataname = string_to_array(CONCAT(array_to_string(f.dataname,';'),';',array_to_string(d.dataname,';')),';'),
-	dataurl = 
-		(CASE
-			WHEN d.dataurl <> ARRAY['FAKE!'] THEN string_to_array(CONCAT(array_to_string(f.dataurl,';'),';',array_to_string(d.dataurl,';')),';')
-			ELSE f.dataurl
-		END),
-	colpusetype = d.colpusetype,
-	proptype = d.proptype
-FROM duplicates AS d
-WHERE f.uid = d.uid
+		pgtable = 'dcas_facilities_colp'
+		AND bbl IS NOT NULL
+		AND geom IS NOT NULL
+		GROUP BY bbl, facsubgrp, overabbrev
+)
+	SELECT a.*, 
+		b.minuid
+		FROM facilities a
+		JOIN grouping b
+		ON a.bbl=b.bbl AND a.facsubgrp=b.facsubgrp AND a.overabbrev=b.overabbrev
+		WHERE b.count>1 
 ;
 
+-- Inserting values into relational tables
+WITH distincts AS(
+	SELECT DISTINCT minuid, bbl
+	FROM duplicates
+	WHERE bbl IS NOT NULL)
 
-DELETE FROM facilities
-WHERE facilities.uid IN (SELECT unnest(facilities.uid_merged) FROM facilities);
+	INSERT INTO facdb_bbl
+	SELECT minuid, bbl
+	FROM distincts;
+
+WITH distincts AS(
+	SELECT DISTINCT minuid, bin
+	FROM duplicates
+	WHERE bin IS NOT NULL)
+
+	INSERT INTO facdb_bin
+	SELECT minuid, bin
+	FROM distincts;
+
+WITH distincts AS(
+	SELECT DISTINCT minuid, idagency, idname, idfield, pgtable
+	FROM duplicates
+	WHERE idagency IS NOT NULL)
+
+	INSERT INTO facdb_agencyid
+	SELECT minuid, idagency, idname, idfield, pgtable
+	FROM distincts;
+
+WITH distincts AS(
+	SELECT DISTINCT minuid, area, areatype
+	FROM duplicates
+	WHERE area IS NOT NULL)
+
+	INSERT INTO facdb_area
+	SELECT minuid, area, areatype
+	FROM distincts;
+
+WITH distincts AS(
+	SELECT DISTINCT minuid, capacity, capacitytype
+	FROM duplicates
+	WHERE capacity IS NOT NULL)
+
+	INSERT INTO facdb_capacity
+	SELECT minuid, capacity, capacitytype
+	FROM distincts;
+
+WITH distincts AS(
+	SELECT DISTINCT minuid, hash
+	FROM duplicates
+	WHERE hash IS NOT NULL)
+
+	INSERT INTO facdb_hashes
+	SELECT minuid, hash
+	FROM distincts;
+
+WITH distincts AS(
+	SELECT DISTINCT minuid, overagency, overabbrev, overlevel
+	FROM duplicates
+	WHERE overagency IS NOT NULL)
+
+	INSERT INTO facdb_oversight
+	SELECT minuid, overagency, overabbrev, overlevel
+	FROM distincts;
+
+WITH distincts AS(
+	SELECT DISTINCT minuid, pgtable
+	FROM duplicates
+	WHERE pgtable IS NOT NULL)
+
+	INSERT INTO facdb_pgtable
+	SELECT minuid, pgtable
+	FROM distincts;
+
+WITH distincts AS(
+	SELECT DISTINCT minuid, uid
+	FROM duplicates
+	WHERE uid IS NOT NULL)
+
+	INSERT INTO facdb_uidsmerged
+	SELECT minuid, uid
+	FROM distincts;
+
+WITH distincts AS(
+	SELECT DISTINCT minuid, util, utiltype
+	FROM duplicates
+	WHERE util IS NOT NULL)
+
+	INSERT INTO facdb_utilization
+	SELECT minuid, util, utiltype
+	FROM distincts;
+
+-- Deleting duplicate records
+DELETE FROM facilities USING duplicates
+WHERE facilities.uid = duplicates.uid
+AND duplicates.uid<>duplicates.minuid;
+
+-- Dropping duplicate records
+DROP VIEW IF EXISTS duplicates;
