@@ -104,3 +104,85 @@ WHERE f.uid = d.uid
 
 DELETE FROM facilities
 WHERE facilities.uid IN (SELECT unnest(facilities.uid_merged) FROM facilities);
+
+---
+
+WITH primaryuids AS (
+	SELECT
+		min(uid) AS uid
+	FROM facilities
+	WHERE
+		pgtable = ARRAY['dcas_facilities_colp']::text[]
+		AND geom IS NOT NULL
+		AND hash_merged IS NULL
+		AND (facname = 'Unnamed'
+		OR facname = 'No Use-Vacant Land'
+		OR facname = 'No Use'
+		OR facname = 'City Owned Property'
+		OR facname = 'Park'
+		OR facname = 'Office Bldg'
+		OR facname = 'Office'
+		OR facname = 'Park Strip'
+		OR facname = 'Playground'
+		OR facname = 'NYPD Parking'
+		OR facname = 'Multi-Service Center'
+		OR facname = 'Animal Shelter'
+		OR facname = 'Garden'
+		OR facname = 'L.U.W'
+		OR facname = 'Long Term Tenant: NYCHA'
+		OR facname = 'Help Social Service Corporation'
+		OR facname = 'Day Care Center'
+		OR facname = 'Safety City Site'
+		OR facname = 'Public Place'
+		OR facname = 'Sanitation Garage'
+		OR facname = 'MTA Bus Depot'
+		OR facname = 'Mta Bus Depot'
+		OR facname = 'Mall'
+		OR facname = 'Vest Pocket Park'
+		OR facname = 'Pier 6'
+		OR overabbrev = ARRAY['NYCDOE'])
+	GROUP BY
+		factype,
+		overagency,
+		censtract,
+		facname
+),
+
+primaries AS (
+	SELECT *
+	FROM facilities
+	WHERE uid IN (SELECT uid from primaryuids)
+),
+
+matches AS (
+	SELECT
+		a.uid,
+		a.facname,
+		a.factype,
+		b.uid AS uid_b,
+		b.hash AS hash_b,
+		b.bin AS bin_b,
+		b.bbl AS bbl_b
+	FROM primaries AS a
+	INNER JOIN facilities AS b
+	ON
+		a.facname = b.facname
+	WHERE
+		b.pgtable = 'dcas_facilities_colp'
+		AND a.factype = b.factype
+		AND a.overagency = b.overagency
+		AND a.censtract = b.censtract
+		AND a.uid <> b.uid
+		AND b.geom IS NOT NULL
+		AND b.hash_merged IS NULL
+		AND ST_DWithin(a.geom::geography, b.geom::geography, 200)
+)
+	SELECT
+		uid,
+		count(*) AS countofdups,
+		facname,
+		factype
+	FROM matches
+	
+	GROUP BY
+		uid, facname, factype

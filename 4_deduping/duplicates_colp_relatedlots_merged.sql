@@ -4,36 +4,21 @@
 CREATE VIEW duplicates AS
 WITH grouping AS (
 SELECT 
-	min(a.uid) as minuid,
-	count(*) as count,
-	LEFT(
-		TRIM(
-			split_part(
-		REPLACE(
-			REPLACE(
-		REPLACE(
-			REPLACE(
-		REPLACE(
-			UPPER(a.facname)
-		,'THE ','')
-			,'-','')
-		,' ','')
-			,'.','')
-		,',','')
-			,'(',1)
-		,' ')
-	,4) as facnamefour,
-	a.pgtable,
+	a.uid,
+	a.geom,
+	a.facname,
 	a.factype,
-	a.overabbrev
+	b.uid AS uid_b,
+	b.hash AS hash_b
 	FROM facilities a
 	LEFT JOIN facilities b
-	ON a.factype=b.factype AND a.overabbrev=b.overabbrev AND ST_DWithin(a.geom::geography, b.geom::geography, 500)
+	ON a.factype=b.factype AND a.overabbrev=b.overabbrev
 	WHERE
 		a.pgtable = 'dcas_facilities_colp'
 		AND b.pgtable = 'dcas_facilities_colp'
-		AND a.geom IS NOT NULL
 		AND b.geom IS NOT NULL
+		AND a.uid <> b.uid
+		AND ST_DWithin(a.geom::geography, b.geom::geography, 500)
 		AND 
 			LEFT(
 				TRIM(
@@ -70,15 +55,12 @@ SELECT
 					,'(',1)
 				,' ')
 			,4)
-		GROUP BY
-		facnamefour,
-		a.pgtable,
-		a.factype,
-		a.overabbrev
 )
-		SELECT a.*, 
-			b.minuid
-		FROM facilities a
+		SELECT COUNT(*),
+		
+		FROM grouping
+		GROUP BY
+		uid, facname, factype
 		JOIN grouping b
 		ON LEFT(
 				TRIM(
@@ -101,6 +83,7 @@ SELECT
 		AND a.factype=b.factype
 		AND a.overabbrev=b.overabbrev
 		WHERE b.count>1
+		AND ST_DWithin(a.geom::geography, b.geom::geography, 500)
 		;
 
 -- Inserting values into relational tables

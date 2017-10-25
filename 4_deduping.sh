@@ -29,13 +29,17 @@ psql -U $DBUSER -d $DBNAME -f ./2_assembly/create/utilization.sql
 psql -U $DBUSER -d $DBNAME -f ./4_deduping/exactsame.sql
 
 
-# # Merge Child Care and Pre-K Duplicate records
+## Merge Child Care and Pre-K Duplicate records
 echo 'Merging and dropping Child Care and Pre-K duplicates...'
 psql -U $DBUSER -d $DBNAME -f ./4_deduping/duplicates_ccprek_acs_hhs.sql
 psql -U $DBUSER -d $DBNAME -f ./4_deduping/duplicates_ccprek_doe_acs.sql
 psql -U $DBUSER -d $DBNAME -f ./4_deduping/duplicates_ccprek_doe_dohmh.sql
 psql -U $DBUSER -d $DBNAME -f ./4_deduping/duplicates_ccprek_acs_dohmh.sql
 psql -U $DBUSER -d $DBNAME -f ./4_deduping/duplicates_ccprek_dohmh.sql
+
+
+duplicates_colp_sbsdot.sql
+duplicates_colp_sbsedc.sql
 
 echo 'Merging and dropping remaining duplicates, pre-COLP...'
 psql -U $DBUSER -d $DBNAME -f ./4_deduping/duplicates_remaining.sql
