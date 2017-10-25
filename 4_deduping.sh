@@ -37,10 +37,11 @@ psql -U $DBUSER -d $DBNAME -f ./4_deduping/duplicates_ccprek_doe_dohmh.sql
 psql -U $DBUSER -d $DBNAME -f ./4_deduping/duplicates_ccprek_acs_dohmh.sql
 psql -U $DBUSER -d $DBNAME -f ./4_deduping/duplicates_ccprek_dohmh.sql
 
+echo 'Merging and dropping SBS, DOT, and EDC duplicates...'
+psql -U $DBUSER -d $DBNAME -f ./4_deduping/duplicates_colp_sbsdot.sql
+psql -U $DBUSER -d $DBNAME -f ./4_deduping/duplicates_colp_sbsedc.sql
 
-duplicates_colp_sbsdot.sql
-duplicates_colp_sbsedc.sql
-
+## Still works in progress
 echo 'Merging and dropping remaining duplicates, pre-COLP...'
 psql -U $DBUSER -d $DBNAME -f ./4_deduping/duplicates_remaining.sql
 
