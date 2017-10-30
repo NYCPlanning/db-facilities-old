@@ -10,7 +10,7 @@ DBUSER=$(cat config.json | jq -r '.DBUSER')
 ## DEDUPING
 
 ## Make a backup
-## psql -U $DBUSER -d $DBNAME -f ./4_deduping/copy_backuppredup.sql
+psql -U $DBUSER -d $DBNAME -f ./4_deduping/copy_backuppredup.sql
 
 # Create relatipnal tables
 psql -U $DBUSER -d $DBNAME -f ./2_assembly/create/agencyid.sql
@@ -24,9 +24,6 @@ psql -U $DBUSER -d $DBNAME -f ./2_assembly/create/pgtable.sql
 psql -U $DBUSER -d $DBNAME -f ./2_assembly/create/uid.sql
 psql -U $DBUSER -d $DBNAME -f ./2_assembly/create/uidsmerged.sql
 psql -U $DBUSER -d $DBNAME -f ./2_assembly/create/utilization.sql
-
-## Reconciling duplicate records 
-psql -U $DBUSER -d $DBNAME -f ./4_deduping/exactsame.sql
 
 ## Merge Child Care and Pre-K Duplicate records
 echo 'Merging and dropping Child Care and Pre-K duplicates...'
@@ -64,6 +61,9 @@ psql -U $DBUSER -d $DBNAME -f ./4_deduping/duplicates_colp_relatedlots_colponly_
 # # Merge records that are exactly the same from the same data source
 # echo 'Merging and dropping records that are exactly the same from the same data source...'
 # psql -U $DBUSER -d $DBNAME -f ./4_deduping/duplicates_exactsame.sql
+
+## Reconciling duplicate records 
+psql -U $DBUSER -d $DBNAME -f ./4_deduping/exactsame.sql
 
 echo 'Deduped!'
 

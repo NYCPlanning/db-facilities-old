@@ -76,11 +76,27 @@ SELECT
 		AND a.pgtable <> b.pgtable
 		AND a.uid <> b.uid
 		GROUP BY
-		a.facnamefour,
 		a.pgtable,
 		b.pgtable,
 		a.bin,
-		b.bin
+		b.bin,
+		LEFT(
+		TRIM(
+			split_part(
+		REPLACE(
+			REPLACE(
+		REPLACE(
+			REPLACE(
+		REPLACE(
+			UPPER(a.facname)
+		,'THE ','')
+			,'-','')
+		,' ','')
+			,'.','')
+		,',','')
+			,'(',1)
+		,' ')
+	,4)
 )
 		SELECT a.*, 
 			b.minuid
@@ -192,12 +208,12 @@ WITH distincts AS(
 	FROM distincts;
 
 WITH distincts AS(
-	SELECT DISTINCT minuid, util, utiltype
+	SELECT DISTINCT minuid, util, capacitytype
 	FROM duplicates
 	WHERE util IS NOT NULL)
 
 	INSERT INTO facdb_utilization
-	SELECT minuid, util, utiltype
+	SELECT minuid, util, capacitytype
 	FROM distincts;
 
 -- Deleting duplicate records

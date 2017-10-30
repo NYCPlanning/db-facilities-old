@@ -227,19 +227,19 @@ WITH distincts AS(
 	FROM distincts;
 
 WITH distincts AS(
-	SELECT DISTINCT minuid, util, utiltype
+	SELECT DISTINCT minuid, util, capacitytype
 	FROM duplicates
 	WHERE util IS NOT NULL)
 
 	INSERT INTO facdb_utilization
-	SELECT minuid, util, utiltype
+	SELECT minuid, util, capacitytype
 	FROM distincts;
 
 -- Changing the facsubgrp for duplicate records
 UPDATE facilities AS f
 SET
 facsubgrp = 'Dual Child Care and Universal Pre-K'
-WHERE facilities.uid = duplicates.minuid;
+WHERE f.uid = duplicates.minuid;
 
 -- Deleting duplicate records
 DELETE FROM facilities USING duplicates

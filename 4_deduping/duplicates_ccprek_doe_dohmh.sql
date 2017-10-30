@@ -228,18 +228,18 @@ WITH distincts AS(
 	FROM distincts;
 
 WITH distincts AS(
-	SELECT DISTINCT minuid, util, utiltype
+	SELECT DISTINCT minuid, util, capacitytype
 	FROM duplicates
 	WHERE util IS NOT NULL)
 
 	INSERT INTO facdb_utilization
-	SELECT minuid, util, utiltype
+	SELECT minuid, util, capacitytype
 	FROM distincts;
 
 -- Changing the facsubgrp for duplicate records
 UPDATE duplicates AS f
 SET
-facsubgrp 
+facsubgrp =
 (CASE
 	WHEN factype LIKE '%Infants/Toddlers%' AND factype LIKE '%Preschool%' THEN 'Dual Child Care and Universal Pre-K'
 	ELSE facsubgrp
@@ -247,7 +247,7 @@ END);
 
 UPDATE facilities AS f
 SET facsubgrp = 'Dual Child Care and Universal Pre-K'
-WHERE facilities.uid = duplicates.minuid
+WHERE f.uid = duplicates.minuid
 AND duplicates.facsubgrp = 'Dual Child Care and Universal Pre-K';
 
 -- Deleting duplicate records

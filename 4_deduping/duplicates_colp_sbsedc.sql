@@ -125,12 +125,12 @@ WITH distincts AS(
 	FROM distincts;
 
 WITH distincts AS(
-	SELECT DISTINCT minuid, util, utiltype
+	SELECT DISTINCT minuid, util, capacitytype
 	FROM duplicates
 	WHERE util IS NOT NULL)
 
 	INSERT INTO facdb_utilization
-	SELECT minuid, util, utiltype
+	SELECT minuid, util, capacitytype
 	FROM distincts;
 
 -- Deleting duplicate records
