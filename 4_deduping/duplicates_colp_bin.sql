@@ -1,28 +1,84 @@
--- Reconcile duplicate records in SFPSD 
+-- Reconcile duplicate records in COLP by bin 
 
 -- Finding duplicate records
 CREATE VIEW duplicates AS
 WITH grouping AS (
-	SELECT
-		min(a.uid) as minuid,
-		count(*) as count,
-		bin,
-		facsubgrp,
-		overabbrev
+SELECT 
+	min(a.uid) as minuid,
+	count(*) as count,
+	a.bin,
+	a.facsubgrp,
+	a.overabbrev
 	FROM facilities a
+	JOIN facilities b
+	ON a.bin = b.bin
 	WHERE
-		pgtable = 'dcas_facilities_colp'
-		AND bin IS NOT NULL
-		AND geom IS NOT NULL
-		GROUP BY bin, facsubgrp, overabbrev
-)
-	SELECT a.*, 
-		b.minuid
-		FROM facilities a
-		JOIN grouping b
-		ON a.bin=b.bin AND a.facsubgrp=b.facsubgrp AND a.overabbrev=b.overabbrev
-		WHERE b.count>1 
-;
+		a.facsubgrp=b.facsubgrp
+		AND a.overabbrev=b.overabbrev
+		AND b.pgtable = 'dcas_facilities_colp'
+		AND a.pgtable <> b.pgtable
+		AND a.geom IS NOT NULL
+		AND b.geom IS NOT NULL
+		AND a.bin IS NOT NULL
+		AND a.bin <> '{""}'
+	GROUP BY 
+		a.bin,
+		a.facsubgrp,
+		a.overabbrev),
+-- getting attributes for colp records
+colpdups AS (
+	SELECT 
+		a.minuid,
+		b.*
+	FROM grouping a
+	LEFT JOIN facilities b
+	ON a.bin = b.bin AND a.facsubgrp = b.facsubgrp AND a.overabbrev = b.overabbrev
+	WHERE b.pgtable = 'dcas_facilities_colp'),
+-- finding duplicate neighbioring colp records
+	SELECT a.minuid,
+	b.*
+	FROM colpdups a
+	LEFT JOIN facilities b
+	ON a.factype=b.factype AND a.overabbrev=b.overabbrev
+	WHERE
+		b.pgtable = 'dcas_facilities_colp'
+		AND b.geom IS NOT NULL
+		AND ST_DWithin(a.geom::geography, b.geom::geography, 500)
+		AND LEFT(
+				TRIM(
+					split_part(
+				REPLACE(
+					REPLACE(
+				REPLACE(
+					REPLACE(
+				REPLACE(
+					UPPER(a.facname)
+				,'THE ','')
+					,'-','')
+				,' ','')
+					,'.','')
+				,',','')
+					,'(',1)
+				,' ')
+			,4)
+			=
+			LEFT(
+				TRIM(
+					split_part(
+				REPLACE(
+					REPLACE(
+				REPLACE(
+					REPLACE(
+				REPLACE(
+					UPPER(b.facname)
+				,'THE ','')
+					,'-','')
+				,' ','')
+					,'.','')
+				,',','')
+					,'(',1)
+				,' ')
+			,4);
 
 -- Inserting values into relational tables
 WITH distincts AS(
@@ -122,3 +178,4 @@ AND duplicates.uid<>duplicates.minuid;
 
 -- Dropping duplicate records
 DROP VIEW IF EXISTS duplicates;
+

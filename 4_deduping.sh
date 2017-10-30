@@ -28,7 +28,6 @@ psql -U $DBUSER -d $DBNAME -f ./2_assembly/create/utilization.sql
 ## Reconciling duplicate records 
 psql -U $DBUSER -d $DBNAME -f ./4_deduping/exactsame.sql
 
-
 ## Merge Child Care and Pre-K Duplicate records
 echo 'Merging and dropping Child Care and Pre-K duplicates...'
 psql -U $DBUSER -d $DBNAME -f ./4_deduping/duplicates_ccprek_acs_hhs.sql
@@ -41,7 +40,6 @@ echo 'Merging and dropping SBS, DOT, and EDC duplicates...'
 psql -U $DBUSER -d $DBNAME -f ./4_deduping/duplicates_colp_sbsdot.sql
 psql -U $DBUSER -d $DBNAME -f ./4_deduping/duplicates_colp_sbsedc.sql
 
-## Still works in progress
 echo 'Merging and dropping remaining duplicates, pre-COLP...'
 psql -U $DBUSER -d $DBNAME -f ./4_deduping/duplicates_remaining.sql
 
@@ -54,20 +52,20 @@ psql -U $DBUSER -d $DBNAME -f ./4_deduping/duplicates_colp_bin.sql
 echo 'Merging and dropping COLP duplicates by BBL...'
 psql -U $DBUSER -d $DBNAME -f ./4_deduping/duplicates_colp_bbl.sql
 
-echo 'Merging related COLP duplicates on surrounding BBLs...'
-psql -U $DBUSER -d $DBNAME -f ./4_deduping/duplicates_colp_relatedlots_merged.sql
+# echo 'Merging related COLP duplicates on surrounding BBLs...' 
+# psql -U $DBUSER -d $DBNAME -f ./4_deduping/duplicates_colp_relatedlots_merged.sql ## likely no longer needed
 
-# echo 'Merging remaining COLP duplicates on surrounding BBLs Part 1...'
-# psql -U $DBUSER -d $DBNAME -f ./4_deduping/duplicates_colp_relatedlots_colponly_p1.sql
+echo 'Merging remaining COLP duplicates on surrounding BBLs Part 1...'
+psql -U $DBUSER -d $DBNAME -f ./4_deduping/duplicates_colp_relatedlots_colponly_p1.sql
 
-# echo 'Merging remaining COLP duplicates on surrounding BBLs Part 2...'
-# psql -U $DBUSER -d $DBNAME -f ./4_deduping/duplicates_colp_relatedlots_colponly_p2.sql
+echo 'Merging remaining COLP duplicates on surrounding BBLs Part 2...'
+psql -U $DBUSER -d $DBNAME -f ./4_deduping/duplicates_colp_relatedlots_colponly_p2.sql
 
 # # Merge records that are exactly the same from the same data source
 # echo 'Merging and dropping records that are exactly the same from the same data source...'
 # psql -U $DBUSER -d $DBNAME -f ./4_deduping/duplicates_exactsame.sql
 
-# echo 'Deduped!'
+echo 'Deduped!'
 
 # echo 'Cleaning up duplicates in BIN and BBl arrays...'
 # psql -U $DBUSER -d $DBNAME -f ./4_deduping/removeArrayDuplicates.sql
