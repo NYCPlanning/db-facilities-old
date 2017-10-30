@@ -239,7 +239,7 @@ WITH distincts AS(
 UPDATE facilities AS f
 SET
 facsubgrp = 'Dual Child Care and Universal Pre-K'
-WHERE f.uid = duplicates.minuid;
+WHERE f.uid IN (SELECT DISTINCT minuid FROM duplicates);
 
 -- Deleting duplicate records
 DELETE FROM facilities USING duplicates
