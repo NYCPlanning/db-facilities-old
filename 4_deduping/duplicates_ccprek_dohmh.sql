@@ -78,7 +78,6 @@ WITH grouping AS (
 			,4)=b.facnamefour
 		AND a.pgtable = b.pgtable 
 		AND a.bin=b.bin
-		WHERE b.count>1
 ;
 
 -- Inserting values into relational tables

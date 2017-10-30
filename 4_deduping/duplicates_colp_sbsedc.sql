@@ -39,7 +39,6 @@ SELECT
 		AND a.pgtable = b.pgtable 
 		AND a.bbl=b.bbl
 		AND (a.overabbrev='NYCEDC' OR a.overabbrev='NYCSBS')
-		WHERE b.count>1
 ;
 
 -- Inserting values into relational tables

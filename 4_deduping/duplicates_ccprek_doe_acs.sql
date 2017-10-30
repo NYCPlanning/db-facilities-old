@@ -141,7 +141,6 @@ SELECT
 		AND (a.pgtable = b.pgtable 
 			OR a.pgtable = b.pgtable_b)
 		AND a.bin=b.bin
-		WHERE b.count>1
 ;
 
 -- Inserting values into relational tables

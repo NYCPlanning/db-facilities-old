@@ -7,3 +7,13 @@ CREATE TABLE facdb_backuppredup AS (
 	ORDER BY
 		facdomain, facgroup, facsubgrp, factype
 );
+
+DROP TABLE IF EXISTS facilities;
+
+CREATE TABLE facilities AS (
+	SELECT facdb_backuppredup.*
+	FROM
+		facdb_backuppredup
+	ORDER BY
+		facdomain, facgroup, facsubgrp, factype
+);
