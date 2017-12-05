@@ -179,3 +179,5 @@ AND duplicates.uid<>duplicates.minuid;
 -- Dropping duplicate records
 DROP VIEW IF EXISTS duplicates;
 
+
+

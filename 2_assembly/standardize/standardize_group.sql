@@ -7,7 +7,7 @@ SET facgroup = 'Schools (K-12)'
 WHERE facsubgrp = 'Public K-12 Schools'
 OR facsubgrp = 'Charter K-12 Schools'
 OR facsubgrp = 'Non-Public K-12 Schools'
-OR facsubgrp = 'Special Ed and Schools for Students with Disabilities'
+OR facsubgrp = 'Public and Private Special Education Schools'
 OR facsubgrp = 'GED and Alternative High School Equivalency'
 ;
 
