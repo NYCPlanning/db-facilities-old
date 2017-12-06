@@ -1,0 +1,477 @@
+pgtable,factype,facsubgrp,facgroup,facdomain,count
+nysed_facilities_activeinstitutions,Academic Libraries,Academic and Special Libraries,Libraries,Libraries and Cultural Programs,6
+nysed_facilities_activeinstitutions,Special Libraries,Academic and Special Libraries,Libraries,Libraries and Cultural Programs,20
+dcas_facilities_colp,Airport,Airports and Heliports,Transportation,Core Infrastructure and Transportation,5
+usdot_facilities_airports,Airport,Airports and Heliports,Transportation,Core Infrastructure and Transportation,2
+usdot_facilities_airports,Heliport,Airports and Heliports,Transportation,Core Infrastructure and Transportation,12
+usdot_facilities_airports,Seaplane Base,Airports and Heliports,Transportation,Core Infrastructure and Transportation,4
+dcas_facilities_colp,Bus Station,Bus Depots and Terminals,Transportation,Core Infrastructure and Transportation,1
+doe_facilities_busroutesgarages,School Bus Depot,Bus Depots and Terminals,Transportation,Core Infrastructure and Transportation,115
+mta_facilities_sfpsd,MTA Bus Depot,Bus Depots and Terminals,Transportation,Core Infrastructure and Transportation,28
+mta_facilities_sfpsd,MTA Paratransit Vehicle Depot,Bus Depots and Terminals,Transportation,Core Infrastructure and Transportation,15
+panynj_facilities_sfpsd,PANYNJ Bus Terminal,Bus Depots and Terminals,Transportation,Core Infrastructure and Transportation,2
+dohmh_facilities_daycare,Camp - All Age,Camps,Camps,"Education, Child Welfare, and Youth",477
+dohmh_facilities_daycare,Camp - School Age,Camps,Camps,"Education, Child Welfare, and Youth",20
+dcas_facilities_colp,Cemetery,Cemeteries,Parks and Plazas,"Parks, Gardens, and Historical Sites",7
+dpr_parksproperties,Cemetery,Cemeteries,Parks and Plazas,"Parks, Gardens, and Historical Sites",12
+doe_facilities_schoolsbluebook,Elementary and Middle School - Charter,Charter K-12 Schools,Schools (K-12),"Education, Child Welfare, and Youth",82
+doe_facilities_schoolsbluebook,Elementary School - Charter,Charter K-12 Schools,Schools (K-12),"Education, Child Welfare, and Youth",43
+doe_facilities_schoolsbluebook,High School - Charter,Charter K-12 Schools,Schools (K-12),"Education, Child Welfare, and Youth",12
+doe_facilities_schoolsbluebook,Middle and High School - Charter,Charter K-12 Schools,Schools (K-12),"Education, Child Welfare, and Youth",7
+doe_facilities_schoolsbluebook,Middle School - Charter,Charter K-12 Schools,Schools (K-12),"Education, Child Welfare, and Youth",5
+nysed_facilities_activeinstitutions,Charter School,Charter K-12 Schools,Schools (K-12),"Education, Child Welfare, and Youth",198
+nysoasas_facilities_programs,Crisis Chemical Dependency,Chemical Dependency,Health Care,Health and Human Services,29
+nysoasas_facilities_programs,Inpatient Chemical Dependency,Chemical Dependency,Health Care,Health and Human Services,12
+nysoasas_facilities_programs,Opioid Treatment Program Chemical Dependency,Chemical Dependency,Health Care,Health and Human Services,62
+nysoasas_facilities_programs,Outpatient Chemical Dependency,Chemical Dependency,Health Care,Health and Human Services,163
+nysoasas_facilities_programs,Residential Chemical Dependency,Chemical Dependency,Health Care,Health and Human Services,51
+acs_facilities_daycareheadstart,Child Care,Child Care,Child Care and Pre-Kindergarten,"Education, Child Welfare, and Youth",38
+acs_facilities_daycareheadstart,Dual Enrollment Child Care/Head Start,Child Care,Child Care and Pre-Kindergarten,"Education, Child Welfare, and Youth",30
+acs_facilities_daycareheadstart,Head Start,Child Care,Child Care and Pre-Kindergarten,"Education, Child Welfare, and Youth",19
+dcas_facilities_colp,Day Care Center,Child Care,Child Care and Pre-Kindergarten,"Education, Child Welfare, and Youth",5
+dcas_facilities_colp,Early Childhood Center,Child Care,Child Care and Pre-Kindergarten,"Education, Child Welfare, and Youth",12
+doe_facilities_schoolsbluebook,DOE Lyfe Program Child Care,Child Care,Child Care and Pre-Kindergarten,"Education, Child Welfare, and Youth",27
+dohmh_facilities_daycare,Group Day Care - Infants/Toddlers,Child Care,Child Care and Pre-Kindergarten,"Education, Child Welfare, and Youth",166
+dohmh_facilities_daycare,Group Day Care - Preschool,Child Care,Child Care and Pre-Kindergarten,"Education, Child Welfare, and Youth",984
+dohmh_facilities_daycare,School Based Child Care - Age Unspecified,Child Care,Child Care and Pre-Kindergarten,"Education, Child Welfare, and Youth",3
+dohmh_facilities_daycare,School Based Child Care - Preschool,Child Care,Child Care and Pre-Kindergarten,"Education, Child Welfare, and Youth",326
+hhs_facilities_financialscontracts,Early Learn NYC: New York City's Early Care and Education Services,Child Care,Child Care and Pre-Kindergarten,"Education, Child Welfare, and Youth",831
+doe_facilities_schoolsbluebook,School-Based Food Services,Child Nutrition,Child Services and Welfare,"Education, Child Welfare, and Youth",20
+nysed_facilities_activeinstitutions,Feeding Site,Child Nutrition,Child Services and Welfare,"Education, Child Welfare, and Youth",1315
+nysed_facilities_activeinstitutions,Summer Only Feeding Site,Child Nutrition,Child Services and Welfare,"Education, Child Welfare, and Youth",1634
+nysed_facilities_activeinstitutions,USDA Community Eligibility Option,Child Nutrition,Child Services and Welfare,"Education, Child Welfare, and Youth",229
+dcas_facilities_colp,Outdoor Parking,City Agency Parking,"City Agency Parking, Maintenance, and Storage",Administration of Government,46
+dcas_facilities_colp,Outdoor Parking - Agency Vehicles,City Agency Parking,"City Agency Parking, Maintenance, and Storage",Administration of Government,36
+dcas_facilities_colp,Outdoor Parking - Clients,City Agency Parking,"City Agency Parking, Maintenance, and Storage",Administration of Government,17
+dcas_facilities_colp,Outdoor Parking - Employees,City Agency Parking,"City Agency Parking, Maintenance, and Storage",Administration of Government,55
+dcas_facilities_colp,Outdoor Parking - Tow Pound,City Agency Parking,"City Agency Parking, Maintenance, and Storage",Administration of Government,5
+dot_facilities_parkingfacilities,City Agency Parking,City Agency Parking,"City Agency Parking, Maintenance, and Storage",Administration of Government,4
+dpr_parksproperties,Lot,City Agency Parking,"City Agency Parking, Maintenance, and Storage",Administration of Government,5
+dcas_facilities_colp,Agency Executive Office,City Government Offices,,,29
+dcas_facilities_colp,Agency Office,City Government Offices,,,101
+dcas_facilities_colp,Borough Office,City Government Offices,,,24
+dcas_facilities_colp,Field Office,City Government Offices,,,1
+dcas_facilities_colp,Field Office-Public,City Government Offices,,,12
+dcas_facilities_colp,Field Office-Staff,City Government Offices,,,9
+dcas_facilities_colp,Office,City Government Offices,,,569
+dcas_facilities_colp,College/University,Colleges or Universities,Higher Education,"Education, Child Welfare, and Youth",3
+dcas_facilities_colp,Community College,Colleges or Universities,Higher Education,"Education, Child Welfare, and Youth",13
+dcas_facilities_colp,In Use-Residential Structure,Colleges or Universities,Higher Education,"Education, Child Welfare, and Youth",1
+dcas_facilities_colp,Senior College,Colleges or Universities,Higher Education,"Education, Child Welfare, and Youth",9
+nysed_facilities_activeinstitutions,2 Year Independent,Colleges or Universities,Higher Education,"Education, Child Welfare, and Youth",12
+nysed_facilities_activeinstitutions,2 Year Proprietary,Colleges or Universities,Higher Education,"Education, Child Welfare, and Youth",10
+nysed_facilities_activeinstitutions,4-Year Independent,Colleges or Universities,Higher Education,"Education, Child Welfare, and Youth",62
+nysed_facilities_activeinstitutions,4 Year Proprietary,Colleges or Universities,Higher Education,"Education, Child Welfare, and Youth",11
+nysed_facilities_activeinstitutions,CUNY - 4 Year College,Colleges or Universities,Higher Education,"Education, Child Welfare, and Youth",10
+nysed_facilities_activeinstitutions,CUNY - Community College,Colleges or Universities,Higher Education,"Education, Child Welfare, and Youth",8
+nysed_facilities_activeinstitutions,CUNY - Graduate Center,Colleges or Universities,Higher Education,"Education, Child Welfare, and Youth",3
+nysed_facilities_activeinstitutions,Graduate Programs Only,Colleges or Universities,Higher Education,"Education, Child Welfare, and Youth",18
+nysed_facilities_activeinstitutions,SUNY - Community Colleges,Colleges or Universities,Higher Education,"Education, Child Welfare, and Youth",1
+nysed_facilities_activeinstitutions,SUNY - Health Science Centers,Colleges or Universities,Higher Education,"Education, Child Welfare, and Youth",1
+nysed_facilities_activeinstitutions,SUNY - Specialized Colleges,Colleges or Universities,Higher Education,"Education, Child Welfare, and Youth",2
+dcas_facilities_colp,Community Center,Community Centers and Community School Programs,Human Services,Health and Human Services,7
+dcas_facilities_colp,Recreation Center/Gymnasium,Community Centers and Community School Programs,Human Services,Health and Human Services,1
+doe_facilities_schoolsbluebook,School-Based Community Based Organization,Community Centers and Community School Programs,Human Services,Health and Human Services,165
+doe_facilities_schoolsbluebook,School-Based Community Service,Community Centers and Community School Programs,Human Services,Health and Human Services,8
+doe_facilities_schoolsbluebook,School-Based Drug Program,Community Centers and Community School Programs,Human Services,Health and Human Services,4
+hhs_facilities_financialscontracts,Community Schools - DOE,Community Centers and Community School Programs,Human Services,Health and Human Services,197
+hhs_facilities_proposals,Community Schools - DOE,Community Centers and Community School Programs,Human Services,Health and Human Services,208
+dycd_facilities_compass,COMPASS Program,Comprehensive After School System (COMPASS) Sites,Youth Services,"Education, Child Welfare, and Youth",822
+dycd_facilities_otherprograms,COMPASS Program,Comprehensive After School System (COMPASS) Sites,Youth Services,"Education, Child Welfare, and Youth",1
+hhs_facilities_financialscontracts,COMPASS Program,Comprehensive After School System (COMPASS) Sites,Youth Services,"Education, Child Welfare, and Youth",454
+hhs_facilities_fmscontracts,COMPASS Program,Comprehensive After School System (COMPASS) Sites,Youth Services,"Education, Child Welfare, and Youth",5032
+dcas_facilities_colp,Courthouse,Courthouses and Judicial,Justice and Corrections,"Public Safety, Emergency Services, and Administration of Justice",12
+nycourts_facilities_courts,Courthouse,Courthouses and Judicial,Justice and Corrections,"Public Safety, Emergency Services, and Administration of Justice",109
+uscourts_facilities_courts,"Federal Defenders of New York, Inc.",Courthouses and Judicial,Justice and Corrections,"Public Safety, Emergency Services, and Administration of Justice",2
+uscourts_facilities_courts,New York Southern Bankruptcy Court,Courthouses and Judicial,Justice and Corrections,"Public Safety, Emergency Services, and Administration of Justice",1
+uscourts_facilities_courts,New York Southern District Court,Courthouses and Judicial,Justice and Corrections,"Public Safety, Emergency Services, and Administration of Justice",1
+uscourts_facilities_courts,New York Southern Pretrial Services,Courthouses and Judicial,Justice and Corrections,"Public Safety, Emergency Services, and Administration of Justice",1
+uscourts_facilities_courts,New York Southern Probation Office,Courthouses and Judicial,Justice and Corrections,"Public Safety, Emergency Services, and Administration of Justice",1
+uscourts_facilities_courts,Second Circuit Court of Appeals Clerk,Courthouses and Judicial,Justice and Corrections,"Public Safety, Emergency Services, and Administration of Justice",1
+uscourts_facilities_courts,Second Circuit Librarian,Courthouses and Judicial,Justice and Corrections,"Public Safety, Emergency Services, and Administration of Justice",2
+uscourts_facilities_courts,United States Court of International Trade,Courthouses and Judicial,Justice and Corrections,"Public Safety, Emergency Services, and Administration of Justice",1
+uscourts_facilities_courts,United States Court of International Trade Librarian,Courthouses and Judicial,Justice and Corrections,"Public Safety, Emergency Services, and Administration of Justice",1
+dcas_facilities_colp,Custodial,Custodial,"City Agency Parking, Maintenance, and Storage",Administration of Government,41
+dcas_facilities_colp,Detention Facility,Detention and Correctional,Justice and Corrections,"Public Safety, Emergency Services, and Administration of Justice",1
+dcas_facilities_colp,Jail,Detention and Correctional,Justice and Corrections,"Public Safety, Emergency Services, and Administration of Justice",3
+dcas_facilities_colp,Secure Detention Facility,Detention and Correctional,Justice and Corrections,"Public Safety, Emergency Services, and Administration of Justice",3
+fbop_facilities_corrections,Correctional Facility,Detention and Correctional,Justice and Corrections,"Public Safety, Emergency Services, and Administration of Justice",1
+fbop_facilities_corrections,Detention Center,Detention and Correctional,Justice and Corrections,"Public Safety, Emergency Services, and Administration of Justice",1
+fbop_facilities_corrections,Field Office,Detention and Correctional,Justice and Corrections,"Public Safety, Emergency Services, and Administration of Justice",1
+nycdoc_facilities_corrections,Detention Center,Detention and Correctional,Justice and Corrections,"Public Safety, Emergency Services, and Administration of Justice",18
+nysdoccs_facilities_corrections,Correctional Facility,Detention and Correctional,Justice and Corrections,"Public Safety, Emergency Services, and Administration of Justice",2
+nysdoccs_facilities_corrections,Residential Treatment Facility,Detention and Correctional,Justice and Corrections,"Public Safety, Emergency Services, and Administration of Justice",1
+nysocfs_facilities_facilities,Juvenile Reception Center,Detention and Correctional,Justice and Corrections,"Public Safety, Emergency Services, and Administration of Justice",1
+doe_facilities_schoolsbluebook,K-12 School - Unspecified,DOE Universal Pre-Kindergarten,Child Care and Pre-Kindergarten,"Education, Child Welfare, and Youth",27
+doe_facilities_universalprek,DOE Universal Pre-K,DOE Universal Pre-Kindergarten,Child Care and Pre-Kindergarten,"Education, Child Welfare, and Youth",674
+doe_facilities_universalprek,DOE Universal Pre-K - Charter,DOE Universal Pre-Kindergarten,Child Care and Pre-Kindergarten,"Education, Child Welfare, and Youth",16
+doe_facilities_universalprek,Early Education Program,DOE Universal Pre-Kindergarten,Child Care and Pre-Kindergarten,"Education, Child Welfare, and Youth",899
+hhs_facilities_proposals,DOE Universal Pre-Kindergarten,DOE Universal Pre-Kindergarten,Child Care and Pre-Kindergarten,"Education, Child Welfare, and Youth",138
+doe_facilities_universalprek,Early Education Program,Dual Child Care and Universal Pre-K,Child Care and Pre-Kindergarten,"Education, Child Welfare, and Youth",288
+hra_facilities_centers,Child Support Offices,Financial Assistance and Social Services,Human Services,Health and Human Services,10
+hra_facilities_centers,HIV/AIDS Services Centers,Financial Assistance and Social Services,Human Services,Health and Human Services,13
+hra_facilities_centers,Medicaid Offices,Financial Assistance and Social Services,Human Services,Health and Human Services,13
+hra_facilities_centers,SNAP Centers,Financial Assistance and Social Services,Human Services,Health and Human Services,17
+dcas_facilities_colp,Firehouse,Fire Services,Emergency Services,"Public Safety, Emergency Services, and Administration of Justice",216
+dcas_facilities_colp,Residential Facility For Children,Foster Care Services and Residential Care,Child Services and Welfare,"Education, Child Welfare, and Youth",1
+dcas_facilities_colp,Botanical Garden,Gardens,Parks and Plazas,"Parks, Gardens, and Historical Sites",2
+dcas_facilities_colp,Community Garden,Gardens,Parks and Plazas,"Parks, Gardens, and Historical Sites",36
+dpr_parksproperties,Garden,Gardens,Parks and Plazas,"Parks, Gardens, and Historical Sites",344
+nysed_facilities_activeinstitutions,GED-Alternative High School Equivalency Prep Programs,GED and Alternative High School Equivalency,Schools (K-12),"Education, Child Welfare, and Youth",97
+doe_facilities_schoolsbluebook,School-Based Health Program,Health Promotion and Disease Prevention,Health Care,Health and Human Services,74
+hhs_facilities_proposals,Nurse Family Partnership,Health Promotion and Disease Prevention,Health Care,Health and Human Services,5
+dpr_parksproperties,Historic House Park,Historical Sites,Historical Sites,"Parks, Gardens, and Historical Sites",13
+nysparks_facilities_historicplaces,State Historic Place,Historical Sites,Historical Sites,"Parks, Gardens, and Historical Sites",794
+usnps_facilities_parks,National Historical Park,Historical Sites,Historical Sites,"Parks, Gardens, and Historical Sites",2
+usnps_facilities_parks,National Historic Site,Historical Sites,Historical Sites,"Parks, Gardens, and Historical Sites",8
+usnps_facilities_parks,National Memorial,Historical Sites,Historical Sites,"Parks, Gardens, and Historical Sites",3
+usnps_facilities_parks,National Monument,Historical Sites,Historical Sites,"Parks, Gardens, and Historical Sites",6
+nysed_facilities_activeinstitutions,Historical Societies,Historical Societies,Cultural Institutions,Libraries and Cultural Programs,49
+dcas_facilities_colp,Ambulatory Health Facility,Hospitals and Clinics,Health Care,Health and Human Services,33
+dcas_facilities_colp,Emergency Medical Station,Hospitals and Clinics,Health Care,Health and Human Services,1
+dcas_facilities_colp,Health Facility,Hospitals and Clinics,Health Care,Health and Human Services,4
+dcas_facilities_colp,Hospital,Hospitals and Clinics,Health Care,Health and Human Services,14
+dcas_facilities_colp,Residential Health Care Facility,Hospitals and Clinics,Health Care,Health and Human Services,5
+hhs_facilities_proposals,School Based Health Clinic,Hospitals and Clinics,Health Care,Health and Human Services,4
+nysdoh_facilities_healthfacilities,Diagnostic and Treatment Center,Hospitals and Clinics,Health Care,Health and Human Services,219
+nysdoh_facilities_healthfacilities,Diagnostic and Treatment Center Extension Clinic,Hospitals and Clinics,Health Care,Health and Human Services,290
+nysdoh_facilities_healthfacilities,Hospital,Hospitals and Clinics,Health Care,Health and Human Services,59
+nysdoh_facilities_healthfacilities,Hospital Extension Clinic,Hospitals and Clinics,Health Care,Health and Human Services,253
+nysdoh_facilities_healthfacilities,Mobile Diagnostic and Treatment Center Extension Clinic,Hospitals and Clinics,Health Care,Health and Human Services,10
+nysdoh_facilities_healthfacilities,Mobile Hospital Extension Clinic,Hospitals and Clinics,Health Care,Health and Human Services,4
+nysdoh_facilities_healthfacilities,School Based Diagnostic and Treatment Center,Hospitals and Clinics,Health Care,Health and Human Services,1
+nysdoh_facilities_healthfacilities,School Based Diagnostic and Treatment Center Extension Clinic,Hospitals and Clinics,Health Care,Health and Human Services,90
+nysdoh_facilities_healthfacilities,School Based Hospital Extension Clinic,Hospitals and Clinics,Health Care,Health and Human Services,105
+hhs_facilities_financialscontracts,Emergency Intervention Services,Legal and Intervention Services,Human Services,Health and Human Services,50
+hhs_facilities_proposals,Arches: A Transformative Mentoring Intervention,Legal and Intervention Services,Human Services,Health and Human Services,11
+hhs_facilities_proposals,Emergency Intervention Services,Legal and Intervention Services,Human Services,Health and Human Services,11
+hhs_facilities_proposals,Legal Services Initiatives,Legal and Intervention Services,Human Services,Health and Human Services,109
+hhs_facilities_proposals,Teen Rapp,Legal and Intervention Services,Human Services,Health and Human Services,3
+dcas_facilities_colp,Facilities Maintenance,Maintenance and Garages,"City Agency Parking, Maintenance, and Storage",Administration of Government,6
+dcas_facilities_colp,Garage,Maintenance and Garages,"City Agency Parking, Maintenance, and Storage",Administration of Government,43
+dcas_facilities_colp,Maintenance,Maintenance and Garages,"City Agency Parking, Maintenance, and Storage",Administration of Government,17
+dcas_facilities_colp,Vehicle Maintenance,Maintenance and Garages,"City Agency Parking, Maintenance, and Storage",Administration of Government,10
+dcas_facilities_colp,Asphalt Plant,Material Supplies,Material Supplies and Markets,Core Infrastructure and Transportation,1
+dcas_facilities_colp,Material Processing Facility,Material Supplies,Material Supplies and Markets,Core Infrastructure and Transportation,2
+dot_facilities_mannedfacilities,Asphalt Plant,Material Supplies,Material Supplies and Markets,Core Infrastructure and Transportation,1
+hhs_facilities_fmscontracts,Outreach Mental Health,Mental Health,Health Care,Health and Human Services,6
+hhs_facilities_proposals,Crisis Services Mental Health,Mental Health,Health Care,Health and Human Services,2
+hhs_facilities_proposals,Screening Mental Health,Mental Health,Health Care,Health and Human Services,7
+nysomh_facilities_mentalhealth,Emergency Mental Health,Mental Health,Health Care,Health and Human Services,55
+nysomh_facilities_mentalhealth,Inpatient Mental Health,Mental Health,Health Care,Health and Human Services,51
+nysomh_facilities_mentalhealth,Outpatient Mental Health,Mental Health,Health Care,Health and Human Services,309
+nysomh_facilities_mentalhealth,Residential Mental Health,Mental Health,Health Care,Health and Human Services,681
+nysomh_facilities_mentalhealth,Support Mental Health,Mental Health,Health Care,Health and Human Services,328
+dcas_facilities_colp,Health Facility,Miscellaneous Use,Other Property,Administration of Government,1
+dcas_facilities_colp,In Use-Residential Structure,Miscellaneous Use,Other Property,Administration of Government,1
+dcas_facilities_colp,No Use,Miscellaneous Use,Other Property,Administration of Government,105
+dcas_facilities_colp,No Use-Non Residential Structure,Miscellaneous Use,Other Property,Administration of Government,42
+dcas_facilities_colp,No Use-Residential Structure,Miscellaneous Use,Other Property,Administration of Government,1
+dcas_facilities_colp,No Use-Vacant Land,Miscellaneous Use,Other Property,Administration of Government,136
+dcas_facilities_colp,No Use-Waterfront (Any Agency),Miscellaneous Use,Other Property,Administration of Government,37
+dcas_facilities_colp,Open Space,Miscellaneous Use,Other Property,Administration of Government,3
+dcas_facilities_colp,Pier - No Use,Miscellaneous Use,Other Property,Administration of Government,3
+dcas_facilities_colp,Retail,Miscellaneous Use,Other Property,Administration of Government,1
+dcas_facilities_colp,Security,Miscellaneous Use,Other Property,Administration of Government,10
+dcas_facilities_colp,Testing Facility,Miscellaneous Use,Other Property,Administration of Government,1
+dcas_facilities_colp,Theater,Miscellaneous Use,Other Property,Administration of Government,1
+dcas_facilities_colp,Undeveloped Open Space,Miscellaneous Use,Other Property,Administration of Government,41
+dcas_facilities_colp,Waterfront Property,Miscellaneous Use,Other Property,Administration of Government,24
+dpr_parksproperties,Undeveloped,Miscellaneous Use,Other Property,Administration of Government,51
+dcas_facilities_colp,Museum/Gallery,Museums,Cultural Institutions,Libraries and Cultural Programs,15
+dcla_facilities_culturalinstitutions,Museum,Museums,Cultural Institutions,Libraries and Cultural Programs,93
+nysed_facilities_activeinstitutions,Private Museums And Sites,Museums,Cultural Institutions,Libraries and Cultural Programs,2
+nysed_facilities_activeinstitutions,Public Museums And Sites,Museums,Cultural Institutions,Libraries and Cultural Programs,23
+nysed_facilities_activeinstitutions,Elementary School - Non-public,Non-Public K-12 Schools,Schools (K-12),"Education, Child Welfare, and Youth",642
+nysed_facilities_activeinstitutions,High School - Non-public,Non-Public K-12 Schools,Schools (K-12),"Education, Child Welfare, and Youth",124
+nysed_facilities_activeinstitutions,Middle School - Non-public,Non-Public K-12 Schools,Schools (K-12),"Education, Child Welfare, and Youth",32
+nysed_facilities_activeinstitutions,School - Non-public,Non-Public K-12 Schools,Schools (K-12),"Education, Child Welfare, and Youth",29
+dcas_facilities_colp,Special Recreational Facility - Indoor,Non-residential Housing and Homeless Services,Human Services,Health and Human Services,1
+dcas_facilities_colp,Special Recreational Facility - Outdoor,Non-residential Housing and Homeless Services,Human Services,Health and Human Services,2
+dhs_facilities_shelters,Drop In,Non-residential Housing and Homeless Services,Human Services,Health and Human Services,5
+doe_facilities_schoolsbluebook,School Administration Site,Offices,"Offices, Training, and Testing",Administration of Government,33
+dcas_facilities_colp,Botanical Garden,Other Cultural Institutions,Cultural Institutions,Libraries and Cultural Programs,4
+dcas_facilities_colp,Cultural Facility,Other Cultural Institutions,Cultural Institutions,Libraries and Cultural Programs,12
+dcas_facilities_colp,In Use-Tenanted,Other Cultural Institutions,Cultural Institutions,Libraries and Cultural Programs,1
+dcas_facilities_colp,Theater,Other Cultural Institutions,Cultural Institutions,Libraries and Cultural Programs,4
+dcas_facilities_colp,Zoo/Aquarium,Other Cultural Institutions,Cultural Institutions,Libraries and Cultural Programs,1
+dcla_facilities_culturalinstitutions,Architecture/Design,Other Cultural Institutions,Cultural Institutions,Libraries and Cultural Programs,26
+dcla_facilities_culturalinstitutions,Botanical,Other Cultural Institutions,Cultural Institutions,Libraries and Cultural Programs,4
+dcla_facilities_culturalinstitutions,Crafts,Other Cultural Institutions,Cultural Institutions,Libraries and Cultural Programs,4
+dcla_facilities_culturalinstitutions,Dance,Other Cultural Institutions,Cultural Institutions,Libraries and Cultural Programs,199
+dcla_facilities_culturalinstitutions,Film/Video/Audio,Other Cultural Institutions,Cultural Institutions,Libraries and Cultural Programs,94
+dcla_facilities_culturalinstitutions,Folk Arts,Other Cultural Institutions,Cultural Institutions,Libraries and Cultural Programs,28
+dcla_facilities_culturalinstitutions,Humanities,Other Cultural Institutions,Cultural Institutions,Libraries and Cultural Programs,25
+dcla_facilities_culturalinstitutions,Literature,Other Cultural Institutions,Cultural Institutions,Libraries and Cultural Programs,50
+dcla_facilities_culturalinstitutions,"Multi-Discipline, Non-Perform",Other Cultural Institutions,Cultural Institutions,Libraries and Cultural Programs,97
+dcla_facilities_culturalinstitutions,"Multi-Discipline, Performing",Other Cultural Institutions,Cultural Institutions,Libraries and Cultural Programs,194
+dcla_facilities_culturalinstitutions,"Multi-Discipl, Perf & Non-Perf",Other Cultural Institutions,Cultural Institutions,Libraries and Cultural Programs,239
+dcla_facilities_culturalinstitutions,Music,Other Cultural Institutions,Cultural Institutions,Libraries and Cultural Programs,325
+dcla_facilities_culturalinstitutions,New Media,Other Cultural Institutions,Cultural Institutions,Libraries and Cultural Programs,16
+dcla_facilities_culturalinstitutions,Other,Other Cultural Institutions,Cultural Institutions,Libraries and Cultural Programs,26
+dcla_facilities_culturalinstitutions,Photography,Other Cultural Institutions,Cultural Institutions,Libraries and Cultural Programs,12
+dcla_facilities_culturalinstitutions,Science,Other Cultural Institutions,Cultural Institutions,Libraries and Cultural Programs,4
+dcla_facilities_culturalinstitutions,Theater,Other Cultural Institutions,Cultural Institutions,Libraries and Cultural Programs,377
+dcla_facilities_culturalinstitutions,Unspecified Discipline,Other Cultural Institutions,Cultural Institutions,Libraries and Cultural Programs,16
+dcla_facilities_culturalinstitutions,Visual Arts,Other Cultural Institutions,Cultural Institutions,Libraries and Cultural Programs,136
+dcla_facilities_culturalinstitutions,Zoo,Other Cultural Institutions,Cultural Institutions,Libraries and Cultural Programs,3
+dcas_facilities_colp,Ambulance Station,Other Emergency Services,Emergency Services,"Public Safety, Emergency Services, and Administration of Justice",30
+dcas_facilities_colp,Emergency Medical Station,Other Emergency Services,Emergency Services,"Public Safety, Emergency Services, and Administration of Justice",2
+dcas_facilities_colp,Health Facility,Other Health Care,Health Care,Health and Human Services,3
+dcas_facilities_colp,Testing Laboratory,Other Health Care,Health Care,Health and Human Services,1
+hhs_facilities_fmscontracts,Epilepsy Education,Other Health Care,Health Care,Health and Human Services,1
+nysdoh_facilities_healthfacilities,Adult Day Health Care Program - Offsite,Other Health Care,Health Care,Health and Human Services,24
+nysdoh_facilities_healthfacilities,Certified Home Health Agency,Other Health Care,Health Care,Health and Human Services,36
+nysdoh_facilities_healthfacilities,Long Term Home Health Care Program,Other Health Care,Health Care,Health and Human Services,13
+dcas_facilities_colp,Public Safety Facility,Other Public Safety,Public Safety,"Public Safety, Emergency Services, and Administration of Justice",34
+dcas_facilities_colp,Transportation Facility,Other Transportation,Transportation,Core Infrastructure and Transportation,67
+dot_facilities_bridgehouses,Bridge House,Other Transportation,Transportation,Core Infrastructure and Transportation,35
+dot_facilities_mannedfacilities,"Borough Commissioner’s Office, Bridge Engineering, Safety Educ, EEO",Other Transportation,Transportation,Core Infrastructure and Transportation,1
+dot_facilities_mannedfacilities,"Borough Commissioner’s Office, Highway Inspection and Quality Assurance",Other Transportation,Transportation,Core Infrastructure and Transportation,1
+dot_facilities_mannedfacilities,"Borough Commissioner’s Office, Highway Inspection and Quality Assurance, Roadway Repair and Maintenance Admin",Other Transportation,Transportation,Core Infrastructure and Transportation,1
+dot_facilities_mannedfacilities,"Borough Commissioner’s Office, Permits, Roadway Repair and Maintenance Admin",Other Transportation,Transportation,Core Infrastructure and Transportation,1
+dot_facilities_mannedfacilities,"Borough Commissioner’s Office, Roadway Repair and Maintenance Admin",Other Transportation,Transportation,Core Infrastructure and Transportation,1
+dot_facilities_mannedfacilities,Bridge Bent - Field Operations,Other Transportation,Transportation,Core Infrastructure and Transportation,1
+dot_facilities_mannedfacilities,Bridge Paint,Other Transportation,Transportation,Core Infrastructure and Transportation,1
+dot_facilities_mannedfacilities,Bridge Repair,Other Transportation,Transportation,Core Infrastructure and Transportation,13
+dot_facilities_mannedfacilities,Bridge Repair & Paint,Other Transportation,Transportation,Core Infrastructure and Transportation,2
+dot_facilities_mannedfacilities,Bridges/PM,Other Transportation,Transportation,Core Infrastructure and Transportation,1
+dot_facilities_mannedfacilities,Bridges & Tunnels Ops,Other Transportation,Transportation,Core Infrastructure and Transportation,2
+dot_facilities_mannedfacilities,Bronx Roadway Repair and Maintenance Arterials,Other Transportation,Transportation,Core Infrastructure and Transportation,1
+dot_facilities_mannedfacilities,Construction Mitigation and Coordination / Bridge Inspection,Other Transportation,Transportation,Core Infrastructure and Transportation,1
+dot_facilities_mannedfacilities,DOT Headquarters,Other Transportation,Transportation,Core Infrastructure and Transportation,1
+dot_facilities_mannedfacilities,Facilities Maintenance Shop,Other Transportation,Transportation,Core Infrastructure and Transportation,1
+dot_facilities_mannedfacilities,Ferry Maintenance,Other Transportation,Transportation,Core Infrastructure and Transportation,1
+dot_facilities_mannedfacilities,Ferry Ops,Other Transportation,Transportation,Core Infrastructure and Transportation,1
+dot_facilities_mannedfacilities,Manned Transportation Facility,Other Transportation,Transportation,Core Infrastructure and Transportation,3
+dot_facilities_mannedfacilities,MTS Shed/Trailer,Other Transportation,Transportation,Core Infrastructure and Transportation,1
+dot_facilities_mannedfacilities,Parking Meters / Signals / Sidewalk and Inspection Management,Other Transportation,Transportation,Core Infrastructure and Transportation,1
+dot_facilities_mannedfacilities,Parking /Signals/Streetlights,Other Transportation,Transportation,Core Infrastructure and Transportation,1
+dot_facilities_mannedfacilities,Roadway Repair and Maintenance,Other Transportation,Transportation,Core Infrastructure and Transportation,3
+dot_facilities_mannedfacilities,Roadway Repair and Maintenance/Arterials,Other Transportation,Transportation,Core Infrastructure and Transportation,4
+dot_facilities_mannedfacilities,Roadway Repair and Maintenance Depot/Fleet/Sidewalk and Inspection Management,Other Transportation,Transportation,Core Infrastructure and Transportation,1
+dot_facilities_mannedfacilities,Roadway Repair and Maintenance /Facilities Maint / Radio Repair,Other Transportation,Transportation,Core Infrastructure and Transportation,1
+dot_facilities_mannedfacilities,Roadway Repair and Maintenance/Fleet M&R,Other Transportation,Transportation,Core Infrastructure and Transportation,6
+dot_facilities_mannedfacilities,Roadway Repair and Maintenance - MN Street Maintenance,Other Transportation,Transportation,Core Infrastructure and Transportation,1
+dot_facilities_mannedfacilities,Roadway Repair and Maintenance / Sidewalk and Inspection Management,Other Transportation,Transportation,Core Infrastructure and Transportation,1
+dot_facilities_mannedfacilities,Roadway Repair and Maintenance/Street Maint,Other Transportation,Transportation,Core Infrastructure and Transportation,1
+dot_facilities_mannedfacilities,Safety City,Other Transportation,Transportation,Core Infrastructure and Transportation,5
+dot_facilities_mannedfacilities,Sidewalk and Inspection Management,Other Transportation,Transportation,Core Infrastructure and Transportation,2
+dot_facilities_mannedfacilities,Sidewalk and Inspection Management/Bridges,Other Transportation,Transportation,Core Infrastructure and Transportation,1
+dot_facilities_mannedfacilities,Sidewalk and Inspection Management/Roadway Repair and Maintenance,Other Transportation,Transportation,Core Infrastructure and Transportation,1
+dot_facilities_mannedfacilities,Signs,Other Transportation,Transportation,Core Infrastructure and Transportation,1
+dot_facilities_mannedfacilities,Sign Shop,Other Transportation,Transportation,Core Infrastructure and Transportation,2
+dot_facilities_mannedfacilities,Sign Shop / Parking Maint/ Signals,Other Transportation,Transportation,Core Infrastructure and Transportation,1
+dot_facilities_mannedfacilities,St. George Ferry Terminal,Other Transportation,Transportation,Core Infrastructure and Transportation,1
+dot_facilities_mannedfacilities,Streetlighting,Other Transportation,Transportation,Core Infrastructure and Transportation,1
+dot_facilities_mannedfacilities,Traffic Admin / Parking/Traffic Management Center/Sidewalk and Inspection Management,Other Transportation,Transportation,Core Infrastructure and Transportation,1
+dot_facilities_mannedfacilities,Whitehall Ferry Terminal,Other Transportation,Transportation,Core Infrastructure and Transportation,1
+dca_facilities_operatingbusinesses,Commercial Garage,Parking Lots and Garages,Transportation,Core Infrastructure and Transportation,1213
+dca_facilities_operatingbusinesses,Commercial Garage and Parking Lot,Parking Lots and Garages,Transportation,Core Infrastructure and Transportation,109
+dca_facilities_operatingbusinesses,Commercial Parking Lot,Parking Lots and Garages,Transportation,Core Infrastructure and Transportation,393
+dca_facilities_operatingbusinesses,Tow Truck Company,Parking Lots and Garages,Transportation,Core Infrastructure and Transportation,603
+dcas_facilities_colp,Municipal Parking - Indoor,Parking Lots and Garages,Transportation,Core Infrastructure and Transportation,1
+dcas_facilities_colp,Municipal Parking - Outdoor,Parking Lots and Garages,Transportation,Core Infrastructure and Transportation,8
+dot_facilities_parkingfacilities,Public Parking Garage,Parking Lots and Garages,Transportation,Core Infrastructure and Transportation,40
+mta_facilities_sfpsd,Public Park and Ride Lot,Parking Lots and Garages,Transportation,Core Infrastructure and Transportation,3
+nysdot_facilities_sfpsd,Public Park and Ride Lot,Parking Lots and Garages,Transportation,Core Infrastructure and Transportation,3
+bbpc_facilities_sfpsd,City-State Park,Parks,Parks and Plazas,"Parks, Gardens, and Historical Sites",1
+dcas_facilities_colp,Community Park,Parks,Parks and Plazas,"Parks, Gardens, and Historical Sites",32
+dcas_facilities_colp,Neighborhood Park,Parks,Parks and Plazas,"Parks, Gardens, and Historical Sites",12
+dcas_facilities_colp,Park,Parks,Parks and Plazas,"Parks, Gardens, and Historical Sites",646
+dcas_facilities_colp,Regional Park,Parks,Parks and Plazas,"Parks, Gardens, and Historical Sites",7
+dpr_parksproperties,Community Park,Parks,Parks and Plazas,"Parks, Gardens, and Historical Sites",106
+dpr_parksproperties,Flagship Park,Parks,Parks and Plazas,"Parks, Gardens, and Historical Sites",16
+dpr_parksproperties,Neighborhood Park,Parks,Parks and Plazas,"Parks, Gardens, and Historical Sites",269
+hrpt_facilities_sfpsd,City-State Park,Parks,Parks and Plazas,"Parks, Gardens, and Historical Sites",1
+nysparks_facilities_parks,State Park,Parks,Parks and Plazas,"Parks, Gardens, and Historical Sites",4
+rioc_facilities_sfpsd,City-State Park,Parks,Parks and Plazas,"Parks, Gardens, and Historical Sites",8
+tgi_facilities_sfpsd,City-State Park,Parks,Parks and Plazas,"Parks, Gardens, and Historical Sites",7
+dhs_facilities_shelters,Supportive Housing,Permanent Supportive SRO Housing,Human Services,Health and Human Services,148
+dcas_facilities_colp,Police Station,Police Services,Public Safety,"Public Safety, Emergency Services, and Administration of Justice",76
+nycha_facilities_policeservice,NYCHA Police Service,Police Services,Public Safety,"Public Safety, Emergency Services, and Administration of Justice",16
+dcas_facilities_colp,Ferry Terminal,Ports and Ferry Landings,Transportation,Core Infrastructure and Transportation,12
+dcas_facilities_colp,Marina,Ports and Ferry Landings,Transportation,Core Infrastructure and Transportation,4
+dcas_facilities_colp,Pier - Maritime Use,Ports and Ferry Landings,Transportation,Core Infrastructure and Transportation,4
+dcas_facilities_colp,Waterfront Transportation Facility,Ports and Ferry Landings,Transportation,Core Infrastructure and Transportation,1
+dot_facilities_ferryterminalslandings,Ferry Terminal or Landing,Ports and Ferry Landings,Transportation,Core Infrastructure and Transportation,12
+usdot_facilities_ports,Cruise Terminal,Ports and Ferry Landings,Transportation,Core Infrastructure and Transportation,3
+usdot_facilities_ports,Ferry Landing,Ports and Ferry Landings,Transportation,Core Infrastructure and Transportation,11
+usdot_facilities_ports,Port or Marine Terminal,Ports and Ferry Landings,Transportation,Core Infrastructure and Transportation,75
+nysed_facilities_activeinstitutions,Pre-School Evaluation Providers For  Students with Disabilities,Preschools for Students with Disabilities,Child Care and Pre-Kindergarten,"Education, Child Welfare, and Youth",7
+nysed_facilities_activeinstitutions,Pre-School For Students With Disabilities,Preschools for Students with Disabilities,Child Care and Pre-Kindergarten,"Education, Child Welfare, and Youth",204
+dcas_facilities_colp,Natural Area/Wetland/Wildlife Refuge,Preserves and Conservation Areas,Parks and Plazas,"Parks, Gardens, and Historical Sites",146
+dcas_facilities_colp,Open Space,Preserves and Conservation Areas,Parks and Plazas,"Parks, Gardens, and Historical Sites",6
+dpr_parksproperties,Nature Area,Preserves and Conservation Areas,Parks and Plazas,"Parks, Gardens, and Historical Sites",84
+nysdec_facilities_lands,Freshwater Wetland,Preserves and Conservation Areas,Parks and Plazas,"Parks, Gardens, and Historical Sites",1
+nysdec_facilities_lands,Natural Resource Area,Preserves and Conservation Areas,Parks and Plazas,"Parks, Gardens, and Historical Sites",4
+nysdec_facilities_lands,State Forest,Preserves and Conservation Areas,Parks and Plazas,"Parks, Gardens, and Historical Sites",4
+nysdec_facilities_lands,Tidal Wetland,Preserves and Conservation Areas,Parks and Plazas,"Parks, Gardens, and Historical Sites",12
+nysdec_facilities_lands,Trailway,Preserves and Conservation Areas,Parks and Plazas,"Parks, Gardens, and Historical Sites",3
+nysdec_facilities_lands,Unique Area,Preserves and Conservation Areas,Parks and Plazas,"Parks, Gardens, and Historical Sites",2
+nysparks_facilities_parks,State Park Preserve,Preserves and Conservation Areas,Parks and Plazas,"Parks, Gardens, and Historical Sites",1
+hhs_facilities_financialscontracts,Family Assessment Program,"Preventative Care, Evaluation Services, and Respite",Child Services and Welfare,"Education, Child Welfare, and Youth",24
+hhs_facilities_financialscontracts,General Preventive Care,"Preventative Care, Evaluation Services, and Respite",Child Services and Welfare,"Education, Child Welfare, and Youth",119
+hhs_facilities_financialscontracts,Homemaker Services,"Preventative Care, Evaluation Services, and Respite",Child Services and Welfare,"Education, Child Welfare, and Youth",3
+hhs_facilities_financialscontracts,Intensive Family Preventive Services,"Preventative Care, Evaluation Services, and Respite",Child Services and Welfare,"Education, Child Welfare, and Youth",7
+hhs_facilities_financialscontracts,Specialized Teen Preventive Services,"Preventative Care, Evaluation Services, and Respite",Child Services and Welfare,"Education, Child Welfare, and Youth",21
+hhs_facilities_fmscontracts,Specialized Teen Preventive Services,"Preventative Care, Evaluation Services, and Respite",Child Services and Welfare,"Education, Child Welfare, and Youth",118
+hhs_facilities_proposals,General Preventive Care,"Preventative Care, Evaluation Services, and Respite",Child Services and Welfare,"Education, Child Welfare, and Youth",3
+hhs_facilities_proposals,Mental Health Evaluation Services,"Preventative Care, Evaluation Services, and Respite",Child Services and Welfare,"Education, Child Welfare, and Youth",1
+hhs_facilities_proposals,Respite,"Preventative Care, Evaluation Services, and Respite",Child Services and Welfare,"Education, Child Welfare, and Youth",6
+dcp_facilities_pops,Privately Owned Public Space,Privately Owned Public Space,Parks and Plazas,"Parks, Gardens, and Historical Sites",391
+nysopwdd_facilities_providers,Programs for People with Disabilities,Programs for People with Disabilities,Human Services,Health and Human Services,165
+dcas_facilities_colp,Long-Term Agreement,Properties Leased or Licensed to Non-public Entities,Other Property,Administration of Government,166
+dcas_facilities_colp,Short & Long Term Agreements,Properties Leased or Licensed to Non-public Entities,Other Property,Administration of Government,11
+dcas_facilities_colp,Short-Term Agreement,Properties Leased or Licensed to Non-public Entities,Other Property,Administration of Government,74
+nysed_facilities_activeinstitutions,Licensed Private Schools,Proprietary Schools,Vocational and Proprietary Schools,"Education, Child Welfare, and Youth",374
+nysed_facilities_activeinstitutions,Registered Business Schools,Proprietary Schools,Vocational and Proprietary Schools,"Education, Child Welfare, and Youth",152
+nysed_facilities_activeinstitutions,Registered ESL Schools,Proprietary Schools,Vocational and Proprietary Schools,"Education, Child Welfare, and Youth",49
+doe_facilities_schoolsbluebook,Special Ed School - Charter,Public and Private Special Education Schools,,,1
+doe_facilities_schoolsbluebook,Special Ed School - Public,Public and Private Special Education Schools,,,307
+nysed_facilities_activeinstitutions,Approved Private Schools For Students with Disabilities,Public and Private Special Education Schools,,,10
+nysed_facilities_activeinstitutions,Interim Placement Facilities For Students with Disabilities,Public and Private Special Education Schools,,,7
+nysed_facilities_activeinstitutions,Residential Facilities For Students with Disabilities Covered Under The NY Justice Center,Public and Private Special Education Schools,,,2
+nysed_facilities_activeinstitutions,Special Ed Training Resource Centers,Public and Private Special Education Schools,,,1
+nysed_facilities_activeinstitutions,Summer School For Handicapped,Public and Private Special Education Schools,,,4
+dcas_facilities_colp,Academic High School,Public K-12 Schools,Schools (K-12),"Education, Child Welfare, and Youth",14
+dcas_facilities_colp,Alternative High School,Public K-12 Schools,Schools (K-12),"Education, Child Welfare, and Youth",1
+dcas_facilities_colp,Charter School,Public K-12 Schools,Schools (K-12),"Education, Child Welfare, and Youth",1
+dcas_facilities_colp,Educational Skills Center,Public K-12 Schools,Schools (K-12),"Education, Child Welfare, and Youth",3
+dcas_facilities_colp,Elementary School,Public K-12 Schools,Schools (K-12),"Education, Child Welfare, and Youth",63
+dcas_facilities_colp,Intermediate School,Public K-12 Schools,Schools (K-12),"Education, Child Welfare, and Youth",19
+dcas_facilities_colp,Public School,Public K-12 Schools,Schools (K-12),"Education, Child Welfare, and Youth",1
+dcas_facilities_colp,School,Public K-12 Schools,Schools (K-12),"Education, Child Welfare, and Youth",2
+dcas_facilities_colp,Special Education School,Public K-12 Schools,Schools (K-12),"Education, Child Welfare, and Youth",24
+dcas_facilities_colp,Vocational High School,Public K-12 Schools,Schools (K-12),"Education, Child Welfare, and Youth",1
+doe_facilities_schoolsbluebook,Elementary and Middle School - Public,Public K-12 Schools,Schools (K-12),"Education, Child Welfare, and Youth",189
+doe_facilities_schoolsbluebook,Elementary School - Public,Public K-12 Schools,Schools (K-12),"Education, Child Welfare, and Youth",692
+doe_facilities_schoolsbluebook,High School - Public,Public K-12 Schools,Schools (K-12),"Education, Child Welfare, and Youth",447
+doe_facilities_schoolsbluebook,K-12 School - Unspecified,Public K-12 Schools,Schools (K-12),"Education, Child Welfare, and Youth",11
+doe_facilities_schoolsbluebook,Middle and High School - Public,Public K-12 Schools,Schools (K-12),"Education, Child Welfare, and Youth",95
+doe_facilities_schoolsbluebook,Middle School - Public,Public K-12 Schools,Schools (K-12),"Education, Child Welfare, and Youth",276
+dcas_facilities_colp,Branch Library,Public Libraries,Libraries,Libraries and Cultural Programs,7
+omb_facilities_libraryvisits,Public Libraries,Public Libraries,Libraries,Libraries and Cultural Programs,222
+amtrak_facilities_sfpsd,Amtrak Maintenance and Other Facility,Rail Yards and Maintenance,Transportation,Core Infrastructure and Transportation,1
+amtrak_facilities_sfpsd,Amtrak Yard,Rail Yards and Maintenance,Transportation,Core Infrastructure and Transportation,1
+dcas_facilities_colp,Rail Facility,Rail Yards and Maintenance,Transportation,Core Infrastructure and Transportation,3
+dcas_facilities_colp,Rail Line,Rail Yards and Maintenance,Transportation,Core Infrastructure and Transportation,4
+dcas_facilities_colp,Transit Substation,Rail Yards and Maintenance,Transportation,Core Infrastructure and Transportation,31
+dcas_facilities_colp,Transit Yard,Rail Yards and Maintenance,Transportation,Core Infrastructure and Transportation,15
+mta_facilities_sfpsd,LIRR Maintenance and Other Facility,Rail Yards and Maintenance,Transportation,Core Infrastructure and Transportation,6
+mta_facilities_sfpsd,LIRR Yard,Rail Yards and Maintenance,Transportation,Core Infrastructure and Transportation,21
+mta_facilities_sfpsd,Metro-North Maintenance and Other Facility,Rail Yards and Maintenance,Transportation,Core Infrastructure and Transportation,1
+mta_facilities_sfpsd,Metro-North Yard,Rail Yards and Maintenance,Transportation,Core Infrastructure and Transportation,3
+mta_facilities_sfpsd,NYCT Maintenance and Other Facility,Rail Yards and Maintenance,Transportation,Core Infrastructure and Transportation,26
+mta_facilities_sfpsd,NYCT Subway Yard,Rail Yards and Maintenance,Transportation,Core Infrastructure and Transportation,40
+dcas_facilities_colp,Accessory Play Area,Recreation and Waterfront Sites,Parks and Plazas,"Parks, Gardens, and Historical Sites",16
+dcas_facilities_colp,Beach,Recreation and Waterfront Sites,Parks and Plazas,"Parks, Gardens, and Historical Sites",15
+dcas_facilities_colp,Golf Course,Recreation and Waterfront Sites,Parks and Plazas,"Parks, Gardens, and Historical Sites",4
+dcas_facilities_colp,Indoor Pool,Recreation and Waterfront Sites,Parks and Plazas,"Parks, Gardens, and Historical Sites",1
+dcas_facilities_colp,Outdoor Pool,Recreation and Waterfront Sites,Parks and Plazas,"Parks, Gardens, and Historical Sites",3
+dcas_facilities_colp,Playground,Recreation and Waterfront Sites,Parks and Plazas,"Parks, Gardens, and Historical Sites",448
+dcas_facilities_colp,Playground/Sports Area,Recreation and Waterfront Sites,Parks and Plazas,"Parks, Gardens, and Historical Sites",374
+dcas_facilities_colp,Playing Field,Recreation and Waterfront Sites,Parks and Plazas,"Parks, Gardens, and Historical Sites",81
+dcas_facilities_colp,Recreational Facility,Recreation and Waterfront Sites,Parks and Plazas,"Parks, Gardens, and Historical Sites",3
+dcas_facilities_colp,Recreation Center/Gymnasium,Recreation and Waterfront Sites,Parks and Plazas,"Parks, Gardens, and Historical Sites",2
+dcas_facilities_colp,Special Recreational Facility - Indoor,Recreation and Waterfront Sites,Parks and Plazas,"Parks, Gardens, and Historical Sites",8
+dcas_facilities_colp,Special Recreational Facility - Outdoor,Recreation and Waterfront Sites,Parks and Plazas,"Parks, Gardens, and Historical Sites",4
+dcas_facilities_colp,Stadium,Recreation and Waterfront Sites,Parks and Plazas,"Parks, Gardens, and Historical Sites",4
+dcas_facilities_colp,"Tennis Court, Basketball Court, Etc",Recreation and Waterfront Sites,Parks and Plazas,"Parks, Gardens, and Historical Sites",7
+dpr_parksproperties,Buildings/Institutions,Recreation and Waterfront Sites,Parks and Plazas,"Parks, Gardens, and Historical Sites",22
+dpr_parksproperties,Jointly Operated Playground,Recreation and Waterfront Sites,Parks and Plazas,"Parks, Gardens, and Historical Sites",267
+dpr_parksproperties,Managed Sites,Recreation and Waterfront Sites,Parks and Plazas,"Parks, Gardens, and Historical Sites",15
+dpr_parksproperties,Playground,Recreation and Waterfront Sites,Parks and Plazas,"Parks, Gardens, and Historical Sites",226
+dpr_parksproperties,Recreation Field/Courts,Recreation and Waterfront Sites,Parks and Plazas,"Parks, Gardens, and Historical Sites",71
+dpr_parksproperties,Waterfront Facility,Recreation and Waterfront Sites,Parks and Plazas,"Parks, Gardens, and Historical Sites",17
+nysdoh_facilities_healthfacilities,Hospice,Residential Health Care,Health Care,Health and Human Services,7
+nysdoh_facilities_healthfacilities,Residential Health Care,Residential Health Care,Health Care,Health and Human Services,170
+doe_facilities_schoolsbluebook,School-Based Safety Program,School-Based Safety Program,Public Safety,"Public Safety, Emergency Services, and Administration of Justice",52
+dcas_facilities_colp,Senior Center,Senior Services,Human Services,Health and Human Services,1
+dfta_facilities_contracts,Home Delivered Meals,Senior Services,Human Services,Health and Human Services,20
+dfta_facilities_contracts,Innovative Senior Centers,Senior Services,Human Services,Health and Human Services,14
+dfta_facilities_contracts,Neighborhood Senior Centers,Senior Services,Human Services,Health and Human Services,230
+dfta_facilities_contracts,Satellite Senior Centers,Senior Services,Human Services,Health and Human Services,41
+dfta_facilities_contracts,Senior Services,Senior Services,Human Services,Health and Human Services,88
+hhs_facilities_fmscontracts,Various Social Services,Senior Services,Human Services,Health and Human Services,16
+hhs_facilities_proposals,Case Management,Senior Services,Human Services,Health and Human Services,28
+hhs_facilities_proposals,Elder Abuse Prevention,Senior Services,Human Services,Health and Human Services,9
+dca_facilities_operatingbusinesses,Scrap Metal Processing,Solid Waste Processing,Solid Waste,Core Infrastructure and Transportation,62
+dcas_facilities_colp,Solid Waste Incinerator,Solid Waste Processing,Solid Waste,Core Infrastructure and Transportation,1
+dcas_facilities_colp,Solid Waste Landfill,Solid Waste Processing,Solid Waste,Core Infrastructure and Transportation,5
+nysdec_facilities_solidwaste,Composting,Solid Waste Processing,Solid Waste,Core Infrastructure and Transportation,8
+nysdec_facilities_solidwaste,Construction and Demolition Processing,Solid Waste Processing,Solid Waste,Core Infrastructure and Transportation,49
+nysdec_facilities_solidwaste,Landfill Gas Recovery,Solid Waste Processing,Solid Waste,Core Infrastructure and Transportation,1
+nysdec_facilities_solidwaste,Mobile Vehicle Crushers,Solid Waste Processing,Solid Waste,Core Infrastructure and Transportation,1
+nysdec_facilities_solidwaste,Recyclables Handling and Recovery,Solid Waste Processing,Solid Waste,Core Infrastructure and Transportation,44
+nysdec_facilities_solidwaste,Regulated Medical Waste,Solid Waste Processing,Solid Waste,Core Infrastructure and Transportation,4
+nysdec_facilities_solidwaste,Solid Waste Processing,Solid Waste Processing,Solid Waste,Core Infrastructure and Transportation,1
+nysdec_facilities_solidwaste,Used Cooking Oil Processing,Solid Waste Processing,Solid Waste,Core Infrastructure and Transportation,3
+nysdec_facilities_solidwaste,Vehicle Dismantling Facility,Solid Waste Processing,Solid Waste,Core Infrastructure and Transportation,87
+nysdec_facilities_solidwaste,Waste Oil Storage,Solid Waste Processing,Solid Waste,Core Infrastructure and Transportation,4
+nysdec_facilities_solidwaste,Waste Tire Storage,Solid Waste Processing,Solid Waste,Core Infrastructure and Transportation,1
+bic_facilities_tradewaste,Trade Waste Carter Site,Solid Waste Transfer and Carting,Solid Waste,Core Infrastructure and Transportation,2121
+dcas_facilities_colp,Sanitation Section Station,Solid Waste Transfer and Carting,Solid Waste,Core Infrastructure and Transportation,13
+dcas_facilities_colp,Solid Waste Transfer Station,Solid Waste Transfer and Carting,Solid Waste,Core Infrastructure and Transportation,7
+dsny_facilities_mtsgaragemaintenance,DSNY Garage,Solid Waste Transfer and Carting,Solid Waste,Core Infrastructure and Transportation,68
+dsny_facilities_mtsgaragemaintenance,DSNY Marine Transfer Station,Solid Waste Transfer and Carting,Solid Waste,Core Infrastructure and Transportation,6
+dsny_facilities_mtsgaragemaintenance,DSNY Repair Facility,Solid Waste Transfer and Carting,Solid Waste,Core Infrastructure and Transportation,8
+nysdec_facilities_solidwaste,Transfer Station,Solid Waste Transfer and Carting,Solid Waste,Core Infrastructure and Transportation,32
+foodbankny_facilities_foodbanks,Food Pantry,Soup Kitchens and Food Pantries,Human Services,Health and Human Services,606
+foodbankny_facilities_foodbanks,Soup Kitchen,Soup Kitchens and Food Pantries,Human Services,Health and Human Services,155
+dcas_facilities_colp,Combined Maintenance/Storage Facility,Storage,"City Agency Parking, Maintenance, and Storage",Administration of Government,56
+dcas_facilities_colp,Indoor Maintenance/Storage Facility,Storage,"City Agency Parking, Maintenance, and Storage",Administration of Government,3
+dcas_facilities_colp,Indoor Storage - Bulk Material,Storage,"City Agency Parking, Maintenance, and Storage",Administration of Government,7
+dcas_facilities_colp,Indoor Storage - Equipment,Storage,"City Agency Parking, Maintenance, and Storage",Administration of Government,16
+dcas_facilities_colp,Indoor Storage - Printed Material/Supplies,Storage,"City Agency Parking, Maintenance, and Storage",Administration of Government,1
+dcas_facilities_colp,Indoor Storage - Supplies,Storage,"City Agency Parking, Maintenance, and Storage",Administration of Government,5
+dcas_facilities_colp,Indoor Storage (Warehouse),Storage,"City Agency Parking, Maintenance, and Storage",Administration of Government,19
+dcas_facilities_colp,Outdoor Maintenance/Storage Facility,Storage,"City Agency Parking, Maintenance, and Storage",Administration of Government,3
+dcas_facilities_colp,Outdoor Storage,Storage,"City Agency Parking, Maintenance, and Storage",Administration of Government,15
+dcas_facilities_colp,Outdoor Storage - Agency Vehicles,Storage,"City Agency Parking, Maintenance, and Storage",Administration of Government,2
+dcas_facilities_colp,Outdoor Storage - Bulk Material,Storage,"City Agency Parking, Maintenance, and Storage",Administration of Government,11
+dcas_facilities_colp,Outdoor Storage - Equipment,Storage,"City Agency Parking, Maintenance, and Storage",Administration of Government,12
+dcas_facilities_colp,Mall/Triangle/Highway Strip/Park Strip,"Streetscapes, Plazas, and Malls",Parks and Plazas,"Parks, Gardens, and Historical Sites",44
+dcas_facilities_colp,Neighborhood Sitting Area,"Streetscapes, Plazas, and Malls",Parks and Plazas,"Parks, Gardens, and Historical Sites",2
+dcas_facilities_colp,Open Space,"Streetscapes, Plazas, and Malls",Parks and Plazas,"Parks, Gardens, and Historical Sites",8
+dcas_facilities_colp,Public Place/Plaza,"Streetscapes, Plazas, and Malls",Parks and Plazas,"Parks, Gardens, and Historical Sites",8
+dcas_facilities_colp,Sitting Area,"Streetscapes, Plazas, and Malls",Parks and Plazas,"Parks, Gardens, and Historical Sites",12
+dot_facilities_pedplazas,Pedestrian Plaza,"Streetscapes, Plazas, and Malls",Parks and Plazas,"Parks, Gardens, and Historical Sites",69
+dpr_parksproperties,Mall,"Streetscapes, Plazas, and Malls",Parks and Plazas,"Parks, Gardens, and Historical Sites",34
+dpr_parksproperties,Parkway,"Streetscapes, Plazas, and Malls",Parks and Plazas,"Parks, Gardens, and Historical Sites",42
+dpr_parksproperties,Strip,"Streetscapes, Plazas, and Malls",Parks and Plazas,"Parks, Gardens, and Historical Sites",68
+dpr_parksproperties,Triangle/Plaza,"Streetscapes, Plazas, and Malls",Parks and Plazas,"Parks, Gardens, and Historical Sites",332
+dcas_facilities_colp,Antenna,Telecommunications,Telecommunications,Core Infrastructure and Transportation,3
+dcas_facilities_colp,Tele/Comp Facility,Telecommunications,Telecommunications,Core Infrastructure and Transportation,1
+dcas_facilities_colp,Testing Facility,Training and Testing,"Offices, Training, and Testing",Administration of Government,3
+dcas_facilities_colp,Training Facility,Training and Testing,"Offices, Training, and Testing",Administration of Government,5
+dcas_facilities_colp,Training Facility - Indoor,Training and Testing,"Offices, Training, and Testing",Administration of Government,1
+dcas_facilities_colp,Training Facility - Outdoor,Training and Testing,"Offices, Training, and Testing",Administration of Government,3
+dcas_facilities_colp,Pollution Control Facility,Wastewater and Pollution Control,Water and Wastewater,Core Infrastructure and Transportation,13
+dcas_facilities_colp,Pumping Station,Wastewater and Pollution Control,Water and Wastewater,Core Infrastructure and Transportation,62
+dcas_facilities_colp,Sludge De-Watering Facility,Wastewater and Pollution Control,Water and Wastewater,Core Infrastructure and Transportation,3
+dcas_facilities_colp,Stormwater Pumping Station,Wastewater and Pollution Control,Water and Wastewater,Core Infrastructure and Transportation,1
+dcas_facilities_colp,Wastewater Pumping Station,Wastewater and Pollution Control,Water and Wastewater,Core Infrastructure and Transportation,41
+dcas_facilities_colp,Water Pollution Control Plant,Wastewater and Pollution Control,Water and Wastewater,Core Infrastructure and Transportation,6
+nycdep_facilities_sfpsd,Wastewater Treatment Plant,Wastewater and Pollution Control,Water and Wastewater,Core Infrastructure and Transportation,14
+dcas_facilities_colp,Commercial Market,Wholesale Markets,Material Supplies and Markets,Core Infrastructure and Transportation,4
+dcas_facilities_colp,Wholesale Food Market,Wholesale Markets,Material Supplies and Markets,Core Infrastructure and Transportation,1
+doe_facilities_schoolsbluebook,School-Based Continuing Education Program,Workforce Development,Human Services,Health and Human Services,10
+hhs_facilities_fmscontracts,Job Plus,Workforce Development,Human Services,Health and Human Services,78
+hhs_facilities_proposals,Workforce1 Sector-Based Career Centers,Workforce Development,Human Services,Health and Human Services,1
+hra_facilities_centers,Job Centers,Workforce Development,Human Services,Health and Human Services,28
+sbs_facilities_workforce1,Employment Works,Workforce Development,Human Services,Health and Human Services,2
+sbs_facilities_workforce1,NYC Business Solutions Center,Workforce Development,Human Services,Health and Human Services,7
+sbs_facilities_workforce1,NYC Business Solutions Industrial and Transportation,Workforce Development,Human Services,Health and Human Services,9
+sbs_facilities_workforce1,Workforce1 Career Center,Workforce Development,Human Services,Health and Human Services,23
+dycd_facilities_otherprograms,Beacon Community Center Program,"Youth Centers, Literacy Programs, Job Training, and Immigrant Services",Youth Services,"Education, Child Welfare, and Youth",80
+dycd_facilities_otherprograms,Cornerstone Community Center Program,"Youth Centers, Literacy Programs, Job Training, and Immigrant Services",Youth Services,"Education, Child Welfare, and Youth",90
+dycd_facilities_otherprograms,Literacy Program,"Youth Centers, Literacy Programs, Job Training, and Immigrant Services",Youth Services,"Education, Child Welfare, and Youth",102
+dycd_facilities_otherprograms,Neighborhood Development Area Program,"Youth Centers, Literacy Programs, Job Training, and Immigrant Services",Youth Services,"Education, Child Welfare, and Youth",220
+dycd_facilities_otherprograms,Youth Program,"Youth Centers, Literacy Programs, Job Training, and Immigrant Services",Youth Services,"Education, Child Welfare, and Youth",746
+hhs_facilities_financialscontracts,Cornerstone Community Center Program,"Youth Centers, Literacy Programs, Job Training, and Immigrant Services",Youth Services,"Education, Child Welfare, and Youth",37
+hhs_facilities_financialscontracts,Youth Program,"Youth Centers, Literacy Programs, Job Training, and Immigrant Services",Youth Services,"Education, Child Welfare, and Youth",44
+hhs_facilities_fmscontracts,Literacy Program,"Youth Centers, Literacy Programs, Job Training, and Immigrant Services",Youth Services,"Education, Child Welfare, and Youth",96
+hhs_facilities_proposals,Cornerstone Community Center Program,"Youth Centers, Literacy Programs, Job Training, and Immigrant Services",Youth Services,"Education, Child Welfare, and Youth",42
+hhs_facilities_proposals,Neighborhood Development Area Program,"Youth Centers, Literacy Programs, Job Training, and Immigrant Services",Youth Services,"Education, Child Welfare, and Youth",49
+hhs_facilities_proposals,Youth Program,"Youth Centers, Literacy Programs, Job Training, and Immigrant Services",Youth Services,"Education, Child Welfare, and Youth",620
