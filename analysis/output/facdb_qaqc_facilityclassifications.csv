@@ -1,4 +1,4 @@
-pgtable,factype,facsubgrp,facgroup,facdomain,count
+pgtable,factype,facsubgrp,facgroup,facdomain,count, AD
 nysed_facilities_activeinstitutions,Academic Libraries,Academic and Special Libraries,Libraries,Libraries and Cultural Programs,6
 nysed_facilities_activeinstitutions,Special Libraries,Academic and Special Libraries,Libraries,Libraries and Cultural Programs,20
 dcas_facilities_colp,Airport,Airports and Heliports,Transportation,Core Infrastructure and Transportation,5
