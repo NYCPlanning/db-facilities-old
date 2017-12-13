@@ -74,6 +74,7 @@ psql -U $DBUSER -d $DBNAME -f ./2_assembly/insert/nysopwdd_facilities_providers.
 psql -U $DBUSER -d $DBNAME -f ./2_assembly/insert/nysparks_facilities_historicplaces.sql
 psql -U $DBUSER -d $DBNAME -f ./2_assembly/insert/nysparks_facilities_parks.sql
 psql -U $DBUSER -d $DBNAME -f ./2_assembly/insert/omb_facilities_libraryvisits.sql
+psql -U $DBUSER -d $DBNAME -f ./2_assembly/insert/otm_mentalhealthservicefinder.sql
 psql -U $DBUSER -d $DBNAME -f ./2_assembly/insert/sbs_facilities_workforce1.sql
 psql -U $DBUSER -d $DBNAME -f ./2_assembly/insert/usdot_facilities_airports.sql
 psql -U $DBUSER -d $DBNAME -f ./2_assembly/insert/usdot_facilities_ports.sql

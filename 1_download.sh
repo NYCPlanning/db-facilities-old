@@ -54,6 +54,7 @@ node loader.js install nysomh_facilities_mentalhealth
 node loader.js install nysopwdd_facilities_providers
 node loader.js install nysparks_facilities_historicplaces
 node loader.js install nysparks_facilities_parks
+node loader.js install otm_mentalhealthservicefinder
 node loader.js install usdot_facilities_airports
 node loader.js install usnps_facilities_parks
 node loader.js install usdot_facilities_ports
