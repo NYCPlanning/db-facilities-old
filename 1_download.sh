@@ -40,12 +40,14 @@ node loader.js install dohmh_facilities_daycare
 node loader.js install dpr_parksproperties
 node loader.js install dsny_facilities_foodscrapdropoffsites
 node loader.js install dsny_facilities_refuseandrecyclingdisposalnetworks
+node loader.js install em_hurricaneevacuationcenters
 node loader.js install hhc_facilities_hospitals
 node loader.js install hra_idnyc_locations
 node loader.js install nycha_facilities_communitycenters
 node loader.js install nycha_facilities_policeservice
 node loader.js install nysdec_facilities_lands
 node loader.js install nysdec_facilities_solidwaste
+node loader.js install nysdoh_cacfp
 node loader.js install nysdoh_facilities_healthfacilities
 node loader.js install nysdoh_nursinghomebedcensus
 node loader.js install nysomh_facilities_mentalhealth

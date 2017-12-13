@@ -54,6 +54,7 @@ psql -U $DBUSER -d $DBNAME -f ./2_assembly/insert/dsny_facilities_mtsgaragemaint
 psql -U $DBUSER -d $DBNAME -f ./2_assembly/insert/dsny_facilities_refuseandrecyclingdisposalnetworks.sql
 psql -U $DBUSER -d $DBNAME -f ./2_assembly/insert/dycd_facilities_compass.sql
 psql -U $DBUSER -d $DBNAME -f ./2_assembly/insert/dycd_facilities_otherprograms.sql
+psql -U $DBUSER -d $DBNAME -f ./2_assembly/insert/em_hurricaneevacuationcenters.sql
 psql -U $DBUSER -d $DBNAME -f ./2_assembly/insert/foodbankny_facilities_foodbanks.sql
 psql -U $DBUSER -d $DBNAME -f ./2_assembly/insert/hhs_facilities_financialscontracts.sql
 psql -U $DBUSER -d $DBNAME -f ./2_assembly/insert/hhs_facilities_fmscontracts.sql
@@ -65,6 +66,7 @@ psql -U $DBUSER -d $DBNAME -f ./2_assembly/insert/nycha_facilities_policeservice
 psql -U $DBUSER -d $DBNAME -f ./2_assembly/insert/nysoasas_facilities_programs.sql
 psql -U $DBUSER -d $DBNAME -f ./2_assembly/insert/nysdec_facilities_lands.sql
 psql -U $DBUSER -d $DBNAME -f ./2_assembly/insert/nysdec_facilities_solidwaste.sql
+psql -U $DBUSER -d $DBNAME -f ./2_assembly/insert/nysdoh_cacfp.sql
 psql -U $DBUSER -d $DBNAME -f ./2_assembly/insert/nysdoh_facilities_healthfacilities.sql
 psql -U $DBUSER -d $DBNAME -f ./2_assembly/insert/nysed_facilities_activeinstitutions.sql
 psql -U $DBUSER -d $DBNAME -f ./2_assembly/insert/nysomh_facilities_mentalhealth.sql
