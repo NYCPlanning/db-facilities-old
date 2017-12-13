@@ -42,36 +42,36 @@ facilities (
 )
 SELECT
 	-- pgtable
-	'nycha_facilities_communitycenters',
+	'dsny_facilities_refuseandrecyclingdisposalnetworks',
 	-- hash,
     hash,
 	-- geom
-	ST_MakePoint(longitude::double precision, latitude::double precision)
+	ST_MakePoint(longitude:double precision, latitude::double precision),
 	-- idagency
 	NULL,
 	NULL,
 	NULL,
 	-- facilityname
-	initcap(development_name),
+	location,
 	-- addressnumber
-	split_part(trim(both ' ' from address), ' ', 1),
+	split_part(trim(both ' ' from initcap(location)), ' ', 1),
 	-- streetname
-	initcap(trim(both ' ' from substr(trim(both ' ' from address), strpos(trim(both ' ' from address), ' ')+1, (length(trim(both ' ' from address))-strpos(trim(both ' ' from address), ' '))))),
+	trim(both ' ' from substr(trim(both ' ' from initcap(location)), strpos(trim(both ' ' from initcap(location)), ' ')+1, (length(trim(both ' ' from initcap(location)))-strpos(trim(both ' ' from initcap(location)), ' ')))),
 	-- address
-	initcap(address),
+	initcap(location),
 	-- borough
 	initcap(borough),
 	-- zipcode
-	ROUND(zip_code::numeric,0),
+	postcode,
 	-- bbl
 	bbl,
 	-- bin
 	bin,
 	'agency',
 	-- facilitytype
-	type,
+	'DSNY Refuse and Recycling Disposal Network ('||material||')',
 	-- facilitysubgroup
-	'Community Centers and Community School Programs',
+	'Solid Waste Transfer and Carting',
 	-- capacity
 	NULL,
 	-- utilization
@@ -87,13 +87,13 @@ SELECT
 	-- operatortype
 	'Public',
 	-- operatorname
-	'New York City Housing Authority',
+	'NYC Department of Sanitation',
 	-- operatorabbrev
-	'NYCHA',
+	'NYCDSNY',
 	-- oversightagency
-	'New York City Housing Authority',
+	'NYC Department of Sanitation',
 	-- oversightabbrev
-	'NYCHA',
+	'NYCDSNY',
 	-- datecreated
 	CURRENT_TIMESTAMP,
 	-- children
@@ -117,4 +117,4 @@ SELECT
 	-- groupquarters
 	FALSE
 FROM
-	nycha_facilities_communitycenters
+	dsny_facilities_refuseandrecyclingdisposalnetworks

@@ -42,36 +42,43 @@ facilities (
 )
 SELECT
 	-- pgtable
-	'nycha_facilities_communitycenters',
+	'dsny_facilities_foodscrapdropoffsites',
 	-- hash,
     hash,
 	-- geom
-	ST_MakePoint(longitude::double precision, latitude::double precision)
+	ST_MakePoint(longitude:double precision, latitude::double precision),
 	-- idagency
 	NULL,
 	NULL,
 	NULL,
 	-- facilityname
-	initcap(development_name),
+	name,
 	-- addressnumber
-	split_part(trim(both ' ' from address), ' ', 1),
+	split_part(trim(both ' ' from initcap(location)), ' ', 1),
 	-- streetname
-	initcap(trim(both ' ' from substr(trim(both ' ' from address), strpos(trim(both ' ' from address), ' ')+1, (length(trim(both ' ' from address))-strpos(trim(both ' ' from address), ' '))))),
+	trim(both ' ' from substr(trim(both ' ' from initcap(location)), strpos(trim(both ' ' from initcap(location)), ' ')+1, (length(trim(both ' ' from initcap(location)))-strpos(trim(both ' ' from initcap(location)), ' ')))),
 	-- address
-	initcap(address),
+	initcap(location),
 	-- borough
-	initcap(borough),
+	(CASE
+		WHEN borough = 'MN' THEN 'Manhattan'
+		WHEN borough = 'BX' THEN 'Bronx'
+		WHEN borough = 'BK' THEN 'Brooklyn'
+		WHEN borough = 'SI' THEN 'Staten Island'
+		WHEN borough = 'QN' THEN 'Queens'
+		ELSE borough
+	END),
 	-- zipcode
-	ROUND(zip_code::numeric,0),
+	postcode,
 	-- bbl
 	bbl,
 	-- bin
 	bin,
 	'agency',
 	-- facilitytype
-	type,
+	'DSNY Food Scrap Drop-off Site',
 	-- facilitysubgroup
-	'Community Centers and Community School Programs',
+	'Solid Waste Transfer and Carting',
 	-- capacity
 	NULL,
 	-- utilization
@@ -85,15 +92,15 @@ SELECT
 	-- areatype
 	NULL,
 	-- operatortype
-	'Public',
+	'Non-public',
 	-- operatorname
-	'New York City Housing Authority',
+	organizer,
 	-- operatorabbrev
-	'NYCHA',
+	'Non-public',
 	-- oversightagency
-	'New York City Housing Authority',
+	'NYC Department of Sanitation',
 	-- oversightabbrev
-	'NYCHA',
+	'NYCDSNY',
 	-- datecreated
 	CURRENT_TIMESTAMP,
 	-- children
@@ -117,4 +124,4 @@ SELECT
 	-- groupquarters
 	FALSE
 FROM
-	nycha_facilities_communitycenters
+	dsny_facilities_foodscrapdropoffsites

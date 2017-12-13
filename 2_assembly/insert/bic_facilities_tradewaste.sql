@@ -74,7 +74,7 @@ SELECT
 	NULL,
 	-- bin
 	NULL,
-	'agecny',
+	'agency',
 	-- facilitytype
 	'Trade Waste Carter Site',
 	-- facilitysubgroup

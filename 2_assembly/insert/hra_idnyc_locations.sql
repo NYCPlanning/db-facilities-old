@@ -42,36 +42,45 @@ facilities (
 )
 SELECT
 	-- pgtable
-	'nycha_facilities_communitycenters',
+	'hra_idnyc_locations',
 	-- hash,
     hash,
 	-- geom
-	ST_MakePoint(longitude::double precision, latitude::double precision)
-	-- idagency
-	NULL,
-	NULL,
-	NULL,
+	ST_MakePoint(substring(location1 from '\, (.+)\)')::double precision, substring(location1 from '\((.+)\,')::double precision)
+    -- idagency
+	id,
+	-- idname
+	'HRA IDNYC ID',
+	-- idfield
+	'id',
 	-- facilityname
-	initcap(development_name),
+	name,
 	-- addressnumber
-	split_part(trim(both ' ' from address), ' ', 1),
+	split_part(trim(both ' ' from initcap(address1)), ' ', 1),
 	-- streetname
-	initcap(trim(both ' ' from substr(trim(both ' ' from address), strpos(trim(both ' ' from address), ' ')+1, (length(trim(both ' ' from address))-strpos(trim(both ' ' from address), ' '))))),
+	trim(both ' ' from substr(trim(both ' ' from initcap(address1)), strpos(trim(both ' ' from initcap(address1)), ' ')+1, (length(trim(both ' ' from initcap(address1)))-strpos(trim(both ' ' from initcap(address1)), ' ')))),
 	-- address
-	initcap(address),
+	initcap(address1),
 	-- borough
-	initcap(borough),
+		(CASE
+			WHEN city = 'New York' THEN 'Manhattan'
+			WHEN city = 'Bronx' THEN 'Bronx'
+			WHEN city = 'Brooklyn' THEN 'Brooklyn'
+			WHEN city = 'Staten Island' THEN 'Staten Island'
+			ELSE 'Queens'
+		END),
 	-- zipcode
-	ROUND(zip_code::numeric,0),
+	zip,
 	-- bbl
-	bbl,
+	NULL,
 	-- bin
-	bin,
+	NULL,
+	-- geomsource
 	'agency',
 	-- facilitytype
-	type,
+	'IDNYC Location ('||type||')',
 	-- facilitysubgroup
-	'Community Centers and Community School Programs',
+	'Financial Assistance and Social Services',
 	-- capacity
 	NULL,
 	-- utilization
@@ -85,15 +94,15 @@ SELECT
 	-- areatype
 	NULL,
 	-- operatortype
-	'Public',
+	'Non-public',
 	-- operatorname
-	'New York City Housing Authority',
-	-- operatorabbrev
-	'NYCHA',
+	name,
+	-- operator abbrev
+	'Non-public',
 	-- oversightagency
-	'New York City Housing Authority',
+	'NYC Human Resources Administration',
 	-- oversightabbrev
-	'NYCHA',
+	'NYCHRA',
 	-- datecreated
 	CURRENT_TIMESTAMP,
 	-- children
@@ -117,4 +126,4 @@ SELECT
 	-- groupquarters
 	FALSE
 FROM
-	nycha_facilities_communitycenters
+	hra_idnyc_locations;
