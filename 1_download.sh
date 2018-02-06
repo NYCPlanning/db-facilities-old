@@ -32,7 +32,7 @@ node loader.js install bic_facilities_tradewaste
 node loader.js install dca_facilities_operatingbusinesses
 node loader.js install dcla_facilities_culturalinstitutions
 node loader.js install dcp_facilities_sfpsd
-node loader.js install dcp_facilities_pops
+node loader.js install dcp_pops
 node loader.js install dfta_facilities_contracts
 node loader.js install doe_facilities_busroutesgarages
 node loader.js install doe_facilities_universalprek

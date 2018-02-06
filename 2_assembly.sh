@@ -34,7 +34,7 @@ psql -U $DBUSER -d $DBNAME -f ./2_assembly/insert/bic_facilities_tradewaste.sql
 psql -U $DBUSER -d $DBNAME -f ./2_assembly/insert/dca_facilities_operatingbusinesses.sql
 psql -U $DBUSER -d $DBNAME -f ./2_assembly/insert/dcas_facilities_colp.sql
 psql -U $DBUSER -d $DBNAME -f ./2_assembly/insert/dcla_facilities_culturalinstitutions.sql
-psql -U $DBUSER -d $DBNAME -f ./2_assembly/insert/dcp_facilities_pops.sql
+psql -U $DBUSER -d $DBNAME -f ./2_assembly/insert/dcp_pops.sql
 psql -U $DBUSER -d $DBNAME -f ./2_assembly/insert/dcp_facilities_sfpsd.sql
 psql -U $DBUSER -d $DBNAME -f ./2_assembly/insert/dcp_facilities_togeocode.sql
 psql -U $DBUSER -d $DBNAME -f ./2_assembly/insert/dhs_facilities_shelters.sql
