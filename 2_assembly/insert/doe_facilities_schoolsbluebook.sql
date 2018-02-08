@@ -124,7 +124,7 @@ SELECT
 			WHEN RIGHT(Org_ID,3) = 'CEP' THEN 'Workforce Development'
 			WHEN RIGHT(Org_ID,3) = 'SBH' THEN 'Health Promotion and Disease Prevention'
 			WHEN Organization_Name LIKE '%PRE-K%' THEN 'DOE Universal Pre-Kindergarten'
-			WHEN Organization_Name LIKE '%LYFE%' THEN 'Child Care'
+			WHEN Organization_Name LIKE '%LYFE%' THEN 'Day Care'
 			ELSE 'Public K-12 Schools'
 		END),
 	-- capacity

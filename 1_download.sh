@@ -64,6 +64,7 @@ echo 'Done loading open source datasets. Moving on to "other" datasets...'
 node loader.js install acs_facilities_daycareheadstart
 node loader.js install dcas_facilities_colp
 node loader.js install dhs_facilities_shelters
+node loader.js install doe_facilities_lcgms
 node loader.js install doe_facilities_schoolsbluebook
 node loader.js install dot_facilities_bridgehouses
 node loader.js install dot_facilities_ferryterminalslandings

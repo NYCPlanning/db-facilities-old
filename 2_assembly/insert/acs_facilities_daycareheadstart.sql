@@ -85,7 +85,7 @@ SELECT
 			ELSE 'Child Care'
 		END),
 	-- facilitysubgroup
-	'Child Care',
+	'Day Care',
 	-- capacity
 	ROUND(Total::numeric,0)::text,
 	-- utilization

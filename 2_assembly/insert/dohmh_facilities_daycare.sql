@@ -98,7 +98,7 @@ SELECT
 		(CASE
 			WHEN (facility_type = 'CAMP' OR facility_type = 'Camp' OR program_type LIKE '%CAMP%' OR program_type LIKE '%Camp%')
 				THEN 'Camps'
-			ELSE 'Child Care'
+			ELSE 'Day Care'
 		END),
 	-- capacity
 		(CASE

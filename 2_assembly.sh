@@ -41,7 +41,7 @@ psql -U $DBUSER -d $DBNAME -f ./2_assembly/insert/dhs_facilities_shelters.sql
 psql -U $DBUSER -d $DBNAME -f ./2_assembly/insert/dfta_facilities_contracts.sql
 psql -U $DBUSER -d $DBNAME -f ./2_assembly/insert/doe_facilities_busroutesgarages.sql
 psql -U $DBUSER -d $DBNAME -f ./2_assembly/insert/doe_facilities_universalprek.sql
-psql -U $DBUSER -d $DBNAME -f ./2_assembly/insert/doe_facilities_schoolsbluebook.sql
+psql -U $DBUSER -d $DBNAME -f ./2_assembly/insert/doe_facilities_lcgms.sql
 psql -U $DBUSER -d $DBNAME -f ./2_assembly/insert/dohmh_facilities_daycare.sql
 psql -U $DBUSER -d $DBNAME -f ./2_assembly/insert/dot_facilities_pedplazas.sql
 psql -U $DBUSER -d $DBNAME -f ./2_assembly/insert/dot_facilities_bridgehouses.sql

@@ -44,66 +44,68 @@ SELECT
 	-- pgtable
 	'doe_facilities_lcgms',
 	-- hash,
-    hash,
+    a.hash,
 	-- geom
 	NULL,
 	-- idagency
-	LocationCode,
-	'DOE Location Code',
-	'LocationCode',
+	b.org_id||'-'||b.bldg_id,
+	'DOE Organization ID and Building ',
+	'org_idp-bldg_id',
 	-- facilityname
-	initcap(LocationName),
+	initcap(a.locationname),
 	-- addressnumber
-	split_part(doe_facilities_schoolsbluebook.Address,' ',1),
+	split_part(b.address,' ',1),
 	-- streetname
-	initcap(trim(both ' ' from substr(trim(both ' ' from doe_facilities_schoolsbluebook.Address), strpos(trim(both ' ' from doe_facilities_schoolsbluebook.Address), ' ')+1, (length(trim(both ' ' from doe_facilities_schoolsbluebook.Address))-strpos(trim(both ' ' from doe_facilities_schoolsbluebook.Address), ' '))))),
+	initcap(trim(both ' ' from substr(trim(both ' ' from b.address), strpos(trim(both ' ' from b.address), ' ')+1, (length(trim(both ' ' from b.address))-strpos(trim(both ' ' from b.address), ' '))))),
 	-- address
-	initcap(doe_facilities_schoolsbluebook.Address),
+	initcap(b.address),
 	-- borough
 		(CASE
-			WHEN LEFT(LocationCode,1) = 'M' THEN 'Manhattan'
-			WHEN LEFT(LocationCode,1) = 'X' THEN 'Bronx'
-			WHEN LEFT(LocationCode,1) = 'K' THEN 'Brooklyn'
-			WHEN LEFT(LocationCode,1) = 'Q' THEN 'Queens'
-			WHEN LEFT(LocationCode,1) = 'R' THEN 'Staten Island'
+			WHEN LEFT(a.locationcode,1) = 'M' THEN 'Manhattan'
+			WHEN LEFT(a.locationcode,1) = 'X' THEN 'Bronx'
+			WHEN LEFT(a.locationcode,1) = 'K' THEN 'Brooklyn'
+			WHEN LEFT(a.locationcode,1) = 'Q' THEN 'Queens'
+			WHEN LEFT(a.locationcode,1) = 'R' THEN 'Staten Island'
 		END),
 	-- zipcode
-	doe_facilities_schoolsbluebook.Zip::numeric,
+	NULL,
 	-- bbl
 		(CASE
-			WHEN BoroughBlockLot <> '0' THEN BoroughBlockLot
+			WHEN a.boroughblocklot <> '0' THEN a.boroughblocklot
 		END),
 	-- bin
 	NULL,
 	-- facilitytype
 		(CASE
-			WHEN ManagedByName = 'Charter' AND lower(LocationCategoryDescription) LIKE '%school%' THEN CONCAT(LocationCategoryDescription, ' - Charter')
-			WHEN ManagedByName = 'Charter' THEN CONCAT(LocationCategoryDescription, ' School - Charter')
-			WHEN lower(LocationCategoryDescription) LIKE '%school%' THEN CONCAT(LocationCategoryDescription, ' - Public')
-			ELSE CONCAT(LocationCategoryDescription, ' School - Public')
+			WHEN a.ManagedByName = 'Charter' AND lower(a.LocationCategoryDescription) LIKE '%school%' AND a.LocationTypeDescription NOT LIKE '%Special%' THEN CONCAT(a.LocationCategoryDescription, ' - Charter')
+			WHEN a.ManagedByName = 'Charter' AND lower(a.LocationCategoryDescription) LIKE '%school%' AND a.LocationTypeDescription LIKE '%Special%' THEN CONCAT(a.LocationCategoryDescription, ' - Charter, Special Education')
+			WHEN a.ManagedByName = 'Charter'AND  a.LocationTypeDescription NOT LIKE '%Special%' THEN CONCAT(a.LocationCategoryDescription, ' School - Charter')
+			WHEN a.ManagedByName = 'Charter' AND a.LocationTypeDescription LIKE '%Special%' THEN CONCAT(a.LocationCategoryDescription, ' School - Charter, Special Education')
+			WHEN lower(a.LocationCategoryDescription) LIKE '%school%' AND a.LocationTypeDescription NOT LIKE '%Special%' THEN CONCAT(a.LocationCategoryDescription, ' - Public')
+			WHEN lower(a.LocationCategoryDescription) LIKE '%school%' AND a.LocationTypeDescription LIKE '%Special%' THEN CONCAT(a.LocationCategoryDescription, ' - Public, Special Education')
+			WHEN a.LocationTypeDescription LIKE '%Special%' THEN CONCAT(a.LocationCategoryDescription, ' School - Public, Special Education')
+			ELSE CONCAT(a.LocationCategoryDescription, ' School - Public')
 		END),
 	-- facilitysubgroup
 		(CASE
-			WHEN LocationTypeDescription LIKE '%Special%' THEN 'Public and Private Special Education Schools'
-			WHEN LocationCategoryDescription LIKE '%Early%' OR LocationCategoryDescription LIKE '%Pre-K%' THEN 'DOE Universal Pre-Kindergarten'
-			WHEN ManagedByName = 'Charter' THEN 'Charter K-12 Schools'
+			WHEN a.LocationTypeDescription LIKE '%Special%' THEN 'Public and Private Special Education Schools'
+			WHEN a.LocationCategoryDescription LIKE '%Early%' OR a.LocationCategoryDescription LIKE '%Pre-K%' THEN 'DOE Universal Pre-Kindergarten'
+			WHEN a.ManagedByName = 'Charter' THEN 'Charter K-12 Schools'
 			ELSE 'Public K-12 Schools'
 		END),
 	-- capacity
-	-- (CASE
-	-- 	WHEN doe_facilities_schoolsbluebook.Org_Target_Cap <> 0 THEN ARRAY[ROUND(doe_facilities_schoolsbluebook.Org_Target_Cap::numeric,0)::text]
-	-- END),
+	b.ps_capacity||','b.ms_capacity||','||b.hs_capacity,
 	NULL,
 	-- utilization
-	-- ARRAY[ROUND(doe_facilities_schoolsbluebook.Org_Enroll::numeric,0)::text],
+	ROUND(b.org_enroll::numeric,0)::text,
 	NULL,
 	-- capacitytype
-	-- ARRAY['Seats'],
+	'Seats',
 	NULL,
 	-- utilizationrate
-		-- (CASE
-		-- 	WHEN (Org_Enroll <> 0 AND doe_facilities_schoolsbluebook.Org_Target_Cap <> 0) THEN ARRAY[ROUND((Org_Enroll::numeric/doe_facilities_schoolsbluebook.Org_Target_Cap::numeric),3)::text]
-		-- END),
+		(CASE
+			WHEN (b.Org_Enroll <> 0 AND b.Org_Target_Cap <> 0) THEN ROUND((b.Org_Enroll::numeric/b.Org_Target_Cap::numeric),3)::text
+		END),
 	NULL,
 	-- area
 	NULL,
@@ -111,17 +113,17 @@ SELECT
 	NULL,
 	-- operatortype
 		(CASE
-			WHEN ManagedByName = 'Charter' THEN 'Non-public'
+			WHEN a.ManagedByName = 'Charter' THEN 'Non-public'
 			ELSE 'Public'
 		END),
 	-- operatorname
 		(CASE
-			WHEN ManagedByName = 'Charter' THEN LocationName
+			WHEN a.ManagedByName = 'Charter' THEN LocationName
 			ELSE 'NYC Department of Education'
 		END),
 	-- operator abbrev
 		(CASE
-			WHEN ManagedByName = 'Charter' THEN 'Non-public'
+			WHEN a.ManagedByName = 'Charter' THEN 'Non-public'
 			ELSE 'NYCDOE'
 		END),
 	-- oversightagency
@@ -132,12 +134,12 @@ SELECT
 	CURRENT_TIMESTAMP,
 	-- children
 		(CASE
-			WHEN LocationCategoryDescription LIKE '%Pre-K%' OR LocationCategoryDescription LIKE '%Elementary%' OR LocationCategoryDescription LIKE '%Early%' OR LocationCategoryDescription LIKE '%K-%' THEN TRUE
+			WHEN a.LocationCategoryDescription LIKE '%Pre-K%' OR a.LocationCategoryDescription LIKE '%Elementary%' OR a.LocationCategoryDescription LIKE '%Early%' OR a.LocationCategoryDescription LIKE '%K-%' THEN TRUE
 			ELSE FALSE
 		END),
 	-- youth
 		(CASE
-			WHEN LocationCategoryDescription LIKE '%High%' OR LocationCategoryDescription LIKE '%Secondary%' OR LocationCategoryDescription LIKE '%K-12%' THEN TRUE
+			WHEN a.LocationCategoryDescription LIKE '%High%' OR a.LocationCategoryDescription LIKE '%Secondary%' OR a.LocationCategoryDescription LIKE '%K-12%' THEN TRUE
 			ELSE FALSE
 		END),
 	-- senior
@@ -157,8 +159,8 @@ SELECT
 	-- groupquarters
 	FALSE
 FROM
-	doe_facilities_lcgms
+	doe_facilities_lcgms a
 LEFT JOIN
-	doe_facilities_schoolsbluebook
+	doe_facilities_schoolsbluebook b
 ON 
-	doe_facilities_lcgms.LocationCode = doe_facilities_schoolsbluebook.Org_ID
+	a.LocationCode = b.Org_ID

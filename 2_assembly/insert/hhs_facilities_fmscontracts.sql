@@ -92,7 +92,7 @@ SELECT
 			WHEN agency LIKE '%Children%' AND (Program_name LIKE '%secure Placement%' OR Program_name LIKE '%Secure Placement%' OR Program_name LIKE '%Detention%')
 				THEN 'Detention and Correctional'
 			WHEN agency LIKE '%Children%' AND Program_name LIKE '%Early Learn%'
-				THEN 'Child Care'
+				THEN 'Day Care'
 			WHEN agency LIKE '%Education%' AND Program_name LIKE '%Prek%'
 				THEN 'DOE Universal Pre-Kindergarten'
 			WHEN agency LIKE '%Children%' AND (Program_name LIKE '%FFC%' OR Program_name LIKE '%Foster%' OR Program_name LIKE '%Residential%')

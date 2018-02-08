@@ -221,10 +221,10 @@ SELECT
 
 			-- Education, Children, Youth
 			WHEN usedec LIKE '%UNIVERSITY%' THEN 'Colleges or Universities'
-			WHEN usedec LIKE '%EARLY CHILDHOOD%' THEN 'Child Care'
-			WHEN usedec LIKE '%DAY CARE%' THEN 'Child Care'
+			WHEN usedec LIKE '%EARLY CHILDHOOD%' THEN 'Day Care'
+			WHEN usedec LIKE '%DAY CARE%' THEN 'Day Care'
 			WHEN agency LIKE '%ACS%' AND usedec LIKE '%RESIDENTIAL%' THEN 'Foster Care Services and Residential Care'
-			WHEN agency LIKE '%ACS%' THEN 'Child Care'
+			WHEN agency LIKE '%ACS%' THEN 'Day Care'
 			WHEN agency LIKE '%EDUC%' and usedec LIKE '%PLAY AREA%' THEN 'Public K-12 Schools'
 			WHEN usedec LIKE '%HIGH SCHOOL%' THEN 'Public K-12 Schools'
 			WHEN agency LIKE '%CUNY%' AND usedec NOT LIKE '%OPEN SPACE%' THEN 'Colleges or Universities'

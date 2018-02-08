@@ -3,7 +3,7 @@
 UPDATE facilities
 SET facdomain = 'Education, Child Welfare, and Youth'
 WHERE facgroup = 'Schools (K-12)'
-OR facgroup = 'Child Care and Pre-Kindergarten'
+OR facgroup = 'Day Care and Pre-Kindergarten'
 OR facgroup = 'Child Services and Welfare'
 OR facgroup = 'Youth Services'
 OR facgroup = 'Camps'
