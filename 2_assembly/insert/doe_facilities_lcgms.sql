@@ -49,7 +49,7 @@ SELECT
 	NULL,
 	-- idagency
 	b.org_id||'-'||b.bldg_id,
-	'DOE Organization ID and Building ',
+	'DOE Organization ID and Building',
 	'org_idp-bldg_id',
 	-- facilityname
 	initcap(a.locationname),
@@ -74,6 +74,7 @@ SELECT
 			WHEN a.boroughblocklot <> '0' THEN a.boroughblocklot
 		END),
 	-- bin
+	NULL,
 	NULL,
 	-- facilitytype
 		(CASE

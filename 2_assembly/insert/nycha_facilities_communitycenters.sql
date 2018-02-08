@@ -60,7 +60,7 @@ SELECT
 	-- address
 	initcap(address),
 	-- borough
-	initcap(borough),
+	initcap(borough_code),
 	-- zipcode
 	ROUND(zip_code::numeric,0),
 	-- bbl
