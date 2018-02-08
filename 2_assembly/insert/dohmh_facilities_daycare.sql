@@ -109,8 +109,8 @@ SELECT
 	NULL,
 	-- capacitytype
 	(CASE
-		WHEN program_type LIKE '%INFANT%' THEN  capacitytype = 'Infant and toddler maxiumum capacity calculated by DOHMH'
-		WHEN upper(program_type) LIKE '%PRESCHOOL%' THEN capacitytype = 'Preschooler maxiumum capacity calculated by DOHMH'
+		WHEN program_type LIKE '%INFANT%' THEN  'Infant and toddler maxiumum capacity calculated by DOHMH'
+		WHEN upper(program_type) LIKE '%PRESCHOOL%' THEN 'Preschooler maxiumum capacity calculated by DOHMH'
 		ELSE 'Maxiumum child capacity calculated by DOHMH'
 	END),
 	-- utilizationrate

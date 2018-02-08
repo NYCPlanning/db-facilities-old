@@ -1,4 +1,4 @@
-DROP FROM dcp_pops
+DELETE FROM dcp_pops
 WHERE popsnumber IS NULL;
 
 INSERT INTO

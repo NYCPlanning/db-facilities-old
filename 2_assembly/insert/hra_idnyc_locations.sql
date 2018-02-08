@@ -46,7 +46,7 @@ SELECT
 	-- hash,
     hash,
 	-- geom
-	ST_MakePoint(substring(location from '\, (.+)\)')::double precision, substring(location from '\((.+)\,')::double precision)
+	ST_MakePoint(substring(location from '\, (.+)\)')::double precision, substring(location from '\((.+)\,')::double precision),
     -- idagency
 	id,
 	-- idname

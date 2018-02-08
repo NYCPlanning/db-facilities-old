@@ -69,7 +69,7 @@ SELECT
 	bin,
 	'agency',
 	-- facilitytype
-	'DSNY Refuse and Recycling Disposal Network ('||material||')',
+	'DSNY Refuse and Recycling Disposal Network ('||matieral||')',
 	-- facilitysubgroup
 	'Solid Waste Transfer and Carting',
 	-- capacity

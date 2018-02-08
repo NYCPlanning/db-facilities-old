@@ -95,18 +95,14 @@ SELECT
 		END),
 	-- capacity
 	b.ps_capacity||','||b.ms_capacity||','||b.hs_capacity,
-	NULL,
 	-- utilization
 	ROUND(b.org_enroll::numeric,0)::text,
-	NULL,
 	-- capacitytype
 	'Seats',
-	NULL,
 	-- utilizationrate
 		(CASE
 			WHEN (b.Org_Enroll <> 0 AND b.Org_Target_Cap <> 0) THEN ROUND((b.Org_Enroll::numeric/b.Org_Target_Cap::numeric),3)::text
 		END),
-	NULL,
 	-- area
 	NULL,
 	-- areatype
