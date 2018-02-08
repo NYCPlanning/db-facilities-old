@@ -104,7 +104,7 @@ SELECT
 		WHEN licensetype = 'OFFICE OF CHILDREN AND FAMILY SERVICES' THEN 'New York State Office of Children and Family Services'
 		WHEN licensetype = 'OFFICE OF MENTAL HEALTH' THEN 'NYS Office of Mental Health'
 		ELSE 'Non-public'
-	END)
+	END),
 	-- oversightabbrev
 	(CASE 
 		WHEN licensetype = 'NYC DEPARTMENT OF HEALTH AND MENTAL HYGIENE' THEN 'NYCDOHMH'
@@ -113,7 +113,7 @@ SELECT
 		WHEN licensetype = 'OFFICE OF CHILDREN AND FAMILY SERVICES' THEN 'NYSOCFS'
 		WHEN licensetype = 'OFFICE OF MENTAL HEALTH' THEN 'NYSOMH'
 		ELSE 'Non-public'
-	END)
+	END),
 	-- datecreated
 	CURRENT_TIMESTAMP,
 	-- children

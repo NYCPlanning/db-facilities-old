@@ -94,7 +94,7 @@ SELECT
 			ELSE 'Public K-12 Schools'
 		END),
 	-- capacity
-	b.ps_capacity||','b.ms_capacity||','||b.hs_capacity,
+	b.ps_capacity||','||b.ms_capacity||','||b.hs_capacity,
 	NULL,
 	-- utilization
 	ROUND(b.org_enroll::numeric,0)::text,

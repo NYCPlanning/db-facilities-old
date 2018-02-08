@@ -1,3 +1,6 @@
+DROP FROM dcp_pops
+WHERE popsnumber IS NULL;
+
 INSERT INTO
 facilities (
 	pgtable,
@@ -64,10 +67,10 @@ SELECT
 	initcap(buildingaddress),
 	-- borough
 		(CASE
-			WHEN LEFT(DCP_RECORD,1) = 'B' THEN 'Bronx'
-			WHEN LEFT(DCP_RECORD,1) = 'K' THEN 'Brooklyn'
-			WHEN LEFT(DCP_RECORD,1) = 'Q' THEN 'Queens'
-			WHEN LEFT(DCP_RECORD,1) = 'M' THEN 'Manhattan'
+			WHEN LEFT(popsnumber,1) = 'B' THEN 'Bronx'
+			WHEN LEFT(popsnumber,1) = 'K' THEN 'Brooklyn'
+			WHEN LEFT(popsnumber,1) = 'Q' THEN 'Queens'
+			WHEN LEFT(popsnumber,1) = 'M' THEN 'Manhattan'
 			ELSE 'Manhattan'
 		END),
 	-- zipcode

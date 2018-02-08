@@ -46,7 +46,7 @@ SELECT
 	-- hash,
     hash,
 	-- geom
-	ST_MakePoint(longitude:double precision, latitude::double precision),
+	ST_MakePoint(longitude::double precision, latitude::double precision),
 	-- idagency
 	NULL,
 	NULL,
