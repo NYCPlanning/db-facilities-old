@@ -329,7 +329,6 @@ WHERE
 	AND Program_name NOT LIKE '%HASA%'
 	AND Agency NOT LIKE '%Homeless%'
 	AND Agency NOT LIKE '%Housing%'
-	AND contract_end_date::date > CURRENT_TIMESTAMP
 GROUP BY
 	hash,
 	agency,
