@@ -33,6 +33,7 @@ facilities (
 	opabbrev,
 	overagency,
 	overabbrev,
+	agencyjuris,
 	datecreated,
 	buildingid,
 	buildingname,
@@ -783,6 +784,50 @@ SELECT
 		END)],
 	-- oversightabbrev
 		ARRAY[(CASE
+			WHEN agency='HYDC' THEN 'HYDC'
+			WHEN agency='MTA' THEN 'MTA'
+			WHEN agency='NYCTA' THEN 'MTA'
+			WHEN agency='TBTA' THEN 'MTA'
+			WHEN agency='PARKS' THEN 'NYCDPR'
+			WHEN agency='BLDGS' THEN 'NYCDOB'
+			WHEN agency='BPL' THEN 'BPL'
+			WHEN agency='NYPL' THEN 'NYPL'
+			WHEN agency='QPL' THEN 'QPL'
+			WHEN agency='SANIT' THEN 'NYCDSNY'
+			WHEN agency='AGING' THEN 'NYCDFTA'
+			WHEN agency='EDUC' THEN 'NYCDOE'
+			WHEN agency='CULT' THEN 'NYCDCLA'
+			WHEN agency='CORR' THEN 'NYCDOC'
+			WHEN agency='FIRE' THEN 'NYCFDNY'
+			WHEN agency='HLTH' THEN 'NYCDOHMH'
+			WHEN agency='ELECT' THEN 'NYCBOE'
+			WHEN agency='CIVIL' THEN 'NYCCSC'
+			WHEN agency='HUMRT' THEN 'NYCCCHR'
+			WHEN agency='COUNC' THEN 'NYCCOUNCIL'
+			WHEN agency='PLAN' THEN 'NYCDCP'
+			WHEN agency='FINAN' THEN 'NYCDOF'
+			WHEN agency='PROB' THEN 'NYCDOP'
+			WHEN agency='DSBS' THEN 'NYCSBS'
+			WHEN agency='FIRE' THEN 'FDNY'
+			WHEN agency='NYPD' THEN 'NYPD'
+			WHEN agency='HRA' THEN 'NYCHRA/DSS'
+			WHEN agency='DA-SP' THEN 'NYCDA-SNP'
+			WHEN agency='LDMKS' THEN 'NYCLPC'
+			WHEN agency='OEM' THEN 'NYCEM'
+			WHEN agency='PBADV' THEN 'NYCPA'
+			WHEN agency='ACTRY' THEN 'NYCACT'
+			WHEN agency='COMPT' THEN 'NYCCOMP'
+			WHEN agency='MAYOR' THEN 'NYCMO'
+			WHEN agency='MOME' THEN 'NYCMO'
+			WHEN agency='TAX' THEN 'NYCTC'
+			WHEN agency='COURT' THEN 'NYCOURTS'
+			WHEN agency='CUNY' THEN 'CUNY'
+			WHEN agency='PRIV' THEN 'Non-public'
+			WHEN agency='UNKN' THEN 'NYC-Unknown'
+			ELSE CONCAT('NYC',agency)
+		END)],
+	-- agencyjuris
+	ARRAY[(CASE
 			WHEN agency='HYDC' THEN 'HYDC'
 			WHEN agency='MTA' THEN 'MTA'
 			WHEN agency='NYCTA' THEN 'MTA'

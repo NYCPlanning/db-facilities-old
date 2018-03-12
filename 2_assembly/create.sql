@@ -54,6 +54,7 @@ overtype text ARRAY,
 overlevel text ARRAY,
 overagency text ARRAY,
 overabbrev text ARRAY,
+agencyjuris text ARRAY,
 -- published data source details
 datasource text ARRAY,
 dataname text ARRAY,

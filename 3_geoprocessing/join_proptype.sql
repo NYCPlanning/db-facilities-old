@@ -1,3 +1,6 @@
+-- takes data from recrods in COLP and joins onto other properties
+-- for every property that overlaps with a COLP propert it'll assign if it's city owned or leased and which agency owns or leases property
+
 WITH COLP_bbls AS (
 SELECT
 	bbl,
@@ -8,6 +11,7 @@ SELECT
     array_agg(distinct dataname) AS dataname,
     array_agg(distinct dataurl) AS dataurl,
     array_agg(distinct datadate) AS datadate
+    array_agg(distinct agencyjuris) AS agencyjuris
 FROM
 	facilities
 WHERE
@@ -21,6 +25,7 @@ SET
 			WHEN c.proptype @> ARRAY['City Owned'] THEN 'City Owned'
 			WHEN c.proptype @> ARRAY['City Leased'] AND c.overabbrev @> f.overabbrev THEN 'City Leased'
 		END),
+	agencyjuris = c.agencyjuris,
 	pgtable = array_append(f.pgtable, array_to_string(c.pgtable,';')),
 	datasource = array_append(f.datasource, array_to_string(c.datasource,';')),
 	dataname = array_append(f.dataname, array_to_string(c.dataname,';')),
