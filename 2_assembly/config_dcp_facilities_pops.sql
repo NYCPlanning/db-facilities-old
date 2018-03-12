@@ -46,28 +46,30 @@ facilities (
 )
 SELECT
 	-- pgtable
-	ARRAY['dcp_facilities_pops'],
+	ARRAY['dcp_pops'],
 	-- hash,
     hash,
 	-- geom
-	NULL,
+	ST_SetSRID(ST_MakePoint(longitude::double precision, latitude::double precision),4326),
 	-- idagency
-	ARRAY[DCP_RECORD],
+	ARRAY[popsnumber],
 	-- facilityname
 	(CASE
-		WHEN Building_Name IS NOT NULL AND Building_Name <> '' THEN Building_Name
-		ELSE Building_Address
+		WHEN alternative IS NOT NULL AND alternative <> '' THEN alternative
+		ELSE buildingaddress
 	END),
 	-- addressnumber
-	split_part(trim(both ' ' from initcap(Building_Address)), ' ', 1),
+	split_part(trim(both ' ' from initcap(buildingaddress)), ' ', 1),
 	-- streetname
-	trim(both ' ' from substr(trim(both ' ' from initcap(Building_Address)), strpos(trim(both ' ' from initcap(Building_Address)), ' ')+1, (length(trim(both ' ' from initcap(Building_Address)))-strpos(trim(both ' ' from initcap(Building_Address)), ' ')))),
+	trim(both ' ' from substr(trim(both ' ' from initcap(buildingaddress)), strpos(trim(both ' ' from initcap(buildingaddress)), ' ')+1, (length(trim(both ' ' from initcap(buildingaddress)))-strpos(trim(both ' ' from initcap(buildingaddress)), ' ')))),
 	-- address
-	initcap(Building_Address),
+	initcap(buildingaddress),
 	-- borough
 		(CASE
-			WHEN LEFT(DCP_RECORD,1) = 'B' THEN 'Brooklyn'
-			WHEN LEFT(DCP_RECORD,1) = 'Q' THEN 'Queens'
+			WHEN LEFT(popsnumber,1) = 'B' THEN 'Bronx'
+			WHEN LEFT(popsnumber,1) = 'K' THEN 'Brooklyn'
+			WHEN LEFT(popsnumber,1) = 'Q' THEN 'Queens'
+			WHEN LEFT(popsnumber,1) = 'M' THEN 'Manhattan'
 			ELSE 'Manhattan'
 		END),
 	-- zipcode
@@ -139,4 +141,4 @@ SELECT
 	-- groupquarters
 	FALSE
 FROM
-	dcp_facilities_pops
+	dcp_pops
