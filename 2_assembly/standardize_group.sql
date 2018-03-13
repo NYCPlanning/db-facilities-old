@@ -12,10 +12,10 @@ OR facilitysubgroup = 'GED and Alternative High School Equivalency'
 ;
 
 UPDATE facilities
-SET facgroup = 'Child Care and Pre-Kindergarten'
+SET facgroup = 'Day Care and Pre-Kindergarten'
 WHERE facilitysubgroup = 'DOE Universal Pre-Kindergarten'
-OR facilitysubgroup = 'Dual Child Care and Universal Pre-K'
-OR facilitysubgroup = 'Child Care'
+OR facilitysubgroup = 'Dual Day Care and Universal Pre-K'
+OR facilitysubgroup = 'Day Care'
 OR facilitysubgroup = 'Preschools for Students with Disabilities'
 ;
 

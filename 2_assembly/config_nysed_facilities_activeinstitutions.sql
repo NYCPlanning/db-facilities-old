@@ -124,7 +124,7 @@ SELECT
 	-- facilitygroup
 		(CASE
 			WHEN Institution_Sub_Type_Desc LIKE '%PRE-K%' THEN 'Offices, Training, and Testing'
-			WHEN Institution_Sub_Type_Desc LIKE '%PRE-SCHOOL%' THEN 'Child Care and Pre-Kindergarten'
+			WHEN Institution_Sub_Type_Desc LIKE '%PRE-SCHOOL%' THEN 'Day Care and Pre-Kindergarten'
 			WHEN Institution_Type_Desc LIKE '%MUSEUM%' THEN 'Cultural Institutions'
 			WHEN Institution_Type_Desc LIKE '%LIBRARIES%' THEN 'Libraries'
 			WHEN Institution_Type_Desc LIKE '%CHILD NUTRITION%' THEN 'Child Services and Welfare'

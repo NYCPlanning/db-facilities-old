@@ -84,7 +84,7 @@ SELECT
 	-- domain
 	'Education, Child Welfare, and Youth',
 	-- facilitygroup
-	'Child Care and Pre-Kindergarten',
+	'Day Care and Pre-Kindergarten',
 	-- facilitysubgroup
 	'DOE Universal Pre-Kindergarten',
 	-- agencyclass1

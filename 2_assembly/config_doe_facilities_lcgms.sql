@@ -88,7 +88,7 @@ SELECT
 	'Education, Child Welfare, and Youth',
 	-- facilitygroup
 		(CASE
-			WHEN LocationCategoryDescription LIKE '%Early%' OR LocationCategoryDescription LIKE '%Pre-K%' THEN 'Child Care and Pre-Kindergarten'
+			WHEN LocationCategoryDescription LIKE '%Early%' OR LocationCategoryDescription LIKE '%Pre-K%' THEN 'Day Care and Pre-Kindergarten'
 			ELSE 'Schools (K-12)'
 		END),
 	-- facilitysubgroup

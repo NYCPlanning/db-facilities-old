@@ -77,17 +77,17 @@ SELECT
 	NULL,
 	-- facilitytype
 		(CASE
-			WHEN Model_Type = 'DE' OR Model_Type = 'DU' THEN 'Dual Enrollment Child Care/Head Start'
-			WHEN Model_Type = 'CC' THEN 'Child Care'
+			WHEN Model_Type = 'DE' OR Model_Type = 'DU' THEN 'Dual Enrollment Day Care/Head Start'
+			WHEN Model_Type = 'CC' THEN 'Day Care'
 			WHEN Model_Type = 'HS' THEN 'Head Start'
-			ELSE 'Child Care'
+			ELSE 'Day Care'
 		END),
 	-- domain
 	'Education, Child Welfare, and Youth',
 	-- facilitygroup
-	'Child Care and Pre-Kindergarten',
+	'Day Care and Pre-Kindergarten',
 	-- facilitysubgroup
-	'Child Care',
+	'Day Care',
 	-- agencyclass1
 	Model_Type,
 	-- agencyclass2

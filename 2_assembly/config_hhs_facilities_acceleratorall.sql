@@ -111,7 +111,7 @@ SELECT
 			WHEN agency LIKE '%Children%' AND (Program_name LIKE '%secure Placement%' OR Program_name LIKE '%Secure Placement%' OR Program_name LIKE '%Detention%')
 				THEN 'Justice and Corrections'
 			WHEN agency LIKE '%Children%' AND Program_name LIKE '%Early Learn%'
-				THEN 'Child Care and Pre-Kindergarten'
+				THEN 'Day Care and Pre-Kindergarten'
 			WHEN agency LIKE '%Children%'
 				THEN 'Child Services and Welfare'
 
@@ -134,7 +134,7 @@ SELECT
 			WHEN agency LIKE '%Children%' AND (Program_name LIKE '%secure Placement%' OR Program_name LIKE '%Secure Placement%' OR Program_name LIKE '%Detention%')
 				THEN 'Detention and Correctional'
 			WHEN agency LIKE '%Children%' AND Program_name LIKE '%Early Learn%'
-				THEN 'Child Care'
+				THEN 'Day Care'
 			WHEN agency LIKE '%Children%' AND (Program_name LIKE '%FFC%' OR Program_name LIKE '%Foster%' OR Program_name LIKE '%Residential%')
 				THEN 'Foster Care Services and Residential Care'
 			WHEN agency LIKE '%Children%'

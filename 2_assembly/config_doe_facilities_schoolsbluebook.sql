@@ -109,7 +109,7 @@ SELECT
 			WHEN Charter IS NOT NULL AND Org_Level = 'HS' THEN 'High School - Charter'
 			WHEN Charter IS NOT NULL AND Org_Level = 'SPED' THEN 'Special Ed School - Charter'
 			WHEN Charter IS NOT NULL AND Org_Level = 'OTHER' THEN 'Other School - Charter'
-			WHEN Organization_Name LIKE '%LYFE%' THEN 'DOE Lyfe Program Child Care'
+			WHEN Organization_Name LIKE '%LYFE%' THEN 'DOE Lyfe Program Day Care'
 			ELSE 'Other K-12 School - Unspecified'
 		END),
 	-- domain
@@ -134,7 +134,7 @@ SELECT
 			WHEN RIGHT(Org_ID,3) = 'OTH' THEN 'Human Services'
 			WHEN RIGHT(Org_ID,3) = 'SST' THEN 'Public Safety'
 			WHEN RIGHT(Org_ID,3) = 'CEP' THEN 'Human Services'
-			WHEN Organization_Name LIKE '%PRE-K%' OR Organization_Name LIKE '%LYFE%' THEN 'Child Care and Pre-Kindergarten'
+			WHEN Organization_Name LIKE '%PRE-K%' OR Organization_Name LIKE '%LYFE%' THEN 'Day Care and Pre-Kindergarten'
 			ELSE 'Schools (K-12)'
 		END),
 	-- facilitysubgroup
@@ -150,7 +150,7 @@ SELECT
 			WHEN RIGHT(Org_ID,3) = 'CEP' THEN 'Workforce Development'
 			WHEN RIGHT(Org_ID,3) = 'SBH' THEN 'Health Promotion and Disease Prevention'
 			WHEN Organization_Name LIKE '%PRE-K%' THEN 'DOE Universal Pre-Kindergarten'
-			WHEN Organization_Name LIKE '%LYFE%' THEN 'Child Care'
+			WHEN Organization_Name LIKE '%LYFE%' THEN 'Day Care'
 			ELSE 'Public K-12 Schools'
 		END),
 	-- agencyclass1
