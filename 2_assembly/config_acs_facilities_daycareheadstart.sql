@@ -97,7 +97,7 @@ SELECT
 	-- utilization
 	NULL,
 	-- capacitytype
-	ARRAY['Seats in Contract'],
+	ARRAY['Seats in ACS Contract'],
 	-- utilizationrate
 	NULL,
 	-- area
