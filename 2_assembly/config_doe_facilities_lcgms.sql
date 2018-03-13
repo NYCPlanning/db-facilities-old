@@ -48,19 +48,19 @@ SELECT
 	-- pgtable
 	ARRAY['doe_facilities_lcgms'],
 	-- hash,
-    hash,
+    a.hash,
 	-- geom
 	NULL,
 	-- idagency
-	ARRAY[LocationCode],
+	ARRAY[b.org_id||'-'||b.bldg_id],
 	-- facilityname
 	initcap(LocationName),
 	-- addressnumber
-	split_part(doe_facilities_schoolsbluebook.Address,' ',1),
+	split_part(b.Address,' ',1),
 	-- streetname
-	initcap(trim(both ' ' from substr(trim(both ' ' from doe_facilities_schoolsbluebook.Address), strpos(trim(both ' ' from doe_facilities_schoolsbluebook.Address), ' ')+1, (length(trim(both ' ' from doe_facilities_schoolsbluebook.Address))-strpos(trim(both ' ' from doe_facilities_schoolsbluebook.Address), ' '))))),
+	initcap(trim(both ' ' from substr(trim(both ' ' from b.Address), strpos(trim(both ' ' from b.Address), ' ')+1, (length(trim(both ' ' from b.Address))-strpos(trim(both ' ' from b.Address), ' '))))),
 	-- address
-	initcap(doe_facilities_schoolsbluebook.Address),
+	initcap(b.Address),
 	-- borough
 		(CASE
 			WHEN LEFT(LocationCode,1) = 'M' THEN 'Manhattan'
@@ -70,7 +70,7 @@ SELECT
 			WHEN LEFT(LocationCode,1) = 'R' THEN 'Staten Island'
 		END),
 	-- zipcode
-	doe_facilities_schoolsbluebook.Zip::numeric,
+	NULL,
 	-- bbl
 		(CASE
 			WHEN BoroughBlockLot <> '0' THEN ARRAY[BoroughBlockLot]
@@ -79,10 +79,14 @@ SELECT
 	NULL,
 	-- facilitytype
 		(CASE
-			WHEN ManagedByName = 'Charter' AND lower(LocationCategoryDescription) LIKE '%school%' THEN CONCAT(LocationCategoryDescription, ' - Charter')
-			WHEN ManagedByName = 'Charter' THEN CONCAT(LocationCategoryDescription, ' School - Charter')
-			WHEN lower(LocationCategoryDescription) LIKE '%school%' THEN CONCAT(LocationCategoryDescription, ' - Public')
-			ELSE CONCAT(LocationCategoryDescription, ' School - Public')
+			WHEN a.ManagedByName = 'Charter' AND lower(a.LocationCategoryDescription) LIKE '%school%' AND a.LocationTypeDescription NOT LIKE '%Special%' THEN CONCAT(a.LocationCategoryDescription, ' - Charter')
+			WHEN a.ManagedByName = 'Charter' AND lower(a.LocationCategoryDescription) LIKE '%school%' AND a.LocationTypeDescription LIKE '%Special%' THEN CONCAT(a.LocationCategoryDescription, ' - Charter, Special Education')
+			WHEN a.ManagedByName = 'Charter'AND  a.LocationTypeDescription NOT LIKE '%Special%' THEN CONCAT(a.LocationCategoryDescription, ' School - Charter')
+			WHEN a.ManagedByName = 'Charter' AND a.LocationTypeDescription LIKE '%Special%' THEN CONCAT(a.LocationCategoryDescription, ' School - Charter, Special Education')
+			WHEN lower(a.LocationCategoryDescription) LIKE '%school%' AND a.LocationTypeDescription NOT LIKE '%Special%' THEN CONCAT(a.LocationCategoryDescription, ' - Public')
+			WHEN lower(a.LocationCategoryDescription) LIKE '%school%' AND a.LocationTypeDescription LIKE '%Special%' THEN CONCAT(a.LocationCategoryDescription, ' - Public, Special Education')
+			WHEN a.LocationTypeDescription LIKE '%Special%' THEN CONCAT(a.LocationCategoryDescription, ' School - Public, Special Education')
+			ELSE CONCAT(a.LocationCategoryDescription, ' School - Public')
 		END),
 	-- domain
 	'Education, Child Welfare, and Youth',
@@ -93,9 +97,9 @@ SELECT
 		END),
 	-- facilitysubgroup
 		(CASE
-			WHEN LocationTypeDescription LIKE '%Special%' THEN 'Public and Private Special Education Schools'
-			WHEN LocationCategoryDescription LIKE '%Early%' OR LocationCategoryDescription LIKE '%Pre-K%' THEN 'DOE Universal Pre-Kindergarten'
-			WHEN ManagedByName = 'Charter' THEN 'Charter K-12 Schools'
+			WHEN a.LocationTypeDescription LIKE '%Special%' THEN 'Public and Private Special Education Schools'
+			WHEN a.LocationCategoryDescription LIKE '%Early%' OR a.LocationCategoryDescription LIKE '%Pre-K%' THEN 'DOE Universal Pre-Kindergarten'
+			WHEN a.ManagedByName = 'Charter' THEN 'Charter K-12 Schools'
 			ELSE 'Public K-12 Schools'
 		END),
 	-- agencyclass1
@@ -103,21 +107,16 @@ SELECT
 	-- agencyclass2
 	NULL,
 	-- capacity
-	-- (CASE
-	-- 	WHEN doe_facilities_schoolsbluebook.Org_Target_Cap <> 0 THEN ARRAY[ROUND(doe_facilities_schoolsbluebook.Org_Target_Cap::numeric,0)::text]
-	-- END),
-	NULL,
+		ARRAY[b.ps_capacity,b.ms_capacity,b.hs_capacity],
 	-- utilization
-	-- ARRAY[ROUND(doe_facilities_schoolsbluebook.Org_Enroll::numeric,0)::text],
-	NULL,
+	ARRAY[ROUND(b.Org_Enroll::numeric,0)::text],
 	-- capacitytype
-	-- ARRAY['Seats'],
+	ARRAY['PS Seats', 'MS Seats', 'HS Seats'],
 	NULL,
 	-- utilizationrate
-		-- (CASE
-		-- 	WHEN (Org_Enroll <> 0 AND doe_facilities_schoolsbluebook.Org_Target_Cap <> 0) THEN ARRAY[ROUND((Org_Enroll::numeric/doe_facilities_schoolsbluebook.Org_Target_Cap::numeric),3)::text]
-		-- END),
-	NULL,
+		(CASE
+			WHEN (Org_Enroll <> 0 AND b.Org_Target_Cap <> 0) THEN ARRAY[ROUND((Org_Enroll::numeric/b.Org_Target_Cap::numeric),3)::text]
+		END),
 	-- area
 	NULL,
 	-- areatype
@@ -176,8 +175,9 @@ SELECT
 	-- groupquarters
 	FALSE
 FROM
-	doe_facilities_lcgms
+	doe_facilities_lcgms a
 LEFT JOIN
-	doe_facilities_schoolsbluebook
+	doe_facilities_schoolsbluebook b
 ON 
-	doe_facilities_lcgms.LocationCode = doe_facilities_schoolsbluebook.Org_ID
+	a.LocationCode = b.Org_ID
+WHERE b.org_id IS NOT NULL
