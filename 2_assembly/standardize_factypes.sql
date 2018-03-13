@@ -1,5 +1,12 @@
 UPDATE facilities AS f
     SET 
+		factype = REPLACE(factype, 'Other -  ', '')
+	WHERE
+		factype LIKE '%Other - %'
+		AND factype NOT LIKE '%  Other - %';
+
+UPDATE facilities AS f
+    SET 
 		factype = REPLACE(factype, 'Other ', '')
 	WHERE
 		factype LIKE '%Other %'

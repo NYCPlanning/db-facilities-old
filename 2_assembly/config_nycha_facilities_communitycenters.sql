@@ -52,7 +52,7 @@ SELECT
 	-- hash,
     hash,
 	-- geom
-	NULL,
+	ST_MakePoint(longitude::double precision, latitude::double precision),
 	-- idagency
 	NULL,
 	-- facilityname
@@ -64,7 +64,7 @@ SELECT
 	-- address
 	initcap(address),
 	-- borough
-	initcap(borough),
+	initcap(borough_code),
 	-- zipcode
 	ROUND(zip_code::numeric,0),
 	-- bbl
@@ -72,7 +72,7 @@ SELECT
 	-- bin
 	NULL,
 	-- facilitytype
-	'NYCHA Community Center',
+	'NYCHA Community Center - '||type,
 	-- domain
 	'Public Safety, Emergency Services, and Administration of Justice',
 	-- facilitygroup
