@@ -37,8 +37,9 @@ psql -U $DBUSER -d $DBNAME -f ./2_assembly/config_dot_facilities_mannedfacilitie
 psql -U $DBUSER -d $DBNAME -f ./2_assembly/config_dot_facilities_parkingfacilities.sql
 psql -U $DBUSER -d $DBNAME -f ./2_assembly/config_dpr_parksproperties.sql
 psql -U $DBUSER -d $DBNAME -f ./2_assembly/config_dsny_facilities_mtsgaragemaintenance.sql
-psql -U $DBUSER -d $DBNAME -f ./2_assembly/config_dycd_facilities_compass.sql
-psql -U $DBUSER -d $DBNAME -f ./2_assembly/config_dycd_facilities_otherprograms.sql
+# psql -U $DBUSER -d $DBNAME -f ./2_assembly/config_dycd_facilities_compass.sql
+# psql -U $DBUSER -d $DBNAME -f ./2_assembly/config_dycd_facilities_otherprograms.sql
+psql -U $DBUSER -d $DBNAME -f ./2_assembly/config_dycd_facilities_afterschoolprograms.sql
 psql -U $DBUSER -d $DBNAME -f ./2_assembly/config_foodbankny_facilities_foodbanks.sql
 psql -U $DBUSER -d $DBNAME -f ./2_assembly/config_hhs_facilities_financialscontracts.sql
 psql -U $DBUSER -d $DBNAME -f ./2_assembly/config_hhs_facilities_fmscontracts.sql

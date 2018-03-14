@@ -72,8 +72,9 @@ node loader.js install nysoasas_facilities_programs ## Being shared with us mont
 node loader.js install nysed_facilities_activeinstitutions ## Actually is open but need to figue out url
 node loader.js install nysed_nonpublicenrollment ## Actually is open but in xlsx that needs to be formatted
 node loader.js install omb_facilities_libraryvisits
-node loader.js install dycd_facilities_compass
-node loader.js install dycd_facilities_otherprograms
+# node loader.js install dycd_facilities_compass
+# node loader.js install dycd_facilities_otherprograms
+node loader.js install dycd_facilities_afterschoolprograms
 node loader.js install hra_facilities_centers
 node loader.js install sbs_facilities_workforce1
 
