@@ -72,9 +72,9 @@ SELECT
 	-- zipcode
 	Postcode::integer,
 	-- bbl
-	BBL,
+	ARRAY[BBL],
 	-- bin
-	BIN,
+	ARRAY[BIN],
 	-- facilitytype
 	program||' '||program_type,
 	-- domain
