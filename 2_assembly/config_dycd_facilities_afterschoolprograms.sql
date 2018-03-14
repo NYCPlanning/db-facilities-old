@@ -70,7 +70,7 @@ SELECT
 	-- borough
 	initcap(BOROUGH_COMMUNITY),
 	-- zipcode
-	Postcode,
+	Postcode::integer,
 	-- bbl
 	BBL,
 	-- bin
