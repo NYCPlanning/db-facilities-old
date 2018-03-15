@@ -10,7 +10,7 @@ SELECT
     array_agg(distinct datasource) AS datasource,
     array_agg(distinct dataname) AS dataname,
     array_agg(distinct dataurl) AS dataurl,
-    array_agg(distinct datadate) AS datadate
+    array_agg(distinct datadate) AS datadate,
     array_agg(distinct agencyjuris) AS agencyjuris
 FROM
 	facilities
