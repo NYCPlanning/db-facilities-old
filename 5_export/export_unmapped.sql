@@ -98,4 +98,4 @@ COPY (
 	ORDER BY
 		-- domain, facilitygroup, facilitysubgroup, facilitytype
 		RANDOM()
-) TO '/Users/hannahbkates/facilities-db/exports/facdb_facilities_unmapped.csv' WITH CSV DELIMITER ',' HEADER;
+) TO '/prod/db-facilities/output/facdb_facilities_unmapped.csv' WITH CSV DELIMITER ',' HEADER;

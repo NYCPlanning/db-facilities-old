@@ -18,4 +18,4 @@ COPY (
 		using_01 = '1'
 	ORDER BY
 		datasourcefull
-) TO '/Users/hannahbkates/facilities-db/tables/docs/facdb_datasources_docs.txt' WITH CSV DELIMITER '~' HEADER;
+) TO '/prod/db-facilities/output/facdb_datasources_docs.txt' WITH CSV DELIMITER '~' HEADER;

@@ -3,7 +3,7 @@
 -- CREATE TABLE IF NOT EXISTS facdb_uid_key AS
 -- SELECT hash FROM facilities;
 -- -- add the serial id column
--- ALTER TABLE facdb_uid_key ADD COLUMN id SERIAL PRIMARY KEY;
+-- ALTER TABLE facdb_uid_key ADD COLUMN uid SERIAL PRIMARY KEY;
 
 -- AFTER ADDING NEW ROWS TO DATABASE, UPDATE KEY
 -- insert the new values into the key table
