@@ -41,7 +41,7 @@ WITH matches AS (
 		AND (b.pgtable = ARRAY['hhs_facilities_fmscontracts']::text[]
 			OR b.pgtable = ARRAY['hhs_facilities_financialscontracts']::text[]
 			OR b.pgtable = ARRAY['hhs_facilities_proposals']::text[])
-		AND b.facgroup LIKE '%Child Care%'
+		AND b.facgroup LIKE '%Day Care%'
 		AND a.geom IS NOT NULL
 		AND b.geom IS NOT NULL
 		AND a.bin IS NOT NULL

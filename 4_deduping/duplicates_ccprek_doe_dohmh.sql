@@ -42,7 +42,7 @@ WITH matches AS (
 	LEFT JOIN facilities b
 	ON a.bin = b.bin
 	WHERE
-		a.facgroup LIKE '%Child Care%'
+		a.facgroup LIKE '%Day Care%'
 		AND (a.factype LIKE '%Early%'
 		OR a.factype LIKE '%Charter%')
 		-- AND b.factype LIKE '%Preschool%'
