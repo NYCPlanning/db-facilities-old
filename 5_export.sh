@@ -4,8 +4,8 @@
 ## NOTE: This script requires that your setup the DATABASE_URL environment variable. 
 ## Directions are in the README.md.
 
-DBNAME=$(cat $REPOLOC/config.json | jq -r '.DBNAME')
-DBUSER=$(cat $REPOLOC/config.json | jq -r '.DBUSER')
+DBNAME=$(cat config.json | jq -r '.DBNAME')
+DBUSER=$(cat config.json | jq -r '.DBUSER')
 
 psql -U $DBUSER -d $DBNAME -f ./5_export/censor.sql
 echo 'Exporting FacDB tables...'
