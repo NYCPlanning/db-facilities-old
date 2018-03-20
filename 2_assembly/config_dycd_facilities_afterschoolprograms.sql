@@ -82,7 +82,7 @@ SELECT
 	-- facilitygroup
 	'Youth Services',
 	-- facilitysubgroup
-	'Comprehensive After School System (COMPASS) Sites',
+	'Youth Centers, Literacy Programs, Job Training, and Immigrant Services',
 	-- agencyclass1
 	NULL,
 	-- agencyclass2

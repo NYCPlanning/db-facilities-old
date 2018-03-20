@@ -168,6 +168,7 @@ UPDATE facilities
 SET facgroup = 'Offices, Training, and Testing'
 WHERE facsubgrp = 'Offices'
 OR facsubgrp = 'Training and Testing'
+OR facsubgrp = 'City Government Offices'
 ;
 
 UPDATE facilities

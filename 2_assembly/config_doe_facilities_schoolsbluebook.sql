@@ -141,7 +141,7 @@ SELECT
 		(CASE
 			WHEN Charter IS NOT NULL AND Org_Level <> 'SPED' THEN 'Charter K-12 Schools'
 			WHEN Org_Level = 'SPED' THEN 'Public and Private Special Education Schools'
-			WHEN RIGHT(Org_ID,3) = 'ADM' THEN 'Offices'
+			WHEN RIGHT(Org_ID,3) = 'ADM' THEN 'City Government Offices'
 			WHEN RIGHT(Org_ID,3) = 'CBO' THEN 'Community Centers and Community School Programs'
 			WHEN RIGHT(Org_ID,3) = 'DRG' THEN 'Community Centers and Community School Programs'
 			WHEN RIGHT(Org_ID,3) = 'SFS' THEN 'Child Nutrition'
