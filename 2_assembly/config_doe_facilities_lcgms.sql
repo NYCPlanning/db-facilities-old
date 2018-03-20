@@ -112,7 +112,6 @@ SELECT
 	ARRAY[ROUND(b.Org_Enroll::numeric,0)::text],
 	-- capacitytype
 	ARRAY['PS Seats', 'MS Seats', 'HS Seats'],
-	NULL,
 	-- utilizationrate
 		(CASE
 			WHEN (Org_Enroll <> 0 AND b.Org_Target_Cap <> 0) THEN ARRAY[ROUND((Org_Enroll::numeric/b.Org_Target_Cap::numeric),3)::text]
