@@ -40,6 +40,7 @@ COPY (
 		-- array_to_string(facilities.overtype,';') AS overtype,
 		array_to_string(facilities.overagency,';') AS overagency,
 		array_to_string(facilities.overabbrev,';') AS overabbrev,
+		array_to_string(facilities.agencyjuris,';') AS agencyjuris,
 		array_to_string(facilities.datasource,';') AS datasource,
 		array_to_string(facilities.dataname,';') AS dataname,
 		array_to_string(facilities.dataurl,';') AS dataurl,
