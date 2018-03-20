@@ -45,6 +45,7 @@ psql -U $DBUSER -d $DBNAME -f ./2_assembly/config_hhs_facilities_financialscontr
 psql -U $DBUSER -d $DBNAME -f ./2_assembly/config_hhs_facilities_fmscontracts.sql
 psql -U $DBUSER -d $DBNAME -f ./2_assembly/config_hhs_facilities_proposals.sql
 psql -U $DBUSER -d $DBNAME -f ./2_assembly/config_hra_facilities_centers.sql
+psql -U $DBUSER -d $DBNAME -f ./2_assembly/config_nycha_facilities_communitycenters.sql
 psql -U $DBUSER -d $DBNAME -f ./2_assembly/config_nycha_facilities_policeservice.sql
 psql -U $DBUSER -d $DBNAME -f ./2_assembly/config_nysoasas_facilities_programs.sql
 psql -U $DBUSER -d $DBNAME -f ./2_assembly/config_nysdec_facilities_lands.sql
@@ -84,4 +85,4 @@ psql -U $DBUSER -d $DBNAME -f ./2_assembly/standardize_domain.sql
 ## STEP 4
 ## Fill in the uid for all new records in the database
 echo 'Filling in / creating uid...'
-psql -U $DBUSER -d $DBNAME -f ./2_assembly/create_uid.sql
+##psql -U $DBUSER -d $DBNAME -f ./2_assembly/create_uid.sql
