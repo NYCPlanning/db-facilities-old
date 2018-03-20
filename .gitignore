@@ -10,6 +10,5 @@ apiCredentials.js
 /3_geoprocessing/.Rhistory
 .env
 /node_modules/*
-/5_export/censor.sql
 /6_refresh/*
 npm-debug.log
