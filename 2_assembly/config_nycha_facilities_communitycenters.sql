@@ -52,7 +52,7 @@ SELECT
 	-- hash,
     hash,
 	-- geom
-	ST_MakePoint(longitude::double precision, latitude::double precision),
+	ST_SetSRID(ST_MakePoint(longitude::double precision, latitude::double precision),4326),
 	-- idagency
 	NULL,
 	-- facilityname
