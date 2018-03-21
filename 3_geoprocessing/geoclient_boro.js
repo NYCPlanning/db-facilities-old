@@ -107,7 +107,7 @@ function addressLookup1(row) {
               } catch (e) {
                 console.log(data)
                 i++;
-                console.log(i,nullGeomResults.length)
+                // console.log(i,nullGeomResults.length)
                   if (i<nullGeomResults.length) {
                     addressLookup1(nullGeomResults[i])
                   }
@@ -115,7 +115,7 @@ function addressLookup1(row) {
             // B. catch error with getting ADDRESS from data response
             } catch (e) {
               i++;
-              console.log(i,nullGeomResults.length)
+              // console.log(i,nullGeomResults.length)
               if (i<nullGeomResults.length) {
                 addressLookup1(nullGeomResults[i])
               }
@@ -123,7 +123,7 @@ function addressLookup1(row) {
           // A. catch error with PARSING json
           } catch (e) {
             i++;
-            console.log(i,nullGeomResults.length)
+            // console.log(i,nullGeomResults.length)
             if (i<nullGeomResults.length) {
               addressLookup1(nullGeomResults[i])
             }
@@ -198,7 +198,7 @@ function updateFacilities(data, row) {
     db.none(insert)
     .then(function(data) {
       i++;
-      console.log(i,nullGeomResults.length)
+      // console.log(i,nullGeomResults.length)
       if (i<nullGeomResults.length) {
          addressLookup1(nullGeomResults[i])
       } else {
@@ -213,7 +213,7 @@ function updateFacilities(data, row) {
   } else {
     // console.log('Response did not include a lat/lon, skipping...');
     i++;
-        console.log(i,nullGeomResults.length)
+        // console.log(i,nullGeomResults.length)
         if (i<nullGeomResults.length) {
            addressLookup1(nullGeomResults[i])
         }
