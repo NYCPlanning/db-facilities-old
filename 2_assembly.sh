@@ -85,4 +85,4 @@ psql -U $DBUSER -d $DBNAME -f ./2_assembly/standardize_domain.sql
 ## STEP 4
 ## Fill in the uid for all new records in the database
 echo 'Filling in / creating uid...'
-##psql -U $DBUSER -d $DBNAME -f ./2_assembly/create_uid.sql
+psql -U $DBUSER -d $DBNAME -f ./2_assembly/create_uid.sql
