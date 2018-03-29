@@ -74,11 +74,11 @@ SELECT
 	-- facilitytype
 	'NYCHA Community Center - '||type,
 	-- domain
-	'Public Safety, Emergency Services, and Administration of Justice',
+	'Health and Human Services',
 	-- facilitygroup
-	'Public Safety',
+	'Human Services',
 	-- facilitysubgroup
-	'Police Services',
+	'Community Centers and Community School Programs',
 	-- agencyclass1
 	Type,
 	-- agencyclass2
