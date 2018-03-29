@@ -16,7 +16,6 @@ FROM
 	facilities
 WHERE
 	pgtable = ARRAY['dcas_facilities_colp'] 
-	AND proptype = 'City Leased'
 GROUP BY bbl)
 
 UPDATE facilities AS f
@@ -24,9 +23,13 @@ SET
     proptype = 
 		(CASE
 			WHEN c.proptype @> ARRAY['City Owned'] THEN 'City Owned'
-			-- WHEN c.proptype @> ARRAY['City Leased'] AND c.overabbrev @> f.overabbrev THEN 'City Leased'
+			WHEN c.proptype @> ARRAY['City Leased'] AND c.overabbrev @> f.overabbrev THEN 'City Leased'
 		END),
-	agencyjuris = c.agencyjuris,
+	agencyjuris = 
+		(CASE 
+			WHEN c.proptype @> ARRAY['City Owned'] THEN c.agencyjuris 
+			ELSE NULL 
+		END),
 	pgtable = array_append(f.pgtable, array_to_string(c.pgtable,';')),
 	datasource = array_append(f.datasource, array_to_string(c.datasource,';')),
 	dataname = array_append(f.dataname, array_to_string(c.dataname,';')),
