@@ -14,7 +14,7 @@ ALTER TABLE facdb_uid_key ADD COLUMN uid SERIAL PRIMARY KEY;
 -- SELECT hash FROM facdb_uid_key
 -- );
 -- -- JOIN uid FROM KEY ONTO DATABASE
--- UPDATE facilities AS f
--- SET uid = k.uid
--- FROM facdb_uid_key AS k
--- WHERE k.hash = f.hash;
+UPDATE facilities AS f
+SET uid = k.uid
+FROM facdb_uid_key AS k
+WHERE k.hash = f.hash;
