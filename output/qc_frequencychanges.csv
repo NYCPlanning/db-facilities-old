@@ -1,0 +1,71 @@
+facility_domain,facility_group,facility_subgroup,newcount,oldcount,percentage_change
+Administration of Government,"City Agency Parking, Maintenance, and Storage",City Agency Parking,171,171,0.00000000000000000000
+Administration of Government,"City Agency Parking, Maintenance, and Storage",Custodial,41,41,0.00000000000000000000
+Administration of Government,"City Agency Parking, Maintenance, and Storage",Maintenance and Garages,77,77,0.00000000000000000000
+Administration of Government,"City Agency Parking, Maintenance, and Storage",Storage,151,151,0.00000000000000000000
+Administration of Government,"Offices, Training, and Testing",City Government Offices,844,844,0.00000000000000000000
+Administration of Government,"Offices, Training, and Testing",Training and Testing,12,12,0.00000000000000000000
+Administration of Government,Other Property,Miscellaneous Use,1943,1943,0.00000000000000000000
+Administration of Government,Other Property,Properties Leased or Licensed to Non-public Entities,274,274,0.00000000000000000000
+Core Infrastructure and Transportation,Material Supplies and Markets,Material Supplies,4,4,0.00000000000000000000
+Core Infrastructure and Transportation,Material Supplies and Markets,Wholesale Markets,5,5,0.00000000000000000000
+Core Infrastructure and Transportation,Solid Waste,Solid Waste Processing,258,258,0.00000000000000000000
+Core Infrastructure and Transportation,Solid Waste,Solid Waste Transfer and Carting,1426,1426,0.00000000000000000000
+Core Infrastructure and Transportation,Telecommunications,Telecommunications,4,4,0.00000000000000000000
+Core Infrastructure and Transportation,Transportation,Airports and Heliports,24,24,0.00000000000000000000
+Core Infrastructure and Transportation,Transportation,Bus Depots and Terminals,151,151,0.00000000000000000000
+Core Infrastructure and Transportation,Transportation,Other Transportation,173,173,0.00000000000000000000
+Core Infrastructure and Transportation,Transportation,Parking Lots and Garages,2330,2330,0.00000000000000000000
+Core Infrastructure and Transportation,Transportation,Ports and Ferry Landings,124,124,0.00000000000000000000
+Core Infrastructure and Transportation,Transportation,Rail Yards and Maintenance,175,175,0.00000000000000000000
+Core Infrastructure and Transportation,Water and Wastewater,Wastewater and Pollution Control,152,152,0.00000000000000000000
+"Education, Child Welfare, and Youth",Camps,Camps,580,580,0.00000000000000000000
+"Education, Child Welfare, and Youth",Child Services and Welfare,Child Nutrition,3169,3169,0.00000000000000000000
+"Education, Child Welfare, and Youth",Child Services and Welfare,Foster Care Services and Residential Care,1,1,0.00000000000000000000
+"Education, Child Welfare, and Youth",Child Services and Welfare,"Preventative Care, Evaluation Services, and Respite",87,87,0.00000000000000000000
+"Education, Child Welfare, and Youth",Day Care and Pre-Kindergarten,DOE Universal Pre-Kindergarten,1946,1946,0.00000000000000000000
+"Education, Child Welfare, and Youth",Day Care and Pre-Kindergarten,Day Care,2233,2233,0.00000000000000000000
+"Education, Child Welfare, and Youth",Day Care and Pre-Kindergarten,Dual Child Care and Universal Pre-K,146,146,0.00000000000000000000
+"Education, Child Welfare, and Youth",Day Care and Pre-Kindergarten,Preschools for Students with Disabilities,209,209,0.00000000000000000000
+"Education, Child Welfare, and Youth",Higher Education,Colleges or Universities,164,164,0.00000000000000000000
+"Education, Child Welfare, and Youth",Schools (K-12),Charter K-12 Schools,391,391,0.00000000000000000000
+"Education, Child Welfare, and Youth",Schools (K-12),GED and Alternative High School Equivalency,95,95,0.00000000000000000000
+"Education, Child Welfare, and Youth",Schools (K-12),Non-Public K-12 Schools,2420,2420,0.00000000000000000000
+"Education, Child Welfare, and Youth",Schools (K-12),Public K-12 Schools,1844,1844,0.00000000000000000000
+"Education, Child Welfare, and Youth",Schools (K-12),Public and Private Special Education Schools,306,306,0.00000000000000000000
+"Education, Child Welfare, and Youth",Vocational and Proprietary Schools,Proprietary Schools,575,575,0.00000000000000000000
+"Education, Child Welfare, and Youth",Youth Services,"Youth Centers, Literacy Programs, Job Training, and Immigrant Services",2187,2187,0.00000000000000000000
+Health and Human Services,Health Care,Chemical Dependency,332,332,0.00000000000000000000
+Health and Human Services,Health Care,Health Promotion and Disease Prevention,5,5,0.00000000000000000000
+Health and Human Services,Health Care,Hospitals and Clinics,1096,1096,0.00000000000000000000
+Health and Human Services,Health Care,Mental Health,821,821,0.00000000000000000000
+Health and Human Services,Health Care,Other Health Care,76,76,0.00000000000000000000
+Health and Human Services,Health Care,Residential Health Care,177,177,0.00000000000000000000
+Health and Human Services,Human Services,Community Centers and Community School Programs,853,853,0.00000000000000000000
+Health and Human Services,Human Services,Financial Assistance and Social Services,7,7,0.00000000000000000000
+Health and Human Services,Human Services,Legal and Intervention Services,305,305,0.00000000000000000000
+Health and Human Services,Human Services,Non-residential Housing and Homeless Services,7,7,0.00000000000000000000
+Health and Human Services,Human Services,Permanent Supportive SRO Housing,145,145,0.00000000000000000000
+Health and Human Services,Human Services,Programs for People with Disabilities,164,164,0.00000000000000000000
+Health and Human Services,Human Services,Senior Services,419,419,0.00000000000000000000
+Health and Human Services,Human Services,Soup Kitchens and Food Pantries,761,761,0.00000000000000000000
+Health and Human Services,Human Services,Workforce Development,53,53,0.00000000000000000000
+Libraries and Cultural Programs,Cultural Institutions,Historical Societies,46,46,0.00000000000000000000
+Libraries and Cultural Programs,Cultural Institutions,Museums,124,124,0.00000000000000000000
+Libraries and Cultural Programs,Cultural Institutions,Other Cultural Institutions,1654,1654,0.00000000000000000000
+Libraries and Cultural Programs,Libraries,Academic and Special Libraries,26,26,0.00000000000000000000
+Libraries and Cultural Programs,Libraries,Public Libraries,249,249,0.00000000000000000000
+"Parks, Gardens, and Historical Sites",Historical Sites,Historical Sites,819,819,0.00000000000000000000
+"Parks, Gardens, and Historical Sites",Parks and Plazas,Cemeteries,21,21,0.00000000000000000000
+"Parks, Gardens, and Historical Sites",Parks and Plazas,Gardens,438,438,0.00000000000000000000
+"Parks, Gardens, and Historical Sites",Parks and Plazas,Parks,1269,1269,0.00000000000000000000
+"Parks, Gardens, and Historical Sites",Parks and Plazas,Preserves and Conservation Areas,320,320,0.00000000000000000000
+"Parks, Gardens, and Historical Sites",Parks and Plazas,Privately Owned Public Space,351,351,0.00000000000000000000
+"Parks, Gardens, and Historical Sites",Parks and Plazas,Recreation and Waterfront Sites,1671,1671,0.00000000000000000000
+"Parks, Gardens, and Historical Sites",Parks and Plazas,"Streetscapes, Plazas, and Malls",651,651,0.00000000000000000000
+"Public Safety, Emergency Services, and Administration of Justice",Emergency Services,Fire Services,216,216,0.00000000000000000000
+"Public Safety, Emergency Services, and Administration of Justice",Emergency Services,Other Emergency Services,32,32,0.00000000000000000000
+"Public Safety, Emergency Services, and Administration of Justice",Justice and Corrections,Courthouses and Judicial,161,161,0.00000000000000000000
+"Public Safety, Emergency Services, and Administration of Justice",Justice and Corrections,Detention and Correctional,33,33,0.00000000000000000000
+"Public Safety, Emergency Services, and Administration of Justice",Public Safety,Other Public Safety,34,34,0.00000000000000000000
+"Public Safety, Emergency Services, and Administration of Justice",Public Safety,Police Services,92,92,0.00000000000000000000
