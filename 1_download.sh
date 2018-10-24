@@ -63,7 +63,6 @@ node loader.js install usnps_facilities_parks
 echo 'Done loading open source datasets. Moving on to "other" datasets...'
 ## Other_datasets - PULLING FROM FTP SITE
 node loader.js install dcas_facilities_colp
-node loader.js install dhs_facilities_shelters
 node loader.js install doe_facilities_schoolsbluebook
 node loader.js install dot_facilities_pedplazas
 node loader.js install dot_facilities_bridgehouses
@@ -74,13 +73,14 @@ node loader.js install foodbankny_facilities_foodbanks
 node loader.js install hhs_facilities_fmscontracts
 node loader.js install hhs_facilities_financialscontracts
 node loader.js install hhs_facilities_proposals
-node loader.js install nysoasas_facilities_programs ## Being shared with us monthly by email in xlsx
-node loader.js install nysed_facilities_activeinstitutions ## Actually is open but need to figue out url
-node loader.js install nysed_nonpublicenrollment ## Actually is open but in xlsx that needs to be formatted
+node loader.js install nysoasas_facilities_programs ## download from here https://www.oasas.ny.gov/providerDirectory/index.cfm?search_type=2
+node loader.js install nysed_facilities_activeinstitutions ## download from here https://eservices.nysed.gov/sedreports/list?id=1
+node loader.js install nysed_nonpublicenrollment ## download from here http://www.p12.nysed.gov/irs/statistics/nonpublic/
 node loader.js install omb_facilities_libraryvisits
 # node loader.js install dycd_facilities_compass
 # node loader.js install dycd_facilities_otherprograms
 # node loader.js install hra_facilities_centers
+# node loader.js install dhs_facilities_shelters
 
 echo 'Done loading other source datasets'
 cd '../facilities-db'
