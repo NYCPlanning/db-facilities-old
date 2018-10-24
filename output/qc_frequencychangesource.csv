@@ -1,0 +1,115 @@
+dataname,newcount,oldcount,percentage_change
+Amtrak: Selected Facilities and Program Sites Database,4,4,0.00000000000000000000
+BBPC: Selected Facilities and Program Sites Database,1,1,0.00000000000000000000
+FBNYC: FBNYC Food Pantry Soup Kitchen List 8-5-16,737,737,0.00000000000000000000
+FBNYC: FBNYC Food Pantry Soup Kitchen List 8-5-16;NYCDCAS: City Owned and Leased Properties,24,24,0.00000000000000000000
+FBOP: Our Locations,3,3,0.00000000000000000000
+HRPT: Selected Facilities and Program Sites Database,1,1,0.00000000000000000000
+MTA: Selected Facilities and Program Sites Database,100,100,0.00000000000000000000
+MTA: Selected Facilities and Program Sites Database;NYCDCAS: City Owned and Leased Properties,44,44,0.00000000000000000000
+NYCACS: Contractor Data,13,13,0.00000000000000000000
+NYCACS: Contractor Data;NYCDCAS: City Owned and Leased Properties,119,119,0.00000000000000000000
+NYCACS: Contractor Data;NYCDOE: Universal Pre-K (UPK) School Locations,12,12,0.00000000000000000000
+NYCACS: Contractor Data;NYCDOE: Universal Pre-K (UPK) School Locations;NYCDOHMH: DOHMH Childcare Center Inspections,45,45,0.00000000000000000000
+NYCACS: Contractor Data;NYCDOHMH: DOHMH Childcare Center Inspections,10,10,0.00000000000000000000
+NYCACS: Contractor Data;NYCHHS: HHS Accelerator - Financials Contracts,137,137,0.00000000000000000000
+NYCACS: Contractor Data;NYCHHS: HHS Accelerator - Financials Contracts;NYCHHS: HHS Accelerator - Selected Proposals,30,30,0.00000000000000000000
+NYCACS: Contractor Data;NYCHHS: HHS Accelerator - Selected Proposals,9,9,0.00000000000000000000
+NYCBIC: Approved licensees and registrants for trade waste,1273,1273,0.00000000000000000000
+NYCBIC: Approved licensees and registrants for trade waste;NYCDCAS: City Owned and Leased Properties,15,15,0.00000000000000000000
+NYCBIC: Approved licensees and registrants for trade waste;NYSDEC: Solid Waste Management Facilities,1,1,0.00000000000000000000
+NYCDCA: Legally Operating Businesses,2229,2229,0.00000000000000000000
+NYCDCA: Legally Operating Businesses;NYCDCAS: City Owned and Leased Properties,89,89,0.00000000000000000000
+NYCDCA: Legally Operating Businesses;NYCDCAS: City Owned and Leased Properties;NYSDEC: Solid Waste Management Facilities,1,1,0.00000000000000000000
+NYCDCA: Legally Operating Businesses;NYSDEC: Solid Waste Management Facilities,12,12,0.00000000000000000000
+NYCDCAS: City Owned and Leased Properties,6856,6856,0.00000000000000000000
+NYCDCAS: City Owned and Leased Properties;NYCDCLA: DCLA Cultural Organizations,169,169,0.00000000000000000000
+NYCDCAS: City Owned and Leased Properties;NYCDCLA: DCLA Cultural Organizations;NYSED: Listings - Active Institutions with GIS coordinates and OITS Accuracy Code,3,3,0.00000000000000000000
+NYCDCAS: City Owned and Leased Properties;NYCDCP: Privately Owned Public Spaces,19,19,0.00000000000000000000
+NYCDCAS: City Owned and Leased Properties;NYCDEP: Selected Facilities and Program Sites Database,13,13,0.00000000000000000000
+NYCDCAS: City Owned and Leased Properties;NYCDFTA: DFTA Contracts,64,64,0.00000000000000000000
+NYCDCAS: City Owned and Leased Properties;NYCDFTA: DFTA Contracts;NYCHHS: HHS Accelerator - Selected Proposals,9,9,0.00000000000000000000
+NYCDCAS: City Owned and Leased Properties;NYCDHS: DHS CARES Building Listing,3,3,0.00000000000000000000
+NYCDCAS: City Owned and Leased Properties;NYCDOC: Correction Facilities Locations,17,17,0.00000000000000000000
+NYCDCAS: City Owned and Leased Properties;NYCDOE: LCGMS - DOE School Information Report,2036,2036,0.00000000000000000000
+NYCDCAS: City Owned and Leased Properties;NYCDOE: Routes,4,4,0.00000000000000000000
+NYCDCAS: City Owned and Leased Properties;NYCDOE: Universal Pre-K (UPK) School Locations,779,779,0.00000000000000000000
+NYCDCAS: City Owned and Leased Properties;NYCDOHMH: DOHMH Childcare Center Inspections,421,421,0.00000000000000000000
+NYCDCAS: City Owned and Leased Properties;NYCDOT: Facilities Data - Bridge Houses,2,2,0.00000000000000000000
+NYCDCAS: City Owned and Leased Properties;NYCDOT: Facilities Data - Manned Facilities,36,36,0.00000000000000000000
+NYCDCAS: City Owned and Leased Properties;NYCDOT: Facilities Data - Parking Facilities,33,33,0.00000000000000000000
+NYCDCAS: City Owned and Leased Properties;NYCDOT: Plaza Program,5,5,0.00000000000000000000
+NYCDCAS: City Owned and Leased Properties;NYCDPR: Parks Properties,1446,1446,0.00000000000000000000
+NYCDCAS: City Owned and Leased Properties;NYCDSNY: DSNY_select_facs_07262916,69,69,0.00000000000000000000
+NYCDCAS: City Owned and Leased Properties;NYCDYCD: DYCD After School Program Locations,694,694,0.00000000000000000000
+NYCDCAS: City Owned and Leased Properties;NYCHA: NYCHA Facilities and Service Centers,68,68,0.00000000000000000000
+NYCDCAS: City Owned and Leased Properties;NYCHA: NYCHA PSA (Police Service Areas),2,2,0.00000000000000000000
+NYCDCAS: City Owned and Leased Properties;NYCHHS: HHS Accelerator - Financials Contracts,265,265,0.00000000000000000000
+NYCDCAS: City Owned and Leased Properties;NYCHHS: HHS Accelerator - Financials Contracts;NYCHHS: HHS Accelerator - Selected Proposals,25,25,0.00000000000000000000
+NYCDCAS: City Owned and Leased Properties;NYCHHS: HHS Accelerator - Selected Proposals,707,707,0.00000000000000000000
+NYCDCAS: City Owned and Leased Properties;NYCHHS: HHS Accelerator - Selected Proposals;NYCSBS: Center & Service Locations,1,1,0.00000000000000000000
+NYCDCAS: City Owned and Leased Properties;NYCHHS: HHS Accelerator - Selected Proposals;NYSDOH: Health Facility General Information,6,6,0.00000000000000000000
+NYCDCAS: City Owned and Leased Properties;NYCHRA/DSS: HRA Locations,10,10,0.00000000000000000000
+NYCDCAS: City Owned and Leased Properties;NYCOMB: District Resource Statement,213,213,0.00000000000000000000
+NYCDCAS: City Owned and Leased Properties;NYCOURTS: The Courts,119,119,0.00000000000000000000
+NYCDCAS: City Owned and Leased Properties;NYCSBS: Center & Service Locations,13,13,0.00000000000000000000
+"NYCDCAS: City Owned and Leased Properties;NYSDEC: Lands - Under the Care, Custody, and Control of DEC",2,2,0.00000000000000000000
+NYCDCAS: City Owned and Leased Properties;NYSDEC: Solid Waste Management Facilities,10,10,0.00000000000000000000
+NYCDCAS: City Owned and Leased Properties;NYSDOH: Health Facility General Information,252,252,0.00000000000000000000
+NYCDCAS: City Owned and Leased Properties;NYSED: Listings - Active Institutions with GIS coordinates and OITS Accuracy Code,1178,1178,0.00000000000000000000
+NYCDCAS: City Owned and Leased Properties;NYSOASAS: NYS OASAS-Certified Chemical Dependence Treatment Programs Located in NYC,48,48,0.00000000000000000000
+NYCDCAS: City Owned and Leased Properties;NYSOMH: Local Mental Health Programs,230,230,0.00000000000000000000
+NYCDCAS: City Owned and Leased Properties;NYSOPRHP: National Register of Historic Places,145,145,0.00000000000000000000
+NYCDCAS: City Owned and Leased Properties;NYSOPWDD: Directory of Developmental Disabilities Service Provider Agencies,20,20,0.00000000000000000000
+NYCDCAS: City Owned and Leased Properties;RIOC: Selected Facilities and Program Sites Database,11,11,0.00000000000000000000
+NYCDCAS: City Owned and Leased Properties;USCOURTS: Court Locator Results,5,5,0.00000000000000000000
+NYCDCAS: City Owned and Leased Properties;USDOT: Airports,5,5,0.00000000000000000000
+NYCDCAS: City Owned and Leased Properties;USDOT: U.S. Army Corps of Engineers Ports,57,57,0.00000000000000000000
+NYCDCAS: City Owned and Leased Properties;USNPS: Administrative Boundaries of National Park System Units,2,2,0.00000000000000000000
+NYCDCLA: DCLA Cultural Organizations,1531,1531,0.00000000000000000000
+NYCDCLA: DCLA Cultural Organizations;NYSED: Listings - Active Institutions with GIS coordinates and OITS Accuracy Code,7,7,0.00000000000000000000
+NYCDCP: Privately Owned Public Spaces,332,332,0.00000000000000000000
+NYCDEP: Selected Facilities and Program Sites Database,1,1,0.00000000000000000000
+NYCDFTA: DFTA Contracts,299,299,0.00000000000000000000
+NYCDFTA: DFTA Contracts;NYCHHS: HHS Accelerator - Selected Proposals,11,11,0.00000000000000000000
+NYCDHS: DHS CARES Building Listing,146,146,0.00000000000000000000
+NYCDOC: Correction Facilities Locations,1,1,0.00000000000000000000
+NYCDOE: LCGMS - DOE School Information Report,102,102,0.00000000000000000000
+NYCDOE: Routes,101,101,0.00000000000000000000
+NYCDOE: Universal Pre-K (UPK) School Locations,382,382,0.00000000000000000000
+NYCDOE: Universal Pre-K (UPK) School Locations;NYCDOHMH: DOHMH Childcare Center Inspections,666,666,0.00000000000000000000
+NYCDOHMH: DOHMH Childcare Center Inspections,1806,1806,0.00000000000000000000
+NYCDOT: Facilities Data - Bridge Houses,33,33,0.00000000000000000000
+NYCDOT: Facilities Data - Manned Facilities,35,35,0.00000000000000000000
+NYCDOT: Facilities Data - Parking Facilities,12,12,0.00000000000000000000
+NYCDOT: Plaza Program,64,64,0.00000000000000000000
+NYCDPR: Parks Properties,562,562,0.00000000000000000000
+NYCDSNY: DSNY_select_facs_07262916,16,16,0.00000000000000000000
+NYCDYCD: DYCD After School Program Locations,489,489,0.00000000000000000000
+NYCHA: NYCHA Facilities and Service Centers,452,452,0.00000000000000000000
+NYCHA: NYCHA PSA (Police Service Areas),14,14,0.00000000000000000000
+NYCHHS: HHS Accelerator - Financials Contracts,249,249,0.00000000000000000000
+NYCHHS: HHS Accelerator - Financials Contracts;NYCHHS: HHS Accelerator - Selected Proposals,43,43,0.00000000000000000000
+NYCHHS: HHS Accelerator - Selected Proposals,915,915,0.00000000000000000000
+NYCHRA/DSS: HRA Locations,1,1,0.00000000000000000000
+NYCOMB: District Resource Statement,22,22,0.00000000000000000000
+NYCOURTS: The Courts,19,19,0.00000000000000000000
+NYCSBS: Center & Service Locations,27,27,0.00000000000000000000
+"NYSDEC: Lands - Under the Care, Custody, and Control of DEC",27,27,0.00000000000000000000
+NYSDEC: Solid Waste Management Facilities,212,212,0.00000000000000000000
+NYSDOCCS: Facility Listing,3,3,0.00000000000000000000
+NYSDOH: Health Facility General Information,1026,1026,0.00000000000000000000
+NYSDOT: Selected Facilities and Program Sites Database,3,3,0.00000000000000000000
+NYSED: Listings - Active Institutions with GIS coordinates and OITS Accuracy Code,5792,5792,0.00000000000000000000
+NYSOASAS: NYS OASAS-Certified Chemical Dependence Treatment Programs Located in NYC,284,284,0.00000000000000000000
+NYSOCFS: Facilities,1,1,0.00000000000000000000
+NYSOMH: Local Mental Health Programs,583,583,0.00000000000000000000
+NYSOPRHP: National Register of Historic Places,653,653,0.00000000000000000000
+NYSOPRHP: State Park Facility Points,5,5,0.00000000000000000000
+NYSOPWDD: Directory of Developmental Disabilities Service Provider Agencies,138,138,0.00000000000000000000
+PANYNJ: Selected Facilities and Program Sites Database,2,2,0.00000000000000000000
+TGI: Selected Facilities and Program Sites Database,7,7,0.00000000000000000000
+USCOURTS: Court Locator Results,6,6,0.00000000000000000000
+USDOT: Airports,13,13,0.00000000000000000000
+USDOT: U.S. Army Corps of Engineers Ports,40,40,0.00000000000000000000
+USNPS: Administrative Boundaries of National Park System Units,6,6,0.00000000000000000000
