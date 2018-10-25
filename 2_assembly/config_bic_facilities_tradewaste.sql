@@ -51,11 +51,11 @@ SELECT
     hash,
 	-- geom
 	(CASE
-		WHEN (Location_1 IS NOT NULL) AND (Location_1 LIKE '%(%') THEN 
+		WHEN (latitude IS NOT NULL) THEN 
 			ST_SetSRID(
 				ST_MakePoint(
-					trim(trim(split_part(split_part(Location_1,'(',2),',',2),' '),')')::double precision,
-					trim(trim(split_part(split_part(Location_1,'(',2),',',1),'('),' ')::double precision),
+					trim(longitude)::double precision,
+					trim(latitude)::double precision),
 				4326)
 	END),
 	-- idagency

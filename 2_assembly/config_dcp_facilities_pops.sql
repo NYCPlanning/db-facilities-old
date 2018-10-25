@@ -55,23 +55,17 @@ SELECT
 	ARRAY[popsnumber],
 	-- facilityname
 	(CASE
-		WHEN alternative IS NOT NULL AND alternative <> '' THEN alternative
-		ELSE buildingaddress
+		WHEN buildingname IS NOT NULL AND buildingname <> '' THEN buildingname
+		ELSE buildingaddresswithzip
 	END),
 	-- addressnumber
-	split_part(trim(both ' ' from initcap(buildingaddress)), ' ', 1),
+	addressnumber,
 	-- streetname
-	trim(both ' ' from substr(trim(both ' ' from initcap(buildingaddress)), strpos(trim(both ' ' from initcap(buildingaddress)), ' ')+1, (length(trim(both ' ' from initcap(buildingaddress)))-strpos(trim(both ' ' from initcap(buildingaddress)), ' ')))),
+	streetname,
 	-- address
-	initcap(buildingaddress),
+	initcap(addressnumber)||' '||initcap(streetname),
 	-- borough
-		(CASE
-			WHEN LEFT(popsnumber,1) = 'B' THEN 'Bronx'
-			WHEN LEFT(popsnumber,1) = 'K' THEN 'Brooklyn'
-			WHEN LEFT(popsnumber,1) = 'Q' THEN 'Queens'
-			WHEN LEFT(popsnumber,1) = 'M' THEN 'Manhattan'
-			ELSE 'Manhattan'
-		END),
+	boroname,
 	-- zipcode
 	NULL,
 	-- bbl

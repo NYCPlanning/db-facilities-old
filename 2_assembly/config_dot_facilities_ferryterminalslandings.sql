@@ -62,7 +62,7 @@ SELECT
 	-- address
 	NULL,
 	-- borough
-	NULL,
+	boroname,
 	-- zipcode
 	NULL,
 	-- bbl
@@ -96,10 +96,7 @@ SELECT
 	-- operatortype
 	'Public',
 	-- operatorname
-	(CASE
-		WHEN owners = 'FTA' THEN 'Federal Transit Administration'
-		WHEN owners = 'EDC' THEN 'NYC Economic Development Corporation'
-	END),
+	NULL,
 	-- operatorabbrev
 	'NYCDOT',
 	-- oversightagency
