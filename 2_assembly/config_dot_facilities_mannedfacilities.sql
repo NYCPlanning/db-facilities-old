@@ -59,22 +59,13 @@ SELECT
 		ELSE label
 	END),
 	-- addressnumber
-	(CASE 
-		WHEN arc_street IS NOT NULL THEN split_part(trim(both ' ' from REPLACE(arc_street,' - ','-')), ' ', 1)
-		ELSE NULL
-	END),
-	-- streetname
-	(CASE 
-		WHEN arc_street IS NOT NULL THEN trim(both ' ' from substr(trim(both ' ' from REPLACE(arc_street,' - ','-')), strpos(trim(both ' ' from REPLACE(arc_street,' - ','-')), ' ')+1, (length(trim(both ' ' from REPLACE(arc_street,' - ','-')))-strpos(trim(both ' ' from REPLACE(arc_street,' - ','-')), ' '))))
-		ELSE NULL
-	END),
-	-- address
-	(CASE 
-		WHEN arc_street IS NOT NULL THEN arc_street
-		ELSE NULL
-	END),
-	-- borough
 	NULL,
+	-- streetname
+	NULL,
+	-- address
+	NULL,
+	-- borough
+	boroname,
 	-- zipcode
 	NULL,
 	-- bbl
