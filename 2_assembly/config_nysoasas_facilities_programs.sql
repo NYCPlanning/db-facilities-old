@@ -76,7 +76,7 @@ SELECT
 	-- bin
 	NULL,
 	-- facilitytype
-	program_category,
+	service,
 	-- domain
 	'Health and Human Services',
 	-- facilitygroup
@@ -84,7 +84,7 @@ SELECT
 	-- facilitysubgroup
 	'Chemical Dependency',
 	-- agencyclass1
-	program_category,
+	program_type,
 	-- agencyclass2
 	service,
 	-- capacity
@@ -137,7 +137,7 @@ SELECT
 	FALSE,
 	-- groupquarters
 		(CASE
-			WHEN program_category LIKE '%Residential%' THEN TRUE
+			WHEN program_type LIKE '%Residential%' THEN TRUE
 			ELSE FALSE
 		END)
 FROM

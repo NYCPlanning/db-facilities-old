@@ -55,8 +55,8 @@ SELECT
 	NULL,
 	-- facilityname
 		(CASE
-			WHEN facility_t = 'GARAGE' THEN CONCAT(facility_n,' ',facility_t)
-			WHEN facility_t <> 'GARAGE' THEN CONCAT(facility_n)
+			WHEN type = 'GARAGE' THEN CONCAT(name,' ',type)
+			WHEN type <> 'GARAGE' THEN CONCAT(name)
 		END),
 	-- addressnumber
 	NULL,
@@ -65,7 +65,7 @@ SELECT
 	-- address
 	NULL,
 	-- borough
-	initcap(geo_boro),
+	NULL,
 	-- zipcode
 	NULL,
 	-- bbl
@@ -74,9 +74,9 @@ SELECT
 	NULL,
 	-- facilitytype
 		(CASE
-			WHEN facility_t = 'MTS' THEN 'DSNY Marine Transfer Station'
-			WHEN facility_t = 'GARAGE' THEN 'DSNY Garage'
-			WHEN facility_t = 'REPAIR' THEN 'DSNY Repair Facility'
+			WHEN type = 'MTS' THEN 'DSNY Marine Transfer Station'
+			WHEN type = 'GARAGE' THEN 'DSNY Garage'
+			WHEN type = 'REPAIR' THEN 'DSNY Repair Facility'
 		END),
 	-- domain
 	'Core Infrastructure and Transportation',
@@ -85,7 +85,7 @@ SELECT
 	-- facilitysubgroup
 	'Solid Waste Transfer and Carting',
 	-- agencyclass1
-	facility_t,
+	type,
 	-- agencyclass2
 	'NA',
 	-- capacity
