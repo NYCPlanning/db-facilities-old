@@ -50,21 +50,21 @@ SELECT
 	-- hash,
     hash,
 	-- geom
-	ST_SetSRID(ST_MakePoint(longitude, latitude),4326),
+	NULL,
 	-- idagency
-	ARRAY[abbrev],
+	ARRAY[dcalicense],
 	-- facilityname
-	name,
+	businessname,
 	-- addressnumber
-	NULL,
+	addressnum,
 	-- streetname
-	NULL,
+	streetname,
 	-- address
 	NULL,
 	-- borough
-	NULL,
+	borough,
 	-- zipcode
-	NULL,
+	zip::integer,
 	-- bbl
 	NULL,
 	-- bin
@@ -82,11 +82,11 @@ SELECT
 	-- agencyclass2
 	'NA',
 	-- capacity
-	ARRAY[capacity::text],
+	NULL,
 	-- utilization
 	NULL,
 	-- capacitytype
-	ARRAY['Parking Spaces'],
+	NULL,
 	-- utilizationrate
 	NULL,
 	-- area
@@ -132,4 +132,4 @@ SELECT
 	-- groupquarters
 	FALSE
 FROM
-	dot_facilities_publicparking
+	dot_parkingfacilities
