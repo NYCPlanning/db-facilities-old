@@ -52,15 +52,15 @@ SELECT
 	-- geom
 	NULL,
 	-- idagency
-	ARRAY[EL_Program_Number],
+	NULL,
 	-- facilityname
-	Program_Name,
+	ProgramName,
 	-- addressnumber
-	split_part(trim(both ' ' from initcap(Program_Address)), ' ', 1),
+	split_part(trim(both ' ' from initcap(ProgramAddress)), ' ', 1),
 	-- streetname
-	trim(both ' ' from substr(trim(both ' ' from initcap(Program_Address)), strpos(trim(both ' ' from initcap(Program_Address)), ' ')+1, (length(trim(both ' ' from initcap(Program_Address)))-strpos(trim(both ' ' from initcap(Program_Address)), ' ')))),
+	trim(both ' ' from substr(trim(both ' ' from initcap(ProgramAddress)), strpos(trim(both ' ' from initcap(ProgramAddress)), ' ')+1, (length(trim(both ' ' from initcap(ProgramAddress)))-strpos(trim(both ' ' from initcap(ProgramAddress)), ' ')))),
 	-- address
-	initcap(Program_Address),
+	initcap(ProgramAddress),
 	-- borough
 		(CASE
 			WHEN Boro = 'MN' THEN 'Manhattan'
@@ -76,12 +76,7 @@ SELECT
 	-- bin
 	NULL,
 	-- facilitytype
-		(CASE
-			WHEN Model_Type = 'DE' OR Model_Type = 'DU' THEN 'Dual Enrollment Day Care/Head Start'
-			WHEN Model_Type = 'CC' THEN 'Day Care'
-			WHEN Model_Type = 'HS' THEN 'Head Start'
-			ELSE 'Day Care'
-		END),
+	'Day Care',
 	-- domain
 	'Education, Child Welfare, and Youth',
 	-- facilitygroup
@@ -89,7 +84,7 @@ SELECT
 	-- facilitysubgroup
 	'Day Care',
 	-- agencyclass1
-	Model_Type,
+	NULL,
 	-- agencyclass2
 	'NA',
 	-- capacity
@@ -107,7 +102,7 @@ SELECT
 	-- operatortype
 	'Non-public',
 	-- operatorname
-	Contractor_Name,
+	ContractorName,
 	-- operator abbrev
 	'Non-public',
 	-- oversightagency
