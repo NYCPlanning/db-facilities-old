@@ -36,6 +36,7 @@ node loader.js install dcp_facilities_sfpsd
 node loader.js install dcp_pops
 node loader.js install dfta_facilities_contracts
 node loader.js install doe_facilities_busroutesgarages
+node loader.js install doe_facilities_lcgms
 node loader.js install doe_facilities_universalprek
 node loader.js install dohmh_facilities_daycare
 node loader.js install dot_parkingfacilities
