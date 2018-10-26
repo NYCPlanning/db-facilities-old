@@ -46,56 +46,41 @@ facilities (
 )
 SELECT
 	-- pgtable
-	ARRAY['dot_facilities_parkingfacilities'],
+	ARRAY['dot_facilities_publicparking'],
 	-- hash,
     hash,
 	-- geom
-	geom,
+	NULL,
 	-- idagency
-	NULL,
+	ARRAY[dcalicense],
 	-- facilityname
-	(CASE
-		WHEN facname IS NOT NULL THEN facname
-		ELSE 'Parking Lot'
-	END),
+	businessname,
 	-- addressnumber
-	NULL,
+	addressnum,
 	-- streetname
-	NULL,
+	streetname,
 	-- address
 	NULL,
 	-- borough
-	NULL,
+	borough,
 	-- zipcode
-	NULL,
+	zip::integer,
 	-- bbl
 	NULL,
 	-- bin
 	NULL,
 	-- facilitytype
-	(CASE
-		WHEN operations = 'Public Parking Garage' THEN 'Public Parking Garage'
-		ELSE 'City Agency Parking'
-	END),
+	'Public Parking',
 	-- domain
-	(CASE
-		WHEN operations = 'Public Parking Garage' THEN 'Core Infrastructure and Transportation'
-		ELSE 'Administration of Government'
-	END),
+	'Core Infrastructure and Transportation',
 	-- facilitygroup
-	(CASE
-		WHEN operations = 'Public Parking Garage' THEN 'Transportation'
-		ELSE 'City Agency Parking, Maintenance, and Storage'
-	END),
+	'Transportation',
 	-- facilitysubgroup
-	(CASE
-		WHEN operations = 'Public Parking Garage' THEN 'Parking Lots and Garages'
-		ELSE 'City Agency Parking'
-	END),
+	'Parking Lots and Garages',
 	-- agencyclass1
-	NULL,
+	'NA',
 	-- agencyclass2
-	NULL,
+	'NA',
 	-- capacity
 	NULL,
 	-- utilization
@@ -147,4 +132,4 @@ SELECT
 	-- groupquarters
 	FALSE
 FROM
-	dot_facilities_parkingfacilities
+	dot_parkingfacilities
