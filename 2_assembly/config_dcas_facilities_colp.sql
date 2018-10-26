@@ -72,16 +72,16 @@ SELECT
 	-- address
 	initcap(Address),
 	-- borough
-	initcap(boro),
+	initcap(borough),
 	-- zipcode
 	NULL,
 	-- bbl
 	(CASE
-		WHEN boro = 'MANHATTAN' THEN ARRAY[CONCAT('1',LPAD(block::text, 5, '0'),LPAD(lot::text, 4, '0'))::text]
-		WHEN boro = 'BRONX' THEN ARRAY[CONCAT('2',LPAD(block::text, 5, '0'),LPAD(lot::text, 4, '0'))::text]
-		WHEN boro = 'BROOKLYN' THEN ARRAY[CONCAT('3',LPAD(block::text, 5, '0'),LPAD(lot::text, 4, '0'))::text]
-		WHEN boro = 'QUEENS' THEN ARRAY[CONCAT('4',LPAD(block::text, 5, '0'),LPAD(lot::text, 4, '0'))::text]
-		WHEN boro = 'STATEN ISLAND' THEN ARRAY[CONCAT('5',LPAD(block::text, 5, '0'),LPAD(lot::text, 4, '0'))::text]
+		WHEN borough = 'MANHATTAN' THEN ARRAY[CONCAT('1',LPAD(block::text, 5, '0'),LPAD(lot::text, 4, '0'))::text]
+		WHEN borough = 'BRONX' THEN ARRAY[CONCAT('2',LPAD(block::text, 5, '0'),LPAD(lot::text, 4, '0'))::text]
+		WHEN borough = 'BROOKLYN' THEN ARRAY[CONCAT('3',LPAD(block::text, 5, '0'),LPAD(lot::text, 4, '0'))::text]
+		WHEN borough = 'QUEENS' THEN ARRAY[CONCAT('4',LPAD(block::text, 5, '0'),LPAD(lot::text, 4, '0'))::text]
+		WHEN borough = 'STATEN ISLAND' THEN ARRAY[CONCAT('5',LPAD(block::text, 5, '0'),LPAD(lot::text, 4, '0'))::text]
 	END),
 	-- bin
 	NULL,
