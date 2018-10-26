@@ -570,7 +570,7 @@ SELECT
 			WHEN agency='BP-SI' THEN 'NYC Borough President - Staten Island'
 			WHEN agency='BPL' THEN 'Brooklyn Public Library'
 			WHEN agency='BSA' THEN 'NYC Board of Standards and Appeals'
-			WHEN agency LIKE 'CB%' THEN REPLACE(CONCAT('NYC ', initcap(boro), ' Community Board ', RIGHT(agency,2)),' 0',' ')
+			WHEN agency LIKE 'CB%' THEN REPLACE(CONCAT('NYC ', initcap(borough), ' Community Board ', RIGHT(agency,2)),' 0',' ')
 			WHEN agency='CCRB' THEN 'NYC Civilian Complaint Review Board'
 			WHEN agency='CEO' THEN 'NYC Center for Economic Opportunity'
 			WHEN agency='CFB' THEN 'NYC Campaign Finance Board'
@@ -705,7 +705,7 @@ SELECT
 			WHEN agency='BP-SI' THEN 'NYC Borough President - Staten Island'
 			WHEN agency='BPL' THEN 'Brooklyn Public Library'
 			WHEN agency='BSA' THEN 'NYC Board of Standards and Appeals'
-			WHEN agency LIKE 'CB%' THEN REPLACE(CONCAT('NYC ', initcap(boro), ' Community Board ', RIGHT(agency,2)),' 0',' ')
+			WHEN agency LIKE 'CB%' THEN REPLACE(CONCAT('NYC ', initcap(borough), ' Community Board ', RIGHT(agency,2)),' 0',' ')
 			WHEN agency='CCRB' THEN 'NYC Civilian Complaint Review Board'
 			WHEN agency='CEO' THEN 'NYC Center for Economic Opportunity'
 			WHEN agency='CFB' THEN 'NYC Campaign Finance Board'
