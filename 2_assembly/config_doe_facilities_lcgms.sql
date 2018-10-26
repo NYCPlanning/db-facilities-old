@@ -114,7 +114,7 @@ SELECT
 	ARRAY['PS Seats', 'MS Seats', 'HS Seats'],
 	-- utilizationrate
 		(CASE
-			WHEN (Org_Enroll::numeric <> 0 AND b.Org_Target_Cap <> 0) THEN ARRAY[ROUND((Org_Enroll::numeric/b.Org_Target_Cap::numeric),3)::text]
+			WHEN (Org_Enroll::numeric <> 0 AND b.Org_Target_Cap::numeric <> 0) THEN ARRAY[ROUND((Org_Enroll::numeric/b.Org_Target_Cap::numeric),3)::text]
 		END),
 	-- area
 	NULL,
