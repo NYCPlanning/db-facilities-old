@@ -39,8 +39,7 @@ var nullGeomQuery = `SELECT DISTINCT
                     WHERE
                       addressnum IS NOT NULL
                       AND streetname IS NOT NULL
-                      AND zipcode IS NOT NULL
-                      AND processingflag IS NULL`;
+                      AND zipcode IS NOT NULL`;
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
