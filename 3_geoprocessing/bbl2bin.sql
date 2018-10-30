@@ -1,3 +1,9 @@
+DROP TABLE IF EXISTS bblbin_one2one;
+CREATE TABLE bblbin_one2one(
+bbl text, bin text, concat text, numbins text);
+\COPY bblbin_one2one FROM '/prod/db-facilities/helpers/bblbin_one2one.csv' CSV HEADER;
+
+
 UPDATE facilities AS f
     SET
         BIN = ARRAY[p.bin::text],

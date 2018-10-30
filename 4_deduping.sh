@@ -21,7 +21,7 @@ echo 'Merging and dropping Child Care and Pre-K duplicates...'
  psql -U $DBUSER -d $DBNAME -f ./4_deduping/duplicates_removeFAKE.sql
  psql -U $DBUSER -d $DBNAME -f ./4_deduping/duplicates_ccprek_dohmh.sql
  psql -U $DBUSER -d $DBNAME -f ./4_deduping/duplicates_removeFAKE.sql
- psql -U $DBUSER -d $DBNAME -f ./4_deduping/copy_backup4.sql
+ #psql -U $DBUSER -d $DBNAME -f ./4_deduping/copy_backup4.sql
 
 echo 'Merging and dropping remaining duplicates, pre-COLP...'
  psql -U $DBUSER -d $DBNAME -f ./4_deduping/duplicates_remaining.sql
@@ -32,7 +32,7 @@ echo 'Merging and dropping remaining duplicates, pre-COLP...'
  psql -U $DBUSER -d $DBNAME -f ./4_deduping/duplicates_removeFAKE.sql
 
 echo 'Creating backup before merging and dropping COLP duplicates...'
- psql -U $DBUSER -d $DBNAME -f ./4_deduping/copy_backup5.sql
+# psql -U $DBUSER -d $DBNAME -f ./4_deduping/copy_backup5.sql
 
 echo 'Merging and dropping COLP duplicates by BIN...'
  psql -U $DBUSER -d $DBNAME -f ./4_deduping/duplicates_colp_bin.sql
@@ -69,4 +69,4 @@ echo 'Deduped!'
 echo 'Cleaning up duplicates in BIN and BBl arrays...'
  psql -U $DBUSER -d $DBNAME -f ./4_deduping/removeArrayDuplicates.sql
 
- psql -U $DBUSER -d $DBNAME -f ./4_deduping/copy_backup6.sql
+ #psql -U $DBUSER -d $DBNAME -f ./4_deduping/copy_backup6.sql
