@@ -9,6 +9,6 @@ UPDATE facilities AS f
     FROM
         doitt_buildingfootprints AS p        
     WHERE
-        CONCAT(f.bin,f.bbl) = CONCAT(ARRAY[p.bin::text],ARRAY[p.bbl::text])
+        f.bin = ARRAY[p.bin::text]
         AND f.bin IS NOT NULL
         AND f.processingflag NOT LIKE '%bin2overwritegeom%'
