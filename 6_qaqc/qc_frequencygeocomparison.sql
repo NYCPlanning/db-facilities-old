@@ -39,39 +39,39 @@ WITH newfrequency(field,newcount) AS (
   WHERE geom IS NOT NULL),
 oldfrequency AS (
   SELECT 'boro' AS field, COUNT(*) AS oldcount
-  FROM facdb
+  FROM facdb_prev
   WHERE boro IS NOT NULL
   UNION
   SELECT 'borocode' AS field, COUNT(*) AS oldcount
-  FROM facdb
+  FROM facdb_prev
   WHERE borocode IS NOT NULL
   UNION
   SELECT 'zipcode' AS field, COUNT(*) AS oldcount
-  FROM facdb
+  FROM facdb_prev
   WHERE zipcode IS NOT NULL
   UNION
   SELECT 'latitude' AS field, COUNT(*) AS oldcount
-  FROM facdb
+  FROM facdb_prev
   WHERE latitude IS NOT NULL
   UNION
   SELECT 'longitude' AS field, COUNT(*) AS oldcount
-  FROM facdb
+  FROM facdb_prev
   WHERE longitude IS NOT NULL
   UNION
   SELECT 'xcoord' AS field, COUNT(*) AS oldcount
-  FROM facdb
+  FROM facdb_prev
   WHERE xcoord IS NOT NULL
   UNION
   SELECT 'ycoord' AS field, COUNT(*) AS oldcount
-  FROM facdb
+  FROM facdb_prev
   WHERE ycoord IS NOT NULL
   UNION
   SELECT 'nta' AS field, COUNT(*) AS oldcount
-  FROM facdb
+  FROM facdb_prev
   WHERE nta IS NOT NULL
   UNION
   SELECT 'geom' AS field, COUNT(*) AS oldcount
-  FROM facdb
+  FROM facdb_prev
   WHERE geom IS NOT NULL)
 SELECT a.field,
        a.newcount,
