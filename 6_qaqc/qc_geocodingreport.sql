@@ -20,7 +20,7 @@ SELECT a.pgtable,
 INTO geocodingreport
 FROM staging a
 JOIN export b
-ON a.pgtable = b.pgtable
+ON a.pgtable = ARRAY[b.pgtable]
 GROUP BY a.pgtable,
       a.initialrecords,
       a.recordswithgeom,

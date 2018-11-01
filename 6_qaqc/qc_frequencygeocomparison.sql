@@ -2,7 +2,7 @@
 -- Calculate the percentage change from the old version to the new version
 DROP TABLE IF EXISTS frequencygeocomparison;
 WITH facilitiesnew as (SELECT * FROM facilities),
-facilitiesprev as (SELECT * FROM dcp_facilieis),
+facilitiesprev as (SELECT * FROM dcp_facilities),
 newfrequency(field,newcount) AS (
   SELECT 'boro' AS field, COUNT(*) AS newcount
   FROM facilitiesnew
