@@ -3,82 +3,82 @@
 DROP TABLE IF EXISTS frequencygeocomparison;
 WITH facilitiesnew as (SELECT * FROM facilities),
 facilitiesprev as (SELECT * FROM dcp_facilities),
-newfrequency(field,newcount) AS (
-  SELECT 'boro' AS field, COUNT(*) AS newcount
+newfrequency(field,newcountnull) AS (
+  SELECT 'boro' AS field, COUNT(*) AS newcountnull
   FROM facilitiesnew
-  WHERE boro IS NOT NULL
+  WHERE boro IS NULL
   UNION
-  SELECT 'borocode' AS field, COUNT(*) AS newcount
+  SELECT 'borocode' AS field, COUNT(*) AS newcountnull
   FROM facilitiesnew
-  WHERE borocode IS NOT NULL
+  WHERE borocode IS NULL
   UNION
-  SELECT 'zipcode' AS field, COUNT(*) AS newcount
+  SELECT 'zipcode' AS field, COUNT(*) AS newcountnull
   FROM facilitiesnew
-  WHERE zipcode IS NOT NULL
+  WHERE zipcode IS NULL
   UNION
-  SELECT 'latitude' AS field, COUNT(*) AS newcount
+  SELECT 'latitude' AS field, COUNT(*) AS newcountnull
   FROM facilitiesnew
-  WHERE latitude IS NOT NULL
+  WHERE latitude IS NULL
   UNION
-  SELECT 'longitude' AS field, COUNT(*) AS newcount
+  SELECT 'longitude' AS field, COUNT(*) AS newcountnull
   FROM facilitiesnew
-  WHERE longitude IS NOT NULL
+  WHERE longitude IS NULL
   UNION
-  SELECT 'xcoord' AS field, COUNT(*) AS newcount
+  SELECT 'xcoord' AS field, COUNT(*) AS newcountnull
   FROM facilitiesnew
-  WHERE xcoord IS NOT NULL
+  WHERE xcoord IS NULL
   UNION
-  SELECT 'ycoord' AS field, COUNT(*) AS newcount
+  SELECT 'ycoord' AS field, COUNT(*) AS newcountnull
   FROM facilitiesnew
-  WHERE ycoord IS NOT NULL
+  WHERE ycoord IS NULL
   UNION
-  SELECT 'nta' AS field, COUNT(*) AS newcount
+  SELECT 'nta' AS field, COUNT(*) AS newcountnull
   FROM facilitiesnew
-  WHERE nta IS NOT NULL
+  WHERE nta IS NULL
   UNION
-  SELECT 'geom' AS field, COUNT(*) AS newcount
+  SELECT 'geom' AS field, COUNT(*) AS newcountnull
   FROM facilitiesnew
-  WHERE geom IS NOT NULL),
+  WHERE geom IS NULL),
 oldfrequency AS (
-  SELECT 'boro' AS field, COUNT(*) AS oldcount
+  SELECT 'boro' AS field, COUNT(*) AS oldcountnull
   FROM facilitiesprev
-  WHERE boro IS NOT NULL
+  WHERE boro IS NULL
   UNION
-  SELECT 'borocode' AS field, COUNT(*) AS oldcount
+  SELECT 'borocode' AS field, COUNT(*) AS oldcountnull
   FROM facilitiesprev
-  WHERE borocode IS NOT NULL
+  WHERE borocode IS NULL
   UNION
-  SELECT 'zipcode' AS field, COUNT(*) AS oldcount
+  SELECT 'zipcode' AS field, COUNT(*) AS oldcountnull
   FROM facilitiesprev
-  WHERE zipcode IS NOT NULL
+  WHERE zipcode IS NULL
   UNION
-  SELECT 'latitude' AS field, COUNT(*) AS oldcount
+  SELECT 'latitude' AS field, COUNT(*) AS oldcountnull
   FROM facilitiesprev
-  WHERE latitude IS NOT NULL
+  WHERE latitude IS NULL
   UNION
-  SELECT 'longitude' AS field, COUNT(*) AS oldcount
+  SELECT 'longitude' AS field, COUNT(*) AS oldcountnull
   FROM facilitiesprev
-  WHERE longitude IS NOT NULL
+  WHERE longitude IS NULL
   UNION
-  SELECT 'xcoord' AS field, COUNT(*) AS oldcount
+  SELECT 'xcoord' AS field, COUNT(*) AS oldcountnull
   FROM facilitiesprev
-  WHERE xcoord IS NOT NULL
+  WHERE xcoord IS NULL
   UNION
-  SELECT 'ycoord' AS field, COUNT(*) AS oldcount
+  SELECT 'ycoord' AS field, COUNT(*) AS oldcountnull
   FROM facilitiesprev
-  WHERE ycoord IS NOT NULL
+  WHERE ycoord IS NULL
   UNION
-  SELECT 'nta' AS field, COUNT(*) AS oldcount
+  SELECT 'nta' AS field, COUNT(*) AS oldcountnull
   FROM facilitiesprev
-  WHERE nta IS NOT NULL
+  WHERE nta IS NULL
   UNION
-  SELECT 'geom' AS field, COUNT(*) AS oldcount
+  SELECT 'geom' AS field, COUNT(*) AS oldcountnull
   FROM facilitiesprev
-  WHERE geom IS NOT NULL)
+  WHERE geom IS NULL)
 SELECT a.field,
-       a.newcount,
-       b.oldcount,
-       100.0 * (a.newcount - b.oldcount) / a.newcount AS percentage_change
+       a.newcountnull,
+       b.oldcountnull,
+       100.0 * (a.newcountnull - b.oldcountnull) / NULLIF(a.newcountnull, 0) AS percentage_change
 INTO frequencygeocomparison
 FROM newfrequency a
 JOIN oldfrequency b
