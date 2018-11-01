@@ -85,5 +85,5 @@ JOIN oldfrequency b
 ON a.field = b.field
 ORDER BY a.field;
 
-copy (SELECT * FROM frequencygeocomparison) TO '/prod/db-facilities/output/qc_frequencygeocomparison.csv' DELIMITER ',' CSV HEADER;
+\copy (SELECT * FROM frequencygeocomparison) TO '/prod/db-facilities/output/qc_frequencygeocomparison.csv' DELIMITER ',' CSV HEADER;
 DROP TABLE IF EXISTS frequencygeocomparison;

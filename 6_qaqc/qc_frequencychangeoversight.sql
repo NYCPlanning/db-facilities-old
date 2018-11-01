@@ -23,5 +23,5 @@ SELECT a.overabbrev AS oversightagency,
       ORDER BY a.overabbrev;
 SELECT * FROM frequencychangesoversight;
 
-copy (SELECT * FROM frequencychangesoversight) TO '/prod/db-facilities/output/qc_frequencychangesoversight.csv' DELIMITER ',' CSV HEADER;
+\copy (SELECT * FROM frequencychangesoversight) TO '/prod/db-facilities/output/qc_frequencychangesoversight.csv' DELIMITER ',' CSV HEADER;
 DROP TABLE IF EXISTS frequencychangesoversight;

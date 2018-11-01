@@ -25,7 +25,7 @@ GROUP BY a.pgtable,
       a.initialrecords,
       a.recordswithgeom,
       b.exportwithgeom
-ORDER BY a.pgtable
+ORDER BY a.pgtable;
 
-copy (SELECT * FROM geocodingreport) TO '/prod/db-facilities/output/qc_geocodingreport.csv' DELIMITER ',' CSV HEADER;
+\copy (SELECT * FROM geocodingreport) TO '/prod/db-facilities/output/qc_geocodingreport.csv' DELIMITER ',' CSV HEADER;
 DROP TABLE IF EXISTS geocodingreport;

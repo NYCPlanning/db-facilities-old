@@ -28,5 +28,5 @@ SELECT a.facdomain AS facility_domain,
   	ON a.facsubgrp = b.facsubgrp
   	GROUP BY a.facdomain, a.facgroup, a.facsubgrp, a.newcount,b.oldcount
   	ORDER BY a.facdomain, a.facgroup, a.facsubgrp;
-copy (SELECT * FROM frequencychangesubgroup) TO '/prod/db-facilities/output/qc_frequencychangesubgroup.csv' DELIMITER ',' CSV HEADER;
+\copy (SELECT * FROM frequencychangesubgroup) TO '/prod/db-facilities/output/qc_frequencychangesubgroup.csv' DELIMITER ',' CSV HEADER;
 DROP TABLE IF EXISTS frequencychangesubgroup;

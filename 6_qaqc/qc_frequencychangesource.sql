@@ -23,5 +23,5 @@ ON a.dataname = b.dataname
 GROUP BY a.dataname, a.newcount, b.oldcount
 ORDER BY a.dataname;
 
-copy (SELECT * FROM frequencychangesource) TO '/prod/db-facilities/output/qc_frequencychangesource.csv' DELIMITER ',' CSV HEADER;
+\copy (SELECT * FROM frequencychangesource) TO '/prod/db-facilities/output/qc_frequencychangesource.csv' DELIMITER ',' CSV HEADER;
 DROP TABLE IF EXISTS frequencychangesource;

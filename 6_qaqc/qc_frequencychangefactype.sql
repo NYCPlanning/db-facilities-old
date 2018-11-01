@@ -21,7 +21,7 @@ FROM newfrequency a
 JOIN oldfrequency b
 ON a.factype = b.factype
 GROUP BY a.factype, a.newcount, b.oldcount
-ORDER BY a.factype
+ORDER BY a.factype;
 
-copy (SELECT * FROM frequencychangesfactype) TO '/prod/db-facilities/output/qc_frequencychangefactype.csv' DELIMITER ',' CSV HEADER;
+\copy (SELECT * FROM frequencychangesfactype) TO '/prod/db-facilities/output/qc_frequencychangefactype.csv' DELIMITER ',' CSV HEADER;
 DROP TABLE IF EXISTS frequencychangesfactype;
