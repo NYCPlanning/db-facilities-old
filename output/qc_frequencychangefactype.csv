@@ -1,245 +1,244 @@
 factype,newcount,oldcount,percentage_change
 2 Year Independent,12,12,0.00000000000000000000
-2 Year Proprietary,10,10,0.00000000000000000000
-4 Year Proprietary,11,11,0.00000000000000000000
+2 Year Proprietary,13,10,23.0769230769230769
 4-Year Independent,62,62,0.00000000000000000000
-Academic High School,18,18,0.00000000000000000000
+4 Year Proprietary,11,11,0.00000000000000000000
+Academic High School,33,18,45.4545454545454545
 Academic Libraries,6,6,0.00000000000000000000
 Accessory Play Area,16,16,0.00000000000000000000
 "Adolescent Literacy Reading & Writing,NDA Programs,Family Literacy",4,4,0.00000000000000000000
-Adult Day Health Care Program - Offsite,23,23,0.00000000000000000000
+Adult Day Health Care Program - Offsite,21,23,-9.5238095238095238
 "Adult Literacy Reading & Writing,NDA Programs,English Language Program,ESOL,Family Literacy",37,37,0.00000000000000000000
 "Adult Literacy Reading & Writing,NDA Programs,English Language Program,ESOL,Family Literacy,Adult Basic Education,ABE/GED",5,5,0.00000000000000000000
 "Adult Literacy Reading & Writing,NDA Programs,English Language Program,Family Literacy,Adult Basic Education,ABE/GED",13,13,0.00000000000000000000
 Adult Protective Services,6,6,0.00000000000000000000
-Agency Executive Office,29,29,0.00000000000000000000
-Agency Office,103,103,0.00000000000000000000
+Agency Executive Office,78,29,62.8205128205128205
+Agency Office,228,103,54.8245614035087719
 Aim,3,3,0.00000000000000000000
-Airport,8,8,0.00000000000000000000
+Airport,9,8,11.1111111111111111
 Alternative High School,2,2,0.00000000000000000000
 Alternative To Detention,7,7,0.00000000000000000000
-Ambulance Station,30,30,0.00000000000000000000
-Ambulatory Health Facility,33,33,0.00000000000000000000
+Ambulance Station,32,30,6.2500000000000000
+Ambulatory Health Facility,32,33,-3.1250000000000000
 Amtrak Maintenance and Other Facility,2,2,0.00000000000000000000
 Amtrak Yard,2,2,0.00000000000000000000
-Antenna,3,3,0.00000000000000000000
+Antenna,4,3,25.0000000000000000
 Appellate Indigent Criminal Defense,4,4,0.00000000000000000000
-Approved Private Schools For Students with Disabilities,10,10,0.00000000000000000000
+Approved Private Schools For Students with Disabilities,9,10,-11.1111111111111111
 Arches: A Transformative Mentoring Intervention,11,11,0.00000000000000000000
 Architecture/Design,24,24,0.00000000000000000000
 Asphalt Plant,2,2,0.00000000000000000000
 Beach,18,18,0.00000000000000000000
 Beacon After-School Programs,60,60,0.00000000000000000000
 "Beacon Satellite After-School Programs,Beacon,NYCHA Community Center",20,20,0.00000000000000000000
-Borough Office,24,24,0.00000000000000000000
+Borough Office,60,24,60.0000000000000000
 Botanical,5,5,0.00000000000000000000
 Botanical Garden,5,5,0.00000000000000000000
-Branch Library,14,14,0.00000000000000000000
-Bridge Bent - Field Operations,1,1,0.00000000000000000000
+Branch Library,19,14,26.3157894736842105
 Bridge House,35,35,0.00000000000000000000
-Bridge Paint,1,1,0.00000000000000000000
-Bridge Repair,13,13,0.00000000000000000000
-Bridge Repair & Paint,2,2,0.00000000000000000000
-Bridges & Tunnels Ops,2,2,0.00000000000000000000
-Bridges/PM,1,1,0.00000000000000000000
-Bronx Roadway Repair and Maintenance Arterials,1,1,0.00000000000000000000
 Buildings/Institutions,22,22,0.00000000000000000000
 Bus Station,1,1,0.00000000000000000000
-CUNY - 4 Year College,10,10,0.00000000000000000000
-CUNY - Community College,8,8,0.00000000000000000000
-CUNY - Graduate Center,3,3,0.00000000000000000000
-Camp - All Age,556,556,0.00000000000000000000
-Camp - Preschool Age,1,1,0.00000000000000000000
-Camp - School Age,23,23,0.00000000000000000000
+Camp - All Age,530,556,-4.9056603773584906
+Camp - School Age,36,23,36.1111111111111111
 Care Work Experience Program,2,2,0.00000000000000000000
 Case Management,26,26,0.00000000000000000000
 Cemetery,21,21,0.00000000000000000000
-Certified Home Health Agency,36,36,0.00000000000000000000
-Charter School,243,243,0.00000000000000000000
+Certified Home Health Agency,34,36,-5.8823529411764706
+Charter School,353,243,31.1614730878186969
 Child Support Offices,2,2,0.00000000000000000000
-City Agency Parking,5,5,0.00000000000000000000
 City-State Park,20,20,0.00000000000000000000
-College/University,3,3,0.00000000000000000000
-Combined Maintenance/Storage Facility,56,56,0.00000000000000000000
-Commercial Garage,1201,1201,0.00000000000000000000
-Commercial Garage and Parking Lot,108,108,0.00000000000000000000
-Commercial Market,4,4,0.00000000000000000000
-Commercial Parking Lot,376,376,0.00000000000000000000
+College/University,7,3,57.1428571428571429
+Combined Maintenance/Storage Facility,72,56,22.2222222222222222
+Commercial Garage,1852,1201,35.1511879049676026
+Commercial Garage and Parking Lot,189,108,42.8571428571428571
+Commercial Market,8,4,50.0000000000000000
+Commercial Parking Lot,673,376,44.1307578008915305
 Community Based Programs,5,5,0.00000000000000000000
 Community Center,8,8,0.00000000000000000000
-Community College,13,13,0.00000000000000000000
-Community Garden,92,92,0.00000000000000000000
-Community Park,150,150,0.00000000000000000000
+Community College,12,13,-8.3333333333333333
+Community Garden,154,92,40.2597402597402597
+Community Park,148,150,-1.3513513513513514
 Community Partnership Program,6,6,0.00000000000000000000
-Community Schools - DOE,324,324,0.00000000000000000000
-Composting,8,8,0.00000000000000000000
-Construction Mitigation and Coordination / Bridge Inspection,1,1,0.00000000000000000000
-Construction and Demolition Processing,49,49,0.00000000000000000000
+Community Schools - DOE,326,324,0.61349693251533742331
+Composting,7,8,-14.2857142857142857
+Construction and Demolition Processing,51,49,3.9215686274509804
 Cornerstone Community Center Program,94,94,0.00000000000000000000
 Correctional Facility,3,3,0.00000000000000000000
-Courthouse,150,150,0.00000000000000000000
+Courthouse,153,150,1.9607843137254902
 Crafts,1,1,0.00000000000000000000
-Crisis Chemical Dependency,30,30,0.00000000000000000000
-Crisis Services Mental Health,1,1,0.00000000000000000000
+Crisis Services Mental Health,2,1,50.0000000000000000
 Crisis Shelter Runaway & Homeless Youth,2,2,0.00000000000000000000
 Cruise Terminal,3,3,0.00000000000000000000
 Cultural Facility,16,16,0.00000000000000000000
-Custodial,41,41,0.00000000000000000000
-DOE Universal Pre-K,676,676,0.00000000000000000000
-DOE Universal Pre-K - Charter,16,16,0.00000000000000000000
-DOE Universal Pre-Kindergarten,166,166,0.00000000000000000000
-DOT Headquarters,1,1,0.00000000000000000000
-DSNY Garage,71,71,0.00000000000000000000
-DSNY Marine Transfer Station,6,6,0.00000000000000000000
-DSNY Repair Facility,8,8,0.00000000000000000000
+CUNY - 4 Year College,11,10,9.0909090909090909
+CUNY - Community College,8,8,0.00000000000000000000
+CUNY - Graduate Center,3,3,0.00000000000000000000
+Custodial,44,41,6.8181818181818182
 Dance,181,181,0.00000000000000000000
-Day Care,168,168,0.00000000000000000000
-Day Care Center,4,4,0.00000000000000000000
+Day Care,346,168,51.4450867052023121
+Day Care Center,8,4,50.0000000000000000
 Detention Center,19,19,0.00000000000000000000
 Detention Facility,1,1,0.00000000000000000000
 Diagnostic and Treatment Center,219,219,0.00000000000000000000
-Diagnostic and Treatment Center Extension Clinic,288,288,0.00000000000000000000
-District Pre-K Center School - Public,24,24,0.00000000000000000000
+Diagnostic and Treatment Center Extension Clinic,298,288,3.3557046979865772
+District Pre-K Center School - Public,21,24,-14.2857142857142857
+DOE Universal Pre-K,676,676,0.00000000000000000000
+DOE Universal Pre-K - Charter,16,16,0.00000000000000000000
+DOE Universal Pre-Kindergarten,166,166,0.00000000000000000000
 "Domestic Violence Program Immigration Services,Immigrant Support Services",10,10,0.00000000000000000000
 Drop In,4,4,0.00000000000000000000
 Drop-In Center Runaway & Homeless Youth,2,2,0.00000000000000000000
-Dual Enrollment Day Care/Head Start,95,95,0.00000000000000000000
-Early Childhood Center,12,12,0.00000000000000000000
+DSNY Marine Transfer Station,7,6,14.2857142857142857
+Early Childhood Center,17,12,29.4117647058823529
 Early Childhood School - Public,18,18,0.00000000000000000000
-Early Education Program,1192,1192,0.00000000000000000000
-Early Learn NYC: New York City's Early Care and Education Services,252,252,0.00000000000000000000
-Educational Skills Center,4,4,0.00000000000000000000
-Elder Abuse Prevention,9,9,0.00000000000000000000
-Elementary School,97,97,0.00000000000000000000
-Elementary School - Charter,31,31,0.00000000000000000000
-Elementary School - Non-public,1923,1923,0.00000000000000000000
-Elementary School - Public,738,738,0.00000000000000000000
+Early Education Program,1190,1192,-0.16806722689075630252
+Early Learn NYC: New York City's Early Care and Education Services,263,252,4.1825095057034221
+Educational Skills Center,5,4,20.0000000000000000
+Elder Abuse Prevention,8,9,-12.5000000000000000
+Elementary School,118,97,17.7966101694915254
+Elementary School - Charter,37,31,16.2162162162162162
+Elementary School - Non-public,646,1923,-197.6780185758513932
+Elementary School - Public,717,738,-2.9288702928870293
 "Elementary School - Public, Special Education",7,7,0.00000000000000000000
 Emergency Intervention Services,33,33,0.00000000000000000000
-Emergency Medical Station,3,3,0.00000000000000000000
+Emergency Medical Station,4,3,25.0000000000000000
 Emergency Mental Health,52,52,0.00000000000000000000
 Employment Works,6,6,0.00000000000000000000
 Every Child Has an Opportunity to Excel and Succeed,5,5,0.00000000000000000000
-Facilities Maintenance,7,7,0.00000000000000000000
-Facilities Maintenance Shop,1,1,0.00000000000000000000
+Facilities Maintenance,6,7,-16.6666666666666667
 Family Assessment Program,6,6,0.00000000000000000000
 Family Justice Center,15,15,0.00000000000000000000
 "Family Literacy Reading & Writing,NDA Programs,Family Literacy",14,14,0.00000000000000000000
 "Fatherhood Initiative Family Support,NDA Programs",9,9,0.00000000000000000000
 "Federal Defenders of New York, Inc.",2,2,0.00000000000000000000
-Feeding Site,1314,1314,0.00000000000000000000
+Feeding Site,1229,1314,-6.9161920260374288
 Ferry Landing,14,14,0.00000000000000000000
-Ferry Maintenance,1,1,0.00000000000000000000
-Ferry Ops,1,1,0.00000000000000000000
-Ferry Terminal,15,15,0.00000000000000000000
-Field Office,2,2,0.00000000000000000000
-Field Office-Public,12,12,0.00000000000000000000
-Field Office-Staff,9,9,0.00000000000000000000
+Ferry Terminal,19,15,21.0526315789473684
+Field Office,5,2,60.0000000000000000
+Field Office-Public,57,12,78.9473684210526316
+Field Office-Staff,17,9,47.0588235294117647
 Film/Video/Audio,88,88,0.00000000000000000000
-Firehouse,216,216,0.00000000000000000000
+Firehouse,219,216,1.3698630136986301
 Flagship Park,16,16,0.00000000000000000000
 Folk Arts,29,29,0.00000000000000000000
 Food Pantry,606,606,0.00000000000000000000
 Freshwater Wetland,1,1,0.00000000000000000000
-GED-Alternative High School Equivalency Prep Programs,95,95,0.00000000000000000000
-Garage,43,43,0.00000000000000000000
-Garden,344,344,0.00000000000000000000
-General Preventive Care,43,43,0.00000000000000000000
+Garage,46,43,6.5217391304347826
+Garden,336,344,-2.3809523809523810
+GED-Alternative High School Equivalency Prep Programs,121,95,21.4876033057851240
+General Preventive Care,45,43,4.4444444444444444
 Golf Course,4,4,0.00000000000000000000
-Graduate Programs Only,18,18,0.00000000000000000000
-Group Day Care - Infants/Toddlers,181,181,0.00000000000000000000
-Group Day Care - Preschool,1118,1118,0.00000000000000000000
-Head Start,55,55,0.00000000000000000000
-Health Facility,10,10,0.00000000000000000000
+Graduate Programs Only,21,18,14.2857142857142857
+Group Day Care - Infants/Toddlers,253,181,28.4584980237154150
+Group Day Care - Preschool,1308,1118,14.5259938837920489
+Health Facility,12,10,16.6666666666666667
 "Health Stat Initiative Family Support,NDA Programs",6,6,0.00000000000000000000
 "Healthy Families Family Support,NDA Programs",41,41,0.00000000000000000000
-Heliport,12,12,0.00000000000000000000
-High School - Non-public,372,372,0.00000000000000000000
-High school - Charter,15,15,0.00000000000000000000
-High school - Public,404,404,0.00000000000000000000
-"High school - Public, Special Education",31,31,0.00000000000000000000
+Heliport,14,12,14.2857142857142857
 "High-School Aged Youth After-School Programs,NDA Programs,Youth Educational Support",41,41,0.00000000000000000000
-Historic House Park,13,13,0.00000000000000000000
-Historical Societies,46,46,0.00000000000000000000
+High school - Charter,15,15,0.00000000000000000000
+High School - Non-public,130,372,-186.1538461538461538
+High school - Public,399,404,-1.2531328320802005
+"High school - Public, Special Education",32,31,3.1250000000000000
+Historical Societies,45,46,-2.2222222222222222
+Historic House Park,12,13,-8.3333333333333333
 Home Delivered Meals,20,20,0.00000000000000000000
 Homemaker Services,1,1,0.00000000000000000000
 Hospice,7,7,0.00000000000000000000
 Hospital,73,73,0.00000000000000000000
-Hospital Extension Clinic,255,255,0.00000000000000000000
+Hospital Extension Clinic,235,255,-8.5106382978723404
 "Housing Family Support,NDA Programs",27,27,0.00000000000000000000
 Humanities,21,21,0.00000000000000000000
-IMPACT,1,1,0.00000000000000000000
 "Immigrant NDA Programs,Immigration Services,Immigrant Support Services",9,9,0.00000000000000000000
 "Immigrant/Refugee Assistance Immigration Services,Immigrant Support Services",12,12,0.00000000000000000000
-In Use-Residential Structure,2,2,0.00000000000000000000
-In Use-Tenanted,1,1,0.00000000000000000000
-"In-School Youth Employment (ISY) After-School Programs,Jobs & Internships,Youth Employment",47,47,0.00000000000000000000
+IMPACT,1,1,0.00000000000000000000
 Indoor Maintenance/Storage Facility,3,3,0.00000000000000000000
 Indoor Pool,1,1,0.00000000000000000000
-Indoor Storage (Warehouse),19,19,0.00000000000000000000
-Indoor Storage - Bulk Material,7,7,0.00000000000000000000
-Indoor Storage - Equipment,16,16,0.00000000000000000000
-Indoor Storage - Printed Material/Supplies,1,1,0.00000000000000000000
+Indoor Storage - Bulk Material,8,7,12.5000000000000000
+Indoor Storage - Equipment,17,16,5.8823529411764706
+Indoor Storage - Printed Material/Supplies,3,1,66.6666666666666667
 Indoor Storage - Supplies,5,5,0.00000000000000000000
+Indoor Storage (Warehouse),44,19,56.8181818181818182
 Innovative Senior Centers,16,16,0.00000000000000000000
-Inpatient Chemical Dependency,12,12,0.00000000000000000000
 Inpatient Mental Health,46,46,0.00000000000000000000
+"In-School Youth Employment (ISY) After-School Programs,Jobs & Internships,Youth Employment",47,47,0.00000000000000000000
 Intensive Family Preventive Services,5,5,0.00000000000000000000
 Interim Placement Facilities For Students with Disabilities,7,7,0.00000000000000000000
-Intermediate School,27,27,0.00000000000000000000
+Intermediate School,29,27,6.8965517241379310
+In Use-Residential Structure,2,2,0.00000000000000000000
+In Use-Tenanted,1,1,0.00000000000000000000
 Jail,4,4,0.00000000000000000000
 Job Centers,4,4,0.00000000000000000000
-Jointly Operated Playground,267,267,0.00000000000000000000
+Jointly Operated Playground,263,267,-1.5209125475285171
 Junior High-Intermediate-Middle School - Charter,10,10,0.00000000000000000000
-Junior High-Intermediate-Middle School - Public,259,259,0.00000000000000000000
+Junior High-Intermediate-Middle School - Public,257,259,-0.77821011673151750973
 Juvenile Reception Center,1,1,0.00000000000000000000
-K-12 all grades School - Charter,38,38,0.00000000000000000000
+K-12 all grades School - Charter,37,38,-2.7027027027027027
 K-12 all grades School - Public,5,5,0.00000000000000000000
-"K-12 all grades School - Public, Special Education",165,165,0.00000000000000000000
-K-8 School - Charter,47,47,0.00000000000000000000
-K-8 School - Public,174,174,0.00000000000000000000
-"K-8 School - Public, Special Education",63,63,0.00000000000000000000
-LIRR Maintenance and Other Facility,7,7,0.00000000000000000000
-LIRR Yard,21,21,0.00000000000000000000
+"K-12 all grades School - Public, Special Education",167,165,1.1976047904191617
+K-8 School - Charter,46,47,-2.1739130434782609
+K-8 School - Public,173,174,-0.57803468208092485549
+"K-8 School - Public, Special Education",64,63,1.5625000000000000
 Landfill Gas Recovery,1,1,0.00000000000000000000
 "Legal Assistance Program Immigration Services,Immigrant Support Services",12,12,0.00000000000000000000
 "Legal Services - Immigrant Youth Immigration Services,Immigrant Support Services",4,4,0.00000000000000000000
 Legal Services Initiatives,187,187,0.00000000000000000000
-Licensed Private Schools,374,374,0.00000000000000000000
+Licensed Private Schools,404,374,7.4257425742574257
+LIRR Maintenance and Other Facility,7,7,0.00000000000000000000
+LIRR Yard,21,21,0.00000000000000000000
 Literature,44,44,0.00000000000000000000
-Long Term Home Health Care Program,13,13,0.00000000000000000000
 Long-Term Agreement,181,181,0.00000000000000000000
+Long Term Home Health Care Program,10,13,-30.0000000000000000
 Lot,5,5,0.00000000000000000000
-MTA Bus Depot,28,28,0.00000000000000000000
-MTA Paratransit Vehicle Depot,15,15,0.00000000000000000000
-MTS Shed/Trailer,1,1,0.00000000000000000000
-Maintenance,17,17,0.00000000000000000000
+Maintenance,22,17,22.7272727272727273
 Mall,34,34,0.00000000000000000000
-Mall/Triangle/Highway Strip/Park Strip,65,65,0.00000000000000000000
+Mall/Triangle/Highway Strip/Park Strip,63,65,-3.1746031746031746
 Managed Sites,15,15,0.00000000000000000000
-Manned Transportation Facility,1,1,0.00000000000000000000
-Marina,4,4,0.00000000000000000000
+Marina,6,4,33.3333333333333333
 Material Processing Facility,2,2,0.00000000000000000000
 Mediation Services,7,7,0.00000000000000000000
 Medicaid Offices,3,3,0.00000000000000000000
 Mental Health Evaluation Services,9,9,0.00000000000000000000
 Metro-North Maintenance and Other Facility,1,1,0.00000000000000000000
 Metro-North Yard,3,3,0.00000000000000000000
-Middle School - Non-public,96,96,0.00000000000000000000
+Middle School - Non-public,28,96,-242.8571428571428571
 "Middle School Youth After-School Programs,NDA Programs,Adolescent Literacy,Youth Educational Support",33,33,0.00000000000000000000
 Mobile Diagnostic and Treatment Center Extension Clinic,13,13,0.00000000000000000000
 Mobile Hospital Extension Clinic,5,5,0.00000000000000000000
 Mobile Vehicle Crushers,1,1,0.00000000000000000000
-"Multi-Discipl, Perf & Non-Perf",215,215,0.00000000000000000000
+MTA Bus Depot,28,28,0.00000000000000000000
+MTA Paratransit Vehicle Depot,15,15,0.00000000000000000000
 "Multi-Discipline, Non-Perform",89,89,0.00000000000000000000
 "Multi-Discipline, Performing",171,171,0.00000000000000000000
-Municipal Parking - Indoor,1,1,0.00000000000000000000
-Municipal Parking - Outdoor,14,14,0.00000000000000000000
+"Multi-Discipl, Perf & Non-Perf",215,215,0.00000000000000000000
+Municipal Parking - Indoor,7,1,85.7142857142857143
+Municipal Parking - Outdoor,29,14,51.7241379310344828
 Museum,82,82,0.00000000000000000000
-Museum/Gallery,16,16,0.00000000000000000000
+Museum/Gallery,18,16,11.1111111111111111
 Music,266,266,0.00000000000000000000
+National Historic Site,1,1,0.00000000000000000000
+National Memorial,3,3,0.00000000000000000000
+National Monument,4,4,0.00000000000000000000
+Natural Area/Wetland/Wildlife Refuge,195,200,-2.5641025641025641
+Natural Resource Area,3,4,-33.3333333333333333
+Nature Area,84,84,0.00000000000000000000
 "NDA Immigrants Immigration Services,Immigrant Support Services,NDA Programs,NDA Immigrants",9,9,0.00000000000000000000
 "NDA Immigrats Immigration Services,Immigrant Support Services,NDA Programs,NDA Immigrants",1,1,0.00000000000000000000
+Neighborhood Development Area Program,172,170,1.1627906976744186
+Neighborhood Park,279,284,-1.7921146953405018
+Neighborhood Senior Centers,224,220,1.7857142857142857
+Neighborhood Sitting Area,2,2,0.00000000000000000000
+New Media,12,12,0.00000000000000000000
+New York Southern Bankruptcy Court,1,1,0.00000000000000000000
+New York Southern District Court,1,1,0.00000000000000000000
+New York Southern Pretrial Services,1,1,0.00000000000000000000
+New York Southern Probation Office,1,1,0.00000000000000000000
+Next STEPS,13,13,0.00000000000000000000
+No Use,292,243,16.7808219178082192
+No Use-Non Residential Structure,63,61,3.1746031746031746
+No Use-Vacant Land,1263,1381,-9.3428345209817894
+No Use-Waterfront (Any Agency),101,98,2.9702970297029703
+Nurse Family Partnership,5,5,0.00000000000000000000
 NYC Business Solutions Center,7,7,0.00000000000000000000
 NYC Business Solutions Industrial and Transportation,9,9,0.00000000000000000000
 NYC Cool Roofs Program,1,1,0.00000000000000000000
@@ -259,8 +258,8 @@ NYCHA Community Center - Occuped,1,1,0.00000000000000000000
 NYCHA Community Center - Occupied,1,1,0.00000000000000000000
 NYCHA Community Center - Other - ATTAIN LAB,6,6,0.00000000000000000000
 NYCHA Community Center - Other - Battered Women center,1,1,0.00000000000000000000
-NYCHA Community Center - Other - Case Management / Homeless Outreach,1,1,0.00000000000000000000
 NYCHA Community Center - Other - Case Management /Child Welfare Program,1,1,0.00000000000000000000
+NYCHA Community Center - Other - Case Management / Homeless Outreach,1,1,0.00000000000000000000
 NYCHA Community Center - Other - Case Management /Referral Services,1,1,0.00000000000000000000
 NYCHA Community Center - Other - Community Center Annex,1,1,0.00000000000000000000
 NYCHA Community Center - Other - Computer Lab,1,1,0.00000000000000000000
@@ -280,11 +279,11 @@ NYCHA Community Center - Other - Office Space,5,5,0.00000000000000000000
 NYCHA Community Center - Other - Religious Center,1,1,0.00000000000000000000
 NYCHA Community Center - Other - Social Adult Day Care,1,1,0.00000000000000000000
 NYCHA Community Center - Other - Sports - Boxing Program,1,1,0.00000000000000000000
+NYCHA Community Center - Other- Sports - Boxing Program,1,1,0.00000000000000000000
 NYCHA Community Center - Other - Sports Program,1,1,0.00000000000000000000
 NYCHA Community Center - Other - Storage,1,1,0.00000000000000000000
 NYCHA Community Center - Other - Training Center,1,1,0.00000000000000000000
 NYCHA Community Center - Other - Urban Farm,1,1,0.00000000000000000000
-NYCHA Community Center - Other- Sports - Boxing Program,1,1,0.00000000000000000000
 NYCHA Community Center - Performing Arts - Center,1,1,0.00000000000000000000
 NYCHA Community Center - Performing Arts - Youth Chorus,1,1,0.00000000000000000000
 NYCHA Community Center - Plasterer's Shop,2,2,0.00000000000000000000
@@ -296,223 +295,176 @@ NYCHA Community Center - Storage,3,3,0.00000000000000000000
 NYCHA Community Center - Unknown,1,1,0.00000000000000000000
 NYCHA Community Center - Vacant,60,60,0.00000000000000000000
 NYCHA Community Center - Vacant- health clinic,7,7,0.00000000000000000000
-NYCHA Police Service,16,16,0.00000000000000000000
+NYCHA Police Service,14,16,-14.2857142857142857
 NYCT Maintenance and Other Facility,26,26,0.00000000000000000000
 NYCT Subway Yard,40,40,0.00000000000000000000
-National Historic Site,1,1,0.00000000000000000000
-National Memorial,3,3,0.00000000000000000000
-National Monument,4,4,0.00000000000000000000
-Natural Area/Wetland/Wildlife Refuge,200,200,0.00000000000000000000
-Natural Resource Area,4,4,0.00000000000000000000
-Nature Area,84,84,0.00000000000000000000
-Neighborhood Development Area Program,170,170,0.00000000000000000000
-Neighborhood Park,284,284,0.00000000000000000000
-Neighborhood Senior Centers,220,220,0.00000000000000000000
-Neighborhood Sitting Area,2,2,0.00000000000000000000
-New Media,12,12,0.00000000000000000000
-New York Southern Bankruptcy Court,1,1,0.00000000000000000000
-New York Southern District Court,1,1,0.00000000000000000000
-New York Southern Pretrial Services,1,1,0.00000000000000000000
-New York Southern Probation Office,1,1,0.00000000000000000000
-Next STEPS,13,13,0.00000000000000000000
-No Use,243,243,0.00000000000000000000
-No Use-Non Residential Structure,61,61,0.00000000000000000000
-No Use-Residential Structure,1,1,0.00000000000000000000
-No Use-Vacant Land,1381,1381,0.00000000000000000000
-No Use-Waterfront (Any Agency),98,98,0.00000000000000000000
-Nurse Family Partnership,5,5,0.00000000000000000000
-Office,666,666,0.00000000000000000000
-Open Space,20,20,0.00000000000000000000
-Opioid Treatment Program Chemical Dependency,69,69,0.00000000000000000000
+Office,31,666,-2048.3870967741935484
+Open Space,19,20,-5.2631578947368421
 Other,24,24,0.00000000000000000000
-Out of School Time After-School Programs,394,394,0.00000000000000000000
-"Out of School Time After-School Programs,Summer Program,Summer Camp",201,201,0.00000000000000000000
-"Out-of-School Youth Employment (OSY) After-School Programs,Jobs & Internships,Youth Employment",15,15,0.00000000000000000000
-Outdoor Maintenance/Storage Facility,3,3,0.00000000000000000000
-Outdoor Parking,47,47,0.00000000000000000000
-Outdoor Parking - Agency Vehicles,36,36,0.00000000000000000000
+Outdoor Maintenance/Storage Facility,4,3,25.0000000000000000
+Outdoor Parking,57,47,17.5438596491228070
+Outdoor Parking - Agency Vehicles,37,36,2.7027027027027027
 Outdoor Parking - Clients,17,17,0.00000000000000000000
 Outdoor Parking - Employees,55,55,0.00000000000000000000
-Outdoor Parking - Tow Pound,6,6,0.00000000000000000000
+Outdoor Parking - Tow Pound,7,6,14.2857142857142857
 Outdoor Pool,4,4,0.00000000000000000000
-Outdoor Storage,15,15,0.00000000000000000000
+Outdoor Storage,18,15,16.6666666666666667
 Outdoor Storage - Agency Vehicles,2,2,0.00000000000000000000
 Outdoor Storage - Bulk Material,12,12,0.00000000000000000000
 Outdoor Storage - Equipment,12,12,0.00000000000000000000
-Outpatient Chemical Dependency,170,170,0.00000000000000000000
-Outpatient Mental Health,356,356,0.00000000000000000000
+Out of School Time After-School Programs,394,394,0.00000000000000000000
+"Out of School Time After-School Programs,Summer Program,Summer Camp",201,201,0.00000000000000000000
+"Out-of-School Youth Employment (OSY) After-School Programs,Jobs & Internships,Youth Employment",15,15,0.00000000000000000000
+Outpatient Mental Health,369,356,3.5230352303523035
 PANYNJ Bus Terminal,2,2,0.00000000000000000000
 Parent Pledge Project,5,5,0.00000000000000000000
-Park,788,788,0.00000000000000000000
-Parking /Signals/Streetlights,1,1,0.00000000000000000000
-Parking Meters / Signals / Sidewalk and Inspection Management,1,1,0.00000000000000000000
+Park,637,788,-23.7048665620094192
 Parkway,43,43,0.00000000000000000000
 "Pathway to Excellence, Achievement and Knowledge",2,2,0.00000000000000000000
 Pedestrian Plaza,69,69,0.00000000000000000000
 Photography,10,10,0.00000000000000000000
-Pier - Maritime Use,5,5,0.00000000000000000000
+Pier - Maritime Use,7,5,28.5714285714285714
 Pier - No Use,5,5,0.00000000000000000000
-Playground,730,730,0.00000000000000000000
+Playground,741,730,1.4844804318488529
 Playground/Sports Area,390,390,0.00000000000000000000
-Playing Field,86,86,0.00000000000000000000
-Police Station,76,76,0.00000000000000000000
-Pollution Control Facility,16,16,0.00000000000000000000
+Playing Field,85,86,-1.1764705882352941
+Police Station,77,76,1.2987012987012987
+Pollution Control Facility,15,16,-6.6666666666666667
 Port or Marine Terminal,80,80,0.00000000000000000000
-Pre-School Evaluation Providers For  Students with Disabilities,7,7,0.00000000000000000000
-Pre-School For Students With Disabilities,202,202,0.00000000000000000000
-Private Museums And Sites,2,2,0.00000000000000000000
-Privately Owned Public Space,351,351,0.00000000000000000000
+Pre-School Evaluation Providers For  Students with Disabilities,8,7,12.5000000000000000
+Pre-School For Students With Disabilities,197,202,-2.5380710659898477
+Privately Owned Public Space,354,351,0.84745762711864406780
+Private Museums And Sites,3,2,33.3333333333333333
 Programs for People with Disabilities,158,158,0.00000000000000000000
 Public Libraries,235,235,0.00000000000000000000
-Public Museums And Sites,24,24,0.00000000000000000000
+Public Museums And Sites,28,24,14.2857142857142857
 Public Park and Ride Lot,6,6,0.00000000000000000000
-Public Parking Garage,40,40,0.00000000000000000000
-Public Place/Plaza,8,8,0.00000000000000000000
+Public Place/Plaza,9,8,11.1111111111111111
 Public Safety Facility,34,34,0.00000000000000000000
-Public School,1,1,0.00000000000000000000
-Pumping Station,65,65,0.00000000000000000000
-Rail Facility,3,3,0.00000000000000000000
+Public School,2,1,50.0000000000000000
+Pumping Station,64,65,-1.5625000000000000
+Rail Facility,2,3,-50.0000000000000000
 Rail Line,8,8,0.00000000000000000000
-Recreation Center/Gymnasium,3,3,0.00000000000000000000
-Recreation Field/Courts,72,72,0.00000000000000000000
 Recreational Facility,3,3,0.00000000000000000000
-Recyclables Handling and Recovery,32,32,0.00000000000000000000
-Regional Park,7,7,0.00000000000000000000
-Registered Business Schools,152,152,0.00000000000000000000
+Recreation Center/Gymnasium,3,3,0.00000000000000000000
+Recreation Field/Courts,70,72,-2.8571428571428571
+Recyclables Handling and Recovery,24,32,-33.3333333333333333
+Regional Park,10,7,30.0000000000000000
+Registered Business Schools,148,152,-2.7027027027027027
 Registered ESL Schools,49,49,0.00000000000000000000
 Regulated Medical Waste,4,4,0.00000000000000000000
-Residential Chemical Dependency,51,51,0.00000000000000000000
 Residential Facilities For Students with Disabilities Covered Under The NY Justice Center,2,2,0.00000000000000000000
 Residential Facility For Children,1,1,0.00000000000000000000
-Residential Health Care,170,170,0.00000000000000000000
+Residential Health Care,169,170,-0.59171597633136094675
 Residential Health Care Facility,5,5,0.00000000000000000000
 Residential Treatment Facility,1,1,0.00000000000000000000
 Respite,6,6,0.00000000000000000000
-Retail,1,1,0.00000000000000000000
-Roadway Repair and Maintenance,3,3,0.00000000000000000000
-Roadway Repair and Maintenance - MN Street Maintenance,1,1,0.00000000000000000000
-Roadway Repair and Maintenance / Sidewalk and Inspection Management,1,1,0.00000000000000000000
-Roadway Repair and Maintenance /Facilities Maint / Radio Repair,1,1,0.00000000000000000000
-Roadway Repair and Maintenance Depot/Fleet/Sidewalk and Inspection Management,1,1,0.00000000000000000000
-Roadway Repair and Maintenance/Arterials,4,4,0.00000000000000000000
-Roadway Repair and Maintenance/Fleet M&R,6,6,0.00000000000000000000
-Roadway Repair and Maintenance/Street Maint,1,1,0.00000000000000000000
-SNAP Centers,2,2,0.00000000000000000000
-SUNY - Community Colleges,1,1,0.00000000000000000000
-SUNY - Health Science Centers,1,1,0.00000000000000000000
-SUNY - Specialized Colleges,2,2,0.00000000000000000000
-Safety City,5,5,0.00000000000000000000
-Sanitation Section Station,13,13,0.00000000000000000000
-Satellite Senior Centers,39,39,0.00000000000000000000
-School,3,3,0.00000000000000000000
-School - Non-public,29,29,0.00000000000000000000
-School Based Child Care - Age Unspecified,3,3,0.00000000000000000000
-School Based Child Care - Preschool,345,345,0.00000000000000000000
+Retail,11,1,90.9090909090909091
+Sanitation Section Station,15,13,13.3333333333333333
+Satellite Senior Centers,44,39,11.3636363636363636
+School,5,3,40.0000000000000000
+School Based Child Care - Age Unspecified,1,3,-200.0000000000000000
+School Based Child Care - Preschool,433,345,20.3233256351039261
 School Based Diagnostic and Treatment Center,1,1,0.00000000000000000000
-School Based Diagnostic and Treatment Center Extension Clinic,90,90,0.00000000000000000000
-School Based Health Clinic,4,4,0.00000000000000000000
-School Based Hospital Extension Clinic,105,105,0.00000000000000000000
+School Based Diagnostic and Treatment Center Extension Clinic,98,90,8.1632653061224490
+School Based Health Clinic,5,4,20.0000000000000000
+School Based Hospital Extension Clinic,110,105,4.5454545454545455
 School Bus Depot,105,105,0.00000000000000000000
+School - Non-public,59,29,50.8474576271186441
 Science,4,4,0.00000000000000000000
-Scrap Metal Processing,62,62,0.00000000000000000000
+Scrap Metal Processing,98,62,36.7346938775510204
 Screening Mental Health,7,7,0.00000000000000000000
 Seaplane Base,4,4,0.00000000000000000000
-Second Circuit Court of Appeals Clerk,1,1,0.00000000000000000000
-Second Circuit Librarian,2,2,0.00000000000000000000
 Secondary School - Charter,8,8,0.00000000000000000000
 Secondary School - Public,85,85,0.00000000000000000000
-"Secondary School - Public, Special Education",15,15,0.00000000000000000000
-Secure Detention Facility,3,3,0.00000000000000000000
-Security,10,10,0.00000000000000000000
-Senior Center,1,1,0.00000000000000000000
+"Secondary School - Public, Special Education",13,15,-15.3846153846153846
+Second Circuit Court of Appeals Clerk,1,1,0.00000000000000000000
+Second Circuit Librarian,2,2,0.00000000000000000000
+Secure Detention Facility,4,3,25.0000000000000000
+Security,11,10,9.0909090909090909
+Senior Center,3,1,66.6666666666666667
 Senior College,9,9,0.00000000000000000000
-Senior Services,88,88,0.00000000000000000000
+Senior Services,89,88,1.1235955056179775
 "Seniors NDA Programs,Senior Programs,Older Adult Program",41,41,0.00000000000000000000
 "Services - Immigrant Families Immigration Services,Immigrant Support Services",10,10,0.00000000000000000000
 Short & Long Term Agreements,11,11,0.00000000000000000000
-Short-Term Agreement,82,82,0.00000000000000000000
-Sidewalk and Inspection Management,2,2,0.00000000000000000000
-Sidewalk and Inspection Management/Bridges,1,1,0.00000000000000000000
-Sidewalk and Inspection Management/Roadway Repair and Maintenance,1,1,0.00000000000000000000
-Sign Shop,2,2,0.00000000000000000000
-Sign Shop / Parking Maint/ Signals,1,1,0.00000000000000000000
-Signs,1,1,0.00000000000000000000
-Sitting Area,13,13,0.00000000000000000000
-Sludge De-Watering Facility,4,4,0.00000000000000000000
+Short-Term Agreement,85,82,3.5294117647058824
+Sitting Area,12,13,-8.3333333333333333
+Sludge De-Watering Facility,5,4,20.0000000000000000
+SNAP Centers,2,2,0.00000000000000000000
 Solid Waste Incinerator,1,1,0.00000000000000000000
 Solid Waste Landfill,5,5,0.00000000000000000000
 Solid Waste Processing,1,1,0.00000000000000000000
-Solid Waste Transfer Station,7,7,0.00000000000000000000
+Solid Waste Transfer Station,6,7,-16.6666666666666667
 Soup Kitchen,155,155,0.00000000000000000000
 Special Ed Training Resource Centers,1,1,0.00000000000000000000
-Special Education School,24,24,0.00000000000000000000
+Special Education School,28,24,14.2857142857142857
+Specialized Teen Preventive Services,11,11,0.00000000000000000000
 Special Libraries,20,20,0.00000000000000000000
 Special Recreational Facility - Indoor,9,9,0.00000000000000000000
-Special Recreational Facility - Outdoor,7,7,0.00000000000000000000
-Specialized Teen Preventive Services,11,11,0.00000000000000000000
-St. George Ferry Terminal,1,1,0.00000000000000000000
+Special Recreational Facility - Outdoor,9,7,22.2222222222222222
 Stadium,4,4,0.00000000000000000000
 State Forest,4,4,0.00000000000000000000
-State Historic Place,798,798,0.00000000000000000000
+State Historic Place,796,798,-0.25125628140703517588
 State Park,4,4,0.00000000000000000000
 State Park Preserve,1,1,0.00000000000000000000
 Stormwater Pumping Station,1,1,0.00000000000000000000
-Streetlighting,1,1,0.00000000000000000000
-Strip,69,69,0.00000000000000000000
-Summer Only Feeding Site,1627,1627,0.00000000000000000000
+Strip,68,69,-1.4705882352941176
+Summer Only Feeding Site,1714,1627,5.0758459743290548
 Summer School For Handicapped,4,4,0.00000000000000000000
 "Summer Youth Employment  Jobs & Internships,Youth Employment",44,44,0.00000000000000000000
 "Summer Youth Employment Jobs & Internships,Youth Employment",1,1,0.00000000000000000000
-Support Mental Health,359,359,0.00000000000000000000
+SUNY - Community Colleges,1,1,0.00000000000000000000
+SUNY - Health Science Centers,1,1,0.00000000000000000000
+SUNY - Specialized Colleges,2,2,0.00000000000000000000
 Supportive Housing,145,145,0.00000000000000000000
+Support Mental Health,353,359,-1.6997167138810198
 Teen Action Program After-School Programs,50,50,0.00000000000000000000
 Teen Rapp,3,3,0.00000000000000000000
-Tele/Comp Facility,1,1,0.00000000000000000000
+Tele/Comp Facility,4,1,75.0000000000000000
 "Tennis Court, Basketball Court, Etc",7,7,0.00000000000000000000
-Testing Facility,4,4,0.00000000000000000000
+Testing Facility,6,4,33.3333333333333333
 Testing Laboratory,1,1,0.00000000000000000000
 Theater,323,323,0.00000000000000000000
 Tidal Wetland,13,13,0.00000000000000000000
-Tow Truck Company,584,584,0.00000000000000000000
-Trade Waste Carter Site,1289,1289,0.00000000000000000000
-Traffic Admin / Parking/Traffic Management Center/Sidewalk and Inspection Management,1,1,0.00000000000000000000
+Tow Truck Company,764,584,23.5602094240837696
+Trade Waste Carter Site,219,1289,-488.5844748858447489
 Trailway,3,3,0.00000000000000000000
-Training Facility,5,5,0.00000000000000000000
-Training Facility - Indoor,1,1,0.00000000000000000000
+Training Facility,7,5,28.5714285714285714
+Training Facility - Indoor,2,1,50.0000000000000000
 Training Facility - Outdoor,3,3,0.00000000000000000000
-Transfer Station,32,32,0.00000000000000000000
-Transit Facility,1,1,0.00000000000000000000
-Transit Substation,36,36,0.00000000000000000000
-Transit Yard,25,25,0.00000000000000000000
+Transfer Station,35,32,8.5714285714285714
+Transit Facility,2,1,50.0000000000000000
 Transitional Independent Living Green Chimneys Runaway & Homeless Youth,1,1,0.00000000000000000000
-Transportation Facility,68,68,0.00000000000000000000
+Transit Substation,35,36,-2.8571428571428571
+Transit Yard,25,25,0.00000000000000000000
+Transportation Facility,71,68,4.2253521126760563
 Trial-Level Indigent Defense Representation,4,4,0.00000000000000000000
 Triangle/Plaza,338,338,0.00000000000000000000
-USDA Community Eligibility Option,228,228,0.00000000000000000000
-Undeveloped,53,53,0.00000000000000000000
+Undeveloped,60,53,11.6666666666666667
 Undeveloped Open Space,41,41,0.00000000000000000000
 "Ungraded School - Charter, Special Education",1,1,0.00000000000000000000
 Unique Area,4,4,0.00000000000000000000
 United States Court of International Trade,1,1,0.00000000000000000000
 United States Court of International Trade Librarian,1,1,0.00000000000000000000
+USDA Community Eligibility Option,228,228,0.00000000000000000000
 Used Cooking Oil Processing,3,3,0.00000000000000000000
-Vehicle Dismantling Facility,86,86,0.00000000000000000000
-Vehicle Maintenance,10,10,0.00000000000000000000
+Vehicle Dismantling Facility,71,86,-21.1267605633802817
+Vehicle Maintenance,14,10,28.5714285714285714
 Visual Arts,124,124,0.00000000000000000000
 Vocational High School,2,2,0.00000000000000000000
 Waste Oil Storage,4,4,0.00000000000000000000
 Waste Tire Storage,1,1,0.00000000000000000000
 Wastewater Pumping Station,44,44,0.00000000000000000000
 Wastewater Treatment Plant,14,14,0.00000000000000000000
+Waterfront Facility,18,17,5.5555555555555556
+Waterfront Property,37,39,-5.4054054054054054
+Waterfront Transportation Facility,4,3,25.0000000000000000
 Water Pollution Control Plant,8,8,0.00000000000000000000
-Waterfront Facility,17,17,0.00000000000000000000
-Waterfront Property,39,39,0.00000000000000000000
-Waterfront Transportation Facility,3,3,0.00000000000000000000
-Whitehall Ferry Terminal,1,1,0.00000000000000000000
-Wholesale Food Market,1,1,0.00000000000000000000
+Wholesale Food Market,6,1,83.3333333333333333
 Workforce1 Career Center,23,23,0.00000000000000000000
 Workforce1 Sector-Based Career Centers,1,1,0.00000000000000000000
 Young Adult Internship Program Jobs & Internships,8,8,0.00000000000000000000
-Youth Program,740,740,0.00000000000000000000
+Youth Program,749,740,1.2016021361815754
 Zoo,3,3,0.00000000000000000000
 Zoo/Aquarium,1,1,0.00000000000000000000
