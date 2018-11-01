@@ -1,107 +1,107 @@
-dataname,newcount,oldcount,percentage_change
-Amtrak: Selected Facilities and Program Sites Database,4,4,0.00000000000000000000
-BBPC: Selected Facilities and Program Sites Database,1,1,0.00000000000000000000
-FBNYC: FBNYC Food Pantry Soup Kitchen List 8-5-16,735,737,-0.27210884353741496599
-FBNYC: FBNYC Food Pantry Soup Kitchen List 8-5-16;NYCDCAS: City Owned and Leased Properties,26,24,7.6923076923076923
-FBOP: Our Locations,3,3,0.00000000000000000000
-HRPT: Selected Facilities and Program Sites Database,1,1,0.00000000000000000000
-MTA: Selected Facilities and Program Sites Database,97,100,-3.0927835051546392
-MTA: Selected Facilities and Program Sites Database;NYCDCAS: City Owned and Leased Properties,47,44,6.3829787234042553
-NYCACS: Contractor Data,40,13,67.5000000000000000
-NYCACS: Contractor Data;NYCDCAS: City Owned and Leased Properties,108,119,-10.1851851851851852
-NYCACS: Contractor Data;NYCDOHMH: DOHMH Childcare Center Inspections,30,10,66.6666666666666667
-NYCACS: Contractor Data;NYCHHS: HHS Accelerator - Financials Contracts,134,137,-2.2388059701492537
-NYCACS: Contractor Data;NYCHHS: HHS Accelerator - Financials Contracts;NYCHHS: HHS Accelerator - Selected Proposals,27,30,-11.1111111111111111
-NYCACS: Contractor Data;NYCHHS: HHS Accelerator - Selected Proposals,7,9,-28.5714285714285714
-NYCBIC: Approved licensees and registrants for trade waste,217,1273,-486.6359447004608295
-NYCBIC: Approved licensees and registrants for trade waste;NYCDCAS: City Owned and Leased Properties,2,15,-650.0000000000000000
-NYCDCA: Legally Operating Businesses,3442,2229,35.2411388727484021
-NYCDCA: Legally Operating Businesses;NYCDCAS: City Owned and Leased Properties,129,89,31.0077519379844961
-NYCDCA: Legally Operating Businesses;NYCDCAS: City Owned and Leased Properties;NYSDEC: Solid Waste Management Facilities,1,1,0.00000000000000000000
-NYCDCA: Legally Operating Businesses;NYSDEC: Solid Waste Management Facilities,4,12,-200.0000000000000000
-NYCDCAS: City Owned and Leased Properties,6563,6856,-4.4644217583422215
-NYCDCAS: City Owned and Leased Properties;NYCDCLA: DCLA Cultural Organizations,172,169,1.7441860465116279
-NYCDCAS: City Owned and Leased Properties;NYCDCLA: DCLA Cultural Organizations;NYSED: Listings - Active Institutions with GIS coordinates and OITS Accuracy Code,3,3,0.00000000000000000000
-NYCDCAS: City Owned and Leased Properties;NYCDCP: Privately Owned Public Spaces,23,19,17.3913043478260870
-NYCDCAS: City Owned and Leased Properties;NYCDEP: Selected Facilities and Program Sites Database,12,13,-8.3333333333333333
-NYCDCAS: City Owned and Leased Properties;NYCDFTA: DFTA Contracts,62,64,-3.2258064516129032
-NYCDCAS: City Owned and Leased Properties;NYCDFTA: DFTA Contracts;NYCHHS: HHS Accelerator - Selected Proposals,9,9,0.00000000000000000000
-NYCDCAS: City Owned and Leased Properties;NYCDHS: DHS CARES Building Listing,3,3,0.00000000000000000000
-NYCDCAS: City Owned and Leased Properties;NYCDOC: Correction Facilities Locations,17,17,0.00000000000000000000
-NYCDCAS: City Owned and Leased Properties;NYCDOE: LCGMS - DOE School Information Report,2003,2036,-1.6475287069395906
-NYCDCAS: City Owned and Leased Properties;NYCDOE: Universal Pre-K (UPK) School Locations,748,779,-4.1443850267379679
-NYCDCAS: City Owned and Leased Properties;NYCDOHMH: DOHMH Childcare Center Inspections,398,421,-5.7788944723618090
-NYCDCAS: City Owned and Leased Properties;NYCDOT: Facilities Data - Bridge Houses,2,2,0.00000000000000000000
-NYCDCAS: City Owned and Leased Properties;NYCDOT: Plaza Program,7,5,28.5714285714285714
-NYCDCAS: City Owned and Leased Properties;NYCDPR: Parks Properties,1457,1446,0.75497597803706245710
-NYCDCAS: City Owned and Leased Properties;NYCDSNY: DSNY_select_facs_07262916,82,69,15.8536585365853659
-NYCDCAS: City Owned and Leased Properties;NYCDYCD: DYCD After School Program Locations,692,694,-0.28901734104046242775
-NYCDCAS: City Owned and Leased Properties;NYCHA: NYCHA Facilities and Service Centers,64,68,-6.2500000000000000
-NYCDCAS: City Owned and Leased Properties;NYCHA: NYCHA PSA (Police Service Areas),2,2,0.00000000000000000000
-NYCDCAS: City Owned and Leased Properties;NYCHHS: HHS Accelerator - Financials Contracts,264,265,-0.37878787878787878788
-NYCDCAS: City Owned and Leased Properties;NYCHHS: HHS Accelerator - Financials Contracts;NYCHHS: HHS Accelerator - Selected Proposals,24,25,-4.1666666666666667
-NYCDCAS: City Owned and Leased Properties;NYCHHS: HHS Accelerator - Selected Proposals,708,707,0.14124293785310734463
-NYCDCAS: City Owned and Leased Properties;NYCHHS: HHS Accelerator - Selected Proposals;NYCSBS: Center & Service Locations,1,1,0.00000000000000000000
-NYCDCAS: City Owned and Leased Properties;NYCHHS: HHS Accelerator - Selected Proposals;NYSDOH: Health Facility General Information,5,6,-20.0000000000000000
-NYCDCAS: City Owned and Leased Properties;NYCHRA/DSS: HRA Locations,10,10,0.00000000000000000000
-NYCDCAS: City Owned and Leased Properties;NYCOMB: District Resource Statement,211,213,-0.94786729857819905213
-NYCDCAS: City Owned and Leased Properties;NYCOURTS: The Courts,125,119,4.8000000000000000
-NYCDCAS: City Owned and Leased Properties;NYCSBS: Center & Service Locations,11,13,-18.1818181818181818
-"NYCDCAS: City Owned and Leased Properties;NYSDEC: Lands - Under the Care, Custody, and Control of DEC",1,2,-100.0000000000000000
-NYCDCAS: City Owned and Leased Properties;NYSDEC: Solid Waste Management Facilities,16,10,37.5000000000000000
-NYCDCAS: City Owned and Leased Properties;NYSDOH: Health Facility General Information,271,252,7.0110701107011070
-NYCDCAS: City Owned and Leased Properties;NYSED: Listings - Active Institutions with GIS coordinates and OITS Accuracy Code,1281,1178,8.0405932864949258
-NYCDCAS: City Owned and Leased Properties;NYSOASAS: NYS OASAS-Certified Chemical Dependence Treatment Programs Located in NYC,45,48,-6.6666666666666667
-NYCDCAS: City Owned and Leased Properties;NYSOMH: Local Mental Health Programs,221,230,-4.0723981900452489
-NYCDCAS: City Owned and Leased Properties;NYSOPRHP: National Register of Historic Places,146,145,0.68493150684931506849
-NYCDCAS: City Owned and Leased Properties;NYSOPWDD: Directory of Developmental Disabilities Service Provider Agencies,20,20,0.00000000000000000000
-NYCDCAS: City Owned and Leased Properties;RIOC: Selected Facilities and Program Sites Database,11,11,0.00000000000000000000
-NYCDCAS: City Owned and Leased Properties;USCOURTS: Court Locator Results,5,5,0.00000000000000000000
-NYCDCAS: City Owned and Leased Properties;USDOT: Airports,5,5,0.00000000000000000000
-NYCDCAS: City Owned and Leased Properties;USDOT: U.S. Army Corps of Engineers Ports,60,57,5.0000000000000000
-NYCDCAS: City Owned and Leased Properties;USNPS: Administrative Boundaries of National Park System Units,2,2,0.00000000000000000000
-NYCDCLA: DCLA Cultural Organizations,1532,1531,0.06527415143603133159
-NYCDCLA: DCLA Cultural Organizations;NYSED: Listings - Active Institutions with GIS coordinates and OITS Accuracy Code,3,7,-133.3333333333333333
-NYCDCP: Privately Owned Public Spaces,331,332,-0.30211480362537764350
-NYCDEP: Selected Facilities and Program Sites Database,2,1,50.0000000000000000
-NYCDFTA: DFTA Contracts,310,299,3.5483870967741935
-NYCDFTA: DFTA Contracts;NYCHHS: HHS Accelerator - Selected Proposals,12,11,8.3333333333333333
-NYCDHS: DHS CARES Building Listing,146,146,0.00000000000000000000
-NYCDOC: Correction Facilities Locations,1,1,0.00000000000000000000
-NYCDOE: LCGMS - DOE School Information Report,109,102,6.4220183486238532
-NYCDOE: Routes,105,101,3.8095238095238095
-NYCDOE: Universal Pre-K (UPK) School Locations,831,382,54.0312876052948255
-NYCDOE: Universal Pre-K (UPK) School Locations;NYCDOHMH: DOHMH Childcare Center Inspections,303,666,-119.8019801980198020
-NYCDOHMH: DOHMH Childcare Center Inspections,2163,1806,16.5048543689320388
-NYCDOT: Facilities Data - Bridge Houses,33,33,0.00000000000000000000
-NYCDOT: Plaza Program,62,64,-3.2258064516129032
-NYCDPR: Parks Properties,547,562,-2.7422303473491773
-NYCDSNY: DSNY_select_facs_07262916,13,16,-23.0769230769230769
-NYCDYCD: DYCD After School Program Locations,491,489,0.40733197556008146640
-NYCHA: NYCHA Facilities and Service Centers,457,452,1.0940919037199125
-NYCHA: NYCHA PSA (Police Service Areas),12,14,-16.6666666666666667
-NYCHHS: HHS Accelerator - Financials Contracts,261,249,4.5977011494252874
-NYCHHS: HHS Accelerator - Financials Contracts;NYCHHS: HHS Accelerator - Selected Proposals,46,43,6.5217391304347826
-NYCHHS: HHS Accelerator - Selected Proposals,928,915,1.4008620689655172
-NYCHRA/DSS: HRA Locations,1,1,0.00000000000000000000
-NYCOMB: District Resource Statement,24,22,8.3333333333333333
-NYCOURTS: The Courts,13,19,-46.1538461538461538
-NYCSBS: Center & Service Locations,29,27,6.8965517241379310
-"NYSDEC: Lands - Under the Care, Custody, and Control of DEC",27,27,0.00000000000000000000
-NYSDEC: Solid Waste Management Facilities,187,212,-13.3689839572192513
-NYSDOCCS: Facility Listing,3,3,0.00000000000000000000
-NYSDOH: Health Facility General Information,1003,1026,-2.2931206380857428
-NYSDOT: Selected Facilities and Program Sites Database,3,3,0.00000000000000000000
-NYSED: Listings - Active Institutions with GIS coordinates and OITS Accuracy Code,4346,5792,-33.2719742291762540
-NYSOASAS: NYS OASAS-Certified Chemical Dependence Treatment Programs Located in NYC,283,284,-0.35335689045936395760
-NYSOCFS: Facilities,1,1,0.00000000000000000000
-NYSOMH: Local Mental Health Programs,599,583,2.6711185308848080
-NYSOPRHP: National Register of Historic Places,650,653,-0.46153846153846153846
-NYSOPRHP: State Park Facility Points,5,5,0.00000000000000000000
-NYSOPWDD: Directory of Developmental Disabilities Service Provider Agencies,138,138,0.00000000000000000000
-PANYNJ: Selected Facilities and Program Sites Database,2,2,0.00000000000000000000
-TGI: Selected Facilities and Program Sites Database,7,7,0.00000000000000000000
-USCOURTS: Court Locator Results,6,6,0.00000000000000000000
-USDOT: Airports,13,13,0.00000000000000000000
-USDOT: U.S. Army Corps of Engineers Ports,37,40,-8.1081081081081081
-USNPS: Administrative Boundaries of National Park System Units,6,6,0.00000000000000000000
+pgtable,newcount,oldcount,percentage_change
+acs_facilities_daycareheadstart,40,13,67.5000000000000000
+acs_facilities_daycareheadstart;dcas_facilities_colp,108,119,-10.1851851851851852
+acs_facilities_daycareheadstart;dohmh_facilities_daycare,30,10,66.6666666666666667
+acs_facilities_daycareheadstart;hhs_facilities_financialscontracts,134,137,-2.2388059701492537
+acs_facilities_daycareheadstart;hhs_facilities_financialscontracts;hhs_facilities_proposals,27,30,-11.1111111111111111
+acs_facilities_daycareheadstart;hhs_facilities_proposals,7,9,-28.5714285714285714
+amtrak_facilities_sfpsd,4,4,0.00000000000000000000
+bbpc_facilities_sfpsd,1,1,0.00000000000000000000
+bic_facilities_tradewaste,217,1273,-486.6359447004608295
+bic_facilities_tradewaste;dcas_facilities_colp,2,15,-650.0000000000000000
+dca_facilities_operatingbusinesses,3442,2229,35.2411388727484021
+dca_facilities_operatingbusinesses;dcas_facilities_colp,129,89,31.0077519379844961
+dca_facilities_operatingbusinesses;dcas_facilities_colp;nysdec_facilities_solidwaste,1,1,0.00000000000000000000
+dca_facilities_operatingbusinesses;nysdec_facilities_solidwaste,4,12,-200.0000000000000000
+dcas_facilities_colp,6563,6856,-4.4644217583422215
+dcas_facilities_colp;dcla_facilities_culturalinstitutions,172,169,1.7441860465116279
+dcas_facilities_colp;dcla_facilities_culturalinstitutions;nysed_facilities_activeinstitutions,3,3,0.00000000000000000000
+dcas_facilities_colp;dcp_pops,23,19,17.3913043478260870
+dcas_facilities_colp;dfta_facilities_contracts,62,64,-3.2258064516129032
+dcas_facilities_colp;dfta_facilities_contracts;hhs_facilities_proposals,9,9,0.00000000000000000000
+dcas_facilities_colp;dhs_facilities_shelters,3,3,0.00000000000000000000
+dcas_facilities_colp;doe_facilities_lcgms,2003,2036,-1.6475287069395906
+dcas_facilities_colp;doe_facilities_universalprek,748,779,-4.1443850267379679
+dcas_facilities_colp;dohmh_facilities_daycare,398,421,-5.7788944723618090
+dcas_facilities_colp;dot_facilities_bridgehouses,2,2,0.00000000000000000000
+dcas_facilities_colp;dot_facilities_pedplazas,7,5,28.5714285714285714
+dcas_facilities_colp;dpr_parksproperties,1457,1446,0.75497597803706245710
+dcas_facilities_colp;dsny_facilities_mtsgaragemaintenance,82,69,15.8536585365853659
+dcas_facilities_colp;dycd_facilities_afterschoolprograms,692,694,-0.28901734104046242775
+dcas_facilities_colp;foodbankny_facilities_foodbanks,26,24,7.6923076923076923
+dcas_facilities_colp;hhs_facilities_financialscontracts,264,265,-0.37878787878787878788
+dcas_facilities_colp;hhs_facilities_financialscontracts;hhs_facilities_proposals,24,25,-4.1666666666666667
+dcas_facilities_colp;hhs_facilities_proposals,708,707,0.14124293785310734463
+dcas_facilities_colp;hhs_facilities_proposals;nysdoh_facilities_healthfacilities,5,6,-20.0000000000000000
+dcas_facilities_colp;hhs_facilities_proposals;sbs_facilities_workforce1,1,1,0.00000000000000000000
+dcas_facilities_colp;hra_facilities_centers,10,10,0.00000000000000000000
+dcas_facilities_colp;mta_facilities_sfpsd,47,44,6.3829787234042553
+dcas_facilities_colp;nycdep_facilities_sfpsd,12,13,-8.3333333333333333
+dcas_facilities_colp;nycdoc_facilities_corrections,17,17,0.00000000000000000000
+dcas_facilities_colp;nycha_facilities_communitycenters,64,68,-6.2500000000000000
+dcas_facilities_colp;nycha_facilities_policeservice,2,2,0.00000000000000000000
+dcas_facilities_colp;nycourts_facilities_courts,125,119,4.8000000000000000
+dcas_facilities_colp;nysdec_facilities_lands,1,2,-100.0000000000000000
+dcas_facilities_colp;nysdec_facilities_solidwaste,16,10,37.5000000000000000
+dcas_facilities_colp;nysdoh_facilities_healthfacilities,271,252,7.0110701107011070
+dcas_facilities_colp;nysed_facilities_activeinstitutions,1281,1178,8.0405932864949258
+dcas_facilities_colp;nysoasas_facilities_programs,45,48,-6.6666666666666667
+dcas_facilities_colp;nysomh_facilities_mentalhealth,221,230,-4.0723981900452489
+dcas_facilities_colp;nysopwdd_facilities_providers,20,20,0.00000000000000000000
+dcas_facilities_colp;nysparks_facilities_historicplaces,146,145,0.68493150684931506849
+dcas_facilities_colp;omb_facilities_libraryvisits,211,213,-0.94786729857819905213
+dcas_facilities_colp;rioc_facilities_sfpsd,11,11,0.00000000000000000000
+dcas_facilities_colp;sbs_facilities_workforce1,11,13,-18.1818181818181818
+dcas_facilities_colp;uscourts_facilities_courts,5,5,0.00000000000000000000
+dcas_facilities_colp;usdot_facilities_airports,5,5,0.00000000000000000000
+dcas_facilities_colp;usdot_facilities_ports,60,57,5.0000000000000000
+dcas_facilities_colp;usnps_facilities_parks,2,2,0.00000000000000000000
+dcla_facilities_culturalinstitutions,1532,1531,0.06527415143603133159
+dcla_facilities_culturalinstitutions;nysed_facilities_activeinstitutions,3,7,-133.3333333333333333
+dcp_pops,331,332,-0.30211480362537764350
+dfta_facilities_contracts,310,299,3.5483870967741935
+dfta_facilities_contracts;hhs_facilities_proposals,12,11,8.3333333333333333
+dhs_facilities_shelters,146,146,0.00000000000000000000
+doe_facilities_busroutesgarages,105,101,3.8095238095238095
+doe_facilities_lcgms,109,102,6.4220183486238532
+doe_facilities_universalprek,831,382,54.0312876052948255
+doe_facilities_universalprek;dohmh_facilities_daycare,303,666,-119.8019801980198020
+dohmh_facilities_daycare,2163,1806,16.5048543689320388
+dot_facilities_bridgehouses,33,33,0.00000000000000000000
+dot_facilities_pedplazas,62,64,-3.2258064516129032
+dpr_parksproperties,547,562,-2.7422303473491773
+dsny_facilities_mtsgaragemaintenance,13,16,-23.0769230769230769
+dycd_facilities_afterschoolprograms,491,489,0.40733197556008146640
+fbop_facilities_corrections,3,3,0.00000000000000000000
+foodbankny_facilities_foodbanks,735,737,-0.27210884353741496599
+hhs_facilities_financialscontracts,261,249,4.5977011494252874
+hhs_facilities_financialscontracts;hhs_facilities_proposals,46,43,6.5217391304347826
+hhs_facilities_proposals,928,915,1.4008620689655172
+hra_facilities_centers,1,1,0.00000000000000000000
+hrpt_facilities_sfpsd,1,1,0.00000000000000000000
+mta_facilities_sfpsd,97,100,-3.0927835051546392
+nycdep_facilities_sfpsd,2,1,50.0000000000000000
+nycdoc_facilities_corrections,1,1,0.00000000000000000000
+nycha_facilities_communitycenters,457,452,1.0940919037199125
+nycha_facilities_policeservice,12,14,-16.6666666666666667
+nycourts_facilities_courts,13,19,-46.1538461538461538
+nysdec_facilities_lands,27,27,0.00000000000000000000
+nysdec_facilities_solidwaste,187,212,-13.3689839572192513
+nysdoccs_facilities_corrections,3,3,0.00000000000000000000
+nysdoh_facilities_healthfacilities,1003,1026,-2.2931206380857428
+nysdot_facilities_sfpsd,3,3,0.00000000000000000000
+nysed_facilities_activeinstitutions,4346,5792,-33.2719742291762540
+nysoasas_facilities_programs,283,284,-0.35335689045936395760
+nysocfs_facilities_facilities,1,1,0.00000000000000000000
+nysomh_facilities_mentalhealth,599,583,2.6711185308848080
+nysopwdd_facilities_providers,138,138,0.00000000000000000000
+nysparks_facilities_historicplaces,650,653,-0.46153846153846153846
+nysparks_facilities_parks,5,5,0.00000000000000000000
+omb_facilities_libraryvisits,24,22,8.3333333333333333
+panynj_facilities_sfpsd,2,2,0.00000000000000000000
+sbs_facilities_workforce1,29,27,6.8965517241379310
+tgi_facilities_sfpsd,7,7,0.00000000000000000000
+uscourts_facilities_courts,6,6,0.00000000000000000000
+usdot_facilities_airports,13,13,0.00000000000000000000
+usdot_facilities_ports,37,40,-8.1081081081081081
+usnps_facilities_parks,6,6,0.00000000000000000000
